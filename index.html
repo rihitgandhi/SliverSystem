@@ -1,218 +1,289 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Rihit Gandhi's Website</title>
+    <title>Spin-off of "Project: Travel webpage"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
+        body {
+            font-family: 'Lato', sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        header {
-            background: #333;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .nav-links {
-            list-style: none;
-        }
-
-        .nav-links li {
-            display: inline;
-            margin-left: 1rem;
-        }
-
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .hero {
-            background: url('hero-image.jpg') no-repeat center center/cover;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 600px;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin: 1rem 0;
-        }
-
-        .btn {
-            background: #333;
-            color: #fff;
-            padding: 0.7rem 1.5rem;
-            text-decoration: none;
-            border-radius: 5px;
-            display: inline-block;
-        }
-
-        .btn:hover {
-            background: #555;
-        }
-
-        .about, .services, .contact {
-            padding: 2rem 0;
-            text-align: center;
+            background-color: #f4f4f9;
         }
 
         .container {
-            width: 80%;
-            margin: 0 auto;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .tab:hover {
+            background-color: #ddd;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid rgb(23, 27, 255);
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato' sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background-color: rgb(255, 255, 255);
+                    
+            }
+        
+        
+        h1 {
+            color: rgb(25, 255, 247);
+        }
+        
         h2 {
-            margin-bottom: 1rem;
+            color: rgb(25, 255, 247);
+        }  
+        
+        body {
+            background-color: rgb(255, 255, 255);
+        }
+         
+        p { 
+            color: rgb(66, 66, 66);
+            
+        }
+        
+        h1 {
+            transition: transform .3s ease;
         }
 
-        .service-cards {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
+        h1:hover{
+            transform: scale(1.2) translateX(10%);
         }
-
-        .card {
-            background: #f4f4f4;
-            padding: 1rem;
-            border-radius: 5px;
-            flex-basis: 30%;
+        
+        h2 {
+            transition: transform .1s ease;
+        }
+        
+        img {
+            width:550px;
+            height:375px;
+            
+        }
+        
+        .text-overlay{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white; 
+            font-size: 100px; 
+            font-weight: bold; 
+            background-color: rgba(255, 255, 255, 0.5); 
+            padding: 10px 20px; 
+            text-align: center; 
+        }
+        
+         .quote {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.8); 
+            color: rgb(34, 34, 34); 
+            padding: 10px 20px;
             text-align: center;
-            margin-bottom: 1rem;
+            border: 2px solid rgba(0, 0, 0, 0.1); 
+            border-radius: 10px; 
+}
+
+        .caption{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 220%);
+            color: white; 
+            font-size: 20px; 
+            font-weight: bold; 
+            background-color: rgba(0, 0, 0, 0.5); 
+            padding: 10px 20px; 
+            text-align: center; 
+        }
+        
+        .poem, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds {
+            font-style: italic;
+            margin: 20px 0;
+            padding-left: 20px;
+            border-left: 4px solid #555;
+            line-height: 1.8;
         }
 
-        .contact form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .poem span {
+            display: block;
+            margin-bottom: 10px;
         }
 
-        .contact label {
-            margin-top: 1rem;
-        }
-
-        .contact input, .contact textarea {
-            padding: 0.5rem;
-            margin-top: 0.5rem;
-            border: 1px solid #ccc;
+         #scrollTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
             border-radius: 5px;
-            width: 100%;
-            max-width: 400px;
+            cursor: pointer;
         }
-
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem 0;
-            margin-top: 2rem;
+        #scrollTop:hover {
+            background-color: #333;
         }
+        
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">MyWebsite</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Welcome to My Website</h1>
-            <p>Your journey to excellence starts here</p>
-            <a href="#about" class="btn">Learn More</a>
+<!---Tab click animation--->    
+<div class="container">
+
+<div class="tabs">
+
+<div class="tab active" onclick="openTab(event, 'tab1')">Dog Info</div>
+            
+<div class="tab" onclick="openTab(event, 'tab2')">Where to adopt</div>
+
+<div class="tab" onclick="openTab(event, 'tab3')">Dog games</div>
         </div>
-    </section>
 
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About Us</h2>
-            <p>Rihit is dedicated professional committed to delivering top-notch services.</p>
-        </div>
-    </section>
+<!---Tab 1 content--->           
+<div id="tab1" class="tab-content active">
+    <!---Dogs--->
+    <div class = "text-overlay">Dogs</div>
+    <div class = "caption"> The best creature <strong>ever!</strong></div>
 
-    <section id="services" class="services">
-        <div class="container">
-            <h2>Our Services</h2>
-            <div class="service-cards">
-                <div class="card">
-                    <h3>Service One</h3>
-                    <p>Details about service one.</p>
-                </div>
-                <div class="card">
-                    <h3>Service Two</h3>
-                    <p>Details about service two.</p>
-                </div>
-                <div class="card">
-                    <h3>Service Three</h3>
-                    <p>Details about service three.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <form action="#">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
+<!---Dog-Image2--> 
+    <img src="https://cdn.kastatic.org/third_party/javascript-khansrc/live-editor/build/images/animals/dog_sleeping-puppy.png" alt="Dog_1" width="203">
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+<!---Quotes--->
+<h2 class = "quote"><strong>'</strong>The world would be a nicer place if everyone had the ability to love as unconditionally as a dog<strong>'</strong><br>-M.K Clinton</h2>
 
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
 
-                <button type="submit" class="btn">Send</button>
-            </form>
-        </div>
-    </section>
+<!---Subsection 1--->      
+    <h1 class = "all-about-dogs"> All about dogs</h1>
+    
+    <p>Dogs, known scientifically as Canis lupus familiaris, have been loyal companions to humans for thousands of years. They come in an astonishing variety of breeds, each with unique characteristics and traits. From the tiny Chihuahua to the massive Great Dane, dogs have been bred for specific tasks such as hunting, herding, and companionship. Their keen sense of smell and intelligence make them invaluable in roles like search and rescue, police work, and as service animals for people with disabilities. Dogs communicate with humans and other animals through a complex system of vocalizations, body language, and facial expressions. They require regular exercise, a balanced diet, and routine veterinary care to maintain their health and well-being. Above all, dogs are known for their unwavering loyalty and the joy they bring to their owners' lives.</p>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 MyWebsite. All rights reserved.</p>
-        </div>
-    </footer>
+
+<!---Subsection 2--->    
+    <h1 class = "why-you-should-have-a-dog">You should get a dog!</h1>
+    
+    <p>Everyone should consider having a dog because they offer unparalleled companionship and emotional support. Dogs have been shown to reduce stress, anxiety, and depression through their affectionate and loyal nature. They encourage a more active lifestyle, as regular walks and playtime are essential for their health, which in turn benefits the owner's physical well-being. Additionally, dogs can teach responsibility, especially to children, as they require consistent care, training, and attention. They provide a sense of security, with many breeds naturally inclined to protect their families and homes. Dogs also help foster social connections, as dog owners often meet and bond with others in their communities during walks or at dog parks. Ultimately, the joy, love, and laughter that a dog brings into a home make them a truly invaluable addition to any family. </p>
+    
+<!---Subsection 3--->     
+    <h1 class = "dog-breeds">Dog Breeds</h1>
+    
+    <p>Dog breeds are incredibly diverse, each developed with unique characteristics and traits to fulfill specific roles and needs. There are over 340 recognized breeds worldwide, ranging from the tiny Chihuahua to the giant Great Dane. Breeds like the Border Collie are renowned for their intelligence and herding abilities, while the Labrador Retriever is celebrated for its friendly nature and versatility as a working dog. Some breeds, such as the Greyhound, are built for speed, whereas others, like the Bulldog, are known for their sturdy, compact build. The Poodle, with its hypoallergenic coat, is a favorite among those with allergies. Each breed not only has distinct physical features but also specific temperaments and care requirements, making it essential for prospective dog owners to choose a breed that fits their lifestyle and needs. The rich variety of dog breeds highlights the close relationship between humans and dogs, showcasing how dogs have been selectively bred over centuries to become invaluable companions and helpers.</p>
+    
+<!---Poem--->
+    <h1 class = "poem">Poem</h1>
+    
+    <p id ="poem">
+    
+    In fields where wildflowers sway and play<br>
+Dogs bound with joy, their spirits gay.<br>
+With wagging tails and eyes so bright,<br>
+They chase the day, from dawn to night.<br>
+
+Guardians of our hearts so true,<br>
+With loyal love in all they do.<br>
+Soft fur to pet, a friend to hold,<br>
+Through summer heat and winter's cold.<br>
+
+Their playful barks, a melody,<br>
+A symphony of loyalty.<br>
+In moments still, or when they leap,<br>
+In our souls, their memories keep.<br>
+
+No greater bond, no sweeter trust,<br>
+In canines' love, our hearts adjust.<br>
+From puppy's first, to elder's rest,<br>
+In dogs, we find our truest best.</p>
+
+
+<!---Button animations--->
+<button id="scrollTop" onclick="scrollToTop()">Top</button>
+
+<script>
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</div>
+        
+<!---Tab 2 content--->
+<div id="tab2" class="tab-content">
+    <h2>Tab 2 Content</h2>
+    <p>This is the content for Tab 2.</p>
+</div>
+        
+<!---Tab 3 content--->
+<div id="tab3" class="tab-content">
+    <h2>Tab 3 Content</h2>
+    <p>This is the content for Tab 3.</p>
+</div>
+    </div>
+
+<!---Active tab--->
+<script>
+        function openTab(evt, tabName) {
+           
+            var i, tabcontent, tablinks;
+
+            
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+
+            
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
 </body>
 </html>
