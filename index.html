@@ -25,6 +25,7 @@
             display: flex;
             border-bottom: 1px solid #ccc;
             margin-bottom: 20px;
+            
         }
 
         .tab {
@@ -112,6 +113,19 @@
             text-align: center; 
         }
         
+        .aad{
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgb(255,255,255); 
+            font-size: 80px; 
+            font-weight: bold; 
+            background-color: rgba(235, 235, 235, 0.5); 
+            padding: 1px 5px; 
+            text-align: center; 
+        }
+        
          .quote {
             font-size: 20px;
             font-weight: bold;
@@ -136,12 +150,21 @@
             text-align: center; 
         }
         
-        .poem, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds {
+        .poem, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds{
             font-style: italic;
             margin: 20px 0;
             padding-left: 20px;
             border-left: 4px solid #555;
             line-height: 1.8;
+        }
+        
+        .adopt-dogs{
+            font-style: italic;
+            margin: 20px 0;
+            padding-left: 20px;
+            border-left: 4px solid #555;
+            line-height: 1.8;
+            border-left: 4px solid #555;
         }
 
         .poem span {
@@ -164,6 +187,37 @@
             background-color: #333;
         }
         
+        p, ul {
+            margin: 0 0 20px;
+            padding: 0;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        * {
+            transition-property: none !important;
+        }
+        
+        @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.text-overlay, .caption, .quote, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds, .poem, .adopt-dogs {
+    animation: fadeIn 2s ease-in;
+}
+        
     </style>
 </head>
 <body>
@@ -177,7 +231,7 @@
             
 <div class="tab" onclick="openTab(event, 'tab2')">Where to adopt</div>
 
-<div class="tab" onclick="openTab(event, 'tab3')">Dog games</div>
+<div class="tab" onclick="openTab(event, 'tab3')"> Games</div>
         </div>
 
 <!---Tab 1 content--->           
@@ -249,16 +303,80 @@ In dogs, we find our truest best.</p>
         
 <!---Tab 2 content--->
 <div id="tab2" class="tab-content">
-    <h2>Tab 2 Content</h2>
-    <p>This is the content for Tab 2.</p>
+
+<!---Text--->
+<h2 class = "aad">Adopting a dog</h2>
+<!---Dog-Image2--> 
+    <img src="https://cdn.kastatic.org/third_party/javascript-khansrc/live-editor/build/images/animals/dogs_collies.png" width="203" height = "150">
+ 
+<h2 class = "quote">"Saving on dog will not change the world, but surely for that one dog, the world will change forever"<br>-Karen Davison</h2>
+
+<h1 class="adopt-dogs!">Where and Why You Should <br> Adopt a Dog</h1>
+        
+        <p>Adopting a dog is a profound act of compassion and commitment that brings immense joy and fulfillment. It involves welcoming a loyal companion into one's life while also offering a second chance to an animal in need. The decision to adopt a dog rather than purchasing from breeders or pet stores is laden with benefits, both for the adopter and for society at large.</p>
+
+        <p>Firstly, adopting a dog from a shelter or rescue organization saves lives. Millions of dogs end up in shelters every year, with many facing the risk of euthanasia due to overcrowding and limited resources. By choosing to adopt, individuals can directly combat this issue, offering a dog a new lease on life. Each adoption opens up space for another dog to be rescued, thereby creating a positive cycle of saving lives.</p>
+
+        <p>Adopting a dog also supports the fight against puppy mills. These mass breeding operations prioritize profit over the well-being of animals, often subjecting dogs to inhumane conditions. Dogs from puppy mills are frequently kept in cramped, unsanitary environments, with minimal veterinary care and socialization. By adopting from shelters or reputable rescue organizations, potential pet owners can help reduce the demand for puppies bred in such unethical conditions.</p>
+
+        <p>Moreover, the emotional and psychological benefits of dog adoption are substantial. Dogs offer unwavering loyalty, companionship, and love. They can significantly reduce stress, anxiety, and depression. The act of caring for a dog encourages physical activity, such as walking and playing, which contributes to overall well-being. For many, the bond formed with a pet can be profoundly therapeutic, providing a sense of purpose and fulfillment.</p>
+
+        <p>However, adopting a dog comes with significant responsibilities. Prospective dog owners must be prepared for the time, effort, and resources required to care for their new companion. This includes providing proper nutrition, regular veterinary care, and ample exercise. It also involves training and socialization to ensure that the dog is well-behaved and happy in its new environment.</p>
+
+        <p>Before adopting, individuals should thoroughly research different breeds and consider their own lifestyle and living situation. Factors such as the size of the home, availability of outdoor space, and daily schedule can influence the type of dog that is most suitable. Potential adopters should also consider the long-term commitment involved, as dogs can live for 10 to 15 years or more.</p>
+
+        <p>For those ready to embark on the journey of dog adoption, numerous resources are available to help find the perfect canine companion. Many websites and organizations specialize in connecting dogs in need with loving homes. Here are some reputable websites to consider:</p>
+
+        <ul>
+            
+            <li><a href="https://www.petfinder.com" target="_blank">Petfinder</a>: This comprehensive database allows users to search for adoptable dogs by location, breed, age, and other criteria. It includes listings from shelters and rescue groups across North America.</li>
+            
+            <li><a href="https://www.adoptapet.com" target="_blank">Adopt-a-Pet</a>: Another extensive resource, Adopt-a-Pet, partners with over 17,000 animal shelters, humane societies, SPCAs, and pet adoption agencies.</li>
+            
+            <li><a href="https://www.humanesociety.org" target="_blank">The Humane Society of the United States</a>: The Humane Society offers a variety of resources for potential adopters, including listings of adoptable pets and information on local shelters.</li>
+            
+            <li><a href="https://www.aspca.org/adopt-pet" target="_blank">ASPCA</a>: The American Society for the Prevention of Cruelty to Animals provides adoption resources and has a searchable database of adoptable pets.</li>
+            
+            <li><a href="https://www.bestfriends.org" target="_blank">Best Friends Animal Society</a>: This organization operates the nation’s largest no-kill sanctuary for companion animals and offers an extensive network for pet adoption.</li>
+            
+            <li>Local Animal Shelters and Rescue Groups: Many communities have their own shelters and rescue organizations. Websites like those mentioned above often list these local resources, or a simple web search can help locate them.</li>
+        </ul>
+
+        <p>Adopting a dog is a life-changing experience that brings joy, companionship, and a sense of purpose. It is an act of kindness that saves lives and supports the ethical treatment of animals. By embracing the responsibilities that come with dog adoption and utilizing available resources to find the right match, individuals can enrich their lives while making a positive impact on the world.</p>
+
+
+<!---Button animations--->
+<button id="scrollTop" onclick="scrollToTop()">Top</button>
+
+
+<script>
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</div>
+    
 </div>
         
 <!---Tab 3 content--->
 <div id="tab3" class="tab-content">
-    <h2>Tab 3 Content</h2>
-    <p>This is the content for Tab 3.</p>
+<h1> Dog game: Fetch</h1>
+
+
+ 
+ 
+<!---Button animations--->
+<button id="scrollTop" onclick="scrollToTop()">Top</button>
+
+<script>
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
 </div>
-    </div>
+
 
 <!---Active tab--->
 <script>
