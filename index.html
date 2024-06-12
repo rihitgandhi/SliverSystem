@@ -26,13 +26,12 @@
             display: flex;
             border-bottom: 1px solid #ccc;
             margin-bottom: 20px;
-            
         }
 
         .tab {
             flex: 1;
             text-align: center;
-            padding: px;
+            padding: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -53,151 +52,83 @@
         .tab-content.active {
             display: block;
         }
-        
-        html, body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Lato' sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #333;
-            background-color: rgb(255, 255, 255);
-                    
-            }
-        
-        
-        h1 {
+
+        h1, h2 {
             color: rgb(25, 255, 247);
-        }
-        
-        h2 {
-            color: rgb(25, 255, 247);
-        }  
-        
-        body {
-            background-color: rgb(255, 255, 255);
-        }
-         
-        p { 
-            color: rgb(66, 66, 66);
-            
-        }
-        
-        h1 {
-            transition: transform .3s ease;
         }
 
-        h1:hover{
+        p {
+            color: rgb(66, 66, 66);
+        }
+
+        h1 {
+            transition: transform 0.3s ease;
+        }
+
+        h1:hover {
             transform: scale(1.2) translateX(10%);
         }
-        
-        h2 {
-            transition: transform .1s ease;
-        }
-        
+
         img {
-            width:550px;
-            height:375px;
-            
+            max-width: 100%;
+            height: auto;
         }
-        
-        .text-overlay{
+
+        .text-overlay, .aad, .quote, .caption, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds, .poem, .adopt-dogs {
+            animation: fadeIn 1s ease-in;
+        }
+
+        .text-overlay, .caption {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: white; 
-            font-size: 100px; 
-            font-weight: bold; 
-            background-color: rgba(255, 255, 255, 0.5); 
-            padding: 10px 20px; 
-            text-align: center; 
+            color: white;
+            font-size: 4vw;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px 20px;
+            text-align: center;
         }
-        
-        .aad{
+
+        .aad {
             position: absolute;
             top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: rgb(255,255,255); 
-            font-size: 80px; 
-            font-weight: bold; 
-            background-color: rgba(235, 235, 235, 0.5); 
-            padding: 1px 5px; 
-            text-align: center; 
-        }
-        
-         .quote {
-            font-size: 20px;
+            color: white;
+            font-size: 3vw;
             font-weight: bold;
-            background-color: rgba(255, 255, 255, 0.8); 
-            color: rgb(34, 34, 34); 
+            background-color: rgba(235, 235, 235, 0.5);
             padding: 10px 20px;
             text-align: center;
-            border: 2px solid rgba(0, 0, 0, 0.1); 
-            border-radius: 10px; 
-}
-
-        .caption{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, 220%);
-            color: white; 
-            font-size: 20px; 
-            font-weight: bold; 
-            background-color: rgba(0, 0, 0, 0.5); 
-            padding: 10px 20px; 
-            text-align: center; 
         }
-        
-        .poem, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds{
+
+        .quote {
+            font-size: 1.2rem;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: rgb(34, 34, 34);
+            padding: 10px 20px;
+            text-align: center;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .poem, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds, .adopt-dogs {
             font-style: italic;
             margin: 20px 0;
             padding-left: 20px;
             border-left: 4px solid #555;
             line-height: 1.8;
         }
-        
-        .adopt-dogs{
-            font-style: italic;
-            margin: 20px 0;
-            padding-left: 20px;
-            border-left: 4px solid #555;
-            line-height: 1.8;
-            border-left: 4px solid #555;
-        }
-
-        .tabs {
-    display: flex;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 20px;
-        }
-        
-        .tab {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-        }
-        
-
-.tab:hover {
-    background-color: #ddd;
-}
-
-.tab.active {
-    border-bottom: 2px solid rgb(23, 27, 255);
-    font-weight: bold;
-}
 
         .poem span {
             display: block;
             margin-bottom: 10px;
         }
 
-         #scrollTop {
+        #scrollTop {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -208,217 +139,143 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
         #scrollTop:hover {
-            background-color: #333;
+            background-color: #555;
         }
-        
+
         p, ul {
             margin: 0 0 20px;
             padding: 0;
         }
+
         ul {
             padding-left: 20px;
         }
+
         li {
             margin-bottom: 10px;
         }
+
         a {
             color: #007BFF;
             text-decoration: none;
         }
+
         a:hover {
             text-decoration: underline;
         }
-        
-        * {
-            transition-property: none !important;
-        }
-        
+
         @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-.text-overlay, .caption, .quote, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds, .poem, .adopt-dogs {
-    animation: fadeIn s ease-in;
-}
+        @media screen and (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
 
-@media screen and (max-width: 768px) {
-    .tabs {
-        flex-direction: column;
-    }
+            .tab {
+                padding: 15px;
+            }
 
-    .tab {
-        padding: 15px;
-    }
+            .text-overlay {
+                font-size: 6vw;
+            }
 
-    .text-overlay {
-        font-size: 6vw;
-    }
+            .aad {
+                font-size: 5vw;
+            }
 
-    .aad {
-        font-size: 5vw;
-    }
+            .quote {
+                font-size: 1rem;
+            }
 
-    .quote {
-        font-size: 1rem;
-    }
+            .caption {
+                font-size: 1rem;
+            }
 
-    .caption {
-        font-size: 1rem;
-    }
+            .container {
+                padding: 10px;
+            }
 
-    .container {
-        padding: 10px;
-    }
+            h1, h2 {
+                font-size: 1.5rem;
+            }
+        }
 
-    h1, h2 {
-        font-size: 1.5rem;
-    }
-}
+        @media screen and (max-width: 480px) {
+            .text-overlay {
+                font-size: 8vw;
+            }
 
-@media screen and (max-width: 480px) {
-    .text-overlay {
-        font-size: 8vw;
-    }
+            .aad {
+                font-size: 7vw;
+            }
 
-    .aad {
-        font-size: 7vw;
-    }
+            .quote {
+                font-size: 0.9rem;
+            }
 
-    .quote {
-        font-size: 0.9rem;
-    }
+            .caption {
+                font-size: 0.9rem;
+            }
 
-    .caption {
-        font-size: 0.9rem;
-    }
-
-    h1, h2 {
-        font-size: 1.2rem;
-    }
-    
-}
-img {
-    max-width: 100%;
-    height: auto;
-}
-        .text-overlay, .caption, .quote, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds, .poem, .adopt-dogs {
-    animation: fadeIn 1s ease-in;
-}
-
-.text-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 4vw;
-    font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 10px 20px;
-    text-align: center;
-}
-
-.aad {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 3vw;
-    font-weight: bold;
-    background-color: rgba(235, 235, 235, 0.5);
-    padding: 10px 20px;
-    text-align: center;
-}
-
-.quote {
-    font-size: 1.2rem;
-    font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.8);
-    color: rgb(34, 34, 34);
-    padding: 10px 20px;
-    text-align: center;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-.caption {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 220%);
-    color: white;
-    font-size: 1.2rem;
-    font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px 20px;
-    text-align: center;
-}
-
-.poem, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds, .adopt-dogs {
-    font-style: italic;
-    margin: 20px 0;
-    padding-left: 20px;
-    border-left: 4px solid #555;
-    line-height: 1.8;
-}
-
-.poem span {
-    display: block;
-    margin-bottom: 10px;
-}
-}
-   
-        
+            h1, h2 {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-<!---Tab click animation--->    
 <div class="container">
+    <div class="tabs">
+        <div class="tab active" onclick="openTab(event, 'tab1')">Dog Info</div>
+        <div class="tab" onclick="openTab(event, 'tab2')">Where to adopt</div>
+        <div class="tab" onclick="openTab(event, 'tab3')">Games</div>
+    </div>
 
-<div class="tabs">
+    <div id="tab1" class="tab-content active">
+        <div class="text-overlay">Dogs</div>
+        <div class="caption">The best creature <strong>ever!</strong></div>
+        <img src="https://cdn.kastatic.org/third_party/javascript-khansrc/live-editor/build/images/animals/dog_sleeping-puppy.png" alt="Dog_1">
 
-<div class="tab active" onclick="openTab(event, 'tab1')">Dog Info</div>
-            
-<div class="tab" onclick="openTab(event, 'tab2')">Where to adopt</div>
+        <h2 class="quote"><strong>'</strong>The world would be a nicer place if everyone had the ability to love as unconditionally as a dog<strong>'</strong><br>-M.K Clinton</h2>
+        
+        <!---Subsection 1---> 
+        <h1 class="all-about-dogs">All about dogs</h1>
+        <p>Dogs, known scientifically as Canis lupus familiaris, have been loyal companions to humans for thousands of years. 
+            They come in an astonishing variety of breeds, each with unique characteristics and traits. From the tiny Chihuahua to the massive Great Dane, 
+            dogs have been bred for specific tasks such as hunting, herding, and companionship. Their keen sense of smell and intelligence make them invaluable
+            in roles like search and rescue, police work, and as service animals for people with disabilities. Dogs communicate with humans and other animals through
+            a complex system of vocalizations, body language, and facial expressions. They require regular exercise, a balanced diet, and routine veterinary care to maintain
+            their health and well-being. Above all, dogs are known for their unwavering loyalty and the joy they bring to their owners' lives.</p>
 
-<div class="tab" onclick="openTab(event, 'tab3')"> Games</div>
-        </div>
+        <!---Subsection 2---> 
+        <h1 class="why-you-should-have-a-dog">You should get a dog!</h1>
+         <p>Everyone should consider having a dog because they offer unparalleled companionship and emotional support. 
+             Dogs have been shown to reduce stress, anxiety, and depression through their affectionate and loyal nature. 
+             They encourage a more active lifestyle, as regular walks and playtime are essential for their health, which 
+             in turn benefits the owner's physical well-being. Additionally, dogs can teach responsibility, especially to children
+             , as they require consistent care, training, and attention. They provide a sense of security, with many breeds 
+             naturally inclined to protect their families and homes. Dogs also help foster social connections, as dog owners often
+             meet and bond with others in their communities during walks or at dog parks. Ultimately, the joy, love, and laughter that a
+             dog brings into a home make them a truly invaluable addition to any family. </p>
 
-<!---Tab 1 content--->           
-<div id="tab1" class="tab-content active">
-    <!---Dogs--->
-    <div class = "text-overlay">Dogs</div>
-    <div class = "caption"> The best creature <strong>ever!</strong></div>
-
-
-<!---Dog-Image2--> 
-    <img src="https://cdn.kastatic.org/third_party/javascript-khansrc/live-editor/build/images/animals/dog_sleeping-puppy.png" alt="Dog_1" width="203">
-
-<!---Quotes--->
-<h2 class = "quote"><strong>'</strong>The world would be a nicer place if everyone had the ability to love as unconditionally as a dog<strong>'</strong><br>-M.K Clinton</h2>
-
-
-<!---Subsection 1--->      
-    <h1 class = "all-about-dogs"> All about dogs</h1>
-    
-    <p>Dogs, known scientifically as Canis lupus familiaris, have been loyal companions to humans for thousands of years. They come in an astonishing variety of breeds, each with unique characteristics and traits. From the tiny Chihuahua to the massive Great Dane, dogs have been bred for specific tasks such as hunting, herding, and companionship. Their keen sense of smell and intelligence make them invaluable in roles like search and rescue, police work, and as service animals for people with disabilities. Dogs communicate with humans and other animals through a complex system of vocalizations, body language, and facial expressions. They require regular exercise, a balanced diet, and routine veterinary care to maintain their health and well-being. Above all, dogs are known for their unwavering loyalty and the joy they bring to their owners' lives.</p>
-
-
-<!---Subsection 2--->    
-    <h1 class = "why-you-should-have-a-dog">You should get a dog!</h1>
-    
-    <p>Everyone should consider having a dog because they offer unparalleled companionship and emotional support. Dogs have been shown to reduce stress, anxiety, and depression through their affectionate and loyal nature. They encourage a more active lifestyle, as regular walks and playtime are essential for their health, which in turn benefits the owner's physical well-being. Additionally, dogs can teach responsibility, especially to children, as they require consistent care, training, and attention. They provide a sense of security, with many breeds naturally inclined to protect their families and homes. Dogs also help foster social connections, as dog owners often meet and bond with others in their communities during walks or at dog parks. Ultimately, the joy, love, and laughter that a dog brings into a home make them a truly invaluable addition to any family. </p>
-    
-<!---Subsection 3--->     
+       <!---Subsection 3--->     
     <h1 class = "dog-breeds">Dog Breeds</h1>
-    
-    <p>Dog breeds are incredibly diverse, each developed with unique characteristics and traits to fulfill specific roles and needs. There are over 340 recognized breeds worldwide, ranging from the tiny Chihuahua to the giant Great Dane. Breeds like the Border Collie are renowned for their intelligence and herding abilities, while the Labrador Retriever is celebrated for its friendly nature and versatility as a working dog. Some breeds, such as the Greyhound, are built for speed, whereas others, like the Bulldog, are known for their sturdy, compact build. The Poodle, with its hypoallergenic coat, is a favorite among those with allergies. Each breed not only has distinct physical features but also specific temperaments and care requirements, making it essential for prospective dog owners to choose a breed that fits their lifestyle and needs. The rich variety of dog breeds highlights the close relationship between humans and dogs, showcasing how dogs have been selectively bred over centuries to become invaluable companions and helpers.</p>
-    
-<!---Poem--->
+    <p>Dog breeds are incredibly diverse, each developed with unique characteristics and traits to fulfill specific roles and needs. 
+        There are over 340 recognized breeds worldwide, ranging from the tiny Chihuahua to the giant Great Dane. Breeds like the Border Collie
+        are renowned for their intelligence and herding abilities, while the Labrador Retriever is celebrated for its friendly nature and versatility as
+        a working dog. Some breeds, such as the Greyhound, are built for speed, whereas others, like the Bulldog, are known for their sturdy, compact build. 
+        The Poodle, with its hypoallergenic coat, is a favorite among those with allergies. Each breed not only has distinct physical features but also specific 
+        temperaments and care requirements, making it essential for prospective dog owners to choose a breed that fits their lifestyle and needs. The rich variety 
+        of dog breeds highlights the close relationship between humans and dogs, showcasing how dogs have been selectively bred over centuries to become invaluable 
+        companions and helpers.</p>
+
+        <!---Poem--->
     <h1 class = "poem">Poem</h1>
     
     <p id ="poem">
@@ -442,120 +299,98 @@ No greater bond, no sweeter trust,<br>
 In canines' love, our hearts adjust.<br>
 From puppy's first, to elder's rest,<br>
 In dogs, we find our truest best.</p>
+    </div>
 
-
-<!---Button animations--->
-<button id="scrollTop" onclick="scrollToTop()">Top</button>
-
-<script>
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-</script>
-
-</div>
+    <div id="tab2" class="tab-content">
         
-<!---Tab 2 content--->
-<div id="tab2" class="tab-content">
+        <h2 class="aad">Adopting a dog</h2>
+        <img src="https://cdn.kastatic.org/third_party/javascript-khansrc/live-editor/build/images/animals/dogs_collies.png" alt="Dog_2">
+        <h2 class="quote">"Saving one dog will not change the world, but surely for that one dog, the world will change forever"<br>-Karen Davison</h2>
 
-<!---Text--->
-<h2 class = "aad">Adopting a dog</h2>
-<!---Dog-Image2--> 
-    <img src="https://cdn.kastatic.org/third_party/javascript-khansrc/live-editor/build/images/animals/dogs_collies.png" width="203" height = "150">
- 
-<h2 class = "quote">"Saving on dog will not change the world, but surely for that one dog, the world will change forever"<br>-Karen Davison</h2>
+        <h1 class="adopt-dogs">Where and Why You Should Adopt a Dog</h1>
+        <p>Adopting a dog is a profound act of compassion and commitment that brings immense joy and fulfillment. It involves welcoming a 
+            loyal companion into one's life while also offering a second chance to an animal in need. The decision to adopt a dog rather than
+            purchasing from breeders or pet stores is laden with benefits, both for the adopter and for society at large.</p>
 
-<h1 class="adopt-dogs!">Where and Why You Should <br> Adopt a Dog</h1>
-        
-        <p>Adopting a dog is a profound act of compassion and commitment that brings immense joy and fulfillment. It involves welcoming a loyal companion into one's life while also offering a second chance to an animal in need. The decision to adopt a dog rather than purchasing from breeders or pet stores is laden with benefits, both for the adopter and for society at large.</p>
+        <p>Firstly, adopting a dog from a shelter or rescue organization saves lives. Millions of dogs end up in shelters every year,
+            with many facing the risk of euthanasia due to overcrowding and limited resources. By choosing to adopt, individuals can directly 
+            combat this issue, offering a dog a new lease on life. Each adoption opens up space for another dog to be rescued, thereby creating 
+            a positive cycle of saving lives.</p>
 
-        <p>Firstly, adopting a dog from a shelter or rescue organization saves lives. Millions of dogs end up in shelters every year, with many facing the risk of euthanasia due to overcrowding and limited resources. By choosing to adopt, individuals can directly combat this issue, offering a dog a new lease on life. Each adoption opens up space for another dog to be rescued, thereby creating a positive cycle of saving lives.</p>
+        <p>Adopting a dog also supports the fight against puppy mills. These mass breeding operations prioritize profit over the well-being 
+            of animals, often subjecting dogs to inhumane conditions. Dogs from puppy mills are frequently kept in cramped, unsanitary environments,
+            with minimal veterinary care and socialization. By adopting from shelters or reputable rescue organizations, potential pet owners can help reduce
+            the demand for puppies bred in such unethical conditions.</p>
 
-        <p>Adopting a dog also supports the fight against puppy mills. These mass breeding operations prioritize profit over the well-being of animals, often subjecting dogs to inhumane conditions. Dogs from puppy mills are frequently kept in cramped, unsanitary environments, with minimal veterinary care and socialization. By adopting from shelters or reputable rescue organizations, potential pet owners can help reduce the demand for puppies bred in such unethical conditions.</p>
+        <p>Moreover, the emotional and psychological benefits of dog adoption are substantial. Dogs offer unwavering loyalty, companionship, and love. They 
+            can significantly reduce stress, anxiety, and depression. The act of caring for a dog encourages physical activity, such as walking and playing, 
+            which contributes to overall well-being. For many, the bond formed with a pet can be profoundly therapeutic, providing a sense of purpose and fulfillment.</p>
 
-        <p>Moreover, the emotional and psychological benefits of dog adoption are substantial. Dogs offer unwavering loyalty, companionship, and love. They can significantly reduce stress, anxiety, and depression. The act of caring for a dog encourages physical activity, such as walking and playing, which contributes to overall well-being. For many, the bond formed with a pet can be profoundly therapeutic, providing a sense of purpose and fulfillment.</p>
+        <p>However, adopting a dog comes with significant responsibilities. Prospective dog owners must be prepared for the time, effort, and resources required to 
+            care for their new companion. This includes providing proper nutrition, regular veterinary care, and ample exercise. It also involves training and socialization 
+            to ensure that the dog is well-behaved and happy in its new environment.</p>
 
-        <p>However, adopting a dog comes with significant responsibilities. Prospective dog owners must be prepared for the time, effort, and resources required to care for their new companion. This includes providing proper nutrition, regular veterinary care, and ample exercise. It also involves training and socialization to ensure that the dog is well-behaved and happy in its new environment.</p>
+        <p>Before adopting, individuals should thoroughly research different breeds and consider their own lifestyle and living situation. Factors such as the size of 
+            the home, availability of outdoor space, and daily schedule can influence the type of dog that is most suitable. Potential adopters should also consider the 
+            long-term commitment involved, as dogs can live for 10 to 15 years or more.</p>
 
-        <p>Before adopting, individuals should thoroughly research different breeds and consider their own lifestyle and living situation. Factors such as the size of the home, availability of outdoor space, and daily schedule can influence the type of dog that is most suitable. Potential adopters should also consider the long-term commitment involved, as dogs can live for 10 to 15 years or more.</p>
-
-        <p>For those ready to embark on the journey of dog adoption, numerous resources are available to help find the perfect canine companion. Many websites and organizations specialize in connecting dogs in need with loving homes. Here are some reputable websites to consider:</p>
+        <p>For those ready to embark on the journey of dog adoption, numerous resources are available to help find the perfect canine companion. Many websites and organizations 
+            specialize in connecting dogs in need with loving homes. Here are some reputable websites to consider:</p>
 
         <ul>
             
-            <li><a href="https://www.petfinder.com" target="_blank">Petfinder</a>: This comprehensive database allows users to search for adoptable dogs by location, breed, age, and other criteria. It includes listings from shelters and rescue groups across North America.</li>
+            <li><a href="https://www.petfinder.com" target="_blank">Petfinder</a>: This comprehensive database allows users to search for adoptable dogs by location, breed, 
+                age, and other criteria. It includes listings from shelters and rescue groups across North America.</li>
             
-            <li><a href="https://www.adoptapet.com" target="_blank">Adopt-a-Pet</a>: Another extensive resource, Adopt-a-Pet, partners with over 17,000 animal shelters, humane societies, SPCAs, and pet adoption agencies.</li>
+            <li><a href="https://www.adoptapet.com" target="_blank">Adopt-a-Pet</a>: Another extensive resource, Adopt-a-Pet, partners with over 17,000 animal shelters, 
+                humane societies, SPCAs, and pet adoption agencies.</li>
             
-            <li><a href="https://www.humanesociety.org" target="_blank">The Humane Society of the United States</a>: The Humane Society offers a variety of resources for potential adopters, including listings of adoptable pets and information on local shelters.</li>
+            <li><a href="https://www.humanesociety.org" target="_blank">The Humane Society of the United States</a>: The Humane Society offers a variety of resources for potential adopters, 
+                including listings of adoptable pets and information on local shelters.</li>
             
-            <li><a href="https://www.aspca.org/adopt-pet" target="_blank">ASPCA</a>: The American Society for the Prevention of Cruelty to Animals provides adoption resources and has a searchable database of adoptable pets.</li>
+            <li><a href="https://www.aspca.org/adopt-pet" target="_blank">ASPCA</a>: The American Society for the Prevention of Cruelty to Animals provides adoption resources and has a searchable
+                database of adoptable pets.</li>
             
-            <li><a href="https://www.bestfriends.org" target="_blank">Best Friends Animal Society</a>: This organization operates the nation’s largest no-kill sanctuary for companion animals and offers an extensive network for pet adoption.</li>
+            <li><a href="https://www.bestfriends.org" target="_blank">Best Friends Animal Society</a>: This organization operates the nation’s largest no-kill sanctuary for companion animals and offers 
+                an extensive network for pet adoption.</li>
             
-            <li>Local Animal Shelters and Rescue Groups: Many communities have their own shelters and rescue organizations. Websites like those mentioned above often list these local resources, or a simple web search can help locate them.</li>
+            <li>Local Animal Shelters and Rescue Groups: Many communities have their own shelters and rescue organizations. Websites like those mentioned above often list these local resources,
+                or a simple web search can help locate them.</li>
         </ul>
 
-        <p>Adopting a dog is a life-changing experience that brings joy, companionship, and a sense of purpose. It is an act of kindness that saves lives and supports the ethical treatment of animals. By embracing the responsibilities that come with dog adoption and utilizing available resources to find the right match, individuals can enrich their lives while making a positive impact on the world.</p>
+        <p>Adopting a dog is a life-changing experience that brings joy, companionship, and a sense of purpose. It is an act of kindness that saves lives and 
+            supports the ethical treatment of animals. By embracing the responsibilities that come with dog adoption and utilizing available resources to find the 
+            right match, individuals can enrich their lives while making a positive impact on the world.</p>
+    </div>
 
-
-<!---Button animations--->
-<button id="scrollTop" onclick="scrollToTop()">Top</button>
-
-
-<script>
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-</script>
-
-</div>
-    
-</div>
-        
-<!---Tab 3 content--->
-<div id="tab3" class="tab-content">
-<h1> Dog game: Fetch</h1>
-
-
- 
- 
-<!---Button animations--->
-<button id="scrollTop" onclick="scrollToTop()">Top</button>
-
-<script>
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-</script>
+    <div id="tab3" class="tab-content">
+        <h1>Games</h1>
+        <p>Games coming soon...</p>
+    </div>
 
 </div>
 
+<button id="scrollTop" onclick="scrollToTop()">Scroll to Top</button>
 
-<!---Active tab--->
 <script>
-        function openTab(evt, tabName) {
-           
-            var i, tabcontent, tablinks;
-
-            
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-                tabcontent[i].classList.remove("active");
-            }
-
-            
-            tablinks = document.getElementsByClassName("tab");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-
-            
-            document.getElementById(tabName).style.display = "block";
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
         }
-    </script>
+        tablinks = document.getElementsByClassName("tab");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    function scrollToTop() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+</script>
+
 </body>
 </html>
