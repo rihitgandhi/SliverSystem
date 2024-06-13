@@ -254,7 +254,76 @@
             padding: 10px 20px;
             text-align: center;
         }
+
+            
 }
+
+        body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e0f7fa;
+}
+
+.game-container {
+    position: relative;
+    width: 80%;
+    height: 80vh;
+    border: 2px solid #00796b;
+    overflow: hidden;
+    background-color: #a7ffeb;
+}
+
+.dog {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    background: url('dog.png') no-repeat center center / contain;
+}
+
+.tennis-ball, .chocolate {
+    position: absolute;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+}
+
+.tennis-ball {
+    background: url('tennis_ball.png') no-repeat center center / contain;
+}
+
+.chocolate {
+    background: url('chocolate.png') no-repeat center center / contain;
+}
+
+#lives {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#startButton {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #00796b;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
     </style>
 </head>
 <body>
@@ -394,7 +463,91 @@ In dogs, we find our truest best.</p>
 
     <div id="tab3" class="tab-content">
         <h1>Games</h1>
-        <p>Games coming soon...</p>
+         
+        <div class="game-container">
+        <div id="dog" class="dog"></div>
+        <div id="lives">Lives: 3</div>
+        <button id="startButton">Start Game</button>
+            
+        const gameContainer = document.querySelector('.game-container');
+const dog = document.getElementById('dog');
+const livesDisplay = document.getElementById('lives');
+const startButton = document.getElementById('startButton');
+let lives = 3;
+let gameInterval;
+
+startButton.addEventListener('click', startGame);
+
+function startGame() {
+    lives = 3;
+    livesDisplay.textContent = `Lives: ${lives}`;
+    startButton.style.display = 'none';
+    gameInterval = setInterval(dropItem, 1000);
+}
+
+function dropItem() {
+    const item = document.createElement('div');
+    item.classList.add(Math.random() > 0.7 ? 'chocolate' : 'tennis-ball');
+    item.style.left = `${Math.random() * (gameContainer.offsetWidth - 30)}px`;
+    gameContainer.appendChild(item);
+
+    const dropSpeed = Math.random() * 3 + 2;
+
+    let dropInterval = setInterval(() => {
+        item.style.top = `${item.offsetTop + dropSpeed}px`;
+
+        if (item.offsetTop > gameContainer.offsetHeight) {
+            clearInterval(dropInterval);
+            gameContainer.removeChild(item);
+
+            if (item.classList.contains('tennis-ball')) {
+                loseLife();
+            }
+        } else if (isColliding(dog, item)) {
+            clearInterval(dropInterval);
+            gameContainer.removeChild(item);
+
+            if (item.classList.contains('chocolate')) {
+                loseLife();
+            }
+        }
+    }, 20);
+}
+
+function isColliding(dog, item) {
+    const dogRect = dog.getBoundingClientRect();
+    const itemRect = item.getBoundingClientRect();
+
+    return !(
+        dogRect.top > itemRect.bottom ||
+        dogRect.right < itemRect.left ||
+        dogRect.bottom < itemRect.top ||
+        dogRect.left > itemRect.right
+    );
+}
+
+function loseLife() {
+    lives--;
+    livesDisplay.textContent = `Lives: ${lives}`;
+
+    if (lives <= 0) {
+        clearInterval(gameInterval);
+        alert('Game Over!');
+        startButton.style.display = 'block';
+    }
+}
+
+document.addEventListener('mousemove', (e) => {
+    const gameRect = gameContainer.getBoundingClientRect();
+    const mouseX = e.clientX - gameRect.left;
+
+    if (mouseX > 0 && mouseX < gameRect.width) {
+        dog.style.left = `${mouseX - dog.offsetWidth / 2}px`;
+    }
+});
+    
+    </div>
+    <script src="script.js"></script>
     </div>
 
 </div>
