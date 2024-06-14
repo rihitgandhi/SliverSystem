@@ -1,31 +1,30 @@
-let dogPosition;
-const resultElement = document.getElementById('result');
-const boxes = document.querySelectorAll('.box');
+// game.js
+const dog = document.getElementById('dog');
+const ball = document.getElementById('ball');
+let ballThrown = false;
 
-function startGame() {
-    dogPosition = Math.floor(Math.random() * boxes.length);
-    resultElement.textContent = '';
-    boxes.forEach(box => {
-        box.textContent = '?';
-        box.classList.add('hidden');
-        box.style.pointerEvents = 'auto';
-    });
-}
+function throwBall() {
+    if (!ballThrown) {
+        ballThrown = true;
+        // Move the ball to a random position within the game area
+        const randomX = Math.floor(Math.random() * (document.querySelector('.game-area').clientWidth - 50));
+        const randomY = Math.floor(Math.random() * (document.querySelector('.game-area').clientHeight - 50));
 
-function makeGuess(index) {
-    if (index === dogPosition) {
-        boxes[index].textContent = '🐶';
-        resultElement.textContent = 'You found the dog!';
-    } else {
-        boxes[index].textContent = '❌';
-        resultElement.textContent = 'Try again!';
+        ball.style.left = randomX + 'px';
+        ball.style.bottom = randomY + 'px';
+
+        // Move the dog to fetch the ball after a short delay
+        setTimeout(() => {
+            dog.style.left = randomX + 'px';
+            dog.style.bottom = randomY + 'px';
+            setTimeout(() => {
+                // Return the dog and ball to the starting position
+                dog.style.left = '10px';
+                dog.style.bottom = '0';
+                ball.style.left = '50px';
+                ball.style.bottom = '0';
+                ballThrown = false;
+            }, 2000);
+        }, 1000);
     }
-    boxes[index].classList.remove('hidden');
-    boxes[index].style.pointerEvents = 'none';
 }
-
-function restartGame() {
-    startGame();
-}
-
-document.addEventListener('DOMContentLoaded', startGame);
