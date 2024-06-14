@@ -469,7 +469,8 @@ In dogs, we find our truest best.</p>
         <div id="lives">Lives: 3</div>
         <button id="startButton">Start Game</button>
             
-        const gameContainer = document.querySelector('.game-container');
+        <script>
+            const gameContainer = document.querySelector('.game-container');
 const dog = document.getElementById('dog');
 const livesDisplay = document.getElementById('lives');
 const startButton = document.getElementById('startButton');
@@ -545,6 +546,7 @@ document.addEventListener('mousemove', (e) => {
         dog.style.left = `${mouseX - dog.offsetWidth / 2}px`;
     }
 });
+        </script>
     
     </div>
     <script src="script.js"></script>
