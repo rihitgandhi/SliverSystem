@@ -470,7 +470,7 @@ In dogs, we find our truest best.</p>
         <button id="startButton">Start Game</button>
     </div>
 
-    <script>
+<script>
         const gameContainer = document.querySelector('.game-container');
         const dog = document.getElementById('dog');
         const livesDisplay = document.getElementById('lives');
@@ -491,6 +491,7 @@ In dogs, we find our truest best.</p>
             const item = document.createElement('div');
             item.classList.add(Math.random() > 0.7 ? 'chocolate' : 'tennis-ball');
             item.style.left = `${Math.random() * (gameContainer.offsetWidth - 30)}px`;
+            item.style.top = '0px';
             gameContainer.appendChild(item);
 
             const dropSpeed = Math.random() * 3 + 2;
