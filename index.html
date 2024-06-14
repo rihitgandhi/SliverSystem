@@ -461,120 +461,95 @@ In dogs, we find our truest best.</p>
             right match, individuals can enrich their lives while making a positive impact on the world.</p>
     </div>
 
-    <div id="tab3" class="tab-content">
-        <h1>Games</h1>
-         
-        <div class="game-container">
+    <<div id="tab3" class="tab-content">
+    <h1>Games</h1>
+     
+    <div class="game-container">
         <div id="dog" class="dog"></div>
         <div id="lives">Lives: 3</div>
         <button id="startButton">Start Game</button>
-            
-        <script>
-            const gameContainer = document.querySelector('.game-container');
-const dog = document.getElementById('dog');
-const livesDisplay = document.getElementById('lives');
-const startButton = document.getElementById('startButton');
-let lives = 3;
-let gameInterval;
+    </div>
 
-startButton.addEventListener('click', startGame);
+    <script>
+        const gameContainer = document.querySelector('.game-container');
+        const dog = document.getElementById('dog');
+        const livesDisplay = document.getElementById('lives');
+        const startButton = document.getElementById('startButton');
+        let lives = 3;
+        let gameInterval;
 
-function startGame() {
-    lives = 3;
-    livesDisplay.textContent = `Lives: ${lives}`;
-    startButton.style.display = 'none';
-    gameInterval = setInterval(dropItem, 1000);
-}
+        startButton.addEventListener('click', startGame);
 
-function dropItem() {
-    const item = document.createElement('div');
-    item.classList.add(Math.random() > 0.7 ? 'chocolate' : 'tennis-ball');
-    item.style.left = `${Math.random() * (gameContainer.offsetWidth - 30)}px`;
-    gameContainer.appendChild(item);
+        function startGame() {
+            lives = 3;
+            livesDisplay.textContent = `Lives: ${lives}`;
+            startButton.style.display = 'none';
+            gameInterval = setInterval(dropItem, 1000);
+        }
 
-    const dropSpeed = Math.random() * 3 + 2;
+        function dropItem() {
+            const item = document.createElement('div');
+            item.classList.add(Math.random() > 0.7 ? 'chocolate' : 'tennis-ball');
+            item.style.left = `${Math.random() * (gameContainer.offsetWidth - 30)}px`;
+            gameContainer.appendChild(item);
 
-    let dropInterval = setInterval(() => {
-        item.style.top = `${item.offsetTop + dropSpeed}px`;
+            const dropSpeed = Math.random() * 3 + 2;
 
-        if (item.offsetTop > gameContainer.offsetHeight) {
-            clearInterval(dropInterval);
-            gameContainer.removeChild(item);
+            let dropInterval = setInterval(() => {
+                item.style.top = `${item.offsetTop + dropSpeed}px`;
 
-            if (item.classList.contains('tennis-ball')) {
-                loseLife();
-            }
-        } else if (isColliding(dog, item)) {
-            clearInterval(dropInterval);
-            gameContainer.removeChild(item);
+                if (item.offsetTop > gameContainer.offsetHeight) {
+                    clearInterval(dropInterval);
+                    gameContainer.removeChild(item);
 
-            if (item.classList.contains('chocolate')) {
-                loseLife();
+                    if (item.classList.contains('tennis-ball')) {
+                        loseLife();
+                    }
+                } else if (isColliding(dog, item)) {
+                    clearInterval(dropInterval);
+                    gameContainer.removeChild(item);
+
+                    if (item.classList.contains('chocolate')) {
+                        loseLife();
+                    }
+                }
+            }, 20);
+        }
+
+        function isColliding(dog, item) {
+            const dogRect = dog.getBoundingClientRect();
+            const itemRect = item.getBoundingClientRect();
+
+            return !(
+                dogRect.top > itemRect.bottom ||
+                dogRect.right < itemRect.left ||
+                dogRect.bottom < itemRect.top ||
+                dogRect.left > itemRect.right
+            );
+        }
+
+        function loseLife() {
+            lives--;
+            livesDisplay.textContent = `Lives: ${lives}`;
+
+            if (lives <= 0) {
+                clearInterval(gameInterval);
+                alert('Game Over!');
+                startButton.style.display = 'block';
             }
         }
-    }, 20);
-}
 
-function isColliding(dog, item) {
-    const dogRect = dog.getBoundingClientRect();
-    const itemRect = item.getBoundingClientRect();
+        document.addEventListener('mousemove', (e) => {
+            const gameRect = gameContainer.getBoundingClientRect();
+            const mouseX = e.clientX - gameRect.left;
 
-    return !(
-        dogRect.top > itemRect.bottom ||
-        dogRect.right < itemRect.left ||
-        dogRect.bottom < itemRect.top ||
-        dogRect.left > itemRect.right
-    );
-}
-
-function loseLife() {
-    lives--;
-    livesDisplay.textContent = `Lives: ${lives}`;
-
-    if (lives <= 0) {
-        clearInterval(gameInterval);
-        alert('Game Over!');
-        startButton.style.display = 'block';
-    }
-}
-
-document.addEventListener('mousemove', (e) => {
-    const gameRect = gameContainer.getBoundingClientRect();
-    const mouseX = e.clientX - gameRect.left;
-
-    if (mouseX > 0 && mouseX < gameRect.width) {
-        dog.style.left = `${mouseX - dog.offsetWidth / 2}px`;
-    }
-});
-        </script>
-    
-    </div>
-    <script src="script.js"></script>
-    </div>
-
+            if (mouseX > 0 && mouseX < gameRect.width) {
+                dog.style.left = `${mouseX - dog.offsetWidth / 2}px`;
+            }
+        });
+    </script>
 </div>
 
-<button id="scrollTop" onclick="scrollToTop()">Scroll to Top</button>
-
-<script>
-    function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tab");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-
-    function scrollToTop() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-    }
-</script>
 
 </body>
 </html>
