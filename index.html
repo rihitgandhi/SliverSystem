@@ -286,6 +286,7 @@
         <div class="tab active" onclick="openTab(event, 'tab1')">Dog Info</div>
         <div class="tab" onclick="openTab(event, 'tab2')">Where to adopt</div>
         <div class="tab" onclick="openTab(event, 'tab3')">Games</div>
+        <button class="tab" onclick="openTab(event, 'GameTab')">Chat Box</button>
     </div>
 
     <div id="tab1" class="tab-content active">
@@ -416,22 +417,80 @@ In dogs, we find our truest best.</p>
 
     <<div id="tab3" class="tab-content">
     
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <script>
+    let dogX = 100;
+    let ballX = 300;
+    let ballY = 200;
 
+    function setup() {
+      createCanvas(400, 400);
+    }
 
- <h1>Find the Dog Game</h1>
-    <p>Click on a box to find the hidden dog!</p>
-    <div class="container">
-        <div class="box hidden" onclick="makeGuess(0)">?</div>
-        <div class="box hidden" onclick="makeGuess(1)">?</div>
-        <div class="box hidden" onclick="makeGuess(2)">?</div>
-        <div class="box hidden" onclick="makeGuess(3)">?</div>
-        <div class="box hidden" onclick="makeGuess(4)">?</div>
-        <div class="box hidden" onclick="makeGuess(5)">?</div>
-    </div>
-    <div id="result"></div>
-    <button onclick="restartGame()">Restart Game</button>
+    function draw() {
+      background(0, 191, 255);
 
-    <script src="game.js"></script>
+      // Dog
+      drawDog(dogX, 200);
+
+      // Tennis ball
+      drawBall(ballX, ballY);
+
+      // Check for collision
+      if (dist(dogX, 200, ballX, ballY) < 50) {
+        ballX = random(50, width - 50);
+        ballY = random(50, height - 50);
+      }
+    }
+
+    function keyPressed() {
+      if (keyCode === LEFT_ARROW) {
+        dogX -= 10;
+      } else if (keyCode === RIGHT_ARROW) {
+        dogX += 10;
+      }
+    }
+
+    function drawDog(x, y) {
+      // Back legs
+      fill(179, 114, 39);
+      rect(x - 60, y + 20, 10, 30);
+      rect(x + 20, y + 20, 10, 30);
+
+      // Body
+      fill(179, 114, 39);
+      ellipse(x, y, 145, 80);
+
+      // Head
+      rect(x + 50, y - 40, 40, 35);
+      rect(x + 50, y - 30, 55, 25);
+      rect(x + 50, y - 30, 10, 35);
+      fill(0, 0, 0);
+      rect(x + 92, y - 30, 12, 10);
+      strokeWeight(5);
+      point(x + 83, y - 35);
+
+      // Legs
+      fill(179, 114, 39);
+      strokeWeight(1);
+      rect(x + 40, y + 20, 10, 30);
+      rect(x - 40, y + 20, 10, 30);
+    }
+
+    function drawBall(x, y) {
+      // Circle
+      fill(81, 255, 0);
+      ellipse(x, y, 50, 50);
+
+      // Black lines on the tennis ball
+      noFill();
+      stroke(0);
+      strokeWeight(2);
+      arc(x, y, 50, 50, PI / 4, PI - PI / 4);
+      arc(x, y, 50, 50, -PI / 4, -PI + PI / 4);
+    }
+  </script>
+
 </div>
 
         <button id="scrollTop" onclick="scrollToTop()">Scroll to Top</button>
