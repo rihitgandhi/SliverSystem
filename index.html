@@ -213,6 +213,14 @@
             padding: 10px 20px;
             text-align: center;
         }
+
+        .scroll-fade {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+        .scroll-fade.visible {
+            opacity: 1;
+        }
             
 }
        
@@ -231,14 +239,14 @@
 <div id="tab1" class="tab-content active">
 
 <!---Title--->
-<div class="text-overlay">Computer Accesibility</div>
-        <div class="caption"> Empowering <strong>Everyone</strong>to Access Technology</div>
+<div class="text-overlay", class="scroll-fade">Computer Accesibility</div>
+        <div class="caption", class="scroll-fade"> Empowering <strong>Everyone</strong>to Access Technology</div>
         <img src="https://wpcdn.web.wsu.edu/news/uploads/sites/2797/2018/12/circuit-board-1188x792-1024x683.jpg" alt="Cool-com-photo">
-        <h2 class="quote">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect."<br>-Tim Berners-Lee</h2>
+        <h2 class="quote", class="scroll-fade">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect."<br>-Tim Berners-Lee</h2>
         
         <!---Subsection 1---> 
-        <h1 class="all-about-dogs">All about dogs</h1>
-        <p>Dogs, known scientifically as Canis lupus familiaris, have been loyal companions to humans for thousands of years. 
+        <h1 class="all-about-dogs", class="scroll-fade">All about dogs</h1>
+        <p class="scroll-fade">Dogs, known scientifically as Canis lupus familiaris, have been loyal companions to humans for thousands of years. 
             They come in an astonishing variety of breeds, each with unique characteristics and traits. From the tiny Chihuahua to the massive Great Dane, 
             dogs have been bred for specific tasks such as hunting, herding, and companionship. Their keen sense of smell and intelligence make them invaluable
             in roles like search and rescue, police work, and as service animals for people with disabilities. Dogs communicate with humans and other animals through
@@ -246,8 +254,8 @@
             their health and well-being. Above all, dogs are known for their unwavering loyalty and the joy they bring to their owners' lives.</p>
         
     <!---Subsection 2---> 
-        <h1 class="why-you-should-have-a-dog">You should get a dog!</h1>
-         <p>Everyone should consider having a dog because they offer unparalleled companionship and emotional support. 
+        <h1 class="why-you-should-have-a-dog", class="scroll-fade">You should get a dog!</h1>
+         <p class="scroll-fade">Everyone should consider having a dog because they offer unparalleled companionship and emotional support. 
              Dogs have been shown to reduce stress, anxiety, and depression through their affectionate and loyal nature. 
              They encourage a more active lifestyle, as regular walks and playtime are essential for their health, which 
              in turn benefits the owner's physical well-being. Additionally, dogs can teach responsibility, especially to children
@@ -255,9 +263,10 @@
              naturally inclined to protect their families and homes. Dogs also help foster social connections, as dog owners often
              meet and bond with others in their communities during walks or at dog parks. Ultimately, the joy, love, and laughter that a
              dog brings into a home make them a truly invaluable addition to any family. </p>
-       <!---Subsection 3--->     
-    <h1 class = "dog-breeds">Dog Breeds</h1>
-    <p>Dog breeds are incredibly diverse, each developed with unique characteristics and traits to fulfill specific roles and needs. 
+       
+    <!---Subsection 3--->     
+    <h1 class = "dog-breeds", class="scroll-fade">Dog Breeds</h1>
+    <p class="scroll-fade">Dog breeds are incredibly diverse, each developed with unique characteristics and traits to fulfill specific roles and needs. 
         There are over 340 recognized breeds worldwide, ranging from the tiny Chihuahua to the giant Great Dane. Breeds like the Border Collie
         are renowned for their intelligence and herding abilities, while the Labrador Retriever is celebrated for its friendly nature and versatility as
         a working dog. Some breeds, such as the Greyhound, are built for speed, whereas others, like the Bulldog, are known for their sturdy, compact build. 
@@ -265,7 +274,9 @@
         temperaments and care requirements, making it essential for prospective dog owners to choose a breed that fits their lifestyle and needs. The rich variety 
         of dog breeds highlights the close relationship between humans and dogs, showcasing how dogs have been selectively bred over centuries to become invaluable 
         companions and helpers.</p>
-        <!---Poem--->
+        
+    
+    <!---Poem--->
     <h1 class = "poem">Poem</h1>
     
     <p id ="poem">
@@ -287,6 +298,8 @@ In canines' love, our hearts adjust.<br>
 From puppy's first, to elder's rest,<br>
 In dogs, we find our truest best.</p>
     </div>
+    
+    
     <div id="tab2" class="tab-content">
         
         <h2 class="aad">Adopting a dog</h2>
