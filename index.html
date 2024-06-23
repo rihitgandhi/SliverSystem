@@ -222,12 +222,12 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="tabs">
-        <div class="tab active" onclick="openTab(event, 'tab1')">Dog Info</div>
-        <div class="tab" onclick="openTab(event, 'tab2')">Where to adopt</div>
-        <div class="tab" onclick="openTab(event, 'tab3')">Games</div>
-    </div>
+<div class="tabs">
+    <div class="tab active" data-tab="tab1">Dog Info</div>
+    <div class="tab" data-tab="tab2">Where to adopt</div>
+    <div class="tab" data-tab="tab3">Games</div>
+</div>
+
     
     
 <div id="tab1" class="tab-content active">
@@ -331,11 +331,6 @@
 <button id="scrollTop" onclick="scrollToTop()">Scroll to Top</button>
 
 <script>
-    // Scroll to Top function
-    function scrollToTop() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-    }
-
     // Tabs functionality
     function openTab(event, tabName) {
         var i, tabcontent, tablinks;
@@ -353,15 +348,17 @@
         event.currentTarget.classList.add("active");
     }
 
-    // Initializing scroll fade
-    window.addEventListener('scroll', function() {
-        var elements = document.querySelectorAll('.scroll-fade');
-        elements.forEach(function(element) {
-            var position = element.getBoundingClientRect().top;
-            var windowHeight = window.innerHeight;
-            if (position < windowHeight - 100) {
-                element.classList.add('visible');
-            }
-        });
+    document.addEventListener("DOMContentLoaded", function() {
+        var tablinks = document.getElementsByClassName("tab");
+        for (var i = 0; i < tablinks.length; i++) {
+            tablinks[i].addEventListener("click", function(event) {
+                openTab(event, event.currentTarget.getAttribute("data-tab"));
+            });
+        }
 
-        </script>
+        // Initialize the first tab as active
+        if (tablinks.length > 0) {
+            tablinks[0].click();
+        }
+    });
+</script>
