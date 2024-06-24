@@ -14,20 +14,34 @@
         }
 
         .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            background: #fff;
+            background-color: white;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+}
 
         .tabs {
             display: flex;
-            border-bottom: 1px solid #ccc;
-            margin-bottom: 20px;
-        }
+            justify-content: space-around;
+            border-bottom: 1px solid #ddd;
+}
 
+        .tabs button {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: color 0.3s ease;
+}
+
+        .tabs button:hover {
+            color: #0000ff;
+}
         .tab {
             flex: 1;
             text-align: center;
@@ -84,6 +98,17 @@
                 border-bottom: none;
             }
         }
+
+        @media (max-width: 600px) {
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tabs button {
+                padding: 10px;
+                 font-size: 14px;
+            }
+}
     </style>
 </head>
 <body>
