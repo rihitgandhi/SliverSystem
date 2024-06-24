@@ -3,38 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accessible Web</title>
+    <title>Tabs Example</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Lato', sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            background-color: #f4f4f9;
         }
 
-        header, nav, main {
+        .container {
+            max-width: 800px;
+            margin: auto;
             padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        nav ul {
-            list-style: none;
-            padding: 0;
+        .tabs {
             display: flex;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
         }
 
-        nav ul li {
-            margin-right: 10px;
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: #f4f4f9;
+            font-weight: bold;
+            border-right: 1px solid #ccc;
         }
 
-        nav ul li a {
-            text-decoration: none;
-            padding: 10px 20px;
-            display: block;
-            color: black;
+        .tab:last-child {
+            border-right: none;
         }
 
-        nav ul li a.active {
+        .tab:hover {
             background-color: #ddd;
+        }
+
+        .tab.active {
+            background-color: #fff;
+            border-bottom: 2px solid rgb(23, 27, 255);
+            color: rgb(23, 27, 255);
         }
 
         .tab-content {
@@ -45,98 +61,83 @@
             display: block;
         }
 
-        .title {
-            font-size: 2em;
+        h1, h2 {
+            color: rgb(23, 27, 255);
         }
 
-        .quote {
-            font-style: italic;
-            margin-top: 10px;
+        p {
+            color: rgb(66, 66, 66);
         }
 
-        .our_mission, .how_this_works, .how_we_help, .feedback {
-            margin-top: 20px;
-        }
+        @media screen and (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
 
-        h2 {
-            font-size: 1.5em;
+            .tab {
+                padding: 15px;
+                border-right: none;
+                border-bottom: 1px solid #ccc;
+            }
+
+            .tab:last-child {
+                border-bottom: none;
+            }
         }
     </style>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('nav ul li a');
-            const contents = document.querySelectorAll('.tab-content');
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const target = this.getAttribute('href').substring(1);
-
-                    tabs.forEach(t => t.classList.remove('active'));
-                    contents.forEach(c => c.classList.remove('active'));
-
-                    this.classList.add('active');
-                    document.getElementById(target).classList.add('active');
-                });
-            });
-
-            // Activate the first tab and content by default
-            tabs[0].classList.add('active');
-            contents[0].classList.add('active');
-        });
-    
-    </script>
 </head>
-
 <body>
-    <header>
-        <h1 class="title">Computer Accessibility</h1>
-    </header>
 
-    <nav>
-        <ul>
-            <li><a href="#home" class="active">Home</a></li>
-            <li><a href="#courses">Courses</a></li>
-            <li><a href="#chatbox">Chatbox</a></li>
-            <li><a href="#more_info">More Info</a></li>
-            <li><a href="#our_mission">Our Mission</a></li>
-        </ul>
-    </nav>
+<div class="container">
+    <div class="tabs">
+        <div class="tab active" onclick="openTab(event, 'home')">Home</div>
+        <div class="tab" onclick="openTab(event, 'courses')">Courses</div>
+        <div class="tab" onclick="openTab(event, 'chatbox')">Chatbox</div>
+        <div class="tab" onclick="openTab(event, 'info')">More Info</div>
+        <div class="tab" onclick="openTab(event, 'mission')">Our Mission</div>
+    </div>
 
-    <main>
-        <section id="home" class="tab-content active">
-            <img src="big_picture.jpg" alt="Big picture related to computer accessibility">
-            <blockquote class="quote">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect." - Tim Berners-Lee</blockquote>
-            
-            
-            <div class="our_mission">
-                <h2>Our Mission</h2>
-                <p>We aim to make technology accessible to everyone, ensuring the web is easier to use for people with disabilities. When you post something online, remember that you have a responsibility to make it accessible to as many people as possible, including the elderly and disabled, so they can fully participate in the vast universe of the internet.</p>
-            </div>
-        </section>
-        
-        <section id="courses" class="tab-content">
-            <h2>Courses</h2>
-            <button>Courses for Disabled and Elderly People</button>
-            <button>Courses for Small Business Owners</button>
-        </section>
-        
-        <section id="chatbox" class="tab-content">
-            <h2>Chatbox</h2>
-            <p>A chat to answer questions</p>
-        </section>
-        
-        <section id="more_info" class="tab-content">
-            <h2>More Info</h2>
-            <p>Additional information about our services and mission.</p>
-        </section>
-        
-        <section id="our_mission" class="tab-content">
-            <h2>Our Mission</h2>
-            <p>We assist people with disabilities and the elderly in navigating the internet, enabling more individuals to use the web as a learning tool. Additionally, we offer courses to help individuals and small businesses create websites that are accessible to everyone.</p>
-        </section>
-    
-    </main>
+    <div id="home" class="tab-content active">
+        <h2>Welcome to our website!</h2>
+        <p>Home content goes here...</p>
+    </div>
+
+    <div id="courses" class="tab-content">
+        <h2>Our Courses</h2>
+        <p>Course information goes here...</p>
+    </div>
+
+    <div id="chatbox" class="tab-content">
+        <h2>Chat with Us</h2>
+        <p>Chatbox content goes here...</p>
+    </div>
+
+    <div id="info" class="tab-content">
+        <h2>More Information</h2>
+        <p>Additional information goes here...</p>
+    </div>
+
+    <div id="mission" class="tab-content">
+        <h2>Our Mission</h2>
+        <p>Our mission statement goes here...</p>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
 </body>
 </html>
