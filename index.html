@@ -75,8 +75,17 @@
             display: block;
         }
 
-        h1, h2 {
-            color: rgb(23, 27, 255);
+        .title{
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 3vw;
+            font-weight: bold;
+            background-color: rgba(235, 235, 235, 0.5);
+            padding: 10px 20px;
+            text-align: center;
         }
 
         p {
@@ -97,6 +106,15 @@
             .tab:last-child {
                 border-bottom: none;
             }
+            
+            .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+            margin: 0px auto;
+            padding: 20px;
         }
 
         @media (max-width: 600px) {
@@ -123,8 +141,7 @@
     </div>
 
     <div id="home" class="tab-content active">
-        <h2>Welcome to our website!</h2>
-        <p>Home content goes here...</p>
+        <h1 class="title">Computer Accesibility</h1>
     </div>
 
     <div id="courses" class="tab-content">
