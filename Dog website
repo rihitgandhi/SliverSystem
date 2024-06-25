@@ -1,122 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spin-off of "Project: Travel webpage"</title>
+    <title>Tabs Example</title>
+    <title>Computer Accesibility</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
+
         body {
-            font-family: 'Lato', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #ccc;
-            margin-bottom: 20px;
-        }
-
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .tab:hover {
-            background-color: #ddd;
-        }
-
-        .tab.active {
-            border-bottom: 2px solid rgb(23, 27, 255);
-            font-weight: bold;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        h1, h2 {
-            color: rgb(25, 255, 247);
-        }
-
-        p {
-            color: rgb(66, 66, 66);
-        }
-
-        h1 {
-            transition: transform 0.3s ease;
-        }
-
-        h1:hover {
-            transform: scale(1.2) translateX(10%);
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .text-overlay, .aad, .quote, .caption, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds, .poem, .adopt-dogs {
-            animation: fadeIn 1s ease-in;
-        }
-
-         .caption {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 1;
-            background-color: rgba(255, 255, 255, 0.5);
-            padding: 10px 20px;
-            text-align: center;
-        }
-
-        .aad {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 3vw;
-            font-weight: bold;
-            background-color: rgba(235, 235, 235, 0.5);
-            padding: 10px 20px;
-            text-align: center;
-        }
-
-        .text-overlay {
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 3vw;
-            font-weight: bold;
-            background-color: rgba(235, 235, 235, 0.5);
-            padding: 10px 20px;
-            text-align: center;
-        }
-
-        .quote {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+.container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+}
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+}
+.tabs button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+.img-container {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    position: relative;
+}
+.img-container img {
+    width: 10%;
+    height: auto;
+}
+.tabs button:hover {
+    color: #0000ff;
+}
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 15px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #f4f4f9;
+    font-weight: bold;
+    border-right: 1px solid #ccc;
+}
+.tab:last-child {
+    border-right: none;
+}
+.tab:hover {
+    background-color: #ddd;
+}
+.tab.active {
+    background-color: #fff;
+    border-bottom: 2px solid rgb(23, 27, 255);
+    color: rgb(23, 27, 255);
+}
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+.title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 2em;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+p {
+    color: rgb(66, 66, 66);
+}
+    .quote {
             font-size: 1.2rem;
             font-weight: bold;
             background-color: rgba(255, 255, 255, 0.8);
@@ -125,380 +102,112 @@
             text-align: center;
             border: 2px solid rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-        }
-
-        .poem, .all-about-dogs, .why-you-should-have-a-dog, .dog-breeds, .adopt-dogs {
-            font-style: italic;
-            margin: 20px 0;
-            padding-left: 20px;
-            border-left: 4px solid #555;
-            line-height: 1.8;
-        }
-
-        .poem span {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        #scrollTop {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #scrollTop:hover {
-            background-color: #555;
-        }
-
-        p, ul {
-            margin: 0 0 20px;
-            padding: 0;
-        }
-
-        ul {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @media screen and (max-width: 768px) {
-            .tabs {
-                flex-direction: column;
-            }
-
-            .tab {
-                padding: 15px;
-            }
-
-            .text-overlay {
-                font-size: 10vw;
-            }
-
-            .aad {
-                font-size: 5vw;
-            }
-
-            .quote {
-                font-size: 1rem;
-            }
-
-            .caption {
-                font-size: 1rem;
-            }
-
-            .container {
-                padding: 10px;
-            }
-
-            h1, h2 {
-                font-size: 1.5rem;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .text-overlay {
-                font-size: 8vw;
-            }
-
-
-            .aad {
-                font-size: 7vw;
-            }
-
-            .quote {
-                font-size: 0.9rem;
-            }
-
-            .caption {
-                font-size: 0.9rem;
-            }
-
-            h1, h2 {
-                font-size: 1.2rem;
-            }
-        }
-        
-        @media (min-width: 768px) {
-    
-           .aad {
+        }    
+       .circle {
             position: absolute;
-            top: 20%;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(19, 213, 247, 0.5);
+            border-radius: 50%;
+            pointer-events: none; /* Prevent the circle from interfering with other elements */
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s ease-out; /* Smooth the movement */
+        } 
+
+@media screen and (max-width: 50000px) {
+@media screen and (max-width: 982px) {
+    .tabs {
+        flex-direction: column;
+    }
+    .tab {
+        padding: 15px;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+    }
+    .tab:last-child {
+        border-bottom: none;
+    }
+    
+    .container {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 800px;
+        margin: 0px auto;
+        padding: 20px;
+    }
+    .title {
+            position: absolute;
+            top: 70%;
+            top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: white;
-            font-size: 3vw;
-            font-weight: bold;
-            background-color: rgba(235, 235, 235, 0.5);
-            padding: 10px 20px;
-            text-align: center;
-        }
-
-            
-}
-
-        .box {
-            width: 100px;
-            height: 100px;
-            margin: 10px;
-            border: 2px solid #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            color: black;
             font-size: 2em;
-            cursor: pointer;
-        }
-        .hidden {
-            background-color: #f0f0f0;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 1.5em;
-        } 
-        
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+}
+}
+@media (max-width: 600px) {
+    .tabs {
+        flex-direction: column;
+    }
+    .tabs button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="tabs">
-        <div class="tab active" onclick="openTab(event, 'tab1')">Dog Info</div>
-        <div class="tab" onclick="openTab(event, 'tab2')">Where to adopt</div>
-        <div class="tab" onclick="openTab(event, 'tab3')">Games</div>
-        <div class="tab" onclick="openTab(event, 'tab4')">Chat Box</div>
+        <div class="tab active" onclick="openTab(event, 'home')">Home</div>
+        <div class="tab" onclick="openTab(event, 'courses')">Courses</div>
+        <div class="tab" onclick="openTab(event, 'chatbox')">Chatbox</div>
+        <div class="tab" onclick="openTab(event, 'info')">More Info</div>
+        <div class="tab" onclick="openTab(event, 'mission')">Our Mission</div>
     </div>
+   
 
-    <div id="tab1" class="tab-content active">
-        <div class="text-overlay">Dogs</div>
-        <div class="caption">The best creature <strong>ever!</strong></div>
-        <img src="https://cdn.kastatic.org/third_party/javascript-khansrc/live-editor/build/images/animals/dog_sleeping-puppy.png" alt="Dog_1">
+<div id="home" class="tab-content active">
+        <h1 class="title">Computer Accesibility</h1>
+        <img src= "https://images.newscientist.com/wp-content/uploads/2023/05/19100257/SEI_156640666.jpg?width=837" width = "100%">
+        <h2>"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect" <br> -Tim Berners Lee</h2>
+        <h2 class = "quote">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect" <br> -Tim Berners Lee</h2>
 
-        <h2 class="quote"><strong>'</strong>The world would be a nicer place if everyone had the ability to love as unconditionally as a dog<strong>'</strong><br>-M.K Clinton</h2>
-        
-        <!---Subsection 1---> 
-        <h1 class="all-about-dogs">All about dogs</h1>
-        <p>Dogs, known scientifically as Canis lupus familiaris, have been loyal companions to humans for thousands of years. 
-            They come in an astonishing variety of breeds, each with unique characteristics and traits. From the tiny Chihuahua to the massive Great Dane, 
-            dogs have been bred for specific tasks such as hunting, herding, and companionship. Their keen sense of smell and intelligence make them invaluable
-            in roles like search and rescue, police work, and as service animals for people with disabilities. Dogs communicate with humans and other animals through
-            a complex system of vocalizations, body language, and facial expressions. They require regular exercise, a balanced diet, and routine veterinary care to maintain
-            their health and well-being. Above all, dogs are known for their unwavering loyalty and the joy they bring to their owners' lives.</p>
 
-        <!---Subsection 2---> 
-        <h1 class="why-you-should-have-a-dog">You should get a dog!</h1>
-         <p>Everyone should consider having a dog because they offer unparalleled companionship and emotional support. 
-             Dogs have been shown to reduce stress, anxiety, and depression through their affectionate and loyal nature. 
-             They encourage a more active lifestyle, as regular walks and playtime are essential for their health, which 
-             in turn benefits the owner's physical well-being. Additionally, dogs can teach responsibility, especially to children
-             , as they require consistent care, training, and attention. They provide a sense of security, with many breeds 
-             naturally inclined to protect their families and homes. Dogs also help foster social connections, as dog owners often
-             meet and bond with others in their communities during walks or at dog parks. Ultimately, the joy, love, and laughter that a
-             dog brings into a home make them a truly invaluable addition to any family. </p>
-
-       <!---Subsection 3--->     
-    <h1 class = "dog-breeds">Dog Breeds</h1>
-    <p>Dog breeds are incredibly diverse, each developed with unique characteristics and traits to fulfill specific roles and needs. 
-        There are over 340 recognized breeds worldwide, ranging from the tiny Chihuahua to the giant Great Dane. Breeds like the Border Collie
-        are renowned for their intelligence and herding abilities, while the Labrador Retriever is celebrated for its friendly nature and versatility as
-        a working dog. Some breeds, such as the Greyhound, are built for speed, whereas others, like the Bulldog, are known for their sturdy, compact build. 
-        The Poodle, with its hypoallergenic coat, is a favorite among those with allergies. Each breed not only has distinct physical features but also specific 
-        temperaments and care requirements, making it essential for prospective dog owners to choose a breed that fits their lifestyle and needs. The rich variety 
-        of dog breeds highlights the close relationship between humans and dogs, showcasing how dogs have been selectively bred over centuries to become invaluable 
-        companions and helpers.</p>
-
-        <!---Poem--->
-    <h1 class = "poem">Poem</h1>
+        <div class="circle" id="circle"></div>
+<script>
+    const circle = document.getElementById('circle');
+    document.addEventListener('mousemove', (e) => {
+        circle.style.left = e.pageX + 'px';
+        circle.style.top = e.pageY + 'px';
+    });
+</script>
     
-    <p id ="poem">
-    
-    In fields where wildflowers sway and play<br>
-Dogs bound with joy, their spirits gay.<br>
-With wagging tails and eyes so bright,<br>
-They chase the day, from dawn to night.<br>
-
-Guardians of our hearts so true,<br>
-With loyal love in all they do.<br>
-Soft fur to pet, a friend to hold,<br>
-Through summer heat and winter's cold.<br>
-
-Their playful barks, a melody,<br>
-A symphony of loyalty.<br>
-In moments still, or when they leap,<br>
-In our souls, their memories keep.<br>
-
-No greater bond, no sweeter trust,<br>
-In canines' love, our hearts adjust.<br>
-From puppy's first, to elder's rest,<br>
-In dogs, we find our truest best.</p>
     </div>
-
-    <div id="tab2" class="tab-content">
-        
-        <h2 class="aad">Adopting a dog</h2>
-        <img src="https://cdn.kastatic.org/third_party/javascript-khansrc/live-editor/build/images/animals/dogs_collies.png" alt="Dog_2">
-        <h2 class="quote">"Saving one dog will not change the world, but surely for that one dog, the world will change forever"<br>-Karen Davison</h2>
-
-        <h1 class="adopt-dogs">Where and Why You Should Adopt a Dog</h1>
-        <p>Adopting a dog is a profound act of compassion and commitment that brings immense joy and fulfillment. It involves welcoming a 
-            loyal companion into one's life while also offering a second chance to an animal in need. The decision to adopt a dog rather than
-            purchasing from breeders or pet stores is laden with benefits, both for the adopter and for society at large.</p>
-
-        <p>Firstly, adopting a dog from a shelter or rescue organization saves lives. Millions of dogs end up in shelters every year,
-            with many facing the risk of euthanasia due to overcrowding and limited resources. By choosing to adopt, individuals can directly 
-            combat this issue, offering a dog a new lease on life. Each adoption opens up space for another dog to be rescued, thereby creating 
-            a positive cycle of saving lives.</p>
-
-        <p>Adopting a dog also supports the fight against puppy mills. These mass breeding operations prioritize profit over the well-being 
-            of animals, often subjecting dogs to inhumane conditions. Dogs from puppy mills are frequently kept in cramped, unsanitary environments,
-            with minimal veterinary care and socialization. By adopting from shelters or reputable rescue organizations, potential pet owners can help reduce
-            the demand for puppies bred in such unethical conditions.</p>
-
-        <p>Moreover, the emotional and psychological benefits of dog adoption are substantial. Dogs offer unwavering loyalty, companionship, and love. They 
-            can significantly reduce stress, anxiety, and depression. The act of caring for a dog encourages physical activity, such as walking and playing, 
-            which contributes to overall well-being. For many, the bond formed with a pet can be profoundly therapeutic, providing a sense of purpose and fulfillment.</p>
-
-        <p>However, adopting a dog comes with significant responsibilities. Prospective dog owners must be prepared for the time, effort, and resources required to 
-            care for their new companion. This includes providing proper nutrition, regular veterinary care, and ample exercise. It also involves training and socialization 
-            to ensure that the dog is well-behaved and happy in its new environment.</p>
-
-        <p>Before adopting, individuals should thoroughly research different breeds and consider their own lifestyle and living situation. Factors such as the size of 
-            the home, availability of outdoor space, and daily schedule can influence the type of dog that is most suitable. Potential adopters should also consider the 
-            long-term commitment involved, as dogs can live for 10 to 15 years or more.</p>
-
-        <p>For those ready to embark on the journey of dog adoption, numerous resources are available to help find the perfect canine companion. Many websites and organizations 
-            specialize in connecting dogs in need with loving homes. Here are some reputable websites to consider:</p>
-
-        <ul>
-            
-            <li><a href="https://www.petfinder.com" target="_blank">Petfinder</a>: This comprehensive database allows users to search for adoptable dogs by location, breed, 
-                age, and other criteria. It includes listings from shelters and rescue groups across North America.</li>
-            
-            <li><a href="https://www.adoptapet.com" target="_blank">Adopt-a-Pet</a>: Another extensive resource, Adopt-a-Pet, partners with over 17,000 animal shelters, 
-                humane societies, SPCAs, and pet adoption agencies.</li>
-            
-            <li><a href="https://www.humanesociety.org" target="_blank">The Humane Society of the United States</a>: The Humane Society offers a variety of resources for potential adopters, 
-                including listings of adoptable pets and information on local shelters.</li>
-            
-            <li><a href="https://www.aspca.org/adopt-pet" target="_blank">ASPCA</a>: The American Society for the Prevention of Cruelty to Animals provides adoption resources and has a searchable
-                database of adoptable pets.</li>
-            
-            <li><a href="https://www.bestfriends.org" target="_blank">Best Friends Animal Society</a>: This organization operates the nation’s largest no-kill sanctuary for companion animals and offers 
-                an extensive network for pet adoption.</li>
-            
-            <li>Local Animal Shelters and Rescue Groups: Many communities have their own shelters and rescue organizations. Websites like those mentioned above often list these local resources,
-                or a simple web search can help locate them.</li>
-        </ul>
-
-        <p>Adopting a dog is a life-changing experience that brings joy, companionship, and a sense of purpose. It is an act of kindness that saves lives and 
-            supports the ethical treatment of animals. By embracing the responsibilities that come with dog adoption and utilizing available resources to find the 
-            right match, individuals can enrich their lives while making a positive impact on the world.</p>
+    <div id="courses" class="tab-content">
+        <h2>Our Courses</h2>
+        <p>Course information goes here...</p>
     </div>
-
-    <<div id="tab3" class="tab-content">
-    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-  <script>
-    let dogX = 100;
-    let ballX = 300;
-    let ballY = 200;
-
-    function setup() {
-      createCanvas(400, 400);
-    }
-
-    function draw() {
-      background(0, 191, 255);
-
-      // Dog
-      drawDog(dogX, 200);
-
-      // Tennis ball
-      drawBall(ballX, ballY);
-
-      // Check for collision
-      if (dist(dogX, 200, ballX, ballY) < 50) {
-        ballX = random(50, width - 50);
-        ballY = random(50, height - 50);
-      }
-    }
-
-    function keyPressed() {
-      if (keyCode === LEFT_ARROW) {
-        dogX -= 10;
-      } else if (keyCode === RIGHT_ARROW) {
-        dogX += 10;
-      }
-    }
-
-    function drawDog(x, y) {
-      // Back legs
-      fill(179, 114, 39);
-      rect(x - 60, y + 20, 10, 30);
-      rect(x + 20, y + 20, 10, 30);
-
-      // Body
-      fill(179, 114, 39);
-      ellipse(x, y, 145, 80);
-
-      // Head
-      rect(x + 50, y - 40, 40, 35);
-      rect(x + 50, y - 30, 55, 25);
-      rect(x + 50, y - 30, 10, 35);
-      fill(0, 0, 0);
-      rect(x + 92, y - 30, 12, 10);
-      strokeWeight(5);
-      point(x + 83, y - 35);
-
-      // Legs
-      fill(179, 114, 39);
-      strokeWeight(1);
-      rect(x + 40, y + 20, 10, 30);
-      rect(x - 40, y + 20, 10, 30);
-    }
-
-    function drawBall(x, y) {
-      // Circle
-      fill(81, 255, 0);
-      ellipse(x, y, 50, 50);
-
-      // Black lines on the tennis ball
-      noFill();
-      stroke(0);
-      strokeWeight(2);
-      arc(x, y, 50, 50, PI / 4, PI - PI / 4);
-      arc(x, y, 50, 50, -PI / 4, -PI + PI / 4);
-    }
-  </script>
-
+    <div id="chatbox" class="tab-content">
+        <h2>Chat with Us</h2>
+        <p>Chatbox content goes here...</p>
+    </div>
+    <div id="info" class="tab-content">
+        <h2>More Information</h2>
+        <p>Additional information goes here...</p>
+    </div>
+    <div id="mission" class="tab-content">
+        <h2>Our Mission</h2>
+        <p>Our mission statement goes here...</p>
+    </div>
 </div>
-        
-
-<<div id="tab4" class="tab-content">
-    <div id = "llVwTYcJDlrDEC4woQIFn"></div>
-</div>
-        
-        <button id="scrollTop" onclick="scrollToTop()">Scroll to Top</button>
 <script>
     function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
@@ -513,11 +222,6 @@ In dogs, we find our truest best.</p>
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
     }
-    function scrollToTop() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-    }
 </script>
-
 </body>
 </html>
-
