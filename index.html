@@ -52,6 +52,34 @@
     height: auto;
 }
 
+        
+.our-mission {
+    font-size: 1.2rem; /* Adjust font size */
+    line-height: 1.6; /* Increase line height for readability */
+    color: #333; /* Darker text color */
+    background-color: #f9f9f9; /* Light background color */
+    padding: 20px; /* Add padding for spacing */
+    border-left: 4px solid #007bff; /* Left border for emphasis */
+    margin-bottom: 20px; /* Bottom margin for separation */
+}
+
+.our-mission::before {
+    content: "\201C"; /* Left double quotation mark */
+    font-size: 2.5em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+    color: #007bff; /* Quotation mark color */
+}
+
+.our-mission::after {
+    content: "\201D"; /* Right double quotation mark */
+    font-size: 2.5em;
+    line-height: 0.1em;
+    margin-left: 0.25em;
+    vertical-align: -0.4em;
+    color: #007bff; /* Quotation mark color */
+        
 .tabs button:hover {
     color: #0000ff;
 }
@@ -197,6 +225,9 @@ p {
         <img src= "https://images.newscientist.com/wp-content/uploads/2023/05/19100257/SEI_156640666.jpg?width=837" width = "100%">
         <h2 class = "quote">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect" <br> -Tim Berners Lee</h2>
         
+        <h2 class = "our-mission">We aim to make technology accessible to everyone, ensuring the web is easier to use for people with disabilities. 
+            When you post something online, remember that you have a responsibility to make it accessible to as many people as possible, including 
+            the elderly and disabled, so they can fully participate in the vast universe of the internet. We aim to educate people about how to do this</h2>>
         
         <div class="circle" id="circle"></div>
 
