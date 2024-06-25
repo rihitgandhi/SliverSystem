@@ -13,7 +13,6 @@
     padding: 0;
     background-color: #f4f4f9;
 }
-
 .container {
     background-color: white;
     border-radius: 8px;
@@ -23,13 +22,11 @@
     margin: 20px auto;
     padding: 20px;
 }
-
 .tabs {
     display: flex;
     justify-content: space-around;
     border-bottom: 1px solid #ddd;
 }
-
 .tabs button {
     background: none;
     border: none;
@@ -39,51 +36,19 @@
     font-size: 16px;
     transition: color 0.3s ease;
 }
-
 .img-container {
     width: 100%;
     height: auto;
     text-align: center;
     position: relative;
 }
-
 .img-container img {
     width: 10%;
     height: auto;
 }
-
-        
-.our-mission {
-    font-size: 1.2rem; /* Adjust font size */
-    line-height: 1.6; /* Increase line height for readability */
-    color: #333; /* Darker text color */
-    background-color: #f9f9f9; /* Light background color */
-    padding: 20px; /* Add padding for spacing */
-    border-left: 4px solid #007bff; /* Left border for emphasis */
-    margin-bottom: 20px; /* Bottom margin for separation */
-}
-
-.our-mission::before {
-    content: "\201C"; /* Left double quotation mark */
-    font-size: 2.5em;
-    line-height: 0.1em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
-    color: #007bff; /* Quotation mark color */
-}
-
-.our-mission::after {
-    content: "\201D"; /* Right double quotation mark */
-    font-size: 2.5em;
-    line-height: 0.1em;
-    margin-left: 0.25em;
-    vertical-align: -0.4em;
-    color: #007bff; /* Quotation mark color */
-        
 .tabs button:hover {
     color: #0000ff;
 }
-
 .tab {
     flex: 1;
     text-align: center;
@@ -94,31 +59,27 @@
     font-weight: bold;
     border-right: 1px solid #ccc;
 }
-
 .tab:last-child {
     border-right: none;
 }
-
 .tab:hover {
     background-color: #ddd;
 }
-
 .tab.active {
     background-color: #fff;
     border-bottom: 2px solid rgb(23, 27, 255);
     color: rgb(23, 27, 255);
 }
-
 .tab-content {
     display: none;
 }
-
 .tab-content.active {
     display: block;
 }
 
 .title {
     position: absolute;
+    top: 50%;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -130,11 +91,9 @@
     border-radius: 5px;
     text-align: center;
 }
-
 p {
     color: rgb(66, 66, 66);
 }
-
     .quote {
             font-size: 1.2rem;
             font-weight: bold;
@@ -145,7 +104,6 @@ p {
             border: 2px solid rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }    
-
        .circle {
             position: absolute;
             width: 50px;
@@ -156,18 +114,15 @@ p {
             transform: translate(-50%, -50%);
             transition: transform 0.05s ease-out; /* Smooth the movement */
         } 
-
 @media screen and (max-width: 982px) {
     .tabs {
         flex-direction: column;
     }
-
     .tab {
         padding: 15px;
         border-right: none;
         border-bottom: 1px solid #ccc;
     }
-
     .tab:last-child {
         border-bottom: none;
     }
@@ -195,22 +150,18 @@ p {
             text-align: center;
 }
 }
-
 @media (max-width: 600px) {
     .tabs {
         flex-direction: column;
     }
-
     .tabs button {
         padding: 10px;
         font-size: 14px;
     }
 }
-
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="tabs">
         <div class="tab active" onclick="openTab(event, 'home')">Home</div>
@@ -219,21 +170,15 @@ p {
         <div class="tab" onclick="openTab(event, 'info')">More Info</div>
         <div class="tab" onclick="openTab(event, 'mission')">Our Mission</div>
     </div>
-
     <div id="home" class="tab-content active">
         <h1 class="title">Computer Accesibility</h1>
         <img src= "https://images.newscientist.com/wp-content/uploads/2023/05/19100257/SEI_156640666.jpg?width=837" width = "100%">
         <h2 class = "quote">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect" <br> -Tim Berners Lee</h2>
         
-        <h2 class = "our-mission">We aim to make technology accessible to everyone, ensuring the web is easier to use for people with disabilities. 
-            When you post something online, remember that you have a responsibility to make it accessible to as many people as possible, including 
-            the elderly and disabled, so they can fully participate in the vast universe of the internet. We aim to educate people about how to do this</h2>>
         
         <div class="circle" id="circle"></div>
-
 <script>
     const circle = document.getElementById('circle');
-
     document.addEventListener('mousemove', (e) => {
         circle.style.left = e.pageX + 'px';
         circle.style.top = e.pageY + 'px';
@@ -241,28 +186,23 @@ p {
 </script>
     
     </div>
-
     <div id="courses" class="tab-content">
         <h2>Our Courses</h2>
         <p>Course information goes here...</p>
     </div>
-
     <div id="chatbox" class="tab-content">
         <h2>Chat with Us</h2>
         <p>Chatbox content goes here...</p>
     </div>
-
     <div id="info" class="tab-content">
         <h2>More Information</h2>
         <p>Additional information goes here...</p>
     </div>
-
     <div id="mission" class="tab-content">
         <h2>Our Mission</h2>
         <p>Our mission statement goes here...</p>
     </div>
 </div>
-
 <script>
     function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
@@ -278,6 +218,5 @@ p {
         evt.currentTarget.className += " active";
     }
 </script>
-
 </body>
 </html>
