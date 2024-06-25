@@ -6,139 +6,143 @@
     <title>Tabs Example</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Lato', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-
-        .container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
+       body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
 }
 
-        .tabs {
-            display: flex;
-            justify-content: space-around;
-            border-bottom: 1px solid #ddd;
+.container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
 }
 
-        .tabs button {
-            background: none;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 10px 20px;
-            font-size: 16px;
-            transition: color 0.3s ease;
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
 }
 
-        .img-container {
-            width: 100%;
-            height: auto;
-            text-align: center;
-            position: relative;
-        }
-
-        .img-container img {
-            width: 100%;
-            height: auto;
-        }
-
-        .tabs button:hover {
-            color: #0000ff;
+.tabs button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: color 0.3s ease;
 }
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 15px 0;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            background-color: #f4f4f9;
-            font-weight: bold;
-            border-right: 1px solid #ccc;
-        }
 
-        .tab:last-child {
-            border-right: none;
-        }
-
-        .tab:hover {
-            background-color: #ddd;
-        }
-
-        .tab.active {
-            background-color: #fff;
-            border-bottom: 2px solid rgb(23, 27, 255);
-            color: rgb(23, 27, 255);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .title{
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 3vw;
-            font-weight: bold;
-            background-color: rgba(235, 235, 235, 0.5);
-            padding: 10px 20px;
-            text-align: center;
-        }
-
-        p {
-            color: rgb(66, 66, 66);
-        }
-
-        @media screen and (max-width: 768px) {
-            .tabs {
-                flex-direction: column;
-            }
-
-            .tab {
-                padding: 15px;
-                border-right: none;
-                border-bottom: 1px solid #ccc;
-            }
-
-            .tab:last-child {
-                border-bottom: none;
-            }
-            
-            .container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 800px;
-            margin: 0px auto;
-            padding: 20px;
-        }
-
-        @media (max-width: 600px) {
-            .tabs {
-                flex-direction: column;
-            }
-
-            .tabs button {
-                padding: 10px;
-                 font-size: 14px;
-            }
+.img-container {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    position: relative;
 }
+
+.img-container img {
+    width: 100%;
+    height: auto;
+}
+
+.tabs button:hover {
+    color: #0000ff;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 15px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #f4f4f9;
+    font-weight: bold;
+    border-right: 1px solid #ccc;
+}
+
+.tab:last-child {
+    border-right: none;
+}
+
+.tab:hover {
+    background-color: #ddd;
+}
+
+.tab.active {
+    background-color: #fff;
+    border-bottom: 2px solid rgb(23, 27, 255);
+    color: rgb(23, 27, 255);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 2em;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+p {
+    color: rgb(66, 66, 66);
+}
+
+@media screen and (max-width: 768px) {
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tab {
+        padding: 15px;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .tab:last-child {
+        border-bottom: none;
+    }
+    
+    .container {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 800px;
+        margin: 0px auto;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tabs button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
     </style>
 </head>
 <body>
