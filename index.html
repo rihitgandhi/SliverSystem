@@ -107,6 +107,17 @@ p {
     color: rgb(66, 66, 66);
 }
 
+       .circle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: lightblue;
+            border-radius: 50%;
+            pointer-events: none; /* Prevent the circle from interfering with other elements */
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s ease-out; /* Smooth the movement */
+        } 
+
 @media screen and (max-width: 768px) {
     .tabs {
         flex-direction: column;
@@ -160,6 +171,20 @@ p {
     <div id="home" class="tab-content active">
         <h1 class="title">Computer Accesibility</h1>
         <img src= "https://images.newscientist.com/wp-content/uploads/2023/05/19100257/SEI_156640666.jpg?width=837" width = "100%">
+
+        
+        
+        <div class="circle" id="circle"></div>
+
+<script>
+    const circle = document.getElementById('circle');
+
+    document.addEventListener('mousemove', (e) => {
+        circle.style.left = e.pageX + 'px';
+        circle.style.top = e.pageY + 'px';
+    });
+</script>
+    
     </div>
 
     <div id="courses" class="tab-content">
