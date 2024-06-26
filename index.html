@@ -3,246 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Computer Accesibility</title>
+    <title>Computer Accessibility</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
-       
-body {
-    font-family: 'Lato', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-}
-.container {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Full width */
-    margin: 0; /* Remove margins */
-    padding: 20px;
-}
-.tabs {
-    display: flex;
-    justify-content: space-around;
-    border-bottom: 1px solid #ddd;
-}
-.tabs button {
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 10px 20px;
-    font-size: 16px;
-    transition: color 0.3s ease;
-}
-.img-container {
-    width: 100%;
-    height: 80%;
-    text-align: center;
-    position: relative;
-}
-.img-container img {
-    width: 100%; /* Full width */
-    height: 80%;
-}
-.tabs button:hover {
-    color: #0000ff;
-}
-.tab {
-    flex: 1;
-    text-align: center;
-    padding: 15px 0;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    background-color: #f4f4f9;
-    font-weight: bold;
-    border-right: 1px solid #ccc;
-}
-.tab:last-child {
-    border-right: none;
-}
-.tab:hover {
-    background-color: #ddd;
-}
-.tab.active {
-    background-color: #fff;
-    border-bottom: 2px solid rgb(23, 27, 255);
-    color: rgb(23, 27, 255);
-}
-.tab-content {
-    display: none;
-}
-.tab-content.active {
-    display: block;
-}
-
-.title {
-    position: absolute;
-    top: 50%;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: black;
-    font-size: 2em;
-    font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-align: center;
-}
-p {
-    color: rgb(66, 66, 66);
-}
-.quote {
-    font-size: 1.2rem;
-    font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.8);
-    color: rgb(34, 34, 34);
-    padding: 10px 20px;
-    text-align: center;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-.circle {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: rgba(19, 213, 247, 0.5);
-    border-radius: 50%;
-    pointer-events: none; /* Prevent the circle from interfering with other elements */
-    transform: translate(-50%, -50%);
-    transition: transform 0.05s ease-out; /* Smooth the movement */
-}
-.our-mission {
-    font-size: 1.2rem; /* Adjust font size */
-    line-height: 1.6; /* Increase line height for readability */
-    color: #333; /* Darker text color */
-    background-color: #f9f9f9; /* Light background color */
-    padding: 20px; /* Add padding for spacing */
-    border-left: 4px solid #007bff; /* Left border for emphasis */
-    margin-bottom: 20px; /* Bottom margin for separation */
-}
-.our-mission::before {
-    content: "\201C"; /* Left double quotation mark */
-    font-size: 2.5em;
-    line-height: 0.1em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
-    color: #007bff; /* Quotation mark color */
-}
-.our-mission::after {
-    content: "\201D"; /* Right double quotation mark */
-    font-size: 2.5em;
-    line-height: 0.1em;
-    margin-left: 0.25em;
-    vertical-align: -0.4em;
-    color: #007bff; /* Quotation mark color */
-}
-@media screen and (max-width: 982px) {
-    .tabs {
-        flex-direction: column;
-    }
-    .tab {
-        padding: 15px;
-        border-right: none;
-        border-bottom: 1px solid #ccc;
-    }
-    .tab:last-child {
-        border-bottom: none;
-    }
-    .container {
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 100%; /* Full width */
-        margin: 0; /* Remove margins */
-        padding: 20px;
-    }
-    .title {
-        position: absolute;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: black;
-        font-size: 2em;
-        font-weight: bold;
-        background-color: rgba(255, 255, 255, 0.7);
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-align: center;
-    }
-}
-@media (max-width: 600px) {
-    .tabs {
-        flex-direction: column;
-    }
-    .tabs button {
-        padding: 10px;
-        font-size: 14px;
-    }
-}
-
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%; /* Full width */
+            margin: 0; /* Remove margins */
+            padding: 20px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 1px solid #ddd;
+        }
+        .tabs button {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        .img-container {
+            width: 100%;
+            height: auto;
+            text-align: center;
+            position: relative;
+        }
+        .img-container img {
+            width: 95%; /* Adjust the width as needed */
+            height: 80%; /* Adjust the height as needed */
+            object-fit: cover; /* This ensures the image covers the container while maintaining aspect ratio */
+        }
+        .tabs button:hover {
+            color: #0000ff;
+        }
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: #f4f4f9;
+            font-weight: bold;
+            border-right: 1px solid #ccc;
+        }
+        .tab:last-child {
+            border-right: none;
+        }
+        .tab:hover {
+            background-color: #ddd;
+        }
+        .tab.active {
+            background-color: #fff;
+            border-bottom: 2px solid rgb(23, 27, 255);
+            color: rgb(23, 27, 255);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: black;
+            font-size: 2em;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        p {
+            color: rgb(66, 66, 66);
+        }
+        .quote {
+            font-size: 1.2rem;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: rgb(34, 34, 34);
+            padding: 10px 20px;
+            text-align: center;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .circle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(19, 213, 247, 0.5);
+            border-radius: 50%;
+            pointer-events: none; /* Prevent the circle from interfering with other elements */
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s ease-out; /* Smooth the movement */
+        }
+        .our-mission {
+            font-size: 1.2rem; /* Adjust font size */
+            line-height: 1.6; /* Increase line height for readability */
+            color: #333; /* Darker text color */
+            background-color: #f9f9f9; /* Light background color */
+            padding: 20px; /* Add padding for spacing */
+            border-left: 4px solid #007bff; /* Left border for emphasis */
+            margin-bottom: 20px; /* Bottom margin for separation */
+        }
+        .our-mission::before {
+            content: "\201C"; /* Left double quotation mark */
+            font-size: 2.5em;
+            line-height: 0.1em;
+            margin-right: 0.25em;
+            vertical-align: -0.4em;
+            color: #007bff; /* Quotation mark color */
+        }
+        .our-mission::after {
+            content: "\201D"; /* Right double quotation mark */
+            font-size: 2.5em;
+            line-height: 0.1em;
+            margin-left: 0.25em;
+            vertical-align: -0.4em;
+            color: #007bff; /* Quotation mark color */
+        }
+        @media screen and (max-width: 982px) {
+            .tabs {
+                flex-direction: column;
+            }
+            .tab {
+                padding: 15px;
+                border-right: none;
+                border-bottom: 1px solid #ccc;
+            }
+            .tab:last-child {
+                border-bottom: none;
+            }
+            .container {
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                width: 100%; /* Full width */
+                margin: 0; /* Remove margins */
+                padding: 20px;
+            }
+            .title {
+                position: absolute;
+                top: 40%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: black;
+                font-size: 2em;
+                font-weight: bold;
+                background-color: rgba(255, 255, 255, 0.7);
+                padding: 10px 20px;
+                border-radius: 5px;
+                text-align: center;
+            }
+        }
+        @media (max-width: 600px) {
+            .tabs {
+                flex-direction: column;
+            }
+            .tabs button {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="tabs">
-        <div class="tab active" onclick="openTab(event, 'home')">Home</div>
-        <div class="tab" onclick="openTab(event, 'courses')">Courses</div>
-        <div class="tab" onclick="openTab(event, 'chatbox')">Chatbox</div>
-        <div class="tab" onclick="openTab(event, 'info')">More Info</div>
-        <div class="tab" onclick="openTab(event, 'mission')">Our Mission</div>
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" onclick="openTab(event, 'home')">Home</div>
+            <div class="tab" onclick="openTab(event, 'courses')">Courses</div>
+            <div class="tab" onclick="openTab(event, 'chatbox')">Chatbox</div>
+            <div class="tab" onclick="openTab(event, 'info')">More Info</div>
+            <div class="tab" onclick="openTab(event, 'mission')">Our Mission</div>
+        </div>
+        <div id="home" class="tab-content active">
+            <div class="img-container">
+                <h1 class="title">Computer Accessibility</h1>
+                <img src="https://images.newscientist.com/wp-content/uploads/2023/05/19100257/SEI_156640666.jpg?width=837">
+            </div>
+            <h2 class="quote">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect" <br> -Tim Berners Lee</h2>
+            <h2 class="our-mission">Our mission<br>We aim to make technology accessible to everyone, ensuring the web is easier to use for people with disabilities. When you post something online, remember that you have a responsibility to make it accessible to as many people as possible, including the elderly and disabled, so they can fully participate in the vast universe of the internet.</h2>
+            <div class="circle" id="circle"></div>
+            <script>
+                const circle = document.getElementById('circle');
+                document.addEventListener('mousemove', (e) => {
+                    circle.style.left = e.pageX + 'px';
+                    circle.style.top = e.pageY + 'px';
+                });
+            </script>
+        </div>
+        <div id="courses" class="tab-content">
+            <h2>Our Courses</h2>
+            <p>Course information goes here...</p>
+        </div>
+        <div id="chatbox" class="tab-content">
+            <h2>Chat with Us</h2>
+            <p>Chatbox content goes here...</p>
+        </div>
+        <div id="info" class="tab-content">
+            <h2>More Information</h2>
+            <p>Additional information goes here...</p>
+        </div>
+        <div id="mission" class="tab-content">
+            <h2>Our Mission</h2>
+            <p>Our mission statement goes here...</p>
+        </div>
     </div>
-    <div id="home" class="tab-content active">
-        <h1 class="title">Computer Accesibility</h1>
-        <img src= "https://images.newscientist.com/wp-content/uploads/2023/05/19100257/SEI_156640666.jpg?width=837" width = "95%" height = "80%">
-        <h2 class = "quote">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect" <br> -Tim Berners Lee</h2>
-        
-        <h2 class = "our-mission"><br><br>Our mission<br>We aim to make technology accessible to everyone, ensuring the web is easier to use for people with disabilities. 
-            When you post something online, remember that you have a responsibility to make it accessible to as many people as possible, including 
-            the elderly and disabled, so they can fully participate in the vast universe of the internet. </h2>
-        
-        <div class="circle" id="circle"></div>
-<script>
-    const circle = document.getElementById('circle');
-    document.addEventListener('mousemove', (e) => {
-        circle.style.left = e.pageX + 'px';
-        circle.style.top = e.pageY + 'px';
-    });
-</script>
-    
-    </div>
-    <div id="courses" class="tab-content">
-        <h2>Our Courses</h2>
-        <p>Course information goes here...</p>
-    </div>
-    <div id="chatbox" class="tab-content">
-        <h2>Chat with Us</h2>
-        <p>Chatbox content goes here...</p>
-    </div>
-    <div id="info" class="tab-content">
-        <h2>More Information</h2>
-        <p>Additional information goes here...</p>
-    </div>
-    <div id="mission" class="tab-content">
-        <h2>Our Mission</h2>
-        <p>Our mission statement goes here...</p>
-    </div>
-</div>
-<script>
-    function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
         }
-        tablinks = document.getElementsByClassName("tab");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-</script>
+    </script>
 </body>
 </html>
