@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
        
-        body {
+body {
     font-family: 'Lato', sans-serif;
     margin: 0;
     padding: 0;
@@ -17,9 +17,8 @@
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 800px;
-    margin: 20px auto;
+    width: 100%; /* Full width */
+    margin: 0; /* Remove margins */
     padding: 20px;
 }
 .tabs {
@@ -43,7 +42,7 @@
     position: relative;
 }
 .img-container img {
-    width: 10%;
+    width: 100%; /* Full width */
     height: auto;
 }
 .tabs button:hover {
@@ -94,28 +93,27 @@
 p {
     color: rgb(66, 66, 66);
 }
-    .quote {
-            font-size: 1.2rem;
-            font-weight: bold;
-            background-color: rgba(255, 255, 255, 0.8);
-            color: rgb(34, 34, 34);
-            padding: 10px 20px;
-            text-align: center;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }    
-       .circle {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(19, 213, 247, 0.5);
-            border-radius: 50%;
-            pointer-events: none; /* Prevent the circle from interfering with other elements */
-            transform: translate(-50%, -50%);
-            transition: transform 0.05s ease-out; /* Smooth the movement */
-        }
-
-        .our-mission {
+.quote {
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: rgb(34, 34, 34);
+    padding: 10px 20px;
+    text-align: center;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+.circle {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(19, 213, 247, 0.5);
+    border-radius: 50%;
+    pointer-events: none; /* Prevent the circle from interfering with other elements */
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s ease-out; /* Smooth the movement */
+}
+.our-mission {
     font-size: 1.2rem; /* Adjust font size */
     line-height: 1.6; /* Increase line height for readability */
     color: #333; /* Darker text color */
@@ -124,7 +122,6 @@ p {
     border-left: 4px solid #007bff; /* Left border for emphasis */
     margin-bottom: 20px; /* Bottom margin for separation */
 }
-
 .our-mission::before {
     content: "\201C"; /* Left double quotation mark */
     font-size: 2.5em;
@@ -133,7 +130,6 @@ p {
     vertical-align: -0.4em;
     color: #007bff; /* Quotation mark color */
 }
-
 .our-mission::after {
     content: "\201D"; /* Right double quotation mark */
     font-size: 2.5em;
@@ -154,29 +150,27 @@ p {
     .tab:last-child {
         border-bottom: none;
     }
-    
     .container {
         background-color: white;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 90%;
-        max-width: 800px;
-        margin: 0px auto;
+        width: 100%; /* Full width */
+        margin: 0; /* Remove margins */
         padding: 20px;
     }
     .title {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: black;
-            font-size: 2em;
-            font-weight: bold;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-align: center;
-}
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: black;
+        font-size: 2em;
+        font-weight: bold;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+    }
 }
 @media (max-width: 600px) {
     .tabs {
@@ -187,6 +181,7 @@ p {
         font-size: 14px;
     }
 }
+
     </style>
 </head>
 <body>
