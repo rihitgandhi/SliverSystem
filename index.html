@@ -36,7 +36,7 @@
         }
         .img-container {
             width: 100%;
-            max-height: 500px; /* Set the max-height as needed */
+            max-height: 600px; /* Increased max-height */
             overflow: hidden;
             text-align: center;
             position: relative;
@@ -227,25 +227,4 @@
             <h2>More Information</h2>
             <p>Additional information goes here...</p>
         </div>
-        <div id="mission" class="tab-content">
-            <h2>Our Mission</h2>
-            <p>Our mission statement goes here...</p>
-        </div>
-    </div>
-    <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tab");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-    </script>
-</body>
-</html>
+       
