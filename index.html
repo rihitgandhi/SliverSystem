@@ -97,7 +97,7 @@
         p {
             color: rgb(66, 66, 66);
         }
-        .quote, .our-mission, .how-it-works, .how-we-help-the-online-community {
+           .our-mission, .how-it-works, .how-we-help-the-online-community {
             font-size: 1.5em; /* Adjust font size */
             line-height: 1.6; /* Increase line height for readability */
             background-color: rgba(255, 255, 255, 0.8);
@@ -110,6 +110,32 @@
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .quote {
+            font-size: 1.2rem; /* Adjust font size */
+            line-height: 1.6; /* Increase line height for readability */
+            color: #333; /* Darker text color */
+            background-color: #f9f9f9; /* Light background color */
+            padding: 20px; /* Add padding for spacing */
+            border-left: 4px solid #007bff; /* Left border for emphasis */
+            margin-bottom: 20px; /* Bottom margin for separation */
+        }
+        .quote::before {
+            content: "\201C"; /* Left double quotation mark */
+            font-size: 2.5em;
+            line-height: 0.1em;
+            margin-right: 0.25em;
+            vertical-align: -0.4em;
+            color: #007bff; /* Quotation mark color */
+        }
+        .quote::after {
+            content: "\201D"; /* Right double quotation mark */
+            font-size: 2.5em;
+            line-height: 0.1em;
+            margin-left: 0.25em;
+            vertical-align: -0.4em;
+            color: #007bff; /* Quotation mark color */
         }
 
         .fade-in {
