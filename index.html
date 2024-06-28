@@ -25,6 +25,7 @@
             display: flex;
             justify-content: space-around;
             border-bottom: 1px solid #ddd;
+            margin-bottom: 20px; /* Add bottom margin for spacing */
         }
         .tabs button {
             background: none;
@@ -35,17 +36,22 @@
             font-size: 16px;
             transition: color 0.3s ease;
         }
+        .tabs button:focus {
+            outline: 2px solid #0000ff; /* Add focus outline for accessibility */
+        }
         .img-container {
-            width: 95%;
+            width: 100%;
             height: 95vh; /* Full viewport height */
             overflow: hidden;
             text-align: center;
             position: relative;
+            margin-bottom: 20px; /* Add bottom margin for spacing */
         }
         .img-container img {
-            width: 95%;
-            height: 95%;
+            width: 100%;
+            height: 100%;
             object-fit: cover; /* This ensures the image covers the container while maintaining aspect ratio */
+            alt: "Circuit board background"; /* Add alt text for accessibility */
         }
         .tabs button:hover {
             color: #0000ff;
@@ -85,13 +91,16 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
-            font-size: 10em; /* Adjust title font size */
+            font-size: 3em; /* Adjust title font size for accessibility */
             text-align: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Add background color for better readability */
+            padding: 10px;
+            border-radius: 8px;
         }
         p {
             color: rgb(66, 66, 66);
         }
-        .quote, .our-mission, .how-it-works, .how-we-help-the-online-community  {
+        .quote, .our-mission, .how-it-works, .how-we-help-the-online-community {
             font-size: 1.5em; /* Adjust font size */
             line-height: 1.6; /* Increase line height for readability */
             background-color: rgba(255, 255, 255, 0.8);
@@ -141,7 +150,7 @@
                 padding: 10px; /* Adjust container padding */
             }
             .title {
-                font-size: 3em; /* Adjust title font size */
+                font-size: 2.5em; /* Adjust title font size for smaller screens */
                 top: 40%; /* Adjust title position */
             }
             .quote, .our-mission, .how-it-works, .how-we-help-the-online-community {
@@ -160,16 +169,16 @@
 <body>
     <div class="container">
         <div class="tabs">
-            <div class="tab active" onclick="openTab(event, 'home')">Home</div>
-            <div class="tab" onclick="openTab(event, 'courses')">Courses</div>
-            <div class="tab" onclick="openTab(event, 'chatbox')">Chatbox</div>
-            <div class="tab" onclick="openTab(event, 'info')">More Info</div>
-            <div class="tab" onclick="openTab(event, 'mission')">Our Mission</div>
+            <div class="tab active" onclick="openTab(event, 'home')" role="button" aria-selected="true" tabindex="0">Home</div>
+            <div class="tab" onclick="openTab(event, 'courses')" role="button" aria-selected="false" tabindex="0">Courses</div>
+            <div class="tab" onclick="openTab(event, 'chatbox')" role="button" aria-selected="false" tabindex="0">Chatbox</div>
+            <div class="tab" onclick="openTab(event, 'info')" role="button" aria-selected="false" tabindex="0">More Info</div>
+            <div class="tab" onclick="openTab(event, 'mission')" role="button" aria-selected="false" tabindex="0">Our Mission</div>
         </div>
-        <div id="home" class="tab-content active">
+        <div id="home" class="tab-content active" role="tabpanel">
             <div class="img-container">
                 <h1 class="title">Computer <strong> Accessibility </strong> </h1>
-                <img src="https://wpcdn.web.wsu.edu/news/uploads/sites/2797/2018/12/circuit-board-1188x792-1024x683.jpg">
+                <img src="https://wpcdn.web.wsu.edu/news/uploads/sites/2797/2018/12/circuit-board-1188x792-1024x683.jpg" alt="Circuit board background">
             </div>
             <h2 class="quote fade">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect" <br> -Tim Berners Lee</h2>
             
@@ -178,11 +187,11 @@
                 participate in the vast universe of the internet.</h2>
             
             <h2 class="how-it-works fade"><div class="big">How it works</div><br>We offer 10 courses for small business owners and anyone looking to make their website accessible to all. 
-                We also provide a series of courses for individuals with disabilities to help them navigate the internet, <strong>ensuring everyone can access the web.</strong</h2>
+                We also provide a series of courses for individuals with disabilities to help them navigate the internet, <strong>ensuring everyone can access the web.</strong></h2>
             
             <h2 class="how-we-help-the-online-community fade"><div class="big">How we help the online community</div>For people with disabilities and the elderly, we help them learn to navigate their way through the internet, 
                 helping more people join the web ensuring that everyone gets to try using the web as a learning tool. For people looking to make a website and/or small businesses, 
-                we will provide courses to help them make their website<strong> accessible for all!</strong> </h2>
+                we will provide courses to help them make their website<strong> accessible for all!</strong></h2>
             
             <div class="circle" id="circle"></div>
             <script>
@@ -215,19 +224,19 @@
                 });
             </script>
         </div>
-        <div id="courses" class="tab-content">
+        <div id="courses" class="tab-content" role="tabpanel">
             <h2>Our Courses</h2>
             <p>Course information goes here...</p>
         </div>
-        <div id="chatbox" class="tab-content">
+        <div id="chatbox" class="tab-content" role="tabpanel">
             <h2>Chat with Us</h2>
             <p>Chatbox content goes here...</p>
         </div>
-        <div id="info" class="tab-content">
+        <div id="info" class="tab-content" role="tabpanel">
             <h2>More Information</h2>
             <p>Additional information goes here...</p>
         </div>
-        <div id="mission" class="tab-content">
+        <div id="mission" class="tab-content" role="tabpanel">
             <h2>Our Mission</h2>
             <p>Our mission statement goes here...</p>
         </div>
@@ -238,13 +247,25 @@
             const tabContents = document.getElementsByClassName('tab-content');
             for (let i = 0; i < tabs.length; i++) {
                 tabs[i].classList.remove('active');
+                tabs[i].setAttribute('aria-selected', 'false');
             }
             for (let i = 0; i < tabContents.length; i++) {
                 tabContents[i].classList.remove('active');
             }
             event.currentTarget.classList.add('active');
+            event.currentTarget.setAttribute('aria-selected', 'true');
             document.getElementById(tabName).classList.add('active');
         }
+
+        // Add keyboard navigation
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    tab.click();
+                }
+            });
+        });
     </script>
 </body>
 </html>
