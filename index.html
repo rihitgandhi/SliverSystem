@@ -85,21 +85,22 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
-            font-size: 10em;
+            font-size: 10em; /* Adjust title font size */
             text-align: center;
         }
         p {
             color: rgb(66, 66, 66);
         }
-        .quote {
-            font-size: 1.2rem;
-            font-weight: bold;
+        .quote, .our-mission {
+            font-size: 1.2rem; /* Adjust font size */
+            line-height: 1.6; /* Increase line height for readability */
             background-color: rgba(255, 255, 255, 0.8);
             color: rgb(34, 34, 34);
-            padding: 10px 20px;
+            padding: 20px;
             text-align: center;
             border: 2px solid rgba(0, 0, 0, 0.1);
             border-radius: 10px;
+            margin-bottom: 20px; /* Bottom margin for separation */
         }
         .circle {
             position: absolute;
@@ -110,31 +111,6 @@
             pointer-events: none; /* Prevent the circle from interfering with other elements */
             transform: translate(-50%, -50%);
             transition: transform 0.05s ease-out; /* Smooth the movement */
-        }
-        .our-mission {
-            font-size: 1.2rem; /* Adjust font size */
-            line-height: 1.6; /* Increase line height for readability */
-            color: #333; /* Darker text color */
-            background-color: #f9f9f9; /* Light background color */
-            padding: 20px; /* Add padding for spacing */
-            border-left: 4px solid #007bff; /* Left border for emphasis */
-            margin-bottom: 20px; /* Bottom margin for separation */
-        }
-        .our-mission::before {
-            content: "\201C"; /* Left double quotation mark */
-            font-size: 2.5em;
-            line-height: 0.1em;
-            margin-right: 0.25em;
-            vertical-align: -0.4em;
-            color: #007bff; /* Quotation mark color */
-        }
-        .our-mission::after {
-            content: "\201D"; /* Right double quotation mark */
-            font-size: 2.5em;
-            line-height: 0.1em;
-            margin-left: 0.25em;
-            vertical-align: -0.4em;
-            color: #007bff; /* Quotation mark color */
         }
         @media screen and (max-width: 982px) {
             .tabs {
@@ -156,8 +132,8 @@
                 font-size: 3em; /* Adjust title font size */
                 top: 40%; /* Adjust title position */
             }
-            .our-mission {
-                font-size: 1.1rem; /* Adjust mission font size */
+            .quote, .our-mission {
+                font-size: 1.1rem; /* Adjust font size */
             }
         }
         @media (max-width: 600px) {
