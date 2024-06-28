@@ -101,10 +101,18 @@
             border: 2px solid rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             margin-bottom: 20px; /* Bottom margin for separation */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .big {
-            font-size: 2em
+            font-size: 2em;
         }
         .circle {
             position: absolute;
@@ -165,14 +173,36 @@
                 <h1 class="title">Computer <strong> Accessibility </strong> </h1>
                 <img src="https://wpcdn.web.wsu.edu/news/uploads/sites/2797/2018/12/circuit-board-1188x792-1024x683.jpg">
             </div>
-            <h2 class="quote">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect" <br> -Tim Berners Lee</h2>
-            <h2 class="our-mission"> <div class = "Big">Our mission</div><br>We aim to make technology accessible to everyone, ensuring the web is easier to use for people with disabilities. When you post something online, remember that you have a responsibility to make it accessible to as many people as possible, including the elderly and disabled, so they can fully participate in the vast universe of the internet.</h2>
+            <h2 class="quote fade">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect" <br> -Tim Berners Lee</h2>
+            <h2 class="our-mission fade"><div class="big">Our mission</div><br>We aim to make technology accessible to everyone, ensuring the web is easier to use for people with disabilities. When you post something online, remember that you have a responsibility to make it accessible to as many people as possible, including the elderly and disabled, so they can fully participate in the vast universe of the internet.</h2>
             <div class="circle" id="circle"></div>
             <script>
                 const circle = document.getElementById('circle');
                 document.addEventListener('mousemove', (e) => {
                     circle.style.left = e.pageX + 'px';
                     circle.style.top = e.pageY + 'px';
+                });
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    const observerOptions = {
+                        root: null,
+                        rootMargin: '0px',
+                        threshold: 0.1
+                    };
+
+                    const observer = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('fade-in');
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, observerOptions);
+
+                    const elements = document.querySelectorAll('.fade');
+                    elements.forEach(element => {
+                        observer.observe(element);
+                    });
                 });
             </script>
         </div>
