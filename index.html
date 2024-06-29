@@ -41,7 +41,7 @@
         }
         .img-container {
             width: 100%;
-            height: 95vh; /* Full viewport height */
+            height: 90vh; /* Full viewport height */
             overflow: hidden;
             text-align: center;
             position: relative;
@@ -49,7 +49,7 @@
         }
         .img-container img {
             width: 100%;
-            height: 100%;
+            height: 90%;
             object-fit: cover; /* This ensures the image covers the container while maintaining aspect ratio */
             alt: "Circuit board background"; /* Add alt text for accessibility */
         }
@@ -114,16 +114,23 @@
             border-radius: 8px;
         }
 
-        .quote, {
-            font-size: 5.0 rem; /* Adjust font size */
+         .quote {
+            font-size: 2.0em; /* Adjust font size */
             line-height: 2.3; /* Increase line height for readability */
             color: #333; /* Darker text color */
             background-color: #f9f9f9; /* Light background color */
             padding: 20px; /* Add padding for spacing */
             border-left: 4px solid #007bff; /* Left border for emphasis */
             margin-bottom: 20px; /* Bottom margin for separation */
-            text-align: center
+            text-align: center; /* Center text horizontally */
+            display: flex; /* Use flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            border: 1px solid #ccc; /* Optional border around the box */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1); /* Optional box shadow */
         }
+
         .quote::before {
             content: "\201C"; /* Left double quotation mark */
             font-size: 2.5em;
@@ -132,14 +139,6 @@
             vertical-align: -0.4em;
             color: #007bff; /* Quotation mark color */
         }
-        .quote::after {
-    content: "\201D"; /* Right double quotation mark followed by question mark */
-    font-size: 2.5em;
-    line-height: 0.1em;
-    margin-left: 0.25em;
-    vertical-align: -0.4em;
-    color: #007bff; /* Quotation mark color */
-}
 
         .fade-in {
             opacity: 1;
