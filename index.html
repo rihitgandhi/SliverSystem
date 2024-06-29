@@ -97,19 +97,21 @@
         p {
             color: rgb(66, 66, 66);
         }
-           .our-mission, .how-it-works, .how-we-help-the-online-community {
-            font-size: 1.5em; /* Adjust font size */
-            line-height: 1.6; /* Increase line height for readability */
-            background-color: rgba(255, 255, 255, 0.8);
-            color: rgb(34, 34, 34);
+
+        .box-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            border: 1px solid #ccc;
             padding: 20px;
+            margin: 10px;
+            width: 200px;
             text-align: center;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            margin-bottom: 20px; /* Bottom margin for separation */
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
         .quote, {
@@ -177,7 +179,7 @@
                 font-size: 2.5em; /* Adjust title font size for smaller screens */
                 top: 40%; /* Adjust title position */
             }
-            .quote, .our-mission, .how-it-works, .how-we-help-the-online-community {
+            .quote {
                 font-size: 1.1rem; /* Adjust font size */
             }
     
@@ -194,28 +196,41 @@
     <div class="container">
         <div class="tabs">
             <div class="tab active" onclick="openTab(event, 'home')" role="button" aria-selected="true" tabindex="0">Home</div>
-            <div class="tab" onclick="openTab(event, 'courses')" role="button" aria-selected="false" tabindex="0">Courses</div>
-            <div class="tab" onclick="openTab(event, 'chatbox')" role="button" aria-selected="false" tabindex="0">Chatbox</div>
-            <div class="tab" onclick="openTab(event, 'info')" role="button" aria-selected="false" tabindex="0">More Info</div>
-            <div class="tab" onclick="openTab(event, 'mission')" role="button" aria-selected="false" tabindex="0">Our Mission</div>
+            <div class="tab" onclick="openTab(event, 'courses')" role="button" aria-selected="false" tabindex="0">Resources</div>
+            <div class="tab" onclick="openTab(event, 'chatbox')" role="button" aria-selected="false" tabindex="0">Support</div>
+            <div class="tab" onclick="openTab(event, 'info')" role="button" aria-selected="false" tabindex="0">Accsesbility features</div>
+            <div class="tab" onclick="openTab(event, 'mission')" role="button" aria-selected="false" tabindex="0">News & Updates</div>
         </div>
         <div id="home" class="tab-content active" role="tabpanel">
             <div class="img-container">
-                <h1 class="title">Copy <strong> Cat </strong> </h1>
+                <h1 class="title">Computer Accesibility </h1>
                 <img src="https://wpcdn.web.wsu.edu/news/uploads/sites/2797/2018/12/circuit-board-1188x792-1024x683.jpg" alt="Circuit board background">
             </div>
+            
             <h2 class="quote fade">The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect</h2>
             
-            <h2 class="our-mission fade"><div class="big">Our mission</div><br>We aim to make technology accessible to everyone, ensuring the web is easier to use for people with disabilities. 
-                 We teach you to remeber that when you post something online, you have a responsibility to make it accessible to as many people as possible, including the elderly and disabled, so they can fully 
-                participate in the vast universe of the internet.</h2>
-            
-            <h2 class="how-it-works fade"><div class="big">How it works</div><br>We offer 10 courses for small business owners and anyone looking to make their website accessible to all. 
-                We also provide a series of courses for individuals with disabilities to help them navigate the internet, <strong>ensuring everyone can access the web.</strong></h2>
-            
-            <h2 class="how-we-help-the-online-community fade"><div class="big">How we help the online community</div>For people with disabilities and the elderly, we help them learn to navigate their way through the internet, 
-                helping more people join the web ensuring that everyone gets to try using the web as a learning tool. For people looking to make a website and/or small businesses, 
-                we will provide courses to help them make their website<strong> accessible for all!</strong></h2>
+            <h2 class = "why-is-it-important fade"><div class="big"> Why is Computer Accesibility important?</div><br> Computer Accesibility is very important; it helps everybody stay connected with each other through the web, 
+                and makes the web a more diverse place. Accesibility through the web isn't an easy feat to get across though, because everybody collabrates through the web, and sadly <strong> only 3% </strong> of the top one milion 
+                websites met the basic accesibility standards. </h2>  
+
+                <div class="box-container">
+        <div class="box">
+            <h3>Inclusion</h3>
+            <p>Computer accessibility ensures that everyone, including individuals with disabilities, can use technology effectively. By making digital content accessible, we create an inclusive environment where everyone has equal opportunities to participate and contribute.</p>
+        </div>
+        <div class="box">
+            <h3>Legal Compliance</h3>
+            <p>Many countries have laws and regulations, such as the Americans with Disabilities Act (ADA) and the Web Content Accessibility Guidelines (WCAG), that mandate accessible digital content. Ensuring your website is accessible helps you stay compliant with these laws and avoid potential legal issues.</p>
+        </div>
+        <div class="box">
+            <h3>Better User Experience</h3>
+            <p>Accessible design improves the overall user experience for all users, not just those with disabilities. Features like easy navigation, clear content, and readable text benefit everyone, making your website more user-friendly and engaging.</p>
+        </div>
+        <div class="box">
+            <h3>Broader Reach</h3>
+            <p>By making your website accessible, you reach a wider audience, including the millions of people with disabilities. This not only enhances your website's usability but also demonstrates your commitment to diversity and inclusion, positively impacting your brand's reputation.</p>
+        </div>
+    </div>
             
             <div class="circle" id="circle"></div>
             <script>
