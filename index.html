@@ -100,15 +100,27 @@
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
         }
         .box {
-            border: 1px solid #ccc;
+            background-color: #333;
+            color: white;
             padding: 20px;
-            margin: 10px;
-            width: 200px;
+            border-radius: 10px;
             text-align: center;
-            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            width: 22%;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .box:hover {
+            transform: translateY(-10px);
+        }
+        .box img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
         }
         .quote {
             font-size: 2.0em;
@@ -190,11 +202,17 @@
             .quote {
                 font-size: 1.1rem;
             }
+            .box {
+                width: 45%;
+            }
         }
         @media (max-width: 600px) {
             .tabs button {
                 padding: 10px;
                 font-size: 12px;
+            }
+            .box {
+                width: 100%;
             }
         }
     </style>
@@ -217,96 +235,65 @@
             <h2 class="why-is-it-important fade"><div class="big"><br><br> Why is Computer Accesibility important?</div></h2>
             <div class="box-container">
                 <div class="box fade">
-                    <h3>Inclusion</h3>
-                    <p>Computer accessibility ensures that everyone, including individuals with disabilities, can use technology effectively. By making digital content accessible, we create an inclusive environment where everyone has equal opportunities to participate and contribute.</p>
+                    <img src="icon1.png" alt="Icon 1">
+                    <p><strong>Accelerate</strong> through the <strong>10 courses.</strong> Learn at your own pace.</p>
                 </div>
                 <div class="box fade">
-                    <h3>Legal Compliance</h3>
-                    <p>Many countries have laws and regulations, such as the Americans with Disabilities Act (ADA) and the Web Content Accessibility Guidelines (WCAG), that mandate accessible digital content. Ensuring your website is accessible helps you stay compliant with these laws and avoid potential legal issues.</p>
+                    <img src="icon2.png" alt="Icon 2">
+                    <p>Learn our <strong>content</strong> through short segments of engaging <strong>reading.</strong></p>
                 </div>
                 <div class="box fade">
-                    <h3>Better User Experience</h3>
-                    <p>Accessible design improves the overall user experience for all users, not just those with disabilities. Features like easy navigation, clear content, and readable text benefit everyone, making your website more user-friendly and engaging.</p>
+                    <img src="icon3.png" alt="Icon 3">
+                    <p>Engage in an interactive <strong>game</strong> and quiz to enhance your skills.</p>
                 </div>
                 <div class="box fade">
-                    <h3>Broader Reach</h3>
-                    <p>By making your website accessible, you reach a wider audience, including the millions of people with disabilities. This not only enhances your website's usability but also demonstrates your commitment to diversity and inclusion, positively impacting your brand's reputation.</p>
+                    <img src="icon4.png" alt="Icon 4">
+                    <p><strong>Raise awareness</strong> on computer accessibility for a more inclusive digital world.</p>
                 </div>
             </div>
-            <div class="circle" id="circle"></div>
         </div>
         <div id="courses" class="tab-content" role="tabpanel">
-            <h2>Our Courses</h2>
-            <p>Course information goes here...</p>
+            <h2>Courses</h2>
+            <p>List of courses...</p>
         </div>
         <div id="chatbox" class="tab-content" role="tabpanel">
-            <h2>Chat with Us</h2>
-            <p>Chatbox content goes here...</p>
+            <h2>Chatbox</h2>
+            <p>Support chat...</p>
         </div>
         <div id="info" class="tab-content" role="tabpanel">
-            <h2>More Information</h2>
-            <p>Additional information goes here...</p>
+            <h2>Accesibility features</h2>
+            <p>Accesibility features information...</p>
         </div>
         <div id="mission" class="tab-content" role="tabpanel">
-            <h2>Our Mission</h2>
-            <p>Our mission statement goes here...</p>
+            <h2>News & Updates</h2>
+            <p>Latest news and updates...</p>
         </div>
     </div>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var fades = document.querySelectorAll('.fade');
+                fades.forEach(function(element) {
+                    element.classList.add('fade-in');
+                });
+            }, 1000);
+        });
+
         function openTab(event, tabName) {
-            const tabs = document.getElementsByClassName('tab');
-            const tabContents = document.getElementsByClassName('tab-content');
-            for (let i = 0; i < tabs.length; i++) {
-                tabs[i].classList.remove('active');
-                tabs[i].setAttribute('aria-selected', 'false');
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove('active');
             }
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove('active');
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove('active');
+                tablinks[i].setAttribute('aria-selected', 'false');
             }
+            document.getElementById(tabName).classList.add('active');
             event.currentTarget.classList.add('active');
             event.currentTarget.setAttribute('aria-selected', 'true');
-            document.getElementById(tabName).classList.add('active');
         }
-
-        // Add keyboard navigation
-        const tabs = document.querySelectorAll('.tab');
-        tabs.forEach(tab => {
-            tab.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    tab.click();
-                }
-            });
-        });
-
-        // Intersection Observer for fade-in effect
-        document.addEventListener('DOMContentLoaded', function () {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            const elements = document.querySelectorAll('.fade');
-            elements.forEach(element => {
-                observer.observe(element);
-            });
-        });
-
-        // Circle follow mouse
-        const circle = document.getElementById('circle');
-        document.addEventListener('mousemove', (e) => {
-            circle.style.left = e.pageX + 'px';
-            circle.style.top = e.pageY + 'px';
-        });
     </script>
 </body>
 </html>
