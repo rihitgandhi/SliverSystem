@@ -6,26 +6,26 @@
     <title>Computer Accessibility</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
-       body {
+        body {
             font-family: 'Lato', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f9;
-            font-size: 16px; /* Default font size */
+            font-size: 16px;
         }
         .container {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%; /* Full width */
-            margin: 0; /* Remove margins */
+            width: 100%;
+            margin: 0;
             padding: 20px;
         }
         .tabs {
             display: flex;
             justify-content: space-around;
             border-bottom: 1px solid #ddd;
-            margin-bottom: 20px; /* Add bottom margin for spacing */
+            margin-bottom: 20px;
         }
         .tabs button {
             background: none;
@@ -37,21 +37,20 @@
             transition: color 0.3s ease;
         }
         .tabs button:focus {
-            outline: 2px solid #0000ff; /* Add focus outline for accessibility */
+            outline: 2px solid #0000ff;
         }
         .img-container {
             width: 100%;
-            height: 90vh; /* Full viewport height */
+            height: 90vh;
             overflow: hidden;
             text-align: center;
             position: relative;
-            margin-bottom: 0px; /* Remove bottom margin */
+            margin-bottom: 0px;
         }
         .img-container img {
             width: 100%;
             height: 90%;
-            object-fit: cover; /* This ensures the image covers the container while maintaining aspect ratio */
-            alt: "Circuit board background"; /* Add alt text for accessibility */
+            object-fit: cover;
         }
         .tabs button:hover {
             color: #0000ff;
@@ -65,7 +64,7 @@
             background-color: #f4f4f9;
             font-weight: bold;
             border-right: 1px solid #ccc;
-            font-size: 16px; /* Default font size */
+            font-size: 16px;
         }
         .tab:last-child {
             border-right: none;
@@ -80,7 +79,7 @@
         }
         .tab-content {
             display: none;
-            font-size: 16px; /* Default font size */
+            font-size: 16px;
         }
         .tab-content.active {
             display: block;
@@ -91,19 +90,17 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
-            font-size: 10em; /* Adjust title font size */
+            font-size: 10em;
             text-align: center;
         }
         p {
             color: rgb(66, 66, 66);
         }
-
         .box-container {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
         }
-
         .box {
             border: 1px solid #ccc;
             padding: 20px;
@@ -113,48 +110,48 @@
             box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
-
         .quote {
-            font-size: 2.0em; /* Adjust font size */
-            line-height: 2.3; /* Increase line height for readability */
-            color: #333; /* Darker text color */
-            background-color: #f9f9f9; /* Light background color */
-            padding: 20px; /* Add padding for spacing */
-            border-left: 4px solid #007bff; /* Left border for emphasis */
-            margin-top: 0px; /* Remove top margin */
-            margin-bottom: 0px; /* Remove bottom margin */
-            text-align: center; /* Center text horizontally */
-            display: flex; /* Use flexbox for centering */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            border: 1px solid #ccc; /* Optional border around the box */
-            border-radius: 8px; /* Rounded corners */
-            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1); /* Optional box shadow */
+            font-size: 2.0em;
+            line-height: 2.3;
+            color: #333;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-left: 4px solid #007bff;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
         }
-
         .quote::before {
-            content: "\201C"; /* Left double quotation mark */
+            content: "\201C";
             font-size: 2.5em;
             line-height: 0.1em;
             margin-right: 0.25em;
             vertical-align: -0.4em;
-            color: #007bff; /* Quotation mark color */
+            color: #007bff;
         }
-
         .quote::after {
-            content: "\201D"; /* Right double quotation mark followed by question mark */
+            content: "\201D";
             font-size: 2.5em;
             line-height: 0.1em;
             margin-left: 0.25em;
             vertical-align: -0.4em;
-            color: #007bff; /* Quotation mark color */
+            color: #007bff;
         }
-
+        .fade {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
         .fade-in {
             opacity: 1;
             transform: translateY(0);
         }
-
         .big {
             font-size: 2em;
             text-align: center;
@@ -166,9 +163,9 @@
             height: 50px;
             background-color: rgba(19, 213, 247, 0.5);
             border-radius: 50%;
-            pointer-events: none; /* Prevent the circle from interfering with other elements */
+            pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: transform 0.05s ease-out; /* Smooth the movement */
+            transition: transform 0.05s ease-out;
         }
         @media screen and (max-width: 982px) {
             .tabs {
@@ -178,27 +175,26 @@
                 padding: 15px;
                 border-right: none;
                 border-bottom: 1px solid #ccc;
-                font-size: 14px; /* Adjust font size for smaller screens */
+                font-size: 14px;
             }
             .tab:last-child {
                 border-bottom: none;
             }
             .container {
-                padding: 10px; /* Adjust container padding */
+                padding: 10px;
             }
             .title {
-                font-size: 2.5em; /* Adjust title font size for smaller screens */
-                top: 40%; /* Adjust title position */
+                font-size: 2.5em;
+                top: 40%;
             }
             .quote {
-                font-size: 1.1rem; /* Adjust font size */
+                font-size: 1.1rem;
             }
-    
         }
         @media (max-width: 600px) {
             .tabs button {
                 padding: 10px;
-                font-size: 12px; /* Further adjust font size for smaller screens */
+                font-size: 12px;
             }
         }
     </style>
@@ -214,63 +210,30 @@
         </div>
         <div id="home" class="tab-content active" role="tabpanel">
             <div class="img-container">
-                <h1 class="title">Computer Accesibility </h1>
+                <h1 class="title">Computer Accesibility</h1>
                 <img src="https://wpcdn.web.wsu.edu/news/uploads/sites/2797/2018/12/circuit-board-1188x792-1024x683.jpg" alt="Circuit board background">
             </div>
-            
-            <h2 class="quote fade-in">The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect</h2>
-            
-            <h2 class = "why-is-it-important fade-in"><div class="big"><br><br> Why is Computer Accesibility important?</div> </h2>  
-
-                <div class="box-container">
-        <div class="box">
-            <h3>Inclusion</h3>
-            <p>Computer accessibility ensures that everyone, including individuals with disabilities, can use technology effectively. By making digital content accessible, we create an inclusive environment where everyone has equal opportunities to participate and contribute.</p>
-        </div>
-        <div class="box">
-            <h3>Legal Compliance</h3>
-            <p>Many countries have laws and regulations, such as the Americans with Disabilities Act (ADA) and the Web Content Accessibility Guidelines (WCAG), that mandate accessible digital content. Ensuring your website is accessible helps you stay compliant with these laws and avoid potential legal issues.</p>
-        </div>
-        <div class="box">
-            <h3>Better User Experience</h3>
-            <p>Accessible design improves the overall user experience for all users, not just those with disabilities. Features like easy navigation, clear content, and readable text benefit everyone, making your website more user-friendly and engaging.</p>
-        </div>
-        <div class="box">
-            <h3>Broader Reach</h3>
-            <p>By making your website accessible, you reach a wider audience, including the millions of people with disabilities. This not only enhances your website's usability but also demonstrates your commitment to diversity and inclusion, positively impacting your brand's reputation.</p>
-        </div>
-    </div>
-            
+            <h2 class="quote fade">The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect</h2>
+            <h2 class="why-is-it-important fade"><div class="big"><br><br> Why is Computer Accesibility important?</div></h2>
+            <div class="box-container">
+                <div class="box fade">
+                    <h3>Inclusion</h3>
+                    <p>Computer accessibility ensures that everyone, including individuals with disabilities, can use technology effectively. By making digital content accessible, we create an inclusive environment where everyone has equal opportunities to participate and contribute.</p>
+                </div>
+                <div class="box fade">
+                    <h3>Legal Compliance</h3>
+                    <p>Many countries have laws and regulations, such as the Americans with Disabilities Act (ADA) and the Web Content Accessibility Guidelines (WCAG), that mandate accessible digital content. Ensuring your website is accessible helps you stay compliant with these laws and avoid potential legal issues.</p>
+                </div>
+                <div class="box fade">
+                    <h3>Better User Experience</h3>
+                    <p>Accessible design improves the overall user experience for all users, not just those with disabilities. Features like easy navigation, clear content, and readable text benefit everyone, making your website more user-friendly and engaging.</p>
+                </div>
+                <div class="box fade">
+                    <h3>Broader Reach</h3>
+                    <p>By making your website accessible, you reach a wider audience, including the millions of people with disabilities. This not only enhances your website's usability but also demonstrates your commitment to diversity and inclusion, positively impacting your brand's reputation.</p>
+                </div>
+            </div>
             <div class="circle" id="circle"></div>
-            <script>
-                const circle = document.getElementById('circle');
-                document.addEventListener('mousemove', (e) => {
-                    circle.style.left = e.pageX + 'px';
-                    circle.style.top = e.pageY + 'px';
-                });
-
-                document.addEventListener('DOMContentLoaded', function () {
-                    const observerOptions = {
-                        root: null,
-                        rootMargin: '0px',
-                        threshold: 0.1
-                    };
-
-                    const observer = new IntersectionObserver((entries, observer) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('fade-in');
-                                observer.unobserve(entry.target);
-                            }
-                        });
-                    }, observerOptions);
-
-                    const elements = document.querySelectorAll('.fade');
-                    elements.forEach(element => {
-                        observer.observe(element);
-                    });
-                });
-            </script>
         </div>
         <div id="courses" class="tab-content" role="tabpanel">
             <h2>Our Courses</h2>
@@ -313,6 +276,36 @@
                     tab.click();
                 }
             });
+        });
+
+        // Intersection Observer for fade-in effect
+        document.addEventListener('DOMContentLoaded', function () {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const elements = document.querySelectorAll('.fade');
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        // Circle follow mouse
+        const circle = document.getElementById('circle');
+        document.addEventListener('mousemove', (e) => {
+            circle.style.left = e.pageX + 'px';
+            circle.style.top = e.pageY + 'px';
         });
     </script>
 </body>
