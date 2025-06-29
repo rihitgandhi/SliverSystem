@@ -41,6 +41,28 @@
                             <span class="score-label">/100</span>
                         </div>
                     </div>
+                    
+                    <!-- WCAG Standards Section -->
+                    <div class="wcag-standards-section">
+                        <h3>WCAG 2.1 Level AA Compliance</h3>
+                        <div class="standards-grid">
+                            <div class="compliant-standards">
+                                <h4>✅ Compliant Standards</h4>
+                                <div id="compliant-list" class="standards-list"></div>
+                            </div>
+                            <div class="non-compliant-standards">
+                                <h4>❌ Non-Compliant Standards</h4>
+                                <div id="non-compliant-list" class="standards-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Priority Issues Section -->
+                    <div class="priority-issues-section">
+                        <h3>Priority Issues</h3>
+                        <div id="priority-issues-list" class="priority-issues-grid"></div>
+                    </div>
+                    
                     <div class="recommendations">
                         <div class="recommendation-card">
                             <h3>Short-term (1-2 weeks)</h3>
@@ -135,6 +157,12 @@
                 document.getElementById('medium-term-details').textContent = data.details.medium_term;
                 document.getElementById('long-term-details').textContent = data.details.long_term;
                 
+                // Display WCAG Standards
+                displayWCAGStandards(data.wcag_standards);
+                
+                // Display Priority Issues
+                displayPriorityIssues(data.priority_issues);
+                
                 showSuccess('Analysis completed successfully!');
                 resultsDiv.style.display = 'block';
                 resultsDiv.scrollIntoView({ behavior: 'smooth' });
@@ -164,6 +192,73 @@
         successDiv.textContent = message;
         successDiv.style.display = 'block';
         successDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    function displayWCAGStandards(wcagData) {
+        const compliantList = document.getElementById('compliant-list');
+        const nonCompliantList = document.getElementById('non-compliant-list');
+        
+        // Clear previous content
+        compliantList.innerHTML = '';
+        nonCompliantList.innerHTML = '';
+        
+        // Display compliant standards
+        if (wcagData.compliant && wcagData.compliant.length > 0) {
+            wcagData.compliant.forEach(criterion => {
+                const item = document.createElement('div');
+                item.className = 'standard-item compliant';
+                item.innerHTML = `
+                    <strong>${criterion}</strong>
+                    <span>${wcagData.details[criterion] || 'Compliant'}</span>
+                `;
+                compliantList.appendChild(item);
+            });
+        } else {
+            compliantList.innerHTML = '<p class="no-standards">No compliant standards found</p>';
+        }
+        
+        // Display non-compliant standards
+        if (wcagData.non_compliant && wcagData.non_compliant.length > 0) {
+            wcagData.non_compliant.forEach(criterion => {
+                const item = document.createElement('div');
+                item.className = 'standard-item non-compliant';
+                item.innerHTML = `
+                    <strong>${criterion}</strong>
+                    <span>${wcagData.details[criterion] || 'Non-compliant'}</span>
+                `;
+                nonCompliantList.appendChild(item);
+            });
+        } else {
+            nonCompliantList.innerHTML = '<p class="no-standards">All standards are compliant!</p>';
+        }
+    }
+    
+    function displayPriorityIssues(priorityIssues) {
+        const issuesList = document.getElementById('priority-issues-list');
+        
+        // Clear previous content
+        issuesList.innerHTML = '';
+        
+        if (priorityIssues && priorityIssues.length > 0) {
+            priorityIssues.forEach(issue => {
+                const issueCard = document.createElement('div');
+                issueCard.className = 'priority-issue-card';
+                issueCard.innerHTML = `
+                    <div class="issue-header">
+                        <h4>${issue.title}</h4>
+                        <span class="wcag-criterion">WCAG ${issue.wcag_criterion}</span>
+                    </div>
+                    <p class="issue-description">${issue.description}</p>
+                    <div class="issue-metrics">
+                        <span class="impact ${issue.impact.toLowerCase()}">Impact: ${issue.impact}</span>
+                        <span class="effort ${issue.effort.toLowerCase()}">Effort: ${issue.effort}</span>
+                    </div>
+                `;
+                issuesList.appendChild(issueCard);
+            });
+        } else {
+            issuesList.innerHTML = '<p class="no-issues">No priority issues identified</p>';
+        }
     }
     </script>
 </body>

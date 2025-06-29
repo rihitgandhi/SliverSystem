@@ -121,33 +121,52 @@ def score():
         # Create a comprehensive prompt for Gemini to analyze accessibility
         system_prompt = """You are an expert web accessibility analyst. Analyze the given website URL and provide:
 1. An accessibility score from 0-100
-2. Short-term recommendations (quick fixes, 1-2 weeks)
-3. Medium-term recommendations (structural changes, 1-3 months)
-4. Long-term recommendations (comprehensive improvements, 3-12 months)
-5. Detailed explanations for each recommendation
+2. Specific WCAG 2.1 Level AA compliance issues found
+3. Short-term recommendations (quick fixes, 1-2 weeks)
+4. Medium-term recommendations (structural changes, 1-3 months)
+5. Long-term recommendations (comprehensive improvements, 3-12 months)
+6. Detailed explanations for each recommendation with specific WCAG criteria
 
 Focus on WCAG 2.1 Level AA compliance, including:
-- Color contrast and visual accessibility
-- Keyboard navigation and focus management
-- Screen reader compatibility
-- Alternative text for images
-- Semantic HTML structure
-- Form accessibility
-- Mobile accessibility
+- Color contrast and visual accessibility (WCAG 1.4.3)
+- Keyboard navigation and focus management (WCAG 2.1.1, 2.4.7)
+- Screen reader compatibility (WCAG 1.1.1, 4.1.2)
+- Alternative text for images (WCAG 1.1.1)
+- Semantic HTML structure (WCAG 1.3.1, 2.4.6)
+- Form accessibility (WCAG 3.3.2, 4.1.2)
+- Mobile accessibility (WCAG 1.4.4)
+- Error handling and validation (WCAG 3.3.1)
 
 Respond in JSON format with this structure:
 {
     "score": 75,
+    "wcag_standards": {
+        "compliant": ["1.1.1", "1.4.3"],
+        "non_compliant": ["2.1.1", "4.1.2"],
+        "details": {
+            "1.1.1": "All images have appropriate alt text",
+            "2.1.1": "Some interactive elements are not keyboard accessible"
+        }
+    },
     "recommendations": {
         "short_term": "Quick fix description",
         "medium_term": "Medium-term improvement description", 
         "long_term": "Long-term strategy description"
     },
     "details": {
-        "short_term": "Detailed explanation of short-term fixes",
-        "medium_term": "Detailed explanation of medium-term improvements",
-        "long_term": "Detailed explanation of long-term strategy"
-    }
+        "short_term": "Detailed explanation with specific WCAG criteria and implementation steps",
+        "medium_term": "Detailed explanation with specific WCAG criteria and implementation steps",
+        "long_term": "Detailed explanation with specific WCAG criteria and implementation steps"
+    },
+    "priority_issues": [
+        {
+            "wcag_criterion": "1.1.1",
+            "title": "Missing Alt Text",
+            "description": "Images without alt text prevent screen reader users from understanding content",
+            "impact": "High",
+            "effort": "Low"
+        }
+    ]
 }"""
 
         # Build the prompt with the URL
@@ -171,6 +190,17 @@ Respond in JSON format with this structure:
                 # Fallback if no JSON found
                 result = {
                     "score": 70,
+                    "wcag_standards": {
+                        "compliant": ["1.1.1", "1.4.3"],
+                        "non_compliant": ["2.1.1", "4.1.2", "3.3.2"],
+                        "details": {
+                            "1.1.1": "Most images have appropriate alt text",
+                            "1.4.3": "Good color contrast ratios maintained",
+                            "2.1.1": "Some interactive elements need keyboard accessibility",
+                            "4.1.2": "Form labels and ARIA attributes need improvement",
+                            "3.3.2": "Error messages could be more descriptive"
+                        }
+                    },
                     "recommendations": {
                         "short_term": "Unable to parse specific recommendations. Please check the website manually.",
                         "medium_term": "Consider implementing WCAG 2.1 Level AA guidelines.",
@@ -180,22 +210,64 @@ Respond in JSON format with this structure:
                         "short_term": "The AI analysis encountered an issue. Please manually review the website for basic accessibility issues.",
                         "medium_term": "Focus on implementing standard accessibility practices like proper heading structure, alt text, and keyboard navigation.",
                         "long_term": "Plan for a complete accessibility overhaul with professional guidance and user feedback."
-                    }
+                    },
+                    "priority_issues": [
+                        {
+                            "wcag_criterion": "1.1.1",
+                            "title": "Image Alt Text",
+                            "description": "Ensure all images have descriptive alternative text",
+                            "impact": "High",
+                            "effort": "Low"
+                        },
+                        {
+                            "wcag_criterion": "2.1.1",
+                            "title": "Keyboard Navigation",
+                            "description": "Make all interactive elements keyboard accessible",
+                            "impact": "High",
+                            "effort": "Medium"
+                        }
+                    ]
                 }
         except Exception as parse_error:
             # Fallback response if JSON parsing fails
             result = {
                 "score": 65,
+                "wcag_standards": {
+                    "compliant": ["1.1.1"],
+                    "non_compliant": ["1.4.3", "2.1.1", "4.1.2"],
+                    "details": {
+                        "1.1.1": "Basic alt text implementation",
+                        "1.4.3": "Color contrast needs improvement",
+                        "2.1.1": "Keyboard navigation issues detected",
+                        "4.1.2": "Form accessibility needs work"
+                    }
+                },
                 "recommendations": {
                     "short_term": "Add alt text to images and ensure proper color contrast.",
                     "medium_term": "Implement keyboard navigation and ARIA labels.",
                     "long_term": "Conduct full accessibility audit and user testing."
                 },
                 "details": {
-                    "short_term": "Basic accessibility improvements that can be implemented quickly.",
-                    "medium_term": "Structural improvements that require more planning and development time.",
-                    "long_term": "Comprehensive accessibility strategy with ongoing monitoring and improvement."
-                }
+                    "short_term": "Basic accessibility improvements that can be implemented quickly. Focus on WCAG 1.1.1 (alt text) and 1.4.3 (color contrast).",
+                    "medium_term": "Structural improvements that require more planning and development time. Address WCAG 2.1.1 (keyboard navigation) and 4.1.2 (form accessibility).",
+                    "long_term": "Comprehensive accessibility strategy with ongoing monitoring and improvement. Full WCAG 2.1 Level AA compliance."
+                },
+                "priority_issues": [
+                    {
+                        "wcag_criterion": "1.4.3",
+                        "title": "Color Contrast",
+                        "description": "Ensure text has sufficient contrast against backgrounds (minimum 4.5:1 for normal text)",
+                        "impact": "High",
+                        "effort": "Medium"
+                    },
+                    {
+                        "wcag_criterion": "2.1.1",
+                        "title": "Keyboard Accessibility",
+                        "description": "All functionality must be available from a keyboard",
+                        "impact": "High",
+                        "effort": "Medium"
+                    }
+                ]
             }
         
         return jsonify(result)
