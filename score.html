@@ -23,11 +23,16 @@
         <main id="main-content" role="main">
             <section class="score-section">
                 <h1>Website Accessibility Score</h1>
-                <form id="score-form">
+                <form id="score-form" class="score-form">
                     <label for="url">Enter website URL:</label>
-                    <input type="url" id="url" name="url" placeholder="https://example.com" required style="width: 300px;">
-                    <button type="submit">Check Accessibility</button>
+                    <input type="url" id="url" name="url" placeholder="https://example.com" required>
+                    <button type="submit" id="submit-btn">
+                        <span class="btn-text">Check Accessibility</span>
+                        <span class="loading-spinner" style="display: none;">⏳</span>
+                    </button>
                 </form>
+                <div id="error-message" class="error-message" style="display: none;"></div>
+                <div id="success-message" class="success-message" style="display: none;"></div>
                 <div id="results" class="results-section" style="display: none;">
                     <h2>Accessibility Analysis Results</h2>
                     <div class="score-display">
@@ -79,18 +84,35 @@
         e.preventDefault();
         
         const url = document.getElementById('url').value;
-        const submitBtn = document.querySelector('button[type="submit"]');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const loadingSpinner = submitBtn.querySelector('.loading-spinner');
         const resultsDiv = document.getElementById('results');
+        const errorDiv = document.getElementById('error-message');
+        const successDiv = document.getElementById('success-message');
         
         if (!url) {
-            alert('Please enter a URL');
+            showError('Please enter a URL');
             return;
         }
         
-        // Show loading state
-        submitBtn.textContent = 'Analyzing...';
-        submitBtn.disabled = true;
+        // Validate URL format
+        try {
+            new URL(url);
+        } catch (e) {
+            showError('Please enter a valid URL (e.g., https://example.com)');
+            return;
+        }
+        
+        // Clear previous messages and hide results
+        errorDiv.style.display = 'none';
+        successDiv.style.display = 'none';
         resultsDiv.style.display = 'none';
+        
+        // Show loading state
+        btnText.textContent = 'Analyzing...';
+        loadingSpinner.style.display = 'inline';
+        submitBtn.disabled = true;
         
         try {
             const response = await fetch('/api/score', {
@@ -113,20 +135,36 @@
                 document.getElementById('medium-term-details').textContent = data.details.medium_term;
                 document.getElementById('long-term-details').textContent = data.details.long_term;
                 
+                showSuccess('Analysis completed successfully!');
                 resultsDiv.style.display = 'block';
                 resultsDiv.scrollIntoView({ behavior: 'smooth' });
             } else {
-                alert('Error: ' + (data.error || 'Failed to analyze website'));
+                showError('Error: ' + (data.error || 'Failed to analyze website'));
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Error: Failed to connect to server');
+            showError('Error: Failed to connect to server. Please check your internet connection and try again.');
         } finally {
             // Reset button
-            submitBtn.textContent = 'Check Accessibility';
+            btnText.textContent = 'Check Accessibility';
+            loadingSpinner.style.display = 'none';
             submitBtn.disabled = false;
         }
     });
+    
+    function showError(message) {
+        const errorDiv = document.getElementById('error-message');
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+        errorDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    function showSuccess(message) {
+        const successDiv = document.getElementById('success-message');
+        successDiv.textContent = message;
+        successDiv.style.display = 'block';
+        successDiv.scrollIntoView({ behavior: 'smooth' });
+    }
     </script>
 </body>
 </html> 
