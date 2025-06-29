@@ -2,6 +2,9 @@ class AccessibilityChatbot {
     constructor() {
         this.conversationId = 'accessibility-chat-' + Date.now();
         this.isLoading = false;
+        // Update this URL for production deployment
+        // Local development: http://localhost:5000
+        // Production: https://your-backend-url.com (e.g., https://sliversystem-backend.onrender.com)
         this.backendUrl = 'http://localhost:5000'; // For local testing
         this.init();
     }
