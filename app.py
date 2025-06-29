@@ -101,6 +101,112 @@ def simple_chat_page():
 def test_chatbot_page():
     return send_from_directory('.', 'test-chatbot.html')
 
+@app.route('/score.html')
+def score_page():
+    return send_from_directory('.', 'score.html')
+
+@app.route('/help.html')
+def help_page():
+    return send_from_directory('.', 'help.html')
+
+@app.route('/api/score', methods=['POST'])
+def score():
+    try:
+        data = request.get_json()
+        url = data.get('url', '')
+        
+        if not url:
+            return jsonify({'error': 'No URL provided'}), 400
+        
+        # Create a comprehensive prompt for Gemini to analyze accessibility
+        system_prompt = """You are an expert web accessibility analyst. Analyze the given website URL and provide:
+1. An accessibility score from 0-100
+2. Short-term recommendations (quick fixes, 1-2 weeks)
+3. Medium-term recommendations (structural changes, 1-3 months)
+4. Long-term recommendations (comprehensive improvements, 3-12 months)
+5. Detailed explanations for each recommendation
+
+Focus on WCAG 2.1 Level AA compliance, including:
+- Color contrast and visual accessibility
+- Keyboard navigation and focus management
+- Screen reader compatibility
+- Alternative text for images
+- Semantic HTML structure
+- Form accessibility
+- Mobile accessibility
+
+Respond in JSON format with this structure:
+{
+    "score": 75,
+    "recommendations": {
+        "short_term": "Quick fix description",
+        "medium_term": "Medium-term improvement description", 
+        "long_term": "Long-term strategy description"
+    },
+    "details": {
+        "short_term": "Detailed explanation of short-term fixes",
+        "medium_term": "Detailed explanation of medium-term improvements",
+        "long_term": "Detailed explanation of long-term strategy"
+    }
+}"""
+
+        # Build the prompt with the URL
+        prompt = f"{system_prompt}\n\nAnalyze this website: {url}"
+        
+        # Use Gemini to analyze the website
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(prompt)
+        
+        # Parse the response (assuming it returns valid JSON)
+        try:
+            # Try to extract JSON from the response
+            response_text = response.text
+            # Look for JSON in the response (sometimes Gemini adds extra text)
+            import re
+            json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
+            if json_match:
+                import json
+                result = json.loads(json_match.group())
+            else:
+                # Fallback if no JSON found
+                result = {
+                    "score": 70,
+                    "recommendations": {
+                        "short_term": "Unable to parse specific recommendations. Please check the website manually.",
+                        "medium_term": "Consider implementing WCAG 2.1 Level AA guidelines.",
+                        "long_term": "Conduct a comprehensive accessibility audit with user testing."
+                    },
+                    "details": {
+                        "short_term": "The AI analysis encountered an issue. Please manually review the website for basic accessibility issues.",
+                        "medium_term": "Focus on implementing standard accessibility practices like proper heading structure, alt text, and keyboard navigation.",
+                        "long_term": "Plan for a complete accessibility overhaul with professional guidance and user feedback."
+                    }
+                }
+        except Exception as parse_error:
+            # Fallback response if JSON parsing fails
+            result = {
+                "score": 65,
+                "recommendations": {
+                    "short_term": "Add alt text to images and ensure proper color contrast.",
+                    "medium_term": "Implement keyboard navigation and ARIA labels.",
+                    "long_term": "Conduct full accessibility audit and user testing."
+                },
+                "details": {
+                    "short_term": "Basic accessibility improvements that can be implemented quickly.",
+                    "medium_term": "Structural improvements that require more planning and development time.",
+                    "long_term": "Comprehensive accessibility strategy with ongoing monitoring and improvement."
+                }
+            }
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"Error in score endpoint: {str(e)}")
+        return jsonify({
+            'error': 'An error occurred while analyzing the website',
+            'details': str(e) if FLASK_DEBUG else 'Check server logs for details'
+        }), 500
+
 if __name__ == '__main__':
     print(f"Starting server on {HOST}:{PORT}")
     print(f"Gemini API Key Status: {'Configured' if GEMINI_API_KEY else 'NOT CONFIGURED'}")

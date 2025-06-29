@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility Help & Guidelines</title>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+    <div id="content-wrapper">
+        <header role="banner">
+            <nav role="navigation" aria-label="Main navigation">
+                <div class="container">
+                    <div class="tabs" role="tablist">
+                        <a href="index.html" class="tab" role="tab" tabindex="0">← Back to Website</a>
+                        <a href="chat.html" class="tab chat-tab" role="tab" tabindex="0">🤖 Chat with AI</a>
+                        <a href="score.html" class="tab score-tab" role="tab" tabindex="0">📝 Accessibility Score</a>
+                        <a href="help.html" class="tab help-tab active" role="tab" tabindex="0">❓ Help & Guidelines</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <main id="main-content" role="main">
+            <section class="help-section">
+                <h1>Accessibility Help & Guidelines</h1>
+                
+                <div class="help-content">
+                    <h2>Understanding Your Accessibility Score</h2>
+                    <p>Your accessibility score (0-100) indicates how well your website meets WCAG 2.1 Level AA standards. Here's what the scores mean:</p>
+                    
+                    <ul>
+                        <li><strong>90-100:</strong> Excellent accessibility - minor improvements needed</li>
+                        <li><strong>70-89:</strong> Good accessibility - some improvements recommended</li>
+                        <li><strong>50-69:</strong> Fair accessibility - significant improvements needed</li>
+                        <li><strong>30-49:</strong> Poor accessibility - major improvements required</li>
+                        <li><strong>0-29:</strong> Very poor accessibility - complete overhaul needed</li>
+                    </ul>
+
+                    <h2>Recommendation Timeframes</h2>
+                    
+                    <h3>Short-term (1-2 weeks)</h3>
+                    <p>Quick fixes that can be implemented immediately:</p>
+                    <ul>
+                        <li><strong>Alt Text:</strong> Add descriptive alternative text to all images</li>
+                        <li><strong>Color Contrast:</strong> Ensure text has sufficient contrast against backgrounds</li>
+                        <li><strong>Headings:</strong> Use proper heading hierarchy (H1, H2, H3, etc.)</li>
+                        <li><strong>Links:</strong> Make link text descriptive and meaningful</li>
+                        <li><strong>Forms:</strong> Add labels to all form fields</li>
+                    </ul>
+
+                    <h3>Medium-term (1-3 months)</h3>
+                    <p>Structural improvements requiring more planning:</p>
+                    <ul>
+                        <li><strong>Keyboard Navigation:</strong> Ensure all functionality works with keyboard only</li>
+                        <li><strong>ARIA Labels:</strong> Add ARIA attributes for complex interactions</li>
+                        <li><strong>Focus Management:</strong> Implement visible focus indicators</li>
+                        <li><strong>Semantic HTML:</strong> Use proper HTML elements (nav, main, section, etc.)</li>
+                        <li><strong>Error Handling:</strong> Provide clear error messages and validation</li>
+                    </ul>
+
+                    <h3>Long-term (3-12 months)</h3>
+                    <p>Comprehensive accessibility strategy:</p>
+                    <ul>
+                        <li><strong>User Testing:</strong> Test with users who have disabilities</li>
+                        <li><strong>Accessibility Policy:</strong> Develop and implement accessibility guidelines</li>
+                        <li><strong>Training:</strong> Train development team on accessibility best practices</li>
+                        <li><strong>Monitoring:</strong> Implement ongoing accessibility monitoring</li>
+                        <li><strong>Compliance:</strong> Achieve full WCAG 2.1 Level AA compliance</li>
+                    </ul>
+
+                    <h2>WCAG 2.1 Guidelines Explained</h2>
+                    
+                    <h3>Perceivable</h3>
+                    <p>Information must be presentable to users in ways they can perceive:</p>
+                    <ul>
+                        <li>Provide text alternatives for non-text content</li>
+                        <li>Provide captions and other alternatives for multimedia</li>
+                        <li>Create content that can be presented in different ways</li>
+                        <li>Make it easier for users to see and hear content</li>
+                    </ul>
+
+                    <h3>Operable</h3>
+                    <p>User interface components and navigation must be operable:</p>
+                    <ul>
+                        <li>Make all functionality available from a keyboard</li>
+                        <li>Give users enough time to read and use content</li>
+                        <li>Do not design content in a way that is known to cause seizures</li>
+                        <li>Help users navigate and find content</li>
+                    </ul>
+
+                    <h3>Understandable</h3>
+                    <p>Information and operation of user interface must be understandable:</p>
+                    <ul>
+                        <li>Make text readable and understandable</li>
+                        <li>Make pages appear and operate in predictable ways</li>
+                        <li>Help users avoid and correct mistakes</li>
+                    </ul>
+
+                    <h3>Robust</h3>
+                    <p>Content must be robust enough to be interpreted by a wide variety of user agents:</p>
+                    <ul>
+                        <li>Maximize compatibility with current and future user tools</li>
+                    </ul>
+
+                    <h2>Common Accessibility Issues & Solutions</h2>
+                    
+                    <h3>Images Without Alt Text</h3>
+                    <p><strong>Problem:</strong> Screen readers can't describe images to users</p>
+                    <p><strong>Solution:</strong> Add descriptive alt text to all images</p>
+                    <pre><code>&lt;img src="logo.png" alt="Company Logo"&gt;</code></pre>
+
+                    <h3>Poor Color Contrast</h3>
+                    <p><strong>Problem:</strong> Text is hard to read for users with visual impairments</p>
+                    <p><strong>Solution:</strong> Ensure contrast ratio of at least 4.5:1 for normal text</p>
+
+                    <h3>Missing Form Labels</h3>
+                    <p><strong>Problem:</strong> Screen readers can't identify form fields</p>
+                    <p><strong>Solution:</strong> Use proper label elements</p>
+                    <pre><code>&lt;label for="email"&gt;Email:&lt;/label&gt;
+&lt;input type="email" id="email" name="email"&gt;</code></pre>
+
+                    <h3>Keyboard Navigation Issues</h3>
+                    <p><strong>Problem:</strong> Users can't navigate with keyboard only</p>
+                    <p><strong>Solution:</strong> Ensure all interactive elements are keyboard accessible</p>
+
+                    <h2>Testing Your Website</h2>
+                    <p>Use these tools to test your website's accessibility:</p>
+                    <ul>
+                        <li><strong>WAVE:</strong> Web Accessibility Evaluation Tool</li>
+                        <li><strong>axe DevTools:</strong> Browser extension for accessibility testing</li>
+                        <li><strong>Lighthouse:</strong> Built into Chrome DevTools</li>
+                        <li><strong>Screen Readers:</strong> Test with NVDA (Windows) or VoiceOver (Mac)</li>
+                    </ul>
+
+                    <h2>Getting Help</h2>
+                    <p>If you need more specific guidance:</p>
+                    <ul>
+                        <li>Use our <a href="chat.html">AI Chatbot</a> for specific questions</li>
+                        <li>Check the <a href="https://www.w3.org/WAI/WCAG21/quickref/">WCAG Quick Reference</a></li>
+                        <li>Consult with accessibility experts</li>
+                        <li>Join accessibility communities and forums</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+        
+        <footer role="contentinfo">
+            <div class="footer-content">
+                <p>&copy; 2024 Computer Accessibility. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility Score</title>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+    <div id="content-wrapper">
+        <header role="banner">
+            <nav role="navigation" aria-label="Main navigation">
+                <div class="container">
+                    <div class="tabs" role="tablist">
+                        <a href="index.html" class="tab" role="tab" tabindex="0">← Back to Website</a>
+                        <a href="chat.html" class="tab chat-tab" role="tab" tabindex="0">🤖 Chat with AI</a>
+                        <a href="score.html" class="tab score-tab active" role="tab" tabindex="0">📝 Accessibility Score</a>
+                        <a href="help.html" class="tab help-tab" role="tab" tabindex="0">❓ Help & Guidelines</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main id="main-content" role="main">
+            <section class="score-section">
+                <h1>Website Accessibility Score</h1>
+                <form id="score-form">
+                    <label for="url">Enter website URL:</label>
+                    <input type="url" id="url" name="url" placeholder="https://example.com" required style="width: 300px;">
+                    <button type="submit">Check Accessibility</button>
+                </form>
+                <div id="results" class="results-section" style="display: none;">
+                    <h2>Accessibility Analysis Results</h2>
+                    <div class="score-display">
+                        <div class="score-circle">
+                            <span id="score-value">0</span>
+                            <span class="score-label">/100</span>
+                        </div>
+                    </div>
+                    <div class="recommendations">
+                        <div class="recommendation-card">
+                            <h3>Short-term (1-2 weeks)</h3>
+                            <p id="short-term-rec"></p>
+                            <details>
+                                <summary>Learn more</summary>
+                                <p id="short-term-details"></p>
+                            </details>
+                        </div>
+                        <div class="recommendation-card">
+                            <h3>Medium-term (1-3 months)</h3>
+                            <p id="medium-term-rec"></p>
+                            <details>
+                                <summary>Learn more</summary>
+                                <p id="medium-term-details"></p>
+                            </details>
+                        </div>
+                        <div class="recommendation-card">
+                            <h3>Long-term (3-12 months)</h3>
+                            <p id="long-term-rec"></p>
+                            <details>
+                                <summary>Learn more</summary>
+                                <p id="long-term-details"></p>
+                            </details>
+                        </div>
+                    </div>
+                    <div class="help-link">
+                        <p>Need help understanding these recommendations? <a href="help.html">View our comprehensive help guide</a></p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer role="contentinfo">
+            <div class="footer-content">
+                <p>&copy; 2024 Computer Accessibility. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script>
+    document.getElementById('score-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const url = document.getElementById('url').value;
+        const submitBtn = document.querySelector('button[type="submit"]');
+        const resultsDiv = document.getElementById('results');
+        
+        if (!url) {
+            alert('Please enter a URL');
+            return;
+        }
+        
+        // Show loading state
+        submitBtn.textContent = 'Analyzing...';
+        submitBtn.disabled = true;
+        resultsDiv.style.display = 'none';
+        
+        try {
+            const response = await fetch('/api/score', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ url: url })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                // Display results
+                document.getElementById('score-value').textContent = data.score;
+                document.getElementById('short-term-rec').textContent = data.recommendations.short_term;
+                document.getElementById('medium-term-rec').textContent = data.recommendations.medium_term;
+                document.getElementById('long-term-rec').textContent = data.recommendations.long_term;
+                document.getElementById('short-term-details').textContent = data.details.short_term;
+                document.getElementById('medium-term-details').textContent = data.details.medium_term;
+                document.getElementById('long-term-details').textContent = data.details.long_term;
+                
+                resultsDiv.style.display = 'block';
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert('Error: ' + (data.error || 'Failed to analyze website'));
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error: Failed to connect to server');
+        } finally {
+            // Reset button
+            submitBtn.textContent = 'Check Accessibility';
+            submitBtn.disabled = false;
+        }
+    });
+    </script>
+</body>
+</html> 
