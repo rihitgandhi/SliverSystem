@@ -2,11 +2,25 @@ class AccessibilityChatbot {
     constructor() {
         this.conversationId = 'accessibility-chat-' + Date.now();
         this.isLoading = false;
-        // Update this URL for production deployment
-        // Local development: http://localhost:5000
-        // Production: https://your-backend-url.com (e.g., https://sliversystem-backend.onrender.com)
-        this.backendUrl = 'http://localhost:5000'; // For local testing
+        
+        // Backend URL Configuration
+        // For local development: http://localhost:5000
+        // For production: Update this to your deployed backend URL
+        // Example: https://sliversystem-backend.onrender.com
+        this.backendUrl = this.getBackendUrl();
+        
         this.init();
+    }
+
+    getBackendUrl() {
+        // Check if we're on GitHub Pages (production)
+        if (window.location.hostname.includes('github.io')) {
+            // Production: Update this URL to your deployed backend
+            return 'https://sliversystem-backend.onrender.com'; // Replace with your actual backend URL
+        } else {
+            // Local development
+            return 'http://localhost:5000';
+        }
     }
 
     init() {
