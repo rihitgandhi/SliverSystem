@@ -1,6 +1,11 @@
-# Computer Accessibility Website with AI Chatbot
+# SliverSystem - Computer Accessibility Analysis Tool
 
-A comprehensive website about computer accessibility featuring an AI-powered chatbot for accessibility questions.
+A comprehensive web application focused on computer accessibility, featuring an AI-powered chatbot and advanced accessibility analysis capabilities.
+
+## 🚀 Latest Update
+- **Deployment Status**: Updated for Render deployment with advanced accessibility analysis
+- **Features**: AI chatbot, accessibility scoring, WCAG compliance analysis
+- **Last Updated**: June 29, 2025
 
 ## 🌟 Features
 
