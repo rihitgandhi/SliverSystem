@@ -1,192 +1,221 @@
-# Computer Accessibility Website
+# Computer Accessibility Website with AI Chatbot
 
-A comprehensive, fully accessible website dedicated to educating people about computer accessibility, assistive technologies, and inclusive web design. This website follows WCAG 2.1 Level AA guidelines and serves as both an educational resource and a demonstration of accessibility best practices.
+A comprehensive website about computer accessibility featuring an AI-powered chatbot for accessibility questions.
 
 ## 🌟 Features
 
-### Accessibility Features
-- **High Contrast Mode**: Toggle high contrast for better visibility
-- **Text-to-Speech**: Built-in text-to-speech functionality
-- **Font Size Adjustment**: Increase/decrease text size
-- **Keyboard Navigation**: Full keyboard accessibility
-- **Screen Reader Compatible**: Proper ARIA labels and semantic HTML
-- **Color Blindness Mode**: Enhanced visibility for color blind users
-- **Accessibility Widget**: Floating accessibility controls
+- **Educational Content**: Lessons, blogs, and resources about computer accessibility
+- **AI Chatbot**: Powered by Google Gemini API for accessibility questions
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **Accessibility Features**: Built with WCAG 2.1 Level AA compliance
+- **Interactive Lessons**: Step-by-step guides for designers and navigators
 
-### Content Sections
-1. **Home**: Introduction to computer accessibility and its importance
-2. **Blogs**: Comprehensive articles about accessibility topics
-3. **AI in Accessibility**: How artificial intelligence is transforming accessibility
-4. **Accessibility Features**: Interactive demonstration of accessibility tools
-5. **News & Updates**: Latest accessibility news and resources
+## 🚀 Quick Start
 
-### Educational Content
-- Understanding different types of disabilities and accessibility needs
-- WCAG guidelines and implementation strategies
-- Best practices for inclusive design
-- Assistive technologies overview
-- Legal aspects of accessibility
+### Local Development
 
-## 🚀 Getting Started
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/SliverSystem.git
+   cd SliverSystem
+   ```
 
-### Prerequisites
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- No additional software required
+2. **Install Python dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Installation
-1. Clone or download this repository
-2. Open `index.html` in your web browser
-3. The website is ready to use!
+3. **Configure API Key**
+   - Edit `config.py`
+   - Replace `'your-api-key-here'` with your Google Gemini API key
+   - Get a free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
 
-### Navigation
-- Use the tab navigation at the top to explore different sections
-- Use keyboard arrow keys to navigate between tabs
-- Use Tab key to navigate through interactive elements
-- Press Enter or Space to activate buttons and links
+4. **Run the development server**
+   ```bash
+   python app.py
+   ```
 
-## 🎯 Target Audience
+5. **Open in browser**
+   - Main site: http://localhost:5000
+   - Chatbot: http://localhost:5000/chat.html
 
-This website is designed for:
-- **Students and Educators**: Learning about accessibility principles
-- **Web Developers**: Understanding accessibility implementation
-- **Designers**: Creating inclusive user experiences
-- **Business Owners**: Understanding accessibility requirements
-- **Individuals with Disabilities**: Learning about available tools and resources
-- **Anyone interested in making technology more accessible**
+### GitHub Pages Deployment
 
-## 📚 Educational Value
+**Option A: Static Version (Recommended for GitHub Pages)**
+1. The static files are ready for GitHub Pages
+2. Push to GitHub and enable Pages in repository settings
+3. Update the chatbot backend URL (see configuration section)
 
-### What You'll Learn
-- **Fundamentals of Accessibility**: Understanding why accessibility matters
-- **WCAG Guidelines**: Web Content Accessibility Guidelines explained
-- **Inclusive Design**: How to design for everyone
-- **Assistive Technologies**: Tools that help people with disabilities
-- **Implementation Strategies**: Practical steps to improve accessibility
-- **Testing Methods**: How to test for accessibility issues
+**Option B: Full Stack with External Backend**
+1. Deploy the Python backend to a service like Render, Railway, or Heroku
+2. Update the backend URL in `scripts/chatbot.js`
+3. Push static files to GitHub Pages
 
-### Key Topics Covered
-- Visual disabilities and screen readers
-- Motor disabilities and keyboard navigation
-- Hearing disabilities and captions
-- Cognitive disabilities and clear design
-- Color blindness and contrast
-- Mobile accessibility
-- Legal requirements and compliance
+## 🔧 Configuration
 
-## 🛠️ Technical Implementation
+### API Keys
 
-### Accessibility Standards
-- **WCAG 2.1 Level AA**: Full compliance with international standards
-- **Semantic HTML**: Proper use of HTML5 elements
-- **ARIA Labels**: Enhanced screen reader support
-- **Keyboard Navigation**: Full keyboard accessibility
-- **Color Contrast**: Meets WCAG contrast requirements
-- **Responsive Design**: Works on all devices and screen sizes
+**For Local Development:**
+```python
+# config.py
+GEMINI_API_KEY = 'your-actual-gemini-api-key'
+```
 
-### Technologies Used
-- **HTML5**: Semantic markup and accessibility features
-- **CSS3**: Modern styling with accessibility considerations
-- **JavaScript**: Interactive features and accessibility enhancements
-- **Google Fonts**: Accessible typography
+**For Production:**
+- Use environment variables
+- Never commit API keys to version control
 
-### Browser Support
-- Chrome 60+
-- Firefox 55+
-- Safari 12+
-- Edge 79+
-- Mobile browsers
+### Backend URL Configuration
 
-## 🔧 Customization
+**Local Development:**
+```javascript
+// scripts/chatbot.js
+this.backendUrl = 'http://localhost:5000';
+```
 
-### Adding Content
-1. Edit the HTML files to add new content
-2. Update the CSS for styling changes
-3. Modify JavaScript for new functionality
-4. Test accessibility with screen readers and keyboard navigation
+**Production (GitHub Pages):**
+```javascript
+// scripts/chatbot.js
+this.backendUrl = 'https://your-backend-url.com';
+```
 
-### Accessibility Testing
-- Use automated tools like WAVE or axe DevTools
-- Test with screen readers (NVDA, JAWS, VoiceOver)
-- Verify keyboard navigation
-- Check color contrast ratios
-- Test with high contrast mode
+## 📁 Project Structure
 
-## 📖 Blog Content
+```
+SliverSystem/
+├── app.py                 # Flask backend server
+├── config.py             # Configuration and API keys
+├── requirements.txt      # Python dependencies
+├── index.html           # Main website
+├── chat.html            # Chatbot page
+├── css/
+│   └── main.css         # Styles
+├── scripts/
+│   └── chatbot.js       # Chatbot functionality
+├── images/              # Website images
+└── Wind power/          # Educational content
+```
 
-### Blog 1: Understanding Computer Accessibility
-- Comprehensive overview of accessibility principles
-- Types of disabilities and accessibility needs
-- WCAG guidelines explained
-- Common barriers and solutions
-- Testing and validation methods
+## 🌐 Deployment Options
 
-### Blog 2: Designing for Inclusivity
-- Inclusive design principles
-- Color and contrast guidelines
-- Typography best practices
-- Navigation and layout considerations
-- Forms and interactive elements
+### GitHub Pages (Static Files Only)
 
-### Blog 3: Assistive Technologies Overview
-- Screen readers and text-to-speech
-- Voice recognition software
-- Alternative input devices
-- Mobile accessibility tools
-- Emerging technologies
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Initial commit"
+   git push origin main
+   ```
 
-### Blog 4: Legal Aspects of Accessibility
-- ADA compliance requirements
-- International accessibility laws
-- Legal precedents and cases
-- Compliance strategies
-- Risk management
+2. **Enable GitHub Pages**
+   - Go to repository Settings → Pages
+   - Source: Deploy from a branch
+   - Branch: main
+   - Folder: / (root)
+
+3. **Update Backend URL**
+   - Edit `scripts/chatbot.js`
+   - Change `backendUrl` to your deployed backend URL
+
+### Full Stack Deployment
+
+**Backend (Python/Flask):**
+- **Render**: Free tier available
+- **Railway**: Easy deployment
+- **Heroku**: Requires credit card
+- **PythonAnywhere**: Free tier available
+
+**Frontend (Static Files):**
+- **GitHub Pages**: Free and easy
+- **Netlify**: Free tier with more features
+- **Vercel**: Free tier available
+
+## 🔒 Security Notes
+
+- Never commit API keys to version control
+- Use environment variables in production
+- Consider rate limiting for production deployments
+- The current setup is for development/testing
+
+## 🛠️ Troubleshooting
+
+### Common Issues
+
+1. **"Connection refused" error**
+   - Make sure the Python backend is running
+   - Check if the backend URL is correct
+
+2. **"API key invalid" error**
+   - Verify your Gemini API key in `config.py`
+   - Check if the API key has proper permissions
+
+3. **CORS errors**
+   - The backend has CORS enabled
+   - Check browser console for specific errors
+
+4. **GitHub Pages not loading**
+   - Ensure all files are in the root directory
+   - Check repository settings for Pages configuration
+
+### Testing
+
+```bash
+# Test backend health
+curl http://localhost:5000/api/health
+
+# Test chatbot API
+curl -X POST http://localhost:5000/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Hello", "conversation_id": "test"}'
+```
+
+## 📚 API Documentation
+
+### Endpoints
+
+- `GET /` - Main website
+- `GET /chat.html` - Chatbot page
+- `POST /api/chat` - Send message to chatbot
+- `GET /api/health` - Health check
+
+### Chat API
+
+**Request:**
+```json
+{
+  "message": "What are WCAG guidelines?",
+  "conversation_id": "user-123"
+}
+```
+
+**Response:**
+```json
+{
+  "response": "WCAG (Web Content Accessibility Guidelines) are...",
+  "conversation_id": "user-123",
+  "timestamp": "2024-01-01T12:00:00Z"
+}
+```
 
 ## 🤝 Contributing
 
-We welcome contributions to improve this accessibility resource:
-
-1. **Content Improvements**: Add more educational content
-2. **Accessibility Enhancements**: Improve accessibility features
-3. **Bug Fixes**: Report and fix accessibility issues
-4. **Translation**: Help translate content to other languages
-5. **Testing**: Test with different assistive technologies
-
-### Contribution Guidelines
-- Follow WCAG 2.1 Level AA guidelines
-- Test with screen readers and keyboard navigation
-- Ensure proper color contrast
-- Use semantic HTML
-- Provide alternative text for images
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 🙏 Acknowledgments
+## 🆘 Support
 
-- **W3C Web Accessibility Initiative** for WCAG guidelines
-- **WebAIM** for accessibility resources and tools
-- **Microsoft Inclusive Design** for design principles
-- **Accessibility advocates** worldwide for their work
-
-## 📞 Contact
-
-For questions, suggestions, or accessibility feedback:
-- Create an issue in this repository
-- Test the website and report any accessibility issues
-- Share your experience with assistive technologies
-
-## 🌍 Impact
-
-This website aims to:
-- **Educate** people about accessibility importance
-- **Demonstrate** accessibility best practices
-- **Inspire** developers to create inclusive technology
-- **Support** people with disabilities
-- **Advocate** for universal design principles
-
-By making technology more accessible, we create a more inclusive world where everyone can participate fully in the digital age.
+For issues and questions:
+- Check the troubleshooting section
+- Open an issue on GitHub
+- Review the API documentation
 
 ---
 
-**Remember**: Accessibility is not just a feature—it's a fundamental aspect of good design that benefits everyone.
+**Made with ❤️ for accessibility and inclusive design**

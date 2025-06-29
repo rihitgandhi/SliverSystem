@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>Chatbot Debug Test</h1>
+    
+    <div class="test-section">
+        <h2>1. Check if chatbot.js loads</h2>
+        <div id="script-status" class="status info">Checking...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Check if AccessibilityChatbot class exists</h2>
+        <div id="class-status" class="status info">Checking...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Test backend connection</h2>
+        <button onclick="testBackend()">Test Backend API</button>
+        <div id="backend-status" class="status info">Click button to test</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Manual chatbot test</h2>
+        <input type="text" id="test-input" placeholder="Type a message...">
+        <button onclick="sendTestMessage()">Send</button>
+        <div id="test-response" class="status info">Response will appear here</div>
+    </div>
+
+    <script src="scripts/chatbot.js"></script>
+    <script>
+        // Test 1: Check if script loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const scriptStatus = document.getElementById('script-status');
+            if (typeof AccessibilityChatbot !== 'undefined') {
+                scriptStatus.textContent = '✅ Chatbot script loaded successfully';
+                scriptStatus.className = 'status success';
+            } else {
+                scriptStatus.textContent = '❌ Chatbot script failed to load';
+                scriptStatus.className = 'status error';
+            }
+            
+            // Test 2: Check if class exists
+            const classStatus = document.getElementById('class-status');
+            if (typeof AccessibilityChatbot === 'function') {
+                classStatus.textContent = '✅ AccessibilityChatbot class is available';
+                classStatus.className = 'status success';
+            } else {
+                classStatus.textContent = '❌ AccessibilityChatbot class not found';
+                classStatus.className = 'status error';
+            }
+        });
+        
+        // Test 3: Test backend connection
+        async function testBackend() {
+            const backendStatus = document.getElementById('backend-status');
+            backendStatus.textContent = 'Testing...';
+            backendStatus.className = 'status info';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/health');
+                if (response.ok) {
+                    backendStatus.textContent = '✅ Backend is running and accessible';
+                    backendStatus.className = 'status success';
+                } else {
+                    backendStatus.textContent = '❌ Backend responded with error: ' + response.status;
+                    backendStatus.className = 'status error';
+                }
+            } catch (error) {
+                backendStatus.textContent = '❌ Backend connection failed: ' + error.message;
+                backendStatus.className = 'status error';
+            }
+        }
+        
+        // Test 4: Manual message test
+        async function sendTestMessage() {
+            const input = document.getElementById('test-input');
+            const responseDiv = document.getElementById('test-response');
+            const message = input.value.trim();
+            
+            if (!message) {
+                responseDiv.textContent = 'Please enter a message';
+                responseDiv.className = 'status error';
+                return;
+            }
+            
+            responseDiv.textContent = 'Sending...';
+            responseDiv.className = 'status info';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        conversation_id: 'test-' + Date.now()
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    responseDiv.innerHTML = '<strong>Response:</strong><br>' + data.response;
+                    responseDiv.className = 'status success';
+                } else {
+                    responseDiv.textContent = 'Error: ' + data.error;
+                    responseDiv.className = 'status error';
+                }
+            } catch (error) {
+                responseDiv.textContent = 'Connection error: ' + error.message;
+                responseDiv.className = 'status error';
+            }
+        }
+    </script>
+</body>
+</html> 
