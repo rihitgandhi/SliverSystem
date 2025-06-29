@@ -1,9 +1,10 @@
 services:
   - type: web
-    name: sliversystem-backend
+    name: sliver-system-backend
     env: python
+    plan: starter
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -16,4 +17,9 @@ services:
       - key: HOST
         value: 0.0.0.0
       - key: PORT
-        value: 10000 
+        value: 10000
+    healthCheckPath: /api/health
+    autoDeploy: true
+    scaling:
+      minInstances: 1
+      maxInstances: 3 

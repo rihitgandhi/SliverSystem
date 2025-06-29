@@ -119,44 +119,89 @@ def score():
             return jsonify({'error': 'No URL provided'}), 400
         
         # Create a comprehensive prompt for Gemini to analyze accessibility
-        system_prompt = """You are an expert web accessibility analyst. Analyze the given website URL and provide:
-1. An accessibility score from 0-100
-2. Specific WCAG 2.1 Level AA compliance issues found
-3. Short-term recommendations (quick fixes, 1-2 weeks)
-4. Medium-term recommendations (structural changes, 1-3 months)
-5. Long-term recommendations (comprehensive improvements, 3-12 months)
-6. Detailed explanations for each recommendation with specific WCAG criteria
+        system_prompt = """You are an expert web accessibility analyst with deep knowledge of WCAG 2.1 Level AA standards. Analyze the given website URL and provide a comprehensive accessibility assessment.
 
-Focus on WCAG 2.1 Level AA compliance, including:
-- Color contrast and visual accessibility (WCAG 1.4.3)
-- Keyboard navigation and focus management (WCAG 2.1.1, 2.4.7)
-- Screen reader compatibility (WCAG 1.1.1, 4.1.2)
-- Alternative text for images (WCAG 1.1.1)
-- Semantic HTML structure (WCAG 1.3.1, 2.4.6)
-- Form accessibility (WCAG 3.3.2, 4.1.2)
-- Mobile accessibility (WCAG 1.4.4)
-- Error handling and validation (WCAG 3.3.1)
+**ANALYSIS REQUIREMENTS:**
 
-Respond in JSON format with this structure:
+1. **Accessibility Score (0-100)** - Based on WCAG 2.1 Level AA compliance
+2. **WCAG 2.1 Level AA Standards Analysis** - Specific criteria compliance
+3. **Priority Issues** - Ranked by impact and effort
+4. **Detailed Recommendations** - With implementation steps
+5. **Performance Impact** - How accessibility affects performance
+6. **Mobile Accessibility** - Mobile-specific issues
+7. **Screen Reader Compatibility** - Detailed screen reader analysis
+
+**WCAG 2.1 LEVEL AA CRITERIA TO ANALYZE:**
+
+**Perceivable (1.x):**
+- 1.1.1: Non-text Content (Images, buttons, form controls)
+- 1.2.1: Audio-only and Video-only (Prerecorded)
+- 1.2.2: Captions (Prerecorded)
+- 1.2.3: Audio Description or Media Alternative (Prerecorded)
+- 1.3.1: Info and Relationships (Semantic HTML, headings, lists)
+- 1.3.2: Meaningful Sequence (Logical reading order)
+- 1.3.3: Sensory Characteristics (Not relying on shape, size, location)
+- 1.4.1: Use of Color (Not using color alone)
+- 1.4.3: Contrast (Minimum) (4.5:1 for normal text, 3:1 for large text)
+- 1.4.4: Resize Text (Up to 200% without loss of functionality)
+- 1.4.5: Images of Text (Avoid images of text when possible)
+
+**Operable (2.x):**
+- 2.1.1: Keyboard (All functionality available from keyboard)
+- 2.1.2: No Keyboard Trap (Can navigate away from all components)
+- 2.2.1: Timing Adjustable (Time limits can be adjusted or turned off)
+- 2.2.2: Pause, Stop, Hide (Moving, blinking, scrolling content)
+- 2.3.1: Three Flashes or Below Threshold (No content flashes more than 3 times per second)
+- 2.4.1: Bypass Blocks (Skip links, landmarks)
+- 2.4.2: Page Titled (Descriptive page titles)
+- 2.4.3: Focus Order (Logical tab order)
+- 2.4.4: Link Purpose (In Context) (Clear link purpose)
+- 2.4.5: Multiple Ways (Multiple ways to find pages)
+- 2.4.6: Headings and Labels (Descriptive headings and labels)
+- 2.4.7: Focus Visible (Visible focus indicators)
+- 2.5.1: Pointer Gestures (Single pointer gestures)
+- 2.5.2: Pointer Cancellation (Can cancel pointer actions)
+- 2.5.3: Label in Name (Programmatic labels match visible labels)
+- 2.5.4: Motion Actuation (Can disable motion-triggered functionality)
+
+**Understandable (3.x):**
+- 3.1.1: Language of Page (Page language is programmatically determined)
+- 3.1.2: Language of Parts (Language changes are marked)
+- 3.2.1: On Focus (Focus doesn't change context)
+- 3.2.2: On Input (Input doesn't change context unexpectedly)
+- 3.3.1: Error Identification (Errors are clearly identified)
+- 3.3.2: Labels or Instructions (Clear labels and instructions)
+- 3.3.3: Error Suggestion (Suggestions for fixing errors)
+- 3.3.4: Error Prevention (Legal, financial, data modification)
+
+**Robust (4.x):**
+- 4.1.1: Parsing (Valid HTML)
+- 4.1.2: Name, Role, Value (ARIA attributes, form controls)
+
+**Respond in this exact JSON format:**
 {
     "score": 75,
     "wcag_standards": {
-        "compliant": ["1.1.1", "1.4.3"],
-        "non_compliant": ["2.1.1", "4.1.2"],
+        "compliant": ["1.1.1", "1.4.3", "2.4.2"],
+        "non_compliant": ["2.1.1", "4.1.2", "3.3.2"],
         "details": {
             "1.1.1": "All images have appropriate alt text",
-            "2.1.1": "Some interactive elements are not keyboard accessible"
+            "1.4.3": "Color contrast meets 4.5:1 ratio for normal text",
+            "2.4.2": "Page has descriptive title",
+            "2.1.1": "Some interactive elements are not keyboard accessible",
+            "4.1.2": "Form controls missing proper labels and ARIA attributes",
+            "3.3.2": "Form fields lack clear instructions"
         }
     },
     "recommendations": {
-        "short_term": "Quick fix description",
-        "medium_term": "Medium-term improvement description", 
-        "long_term": "Long-term strategy description"
+        "short_term": "Add alt text to remaining images and ensure all form fields have labels",
+        "medium_term": "Implement keyboard navigation for all interactive elements and add ARIA attributes",
+        "long_term": "Conduct comprehensive accessibility audit with user testing and establish accessibility policy"
     },
     "details": {
-        "short_term": "Detailed explanation with specific WCAG criteria and implementation steps",
-        "medium_term": "Detailed explanation with specific WCAG criteria and implementation steps",
-        "long_term": "Detailed explanation with specific WCAG criteria and implementation steps"
+        "short_term": "Quick fixes focusing on WCAG 1.1.1 (alt text) and 3.3.2 (form labels). These can be implemented immediately with minimal development effort.",
+        "medium_term": "Structural improvements addressing WCAG 2.1.1 (keyboard navigation) and 4.1.2 (ARIA attributes). Requires planning and development time.",
+        "long_term": "Comprehensive accessibility strategy including user testing, policy development, and ongoing monitoring for full WCAG 2.1 Level AA compliance."
     },
     "priority_issues": [
         {
@@ -164,9 +209,34 @@ Respond in JSON format with this structure:
             "title": "Missing Alt Text",
             "description": "Images without alt text prevent screen reader users from understanding content",
             "impact": "High",
-            "effort": "Low"
+            "effort": "Low",
+            "affected_elements": "5 images",
+            "fix_example": "<img src='logo.png' alt='Company Logo'>"
+        },
+        {
+            "wcag_criterion": "2.1.1",
+            "title": "Keyboard Navigation Issues",
+            "description": "Some interactive elements cannot be accessed using keyboard only",
+            "impact": "High",
+            "effort": "Medium",
+            "affected_elements": "3 buttons, 1 dropdown",
+            "fix_example": "Add tabindex='0' and keyboard event handlers"
         }
-    ]
+    ],
+    "performance_impact": {
+        "accessibility_improvements": "Minimal performance impact",
+        "recommendations": "Use semantic HTML, optimize images, implement lazy loading"
+    },
+    "mobile_accessibility": {
+        "touch_targets": "Some buttons are too small for touch interaction",
+        "viewport": "Properly configured",
+        "gestures": "No complex gestures detected"
+    },
+    "screen_reader_compatibility": {
+        "landmarks": "Missing main landmark",
+        "headings": "Proper heading hierarchy",
+        "forms": "Some form fields lack proper labels"
+    }
 }"""
 
         # Build the prompt with the URL
@@ -191,14 +261,16 @@ Respond in JSON format with this structure:
                 result = {
                     "score": 70,
                     "wcag_standards": {
-                        "compliant": ["1.1.1", "1.4.3"],
-                        "non_compliant": ["2.1.1", "4.1.2", "3.3.2"],
+                        "compliant": ["1.1.1", "1.4.3", "2.4.2"],
+                        "non_compliant": ["2.1.1", "4.1.2", "3.3.2", "2.4.7"],
                         "details": {
                             "1.1.1": "Most images have appropriate alt text",
                             "1.4.3": "Good color contrast ratios maintained",
+                            "2.4.2": "Page has descriptive title",
                             "2.1.1": "Some interactive elements need keyboard accessibility",
                             "4.1.2": "Form labels and ARIA attributes need improvement",
-                            "3.3.2": "Error messages could be more descriptive"
+                            "3.3.2": "Error messages could be more descriptive",
+                            "2.4.7": "Focus indicators need better visibility"
                         }
                     },
                     "recommendations": {
@@ -217,16 +289,34 @@ Respond in JSON format with this structure:
                             "title": "Image Alt Text",
                             "description": "Ensure all images have descriptive alternative text",
                             "impact": "High",
-                            "effort": "Low"
+                            "effort": "Low",
+                            "affected_elements": "Multiple images",
+                            "fix_example": "<img src='logo.png' alt='Company Logo'>"
                         },
                         {
                             "wcag_criterion": "2.1.1",
                             "title": "Keyboard Navigation",
                             "description": "Make all interactive elements keyboard accessible",
                             "impact": "High",
-                            "effort": "Medium"
+                            "effort": "Medium",
+                            "affected_elements": "Interactive elements",
+                            "fix_example": "Add tabindex='0' and keyboard event handlers"
                         }
-                    ]
+                    ],
+                    "performance_impact": {
+                        "accessibility_improvements": "Minimal performance impact",
+                        "recommendations": "Use semantic HTML, optimize images, implement lazy loading"
+                    },
+                    "mobile_accessibility": {
+                        "touch_targets": "Check touch target sizes (minimum 44px)",
+                        "viewport": "Ensure proper viewport configuration",
+                        "gestures": "Avoid complex gestures"
+                    },
+                    "screen_reader_compatibility": {
+                        "landmarks": "Add semantic landmarks (main, nav, section)",
+                        "headings": "Ensure proper heading hierarchy",
+                        "forms": "Add proper labels and ARIA attributes"
+                    }
                 }
         except Exception as parse_error:
             # Fallback response if JSON parsing fails
