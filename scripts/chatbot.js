@@ -16,10 +16,14 @@ class AccessibilityChatbot {
         // Check if we're on GitHub Pages (production)
         if (window.location.hostname.includes('github.io')) {
             // Production: Update this URL to your deployed backend
-            return 'https://sliversystem-backend.onrender.com'; // Replace with your actual backend URL
+            const url = 'https://sliversystem-backend.onrender.com';
+            console.log('🌐 Using production backend URL:', url);
+            return url;
         } else {
             // Local development
-            return 'http://localhost:5000';
+            const url = 'http://localhost:5000';
+            console.log('🏠 Using local backend URL:', url);
+            return url;
         }
     }
 
@@ -150,6 +154,9 @@ class AccessibilityChatbot {
         // Show loading indicator
         this.showLoading();
 
+        console.log('📤 Sending message to:', `${this.backendUrl}/api/chat`);
+        console.log('📝 Message:', message);
+
         try {
             const response = await fetch(`${this.backendUrl}/api/chat`, {
                 method: 'POST',
@@ -162,16 +169,26 @@ class AccessibilityChatbot {
                 })
             });
 
+            console.log('📥 Response status:', response.status);
+            console.log('📥 Response headers:', Object.fromEntries(response.headers.entries()));
+
             const data = await response.json();
+            console.log('📥 Response data:', data);
 
             if (response.ok) {
                 this.addMessage(data.response, 'bot');
                 this.saveChatHistory();
             } else {
+                console.error('❌ API Error:', data);
                 this.addMessage('Sorry, I encountered an error. Please try again.', 'bot error');
             }
         } catch (error) {
-            console.error('Chat error:', error);
+            console.error('❌ Chat error:', error);
+            console.error('❌ Error details:', {
+                name: error.name,
+                message: error.message,
+                stack: error.stack
+            });
             this.addMessage('Sorry, I\'m having trouble connecting to the server. Please check if the Python backend is running.', 'bot error');
         }
 
