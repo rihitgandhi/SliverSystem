@@ -248,6 +248,11 @@
                 // Display Priority Issues
                 displayPriorityIssues(data.priority_issues);
                 
+                // Add button to get detailed code examples if there are non-compliant standards
+                if (data.wcag_standards && data.wcag_standards.non_compliant && data.wcag_standards.non_compliant.length > 0) {
+                    addCodeExamplesButton(data.wcag_standards.non_compliant, url);
+                }
+                
                 showSuccess('Analysis completed successfully!');
                 resultsDiv.style.display = 'block';
                 resultsDiv.scrollIntoView({ behavior: 'smooth' });
@@ -382,6 +387,297 @@
         } else {
             issuesList.innerHTML = '<p class="no-issues">No priority issues identified</p>';
         }
+    }
+    
+    function addCodeExamplesButton(nonCompliantStandards, url) {
+        // Remove existing button if any
+        const existingButton = document.getElementById('code-examples-btn');
+        if (existingButton) {
+            existingButton.remove();
+        }
+        
+        // Create new button
+        const button = document.createElement('button');
+        button.id = 'code-examples-btn';
+        button.className = 'btn btn-secondary';
+        button.innerHTML = '<i class="fas fa-code"></i> Get Code Examples & Fixes';
+        button.onclick = () => getCodeExamples(nonCompliantStandards, url);
+        
+        // Add button after the results section
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.appendChild(button);
+    }
+    
+    async function getCodeExamples(nonCompliantStandards, url) {
+        const button = document.getElementById('code-examples-btn');
+        const originalText = button.innerHTML;
+        
+        try {
+            // Show loading state
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Code Examples...';
+            button.disabled = true;
+            
+            // Determine backend URL
+            const backendUrl = window.location.hostname === 'rihitgandhi.github.io' 
+                ? 'https://sliversystem-backend.onrender.com' 
+                : '';
+            
+            const response = await fetch(`${backendUrl}/api/score-details`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    url: url,
+                    non_compliant_standards: nonCompliantStandards
+                })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                displayCodeExamples(data);
+                showSuccess('Code examples and fixes loaded successfully!');
+            } else {
+                const errorData = await response.json();
+                showError('Error: ' + (errorData.error || 'Failed to get code examples'));
+            }
+        } catch (error) {
+            console.error('Error getting code examples:', error);
+            showError('Error: Failed to get code examples. Please try again.');
+        } finally {
+            // Reset button
+            button.innerHTML = originalText;
+            button.disabled = false;
+        }
+    }
+    
+    function displayCodeExamples(data) {
+        // Remove existing code examples section if any
+        const existingSection = document.getElementById('code-examples-section');
+        if (existingSection) {
+            existingSection.remove();
+        }
+        
+        // Create new section
+        const section = document.createElement('div');
+        section.id = 'code-examples-section';
+        section.className = 'code-examples-section';
+        
+        let html = `
+            <h3><i class="fas fa-code"></i> Code Examples & Fixes</h3>
+            <p class="section-description">${data.summary}</p>
+        `;
+        
+        // Display code examples
+        if (data.code_examples && data.code_examples.length > 0) {
+            html += '<div class="code-examples">';
+            data.code_examples.forEach(example => {
+                html += `
+                    <div class="code-example-card">
+                        <div class="example-header">
+                            <h4>${example.title}</h4>
+                            <span class="wcag-criterion">WCAG ${example.wcag_criterion}</span>
+                            <span class="severity ${example.severity.toLowerCase()}">${example.severity}</span>
+                        </div>
+                        <p class="example-description">${example.description}</p>
+                        
+                        <div class="examples-list">
+                            <h5>Code Examples:</h5>
+                `;
+                
+                example.examples.forEach(ex => {
+                    html += `
+                        <div class="example-item">
+                            <h6>${ex.issue}</h6>
+                            <div class="code-comparison">
+                                <div class="bad-code">
+                                    <label>❌ Bad Code:</label>
+                                    <pre><code>${ex.bad_code}</code></pre>
+                                </div>
+                                <div class="good-code">
+                                    <label>✅ Good Code:</label>
+                                    <pre><code>${ex.good_code}</code></pre>
+                                </div>
+                            </div>
+                            <p class="explanation">${ex.explanation}</p>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                
+                // Add implementation steps
+                if (example.implementation_steps && example.implementation_steps.length > 0) {
+                    html += `
+                        <div class="implementation-steps">
+                            <h5>Implementation Steps:</h5>
+                            <ol>
+                                ${example.implementation_steps.map(step => `<li>${step}</li>`).join('')}
+                            </ol>
+                        </div>
+                    `;
+                }
+                
+                // Add testing methods
+                if (example.testing_methods && example.testing_methods.length > 0) {
+                    html += `
+                        <div class="testing-methods">
+                            <h5>Testing Methods:</h5>
+                            <ul>
+                                ${example.testing_methods.map(method => `<li>${method}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                // Add common mistakes
+                if (example.common_mistakes && example.common_mistakes.length > 0) {
+                    html += `
+                        <div class="common-mistakes">
+                            <h5>Common Mistakes:</h5>
+                            <ul>
+                                ${example.common_mistakes.map(mistake => `<li>${mistake}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                // Add best practices
+                if (example.best_practices && example.best_practices.length > 0) {
+                    html += `
+                        <div class="best-practices">
+                            <h5>Best Practices:</h5>
+                            <ul>
+                                ${example.best_practices.map(practice => `<li>${practice}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                html += `
+                        <div class="technical-info">
+                            <p><strong>Browser Support:</strong> ${example.browser_support}</p>
+                            <p><strong>Performance Impact:</strong> ${example.performance_impact}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+        }
+        
+        // Display fixes
+        if (data.fixes && data.fixes.length > 0) {
+            html += '<div class="fixes-section">';
+            html += '<h4>Detailed Fixes</h4>';
+            data.fixes.forEach(fix => {
+                html += `
+                    <div class="fix-card">
+                        <div class="fix-header">
+                            <h5>${fix.title}</h5>
+                            <span class="wcag-criterion">WCAG ${fix.wcag_criterion}</span>
+                            <span class="priority ${fix.priority.toLowerCase()}">${fix.priority}</span>
+                        </div>
+                        <div class="fix-metrics">
+                            <span class="estimated-time">⏱️ ${fix.estimated_time}</span>
+                            <span class="difficulty">📊 ${fix.difficulty}</span>
+                        </div>
+                        
+                        ${fix.code_fixes && fix.code_fixes.length > 0 ? `
+                            <div class="code-fixes">
+                                <h6>Code Fixes:</h6>
+                                ${fix.code_fixes.map(codeFix => `
+                                    <div class="code-fix-item">
+                                        <h7>${codeFix.description}</h7>
+                                        <div class="code-comparison">
+                                            <div class="before-code">
+                                                <label>Before:</label>
+                                                <pre><code>${codeFix.before}</code></pre>
+                                            </div>
+                                            <div class="after-code">
+                                                <label>After:</label>
+                                                <pre><code>${codeFix.after}</code></pre>
+                                            </div>
+                                        </div>
+                                        <p class="notes">${codeFix.notes}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        
+                        ${fix.css_fixes && fix.css_fixes.length > 0 ? `
+                            <div class="css-fixes">
+                                <h6>CSS Fixes:</h6>
+                                ${fix.css_fixes.map(cssFix => `
+                                    <div class="css-fix-item">
+                                        <h7>${cssFix.description}</h7>
+                                        <pre><code>${cssFix.code}</code></pre>
+                                        <p class="notes">${cssFix.notes}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        
+                        ${fix.javascript_fixes && fix.javascript_fixes.length > 0 ? `
+                            <div class="js-fixes">
+                                <h6>JavaScript Fixes:</h6>
+                                ${fix.javascript_fixes.map(jsFix => `
+                                    <div class="js-fix-item">
+                                        <h7>${jsFix.description}</h7>
+                                        <pre><code>${jsFix.code}</code></pre>
+                                        <p class="notes">${jsFix.notes}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+            html += '</div>';
+        }
+        
+        // Add testing checklist
+        if (data.testing_checklist && data.testing_checklist.length > 0) {
+            html += '<div class="testing-checklist">';
+            html += '<h4>Testing Checklist</h4>';
+            data.testing_checklist.forEach(category => {
+                html += `
+                    <div class="checklist-category">
+                        <h5>${category.category}</h5>
+                        <ul>
+                            ${category.items.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+            html += '</div>';
+        }
+        
+        // Add resources
+        if (data.resources && data.resources.length > 0) {
+            html += '<div class="resources-section">';
+            html += '<h4>Additional Resources</h4>';
+            html += '<ul class="resources-list">';
+            data.resources.forEach(resource => {
+                html += `
+                    <li>
+                        <a href="${resource.url}" target="_blank" rel="noopener noreferrer">
+                            ${resource.title}
+                        </a>
+                        <span class="resource-description">${resource.description}</span>
+                    </li>
+                `;
+            });
+            html += '</ul></div>';
+        }
+        
+        section.innerHTML = html;
+        
+        // Add to results section
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.appendChild(section);
+        
+        // Scroll to the new section
+        section.scrollIntoView({ behavior: 'smooth' });
     }
     </script>
 </body>

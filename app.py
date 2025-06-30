@@ -500,6 +500,283 @@ def score():
             'details': str(e) if FLASK_DEBUG else 'Check server logs for details'
         }), 500
 
+@app.route('/api/score-details', methods=['POST', 'OPTIONS'])
+def score_details():
+    if request.method == 'OPTIONS':
+        print("Handling OPTIONS request for /api/score-details")
+        response = jsonify({'status': 'ok'})
+        print(f"OPTIONS response headers: {dict(response.headers)}")
+        return response
+    
+    try:
+        # Add better error handling for JSON parsing
+        if not request.is_json:
+            return jsonify({'error': 'Content-Type must be application/json'}), 400
+        
+        try:
+            data = request.get_json(force=True)
+        except Exception as json_error:
+            print(f"JSON parsing error: {str(json_error)}")
+            print(f"Request data: {request.get_data()}")
+            return jsonify({'error': f'Invalid JSON format: {str(json_error)}'}), 400
+        
+        url = data.get('url', '')
+        non_compliant_standards = data.get('non_compliant_standards', [])
+        
+        if not url:
+            return jsonify({'error': 'No URL provided'}), 400
+        
+        if not non_compliant_standards:
+            return jsonify({'error': 'No non-compliant standards provided'}), 400
+        
+        # Create a detailed prompt for code examples and fixes
+        system_prompt = f"""You are an expert web accessibility developer with deep knowledge of WCAG 2.1 Level AA standards and practical implementation. Analyze the given website URL and provide specific code examples and fixes for the non-compliant standards.
+
+**ANALYSIS REQUIREMENTS:**
+
+1. **Specific Code Examples** - Show actual HTML/CSS/JavaScript code that demonstrates the accessibility issues
+2. **Detailed Fixes** - Provide complete, working code solutions for each issue
+3. **Implementation Steps** - Step-by-step instructions for implementing each fix
+4. **Testing Methods** - How to test each fix for compliance
+5. **Common Mistakes** - What developers often do wrong and how to avoid them
+6. **Best Practices** - Industry best practices for each standard
+7. **Browser/Device Support** - Compatibility considerations
+8. **Performance Impact** - How each fix affects performance
+
+**NON-COMPLIANT STANDARDS TO ANALYZE:**
+{', '.join(non_compliant_standards)}
+
+**RESPOND IN THIS EXACT JSON FORMAT:**
+{{
+    "url": "{url}",
+    "non_compliant_standards": {non_compliant_standards},
+    "code_examples": [
+        {{
+            "wcag_criterion": "1.1.1",
+            "title": "Missing Alt Text Examples",
+            "description": "Images without proper alt text prevent screen reader users from understanding content",
+            "severity": "Critical",
+            "examples": [
+                {{
+                    "issue": "Decorative image without alt text",
+                    "bad_code": "<img src='decoration.png'>",
+                    "good_code": "<img src='decoration.png' alt=''>",
+                    "explanation": "Decorative images should have empty alt text to indicate they are decorative"
+                }},
+                {{
+                    "issue": "Informative image without descriptive alt text",
+                    "bad_code": "<img src='chart.png'>",
+                    "good_code": "<img src='chart.png' alt='Sales growth chart showing 25% increase in Q3 2024'>",
+                    "explanation": "Informative images need descriptive alt text that conveys the same information"
+                }}
+            ],
+            "implementation_steps": [
+                "1. Audit all images on the page",
+                "2. Identify decorative vs informative images",
+                "3. Add appropriate alt text for each image type",
+                "4. Test with screen reader software"
+            ],
+            "testing_methods": [
+                "Use screen reader (NVDA, JAWS, VoiceOver)",
+                "Check browser developer tools for alt attributes",
+                "Validate with WAVE or axe-core tools"
+            ],
+            "common_mistakes": [
+                "Using generic alt text like 'image' or 'picture'",
+                "Forgetting alt text on background images",
+                "Not considering context when writing alt text"
+            ],
+            "best_practices": [
+                "Write alt text that conveys the same information as the image",
+                "Keep alt text concise but descriptive",
+                "Use empty alt='' for decorative images",
+                "Test with actual screen reader users"
+            ],
+            "browser_support": "Universal support across all browsers",
+            "performance_impact": "Minimal - alt text is lightweight and improves SEO"
+        }}
+    ],
+    "fixes": [
+        {{
+            "wcag_criterion": "1.1.1",
+            "title": "Alt Text Implementation",
+            "priority": "Critical",
+            "estimated_time": "2-4 hours",
+            "difficulty": "Easy",
+            "code_fixes": [
+                {{
+                    "file_type": "HTML",
+                    "description": "Add alt text to all images",
+                    "before": "<img src='logo.png'>",
+                    "after": "<img src='logo.png' alt='Company Logo'>",
+                    "notes": "Ensure alt text is descriptive and meaningful"
+                }}
+            ],
+            "css_fixes": [
+                {{
+                    "description": "Hide decorative images from screen readers",
+                    "code": ".decorative {{ position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }}",
+                    "notes": "Alternative to empty alt text for complex decorative elements"
+                }}
+            ],
+            "javascript_fixes": [
+                {{
+                    "description": "Dynamically add alt text to images loaded via JavaScript",
+                    "code": "function addAltText() {{ const images = document.querySelectorAll('img[data-alt]'); images.forEach(img => {{ img.alt = img.dataset.alt; }}); }}",
+                    "notes": "Use for dynamically loaded content"
+                }}
+            ]
+        }}
+    ],
+    "testing_checklist": [
+        {{
+            "category": "Manual Testing",
+            "items": [
+                "Test with screen reader software",
+                "Verify keyboard navigation",
+                "Check color contrast ratios",
+                "Test with different zoom levels"
+            ]
+        }},
+        {{
+            "category": "Automated Testing",
+            "items": [
+                "Run axe-core accessibility tests",
+                "Use WAVE web accessibility evaluator",
+                "Validate HTML with W3C validator",
+                "Test with Lighthouse accessibility audit"
+            ]
+        }}
+    ],
+    "resources": [
+        {{
+            "title": "WCAG 2.1 Guidelines",
+            "url": "https://www.w3.org/WAI/WCAG21/quickref/",
+            "description": "Official WCAG 2.1 quick reference"
+        }},
+        {{
+            "title": "WebAIM Color Contrast Checker",
+            "url": "https://webaim.org/resources/contrastchecker/",
+            "description": "Tool to check color contrast ratios"
+        }}
+    ],
+    "summary": "Comprehensive accessibility fixes with code examples, implementation steps, and testing methods for achieving WCAG 2.1 Level AA compliance."
+}}"""
+
+        # Build the prompt with the URL and standards
+        prompt = f"{system_prompt}\n\nAnalyze this website: {url}"
+        
+        # Use Gemini to analyze the website
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(prompt)
+        
+        # Parse the response (assuming it returns valid JSON)
+        try:
+            # Try to extract JSON from the response
+            response_text = response.text
+            # Look for JSON in the response (sometimes Gemini adds extra text)
+            import re
+            json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
+            if json_match:
+                import json
+                result = json.loads(json_match.group())
+            else:
+                # Fallback if no JSON found
+                result = {
+                    "url": url,
+                    "non_compliant_standards": non_compliant_standards,
+                    "code_examples": [
+                        {
+                            "wcag_criterion": "1.1.1",
+                            "title": "Missing Alt Text Examples",
+                            "description": "Images without proper alt text prevent screen reader users from understanding content",
+                            "severity": "Critical",
+                            "examples": [
+                                {
+                                    "issue": "Decorative image without alt text",
+                                    "bad_code": "<img src='decoration.png'>",
+                                    "good_code": "<img src='decoration.png' alt=''>",
+                                    "explanation": "Decorative images should have empty alt text to indicate they are decorative"
+                                }
+                            ],
+                            "implementation_steps": [
+                                "1. Audit all images on the page",
+                                "2. Identify decorative vs informative images",
+                                "3. Add appropriate alt text for each image type",
+                                "4. Test with screen reader software"
+                            ],
+                            "testing_methods": [
+                                "Use screen reader (NVDA, JAWS, VoiceOver)",
+                                "Check browser developer tools for alt attributes",
+                                "Validate with WAVE or axe-core tools"
+                            ],
+                            "common_mistakes": [
+                                "Using generic alt text like 'image' or 'picture'",
+                                "Forgetting alt text on background images",
+                                "Not considering context when writing alt text"
+                            ],
+                            "best_practices": [
+                                "Write alt text that conveys the same information as the image",
+                                "Keep alt text concise but descriptive",
+                                "Use empty alt='' for decorative images",
+                                "Test with actual screen reader users"
+                            ],
+                            "browser_support": "Universal support across all browsers",
+                            "performance_impact": "Minimal - alt text is lightweight and improves SEO"
+                        }
+                    ],
+                    "fixes": [
+                        {
+                            "wcag_criterion": "1.1.1",
+                            "title": "Alt Text Implementation",
+                            "priority": "Critical",
+                            "estimated_time": "2-4 hours",
+                            "difficulty": "Easy",
+                            "code_fixes": [
+                                {
+                                    "file_type": "HTML",
+                                    "description": "Add alt text to all images",
+                                    "before": "<img src='logo.png'>",
+                                    "after": "<img src='logo.png' alt='Company Logo'>",
+                                    "notes": "Ensure alt text is descriptive and meaningful"
+                                }
+                            ],
+                            "css_fixes": [],
+                            "javascript_fixes": []
+                        }
+                    ],
+                    "testing_checklist": [
+                        {
+                            "category": "Manual Testing",
+                            "items": [
+                                "Test with screen reader software",
+                                "Verify keyboard navigation",
+                                "Check color contrast ratios",
+                                "Test with different zoom levels"
+                            ]
+                        }
+                    ],
+                    "resources": [
+                        {
+                            "title": "WCAG 2.1 Guidelines",
+                            "url": "https://www.w3.org/WAI/WCAG21/quickref/",
+                            "description": "Official WCAG 2.1 quick reference"
+                        }
+                    ],
+                    "summary": "Comprehensive accessibility fixes with code examples, implementation steps, and testing methods for achieving WCAG 2.1 Level AA compliance."
+                }
+            
+            return jsonify(result)
+            
+        except Exception as e:
+            print(f"Error parsing Gemini response: {str(e)}")
+            print(f"Response text: {response.text}")
+            return jsonify({'error': 'Failed to parse AI response'}), 500
+            
+    except Exception as e:
+        print(f"Error in score-details endpoint: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
 @app.route('/api/cors-test', methods=['GET', 'OPTIONS'])
 def cors_test():
     if request.method == 'OPTIONS':
