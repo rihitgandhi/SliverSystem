@@ -8,7 +8,15 @@ import google.generativeai as genai
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 app.secret_key = FLASK_SECRET_KEY
-CORS(app)  # Enable CORS for all routes
+
+# Configure CORS to allow requests from GitHub Pages and other origins
+CORS(app, origins=[
+    'http://localhost:5000',
+    'http://127.0.0.1:5000',
+    'https://*.github.io',
+    'https://*.github.com',
+    'https://sliversystem-backend.onrender.com'
+], methods=['GET', 'POST', 'OPTIONS'], allow_headers=['Content-Type'])
 
 # Configure Gemini API
 if not GEMINI_API_KEY or GEMINI_API_KEY == '':
@@ -22,8 +30,16 @@ conversations = {}
 def home():
     return send_from_directory('.', 'index.html')
 
-@app.route('/api/chat', methods=['POST'])
+@app.route('/api/chat', methods=['POST', 'OPTIONS'])
 def chat():
+    if request.method == 'OPTIONS':
+        # Handle preflight request
+        response = jsonify({'status': 'ok'})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        return response
+    
     try:
         data = request.get_json()
         user_message = data.get('message', '')
@@ -109,10 +125,28 @@ def score_page():
 def help_page():
     return send_from_directory('.', 'help.html')
 
-@app.route('/api/score', methods=['POST'])
+@app.route('/api/score', methods=['POST', 'OPTIONS'])
 def score():
+    if request.method == 'OPTIONS':
+        # Handle preflight request
+        response = jsonify({'status': 'ok'})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        return response
+    
     try:
-        data = request.get_json()
+        # Add better error handling for JSON parsing
+        if not request.is_json:
+            return jsonify({'error': 'Content-Type must be application/json'}), 400
+        
+        try:
+            data = request.get_json(force=True)
+        except Exception as json_error:
+            print(f"JSON parsing error: {str(json_error)}")
+            print(f"Request data: {request.get_data()}")
+            return jsonify({'error': f'Invalid JSON format: {str(json_error)}'}), 400
+        
         url = data.get('url', '')
         
         if not url:
