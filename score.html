@@ -137,15 +137,40 @@
         submitBtn.disabled = true;
         
         try {
-            const response = await fetch('/api/score', {
+            // More robust backend URL detection
+            let backendUrl;
+            const hostname = window.location.hostname;
+            const protocol = window.location.protocol;
+            
+            console.log('Current hostname:', hostname);
+            console.log('Current protocol:', protocol);
+            console.log('Current origin:', window.location.origin);
+            
+            if (hostname.includes('github.io') || hostname.includes('github.com')) {
+                backendUrl = 'https://sliversystem-backend.onrender.com';
+            } else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+                backendUrl = 'http://localhost:5000';
+            } else {
+                backendUrl = window.location.origin;
+            }
+            
+            console.log('Detected backend URL:', backendUrl);
+            
+            const requestData = { url: url };
+            console.log('Sending request to:', `${backendUrl}/api/score`);
+            console.log('Request data:', requestData);
+            
+            const response = await fetch(`${backendUrl}/api/score`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ url: url })
+                body: JSON.stringify(requestData)
             });
             
+            console.log('Response status:', response.status);
             const data = await response.json();
+            console.log('Response data:', data);
             
             if (response.ok) {
                 // Display results
@@ -171,7 +196,19 @@
             }
         } catch (error) {
             console.error('Error:', error);
-            showError('Error: Failed to connect to server. Please check your internet connection and try again.');
+            console.error('Error details:', {
+                name: error.name,
+                message: error.message,
+                stack: error.stack
+            });
+            
+            if (error.message.includes('Unexpected token')) {
+                showError('Error: Received HTML instead of JSON. This usually means the request went to the wrong server. Please try again.');
+            } else if (error.message.includes('Failed to fetch')) {
+                showError('Error: Failed to connect to server. Please check your internet connection and try again.');
+            } else {
+                showError('Error: ' + error.message);
+            }
         } finally {
             // Reset button
             btnText.textContent = 'Check Accessibility';
