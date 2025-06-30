@@ -14,15 +14,11 @@ CORS(app,
      origins=[
          'http://localhost:5000',
          'http://127.0.0.1:5000',
-         'https://rihitgandhi.github.io',
-         'https://*.github.io',
-         'https://*.github.com',
-         'https://sliversystem-backend.onrender.com'
+         'https://rihitgandhi.github.io'
      ], 
      methods=['GET', 'POST', 'OPTIONS'], 
-     allow_headers=['Content-Type', 'Authorization'],
-     supports_credentials=True,
-     max_age=3600)
+     allow_headers=['Content-Type'],
+     supports_credentials=False)
 
 # Configure Gemini API
 if not GEMINI_API_KEY or GEMINI_API_KEY == '':
@@ -32,22 +28,6 @@ genai.configure(api_key=GEMINI_API_KEY)
 # Store conversation history (in a real app, you'd use a database)
 conversations = {}
 
-# Add CORS headers to all responses
-@app.after_request
-def after_request(response):
-    origin = request.headers.get('Origin')
-    if origin and origin in [
-        'http://localhost:5000',
-        'http://127.0.0.1:5000',
-        'https://rihitgandhi.github.io',
-        'https://sliversystem-backend.onrender.com'
-    ]:
-        response.headers.add('Access-Control-Allow-Origin', origin)
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-    response.headers.add('Access-Control-Allow-Credentials', 'true')
-    return response
-
 @app.route('/')
 def home():
     return send_from_directory('.', 'index.html')
@@ -55,14 +35,8 @@ def home():
 @app.route('/api/chat', methods=['POST', 'OPTIONS'])
 def chat():
     if request.method == 'OPTIONS':
-        # Handle preflight request
-        response = jsonify({'status': 'ok'})
-        response.headers.add('Access-Control-Allow-Origin', 'https://rihitgandhi.github.io')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        response.headers.add('Access-Control-Allow-Credentials', 'true')
-        response.headers.add('Access-Control-Max-Age', '3600')
-        return response
+        # Handle preflight request - Flask-CORS will handle the headers
+        return jsonify({'status': 'ok'})
     
     try:
         data = request.get_json()
@@ -152,14 +126,8 @@ def help_page():
 @app.route('/api/score', methods=['POST', 'OPTIONS'])
 def score():
     if request.method == 'OPTIONS':
-        # Handle preflight request
-        response = jsonify({'status': 'ok'})
-        response.headers.add('Access-Control-Allow-Origin', 'https://rihitgandhi.github.io')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        response.headers.add('Access-Control-Allow-Credentials', 'true')
-        response.headers.add('Access-Control-Max-Age', '3600')
-        return response
+        # Handle preflight request - Flask-CORS will handle the headers
+        return jsonify({'status': 'ok'})
     
     try:
         # Add better error handling for JSON parsing
