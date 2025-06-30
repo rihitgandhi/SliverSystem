@@ -14,11 +14,19 @@ CORS(app,
      origins=[
          'http://localhost:5000',
          'http://127.0.0.1:5000',
-         'https://rihitgandhi.github.io'
+         'https://rihitgandhi.github.io',
+         'https://rihitgandhi.github.io/SliverSystem'
      ], 
      methods=['GET', 'POST', 'OPTIONS'], 
-     allow_headers=['Content-Type'],
+     allow_headers=['Content-Type', 'Authorization'],
      supports_credentials=False)
+
+# Add debugging for CORS requests
+@app.before_request
+def log_request_info():
+    print(f"Request: {request.method} {request.path}")
+    print(f"Origin: {request.headers.get('Origin', 'No Origin')}")
+    print(f"User-Agent: {request.headers.get('User-Agent', 'No User-Agent')}")
 
 # Configure Gemini API
 if not GEMINI_API_KEY or GEMINI_API_KEY == '':
@@ -35,8 +43,11 @@ def home():
 @app.route('/api/chat', methods=['POST', 'OPTIONS'])
 def chat():
     if request.method == 'OPTIONS':
+        print("Handling OPTIONS request for /api/chat")
         # Handle preflight request - Flask-CORS will handle the headers
-        return jsonify({'status': 'ok'})
+        response = jsonify({'status': 'ok'})
+        print(f"OPTIONS response headers: {dict(response.headers)}")
+        return response
     
     try:
         data = request.get_json()
@@ -126,8 +137,11 @@ def help_page():
 @app.route('/api/score', methods=['POST', 'OPTIONS'])
 def score():
     if request.method == 'OPTIONS':
+        print("Handling OPTIONS request for /api/score")
         # Handle preflight request - Flask-CORS will handle the headers
-        return jsonify({'status': 'ok'})
+        response = jsonify({'status': 'ok'})
+        print(f"OPTIONS response headers: {dict(response.headers)}")
+        return response
     
     try:
         # Add better error handling for JSON parsing
@@ -396,6 +410,23 @@ def score():
             'error': 'An error occurred while analyzing the website',
             'details': str(e) if FLASK_DEBUG else 'Check server logs for details'
         }), 500
+
+@app.route('/api/cors-test', methods=['GET', 'OPTIONS'])
+def cors_test():
+    if request.method == 'OPTIONS':
+        print("Handling OPTIONS request for /api/cors-test")
+        response = jsonify({'status': 'ok'})
+        print(f"OPTIONS response headers: {dict(response.headers)}")
+        return response
+    
+    print("Handling GET request for /api/cors-test")
+    response = jsonify({
+        'message': 'CORS test successful',
+        'origin': request.headers.get('Origin', 'No Origin'),
+        'timestamp': datetime.now().isoformat()
+    })
+    print(f"GET response headers: {dict(response.headers)}")
+    return response
 
 if __name__ == '__main__':
     print(f"Starting server on {HOST}:{PORT}")
