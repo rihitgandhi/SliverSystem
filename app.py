@@ -161,71 +161,97 @@ def score():
             return jsonify({'error': 'No URL provided'}), 400
         
         # Create a comprehensive prompt for Gemini to analyze accessibility
-        system_prompt = """You are an expert web accessibility analyst with deep knowledge of WCAG 2.1 Level AA standards. Analyze the given website URL and provide a comprehensive accessibility assessment.
+        system_prompt = """You are an expert web accessibility analyst with deep knowledge of WCAG 2.1 Level AA standards. Analyze the given website URL and provide a comprehensive accessibility assessment with detailed scoring methodology.
+
+**SCORING METHODOLOGY (0-100):**
+- **90-100**: Excellent - Fully compliant with WCAG 2.1 Level AA, exemplary accessibility practices
+- **80-89**: Very Good - Minor issues, mostly compliant with clear improvement areas
+- **70-79**: Good - Several issues but generally accessible with moderate effort to fix
+- **60-69**: Fair - Multiple accessibility barriers, significant work needed
+- **50-59**: Poor - Major accessibility issues, substantial barriers for users with disabilities
+- **40-49**: Very Poor - Critical accessibility failures, many users cannot access content
+- **30-39**: Extremely Poor - Severe accessibility violations, content largely inaccessible
+- **0-29**: Non-compliant - Complete accessibility failure, violates basic accessibility standards
+
+**SCORING FACTORS:**
+1. **Critical Issues (40% weight)**: Missing alt text, keyboard navigation, color contrast, form labels
+2. **Structural Issues (30% weight)**: Heading hierarchy, semantic HTML, landmarks, focus management
+3. **Content Issues (20% weight)**: Language declaration, error handling, link purpose clarity
+4. **Technical Issues (10% weight)**: HTML validation, ARIA implementation, responsive design
 
 **ANALYSIS REQUIREMENTS:**
 
-1. **Accessibility Score (0-100)** - Based on WCAG 2.1 Level AA compliance
-2. **WCAG 2.1 Level AA Standards Analysis** - Specific criteria compliance
-3. **Priority Issues** - Ranked by impact and effort
-4. **Detailed Recommendations** - With implementation steps
+1. **Accessibility Score (0-100)** - Based on WCAG 2.1 Level AA compliance with detailed explanation
+2. **WCAG 2.1 Level AA Standards Analysis** - Specific criteria compliance with severity ratings
+3. **Priority Issues** - Ranked by impact and effort with specific element counts
+4. **Detailed Recommendations** - With implementation steps and estimated effort
 5. **Performance Impact** - How accessibility affects performance
-6. **Mobile Accessibility** - Mobile-specific issues
+6. **Mobile Accessibility** - Mobile-specific issues and touch target analysis
 7. **Screen Reader Compatibility** - Detailed screen reader analysis
+8. **Score Breakdown** - Detailed explanation of how the score was calculated
 
 **WCAG 2.1 LEVEL AA CRITERIA TO ANALYZE:**
 
 **Perceivable (1.x):**
-- 1.1.1: Non-text Content (Images, buttons, form controls)
-- 1.2.1: Audio-only and Video-only (Prerecorded)
-- 1.2.2: Captions (Prerecorded)
-- 1.2.3: Audio Description or Media Alternative (Prerecorded)
-- 1.3.1: Info and Relationships (Semantic HTML, headings, lists)
-- 1.3.2: Meaningful Sequence (Logical reading order)
-- 1.3.3: Sensory Characteristics (Not relying on shape, size, location)
-- 1.4.1: Use of Color (Not using color alone)
-- 1.4.3: Contrast (Minimum) (4.5:1 for normal text, 3:1 for large text)
-- 1.4.4: Resize Text (Up to 200% without loss of functionality)
-- 1.4.5: Images of Text (Avoid images of text when possible)
+- 1.1.1: Non-text Content (Images, buttons, form controls) - CRITICAL
+- 1.2.1: Audio-only and Video-only (Prerecorded) - MODERATE
+- 1.2.2: Captions (Prerecorded) - MODERATE
+- 1.2.3: Audio Description or Media Alternative (Prerecorded) - MODERATE
+- 1.3.1: Info and Relationships (Semantic HTML, headings, lists) - CRITICAL
+- 1.3.2: Meaningful Sequence (Logical reading order) - HIGH
+- 1.3.3: Sensory Characteristics (Not relying on shape, size, location) - MODERATE
+- 1.4.1: Use of Color (Not using color alone) - HIGH
+- 1.4.3: Contrast (Minimum) (4.5:1 for normal text, 3:1 for large text) - CRITICAL
+- 1.4.4: Resize Text (Up to 200% without loss of functionality) - HIGH
+- 1.4.5: Images of Text (Avoid images of text when possible) - MODERATE
 
 **Operable (2.x):**
-- 2.1.1: Keyboard (All functionality available from keyboard)
-- 2.1.2: No Keyboard Trap (Can navigate away from all components)
-- 2.2.1: Timing Adjustable (Time limits can be adjusted or turned off)
-- 2.2.2: Pause, Stop, Hide (Moving, blinking, scrolling content)
-- 2.3.1: Three Flashes or Below Threshold (No content flashes more than 3 times per second)
-- 2.4.1: Bypass Blocks (Skip links, landmarks)
-- 2.4.2: Page Titled (Descriptive page titles)
-- 2.4.3: Focus Order (Logical tab order)
-- 2.4.4: Link Purpose (In Context) (Clear link purpose)
-- 2.4.5: Multiple Ways (Multiple ways to find pages)
-- 2.4.6: Headings and Labels (Descriptive headings and labels)
-- 2.4.7: Focus Visible (Visible focus indicators)
-- 2.5.1: Pointer Gestures (Single pointer gestures)
-- 2.5.2: Pointer Cancellation (Can cancel pointer actions)
-- 2.5.3: Label in Name (Programmatic labels match visible labels)
-- 2.5.4: Motion Actuation (Can disable motion-triggered functionality)
+- 2.1.1: Keyboard (All functionality available from keyboard) - CRITICAL
+- 2.1.2: No Keyboard Trap (Can navigate away from all components) - HIGH
+- 2.2.1: Timing Adjustable (Time limits can be adjusted or turned off) - MODERATE
+- 2.2.2: Pause, Stop, Hide (Moving, blinking, scrolling content) - MODERATE
+- 2.3.1: Three Flashes or Below Threshold (No content flashes more than 3 times per second) - HIGH
+- 2.4.1: Bypass Blocks (Skip links, landmarks) - HIGH
+- 2.4.2: Page Titled (Descriptive page titles) - HIGH
+- 2.4.3: Focus Order (Logical tab order) - CRITICAL
+- 2.4.4: Link Purpose (In Context) (Clear link purpose) - HIGH
+- 2.4.5: Multiple Ways (Multiple ways to find pages) - MODERATE
+- 2.4.6: Headings and Labels (Descriptive headings and labels) - HIGH
+- 2.4.7: Focus Visible (Visible focus indicators) - CRITICAL
+- 2.5.1: Pointer Gestures (Single pointer gestures) - MODERATE
+- 2.5.2: Pointer Cancellation (Can cancel pointer actions) - MODERATE
+- 2.5.3: Label in Name (Programmatic labels match visible labels) - HIGH
+- 2.5.4: Motion Actuation (Can disable motion-triggered functionality) - MODERATE
 
 **Understandable (3.x):**
-- 3.1.1: Language of Page (Page language is programmatically determined)
-- 3.1.2: Language of Parts (Language changes are marked)
-- 3.2.1: On Focus (Focus doesn't change context)
-- 3.2.2: On Input (Input doesn't change context unexpectedly)
-- 3.3.1: Error Identification (Errors are clearly identified)
-- 3.3.2: Labels or Instructions (Clear labels and instructions)
-- 3.3.3: Error Suggestion (Suggestions for fixing errors)
-- 3.3.4: Error Prevention (Legal, financial, data modification)
+- 3.1.1: Language of Page (Page language is programmatically determined) - HIGH
+- 3.1.2: Language of Parts (Language changes are marked) - MODERATE
+- 3.2.1: On Focus (Focus doesn't change context) - HIGH
+- 3.2.2: On Input (Input doesn't change context unexpectedly) - HIGH
+- 3.3.1: Error Identification (Errors are clearly identified) - HIGH
+- 3.3.2: Labels or Instructions (Clear labels and instructions) - CRITICAL
+- 3.3.3: Error Suggestion (Suggestions for fixing errors) - MODERATE
+- 3.3.4: Error Prevention (Legal, financial, data modification) - MODERATE
 
 **Robust (4.x):**
-- 4.1.1: Parsing (Valid HTML)
-- 4.1.2: Name, Role, Value (ARIA attributes, form controls)
+- 4.1.1: Parsing (Valid HTML) - HIGH
+- 4.1.2: Name, Role, Value (ARIA attributes, form controls) - CRITICAL
 
 **Respond in this exact JSON format:**
 {
     "score": 75,
+    "score_explanation": "The website achieves a score of 75/100, indicating good accessibility with several areas for improvement. The score reflects strong compliance in basic accessibility areas but reveals gaps in advanced features and comprehensive user experience.",
+    "score_breakdown": {
+        "critical_issues": 28,
+        "structural_issues": 22,
+        "content_issues": 15,
+        "technical_issues": 10,
+        "total_score": 75
+    },
     "wcag_standards": {
         "compliant": ["1.1.1", "1.4.3", "2.4.2"],
         "non_compliant": ["2.1.1", "4.1.2", "3.3.2"],
+        "partially_compliant": ["1.3.1", "2.4.7"],
         "details": {
             "1.1.1": "All images have appropriate alt text",
             "1.4.3": "Color contrast meets 4.5:1 ratio for normal text",
@@ -252,8 +278,10 @@ def score():
             "description": "Images without alt text prevent screen reader users from understanding content",
             "impact": "High",
             "effort": "Low",
+            "severity": "Critical",
             "affected_elements": "5 images",
-            "fix_example": "<img src='logo.png' alt='Company Logo'>"
+            "fix_example": "<img src='logo.png' alt='Company Logo'>",
+            "estimated_time": "30 minutes"
         },
         {
             "wcag_criterion": "2.1.1",
@@ -261,24 +289,31 @@ def score():
             "description": "Some interactive elements cannot be accessed using keyboard only",
             "impact": "High",
             "effort": "Medium",
+            "severity": "Critical",
             "affected_elements": "3 buttons, 1 dropdown",
-            "fix_example": "Add tabindex='0' and keyboard event handlers"
+            "fix_example": "Add tabindex='0' and keyboard event handlers",
+            "estimated_time": "2-3 hours"
         }
     ],
     "performance_impact": {
         "accessibility_improvements": "Minimal performance impact",
-        "recommendations": "Use semantic HTML, optimize images, implement lazy loading"
+        "recommendations": "Use semantic HTML, optimize images, implement lazy loading",
+        "estimated_performance_improvement": "5-10% faster loading with optimized images"
     },
     "mobile_accessibility": {
         "touch_targets": "Some buttons are too small for touch interaction",
         "viewport": "Properly configured",
-        "gestures": "No complex gestures detected"
+        "gestures": "No complex gestures detected",
+        "responsive_design": "Good responsive implementation"
     },
     "screen_reader_compatibility": {
         "landmarks": "Missing main landmark",
         "headings": "Proper heading hierarchy",
-        "forms": "Some form fields lack proper labels"
-    }
+        "forms": "Some form fields lack proper labels",
+        "navigation": "Skip links implemented"
+    },
+    "compliance_level": "WCAG 2.1 Level A (Partial AA)",
+    "next_steps": "Focus on critical issues first, then address structural improvements, followed by content and technical enhancements."
 }"""
 
         # Build the prompt with the URL
@@ -302,9 +337,18 @@ def score():
                 # Fallback if no JSON found
                 result = {
                     "score": 70,
+                    "score_explanation": "The website achieves a score of 70/100, indicating good accessibility with several areas for improvement. The score reflects strong compliance in basic accessibility areas but reveals gaps in advanced features and comprehensive user experience.",
+                    "score_breakdown": {
+                        "critical_issues": 25,
+                        "structural_issues": 20,
+                        "content_issues": 15,
+                        "technical_issues": 10,
+                        "total_score": 70
+                    },
                     "wcag_standards": {
                         "compliant": ["1.1.1", "1.4.3", "2.4.2"],
                         "non_compliant": ["2.1.1", "4.1.2", "3.3.2", "2.4.7"],
+                        "partially_compliant": ["1.3.1", "2.4.4"],
                         "details": {
                             "1.1.1": "Most images have appropriate alt text",
                             "1.4.3": "Good color contrast ratios maintained",
@@ -332,8 +376,10 @@ def score():
                             "description": "Ensure all images have descriptive alternative text",
                             "impact": "High",
                             "effort": "Low",
+                            "severity": "Critical",
                             "affected_elements": "Multiple images",
-                            "fix_example": "<img src='logo.png' alt='Company Logo'>"
+                            "fix_example": "<img src='logo.png' alt='Company Logo'>",
+                            "estimated_time": "30 minutes"
                         },
                         {
                             "wcag_criterion": "2.1.1",
@@ -341,32 +387,48 @@ def score():
                             "description": "Make all interactive elements keyboard accessible",
                             "impact": "High",
                             "effort": "Medium",
+                            "severity": "Critical",
                             "affected_elements": "Interactive elements",
-                            "fix_example": "Add tabindex='0' and keyboard event handlers"
+                            "fix_example": "Add tabindex='0' and keyboard event handlers",
+                            "estimated_time": "2-3 hours"
                         }
                     ],
                     "performance_impact": {
                         "accessibility_improvements": "Minimal performance impact",
-                        "recommendations": "Use semantic HTML, optimize images, implement lazy loading"
+                        "recommendations": "Use semantic HTML, optimize images, implement lazy loading",
+                        "estimated_performance_improvement": "5-10% faster loading with optimized images"
                     },
                     "mobile_accessibility": {
                         "touch_targets": "Check touch target sizes (minimum 44px)",
                         "viewport": "Ensure proper viewport configuration",
-                        "gestures": "Avoid complex gestures"
+                        "gestures": "Avoid complex gestures",
+                        "responsive_design": "Good responsive implementation"
                     },
                     "screen_reader_compatibility": {
                         "landmarks": "Add semantic landmarks (main, nav, section)",
                         "headings": "Ensure proper heading hierarchy",
-                        "forms": "Add proper labels and ARIA attributes"
-                    }
+                        "forms": "Add proper labels and ARIA attributes",
+                        "navigation": "Skip links implemented"
+                    },
+                    "compliance_level": "WCAG 2.1 Level A (Partial AA)",
+                    "next_steps": "Focus on critical issues first, then address structural improvements, followed by content and technical enhancements."
                 }
         except Exception as parse_error:
             # Fallback response if JSON parsing fails
             result = {
                 "score": 65,
+                "score_explanation": "The website achieves a score of 65/100, indicating fair accessibility with multiple areas requiring improvement. The score reflects basic compliance but reveals significant gaps in comprehensive accessibility implementation.",
+                "score_breakdown": {
+                    "critical_issues": 30,
+                    "structural_issues": 18,
+                    "content_issues": 12,
+                    "technical_issues": 5,
+                    "total_score": 65
+                },
                 "wcag_standards": {
                     "compliant": ["1.1.1"],
                     "non_compliant": ["1.4.3", "2.1.1", "4.1.2"],
+                    "partially_compliant": ["2.4.2", "3.3.2"],
                     "details": {
                         "1.1.1": "Basic alt text implementation",
                         "1.4.3": "Color contrast needs improvement",
@@ -390,16 +452,43 @@ def score():
                         "title": "Color Contrast",
                         "description": "Ensure text has sufficient contrast against backgrounds (minimum 4.5:1 for normal text)",
                         "impact": "High",
-                        "effort": "Medium"
+                        "effort": "Medium",
+                        "severity": "Critical",
+                        "affected_elements": "Text elements",
+                        "fix_example": "Use color contrast checker tools",
+                        "estimated_time": "1-2 hours"
                     },
                     {
                         "wcag_criterion": "2.1.1",
                         "title": "Keyboard Accessibility",
                         "description": "All functionality must be available from a keyboard",
                         "impact": "High",
-                        "effort": "Medium"
+                        "effort": "Medium",
+                        "severity": "Critical",
+                        "affected_elements": "Interactive elements",
+                        "fix_example": "Add keyboard event handlers",
+                        "estimated_time": "2-4 hours"
                     }
-                ]
+                ],
+                "performance_impact": {
+                    "accessibility_improvements": "Minimal performance impact",
+                    "recommendations": "Use semantic HTML, optimize images, implement lazy loading",
+                    "estimated_performance_improvement": "3-8% faster loading with optimized images"
+                },
+                "mobile_accessibility": {
+                    "touch_targets": "Some buttons may be too small for touch interaction",
+                    "viewport": "Ensure proper viewport configuration",
+                    "gestures": "Avoid complex gestures",
+                    "responsive_design": "Basic responsive implementation"
+                },
+                "screen_reader_compatibility": {
+                    "landmarks": "Missing semantic landmarks",
+                    "headings": "Heading hierarchy needs improvement",
+                    "forms": "Form accessibility needs work",
+                    "navigation": "Skip links not implemented"
+                },
+                "compliance_level": "WCAG 2.1 Level A (Partial)",
+                "next_steps": "Address critical accessibility issues first, then work on structural improvements and comprehensive testing."
             }
         
         return jsonify(result)

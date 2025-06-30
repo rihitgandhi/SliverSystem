@@ -40,6 +40,12 @@
                             <span id="score-value">0</span>
                             <span class="score-label">/100</span>
                         </div>
+                        <div id="score-explanation" class="score-explanation" style="display: none;"></div>
+                        <div id="score-breakdown" class="score-breakdown" style="display: none;">
+                            <h4>Score Breakdown</h4>
+                        </div>
+                        <div id="compliance-level" class="compliance-level" style="display: none;"></div>
+                        <div id="next-steps" class="next-steps" style="display: none;"></div>
                     </div>
                     
                     <!-- WCAG Standards Section -->
@@ -175,6 +181,60 @@
             if (response.ok) {
                 // Display results
                 document.getElementById('score-value').textContent = data.score;
+                
+                // Display score explanation if available
+                if (data.score_explanation) {
+                    const scoreExplanationDiv = document.getElementById('score-explanation');
+                    if (scoreExplanationDiv) {
+                        scoreExplanationDiv.textContent = data.score_explanation;
+                        scoreExplanationDiv.style.display = 'block';
+                    }
+                }
+                
+                // Display score breakdown if available
+                if (data.score_breakdown) {
+                    const scoreBreakdownDiv = document.getElementById('score-breakdown');
+                    if (scoreBreakdownDiv) {
+                        scoreBreakdownDiv.innerHTML = `
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Critical Issues:</span>
+                                <span class="breakdown-value">${data.score_breakdown.critical_issues}/40</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Structural Issues:</span>
+                                <span class="breakdown-value">${data.score_breakdown.structural_issues}/30</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Content Issues:</span>
+                                <span class="breakdown-value">${data.score_breakdown.content_issues}/20</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Technical Issues:</span>
+                                <span class="breakdown-value">${data.score_breakdown.technical_issues}/10</span>
+                            </div>
+                        `;
+                        scoreBreakdownDiv.style.display = 'block';
+                    }
+                }
+                
+                // Display compliance level if available
+                if (data.compliance_level) {
+                    const complianceLevelDiv = document.getElementById('compliance-level');
+                    if (complianceLevelDiv) {
+                        complianceLevelDiv.textContent = data.compliance_level;
+                        complianceLevelDiv.style.display = 'block';
+                    }
+                }
+                
+                // Display next steps if available
+                if (data.next_steps) {
+                    const nextStepsDiv = document.getElementById('next-steps');
+                    if (nextStepsDiv) {
+                        nextStepsDiv.textContent = data.next_steps;
+                        nextStepsDiv.style.display = 'block';
+                    }
+                }
+                
                 document.getElementById('short-term-rec').textContent = data.recommendations.short_term;
                 document.getElementById('medium-term-rec').textContent = data.recommendations.medium_term;
                 document.getElementById('long-term-rec').textContent = data.recommendations.long_term;
@@ -280,7 +340,9 @@
             priorityIssues.forEach(issue => {
                 const issueCard = document.createElement('div');
                 issueCard.className = 'priority-issue-card';
-                issueCard.innerHTML = `
+                
+                // Build the card content with new fields
+                let cardContent = `
                     <div class="issue-header">
                         <h4>${issue.title}</h4>
                         <span class="wcag-criterion">WCAG ${issue.wcag_criterion}</span>
@@ -289,8 +351,32 @@
                     <div class="issue-metrics">
                         <span class="impact ${issue.impact.toLowerCase()}">Impact: ${issue.impact}</span>
                         <span class="effort ${issue.effort.toLowerCase()}">Effort: ${issue.effort}</span>
-                    </div>
                 `;
+                
+                // Add severity if available
+                if (issue.severity) {
+                    cardContent += `<span class="severity ${issue.severity.toLowerCase()}">Severity: ${issue.severity}</span>`;
+                }
+                
+                cardContent += '</div>';
+                
+                // Add affected elements if available
+                if (issue.affected_elements) {
+                    cardContent += `<div class="affected-elements"><strong>Affected:</strong> ${issue.affected_elements}</div>`;
+                }
+                
+                // Add fix example if available
+                if (issue.fix_example) {
+                    cardContent += `<div class="fix-example"><strong>Fix Example:</strong> <code>${issue.fix_example}</code></div>`;
+                }
+                
+                // Add estimated time if available
+                if (issue.estimated_time) {
+                    cardContent += `<div class="estimated-time"><strong>Estimated Time:</strong> ${issue.estimated_time}</div>`;
+                }
+                
+                cardContent += '</div>';
+                issueCard.innerHTML = cardContent;
                 issuesList.appendChild(issueCard);
             });
         } else {
