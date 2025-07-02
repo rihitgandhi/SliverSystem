@@ -29,26 +29,24 @@ class AccessibilityChatbot {
 
     init() {
         console.log('Chatbot init() called');
-        // Check if we're on the chat page (has existing HTML structure)
-        const existingChatMessages = document.getElementById('chat-messages');
-        console.log('Existing chat messages element:', existingChatMessages);
-        
-        if (existingChatMessages) {
-            // We're on chat.html - use existing structure
-            console.log('Using existing HTML structure');
-            this.bindEvents();
-            this.loadChatHistory();
-        } else {
-            // We're on index.html - create interface dynamically
-            console.log('Creating interface dynamically');
-            this.createChatInterface();
-            this.bindEvents();
-            this.loadChatHistory();
+        const messagesContainer = document.getElementById('chat-messages');
+        if (messagesContainer && messagesContainer.children.length === 0) {
+            // Insert initial bot message if empty
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot-message';
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = "<p>Hello! I'm your accessibility assistant. Ask me anything about web accessibility, WCAG, or inclusive design.</p>";
+            messageDiv.appendChild(contentDiv);
+            messagesContainer.appendChild(messageDiv);
         }
+        this.bindEvents();
+        this.loadChatHistory();
     }
 
     createChatInterface() {
-        const aiSection = document.getElementById('ai');
+        // Prefer #ai-chatbox (for Home tab), fallback to #ai (for AI in Accessibility tab)
+        const aiSection = document.getElementById('ai-chatbox') || document.getElementById('ai');
         if (!aiSection) return;
 
         // Create chatbot container
@@ -98,13 +96,7 @@ class AccessibilityChatbot {
             </div>
         `;
 
-        // Insert chatbot after the existing AI content
-        const existingContent = aiSection.querySelector('.my-ai-card');
-        if (existingContent) {
-            existingContent.parentNode.insertBefore(chatbotContainer, existingContent.nextSibling);
-        } else {
-            aiSection.appendChild(chatbotContainer);
-        }
+        aiSection.appendChild(chatbotContainer);
     }
 
     bindEvents() {
@@ -189,7 +181,7 @@ class AccessibilityChatbot {
                 message: error.message,
                 stack: error.stack
             });
-            this.addMessage('Sorry, I\'m having trouble connecting to the server. Please check if the Python backend is running.', 'bot error');
+            this.addMessage('Sorry, I'm having trouble connecting to the server. Please check if the Python backend is running.', 'bot error');
         }
 
         this.hideLoading();
