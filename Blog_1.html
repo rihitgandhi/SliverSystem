@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accessible Digital World Blog</title>
+<title>Building a More Inclusive Digital World</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -13,199 +13,145 @@
         color: #333;
         line-height: 1.6;
     }
-    .blog-container {
-        max-width: 1200px;
-        margin: auto;
+    header {
+        background: linear-gradient(135deg, #007BFF, #00C6FF);
+        color: white;
+        text-align: center;
         padding: 40px 20px;
     }
-    h1, h2, h3 {
-        text-align: center;
-        color: #1a1a1a;
+    header h1 {
+        margin: 0;
+        font-size: 2.5em;
     }
-    p {
-        max-width: 900px;
-        margin: 10px auto;
-        font-size: 1.1em;
+    header p {
+        font-size: 1.2em;
+        margin-top: 10px;
     }
-    .stats {
+    .container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 20px;
+    }
+    .stat-section {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
+        justify-content: space-between;
         margin: 40px 0;
     }
     .stat-card {
         background: white;
-        padding: 20px;
         border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        padding: 20px;
+        flex: 1;
+        min-width: 250px;
+        margin: 10px;
         text-align: center;
-        flex: 1 1 200px;
-        max-width: 250px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    .stat-card h3 {
+    .stat-card h2 {
         font-size: 2em;
-        background: linear-gradient(90deg, #f39c12, #f1c40f);
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #ff7e5f, #feb47b);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 10px;
     }
-    .process {
+    .highlight {
+        background: #fff3cd;
+        border-left: 6px solid #ffeb3b;
+        padding: 15px;
+        margin: 30px 0;
+    }
+    .image-section {
+        margin: 40px 0;
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
-        justify-content: space-around;
-        margin: 40px 0;
     }
-    .process-step {
-        flex: 1 1 200px;
-        background: white;
-        padding: 20px;
-        border-radius: 12px;
-        text-align: center;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .process-step h4 {
-        margin: 10px 0;
-        color: #2c3e50;
-    }
-    .case-study {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        background: white;
-        padding: 20px;
-        border-radius: 12px;
-        margin: 40px 0;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .case-card {
-        flex: 1 1 300px;
-        padding: 20px;
+    .image-section img {
+        flex: 1;
+        max-width: 100%;
         border-radius: 10px;
-    }
-    .case-before {
-        background: #f8d7da;
-    }
-    .case-after {
-        background: #d4edda;
-    }
-    .commitment {
-        background: white;
-        padding: 20px;
-        border-radius: 12px;
-        margin: 40px auto;
-        max-width: 500px;
-        text-align: center;
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    .commitment-circle {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        border: 10px solid #f39c12;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: auto;
-        font-size: 1.5em;
-        font-weight: bold;
-        color: #f39c12;
+    .callout {
+        background: linear-gradient(135deg, #4CAF50, #8BC34A);
+        color: white;
+        padding: 30px;
+        text-align: center;
+        border-radius: 12px;
+        margin: 50px 0;
+    }
+    footer {
+        background: #222;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
     }
 </style>
 </head>
 <body>
 
-<div class="blog-container">
-    <h1>Breaking Barriers: Building a More Accessible Digital World</h1>
-    <p>In today’s hyper-connected society, technology has the power to open doors—or to leave them firmly shut. For over a billion people around the globe living with disabilities, digital accessibility isn’t a “nice-to-have”—it’s a lifeline. Yet, despite advances in awareness and tools, the internet remains largely out of reach for many.</p>
-    <p>Our mission is simple: <strong>make the digital world usable, enjoyable, and empowering for everyone.</strong></p>
+<header>
+    <h1>Building a More Inclusive Digital World</h1>
+    <p>Redefining accessibility to ensure no one is left behind in the digital age</p>
+</header>
 
-    <h2>Why Accessibility Matters</h2>
-    <p>When websites, apps, and digital tools are inaccessible, they create invisible walls. From job applications to online learning, social connection to telemedicine—opportunities disappear. But the reverse is also true: inclusive design transforms lives.</p>
-
-    <!-- Visual Element 1 -->
-    <div class="stats">
+<div class="container">
+    <section class="stat-section">
         <div class="stat-card">
-            <h3>1.5B+</h3>
-            <p>People living with disabilities worldwide</p>
+            <h2>1.3B+</h2>
+            <p>People globally living with a disability.</p>
         </div>
         <div class="stat-card">
-            <h3>97%</h3>
-            <p>Websites failing basic accessibility tests</p>
+            <h2>98%</h2>
+            <p>Websites with accessibility barriers.</p>
         </div>
         <div class="stat-card">
-            <h3>85%</h3>
-            <p>Support brands that prioritize accessibility</p>
+            <h2>100%</h2>
+            <p>Our dedication to a barrier-free web.</p>
         </div>
-        <div class="stat-card">
-            <h3>100%</h3>
-            <p>Our work guided by inclusivity</p>
-        </div>
+    </section>
+
+    <div class="highlight">
+        <strong>Did you know?</strong>  
+        Accessible design isn’t just for those with disabilities—it improves usability for everyone, from faster navigation to clearer content presentation.
     </div>
 
-    <h2>How We’re Driving Change</h2>
-    <p>We partner with businesses, educators, and innovators to ensure accessibility is baked into every digital experience—not added as an afterthought. This means:</p>
-    <ul>
-        <li><strong>Auditing</strong> websites and apps for compliance and usability</li>
-        <li><strong>Implementing</strong> accessibility features like alt text, ARIA labels, captions, and keyboard navigation</li>
-        <li><strong>Training</strong> teams to think inclusively from day one</li>
-    </ul>
+    <section>
+        <h2>Why Digital Accessibility Matters</h2>
+        <p>
+            In a world where technology drives everything from education to healthcare, digital inclusion is no longer optional—it’s essential.
+            Yet, millions are still excluded due to poor accessibility design.
+        </p>
+    </section>
 
-    <!-- Visual Element 2 -->
-    <div class="process">
-        <div class="process-step">
-            <h4>1. Discover</h4>
-            <p>Identify barriers through expert audits</p>
-        </div>
-        <div class="process-step">
-            <h4>2. Design</h4>
-            <p>Build with empathy and universal design principles</p>
-        </div>
-        <div class="process-step">
-            <h4>3. Deploy</h4>
-            <p>Integrate solutions seamlessly</p>
-        </div>
-        <div class="process-step">
-            <h4>4. Deliver</h4>
-            <p>Ensure long-term accessibility through ongoing support</p>
-        </div>
+    <div class="image-section">
+        <img src="https://via.placeholder.com/500x300" alt="Accessible website example">
+        <img src="https://via.placeholder.com/500x300" alt="User navigating with screen reader">
     </div>
 
-    <h2>Success Stories That Inspire</h2>
-    <p>From small nonprofits to global enterprises, the impact is tangible:</p>
-    <ul>
-        <li>An e-commerce store saw a <strong>23% increase in sales</strong> after improving accessibility</li>
-        <li>A university boosted online course enrollment by <strong>40%</strong> after updating their learning platform</li>
-        <li>A healthcare provider received <strong>nationwide recognition</strong> for inclusive telehealth design</li>
-    </ul>
+    <section>
+        <h2>Our Four Pillars of Accessibility</h2>
+        <ul>
+            <li><strong>Inclusivity First:</strong> Design that prioritizes all users, regardless of ability.</li>
+            <li><strong>Continuous Testing:</strong> Regular audits to ensure compliance with WCAG standards.</li>
+            <li><strong>User Education:</strong> Teaching teams to implement accessibility from day one.</li>
+            <li><strong>Innovation with Purpose:</strong> Using technology to remove—not create—barriers.</li>
+        </ul>
+    </section>
 
-    <!-- Visual Element 3 -->
-    <div class="case-study">
-        <div class="case-card case-before">
-            <h3>Before</h3>
-            <p>Navigation was complex, no captions, poor color contrast</p>
-        </div>
-        <div class="case-card case-after">
-            <h3>After</h3>
-            <p>Streamlined menus, full captions, accessible color palette</p>
-            <strong>Result:</strong> Enrollment up 40%, dropout rate down 15%
-        </div>
+    <div class="callout">
+        <h2>Join Us in Building a Better Web</h2>
+        <p>
+            Every change you make towards accessibility has the power to open doors for millions. Let’s make it happen—together.
+        </p>
     </div>
-
-    <h2>The Future We’re Building</h2>
-    <p>Accessibility is not just a compliance checkbox—it’s the foundation of a fair, innovative, and connected world. We envision a future where <strong>every click, tap, and swipe works for everyone.</strong></p>
-
-    <!-- Visual Element 4 -->
-    <div class="commitment">
-        <div class="commitment-circle">100%</div>
-        <p>Commitment to Accessibility</p>
-        <p>Ongoing Innovation in Assistive Tech</p>
-        <p>Global Collaboration for Inclusion</p>
-    </div>
-
-    <p style="text-align:center; font-weight:bold;">💡 Join the Movement: Whether you’re a business owner, educator, or developer, you can help create a web that welcomes everyone.</p>
 </div>
+
+<footer>
+    <p>&copy; 2025 Inclusive Web Initiative | Designed with accessibility in mind</p>
+</footer>
 
 </body>
 </html>
