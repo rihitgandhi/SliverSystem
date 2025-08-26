@@ -1,455 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn how to design accessible websites that everyone can use, including color contrast, typography, and navigation best practices for inclusive design.">
-    <title>Designing for Inclusivity - Creating Accessible Websites</title>
-    <link rel="stylesheet" href="./css/main.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        .blog-header {
-            position: relative;
-            height: 60vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 40px;
-        }
-        
-        .blog-header img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-        }
-        
-        .blog-title {
-            position: relative;
-            z-index: 2;
-            color: white;
-            font-size: clamp(2rem, 6vw, 4rem);
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            margin: 0;
-            padding: 20px;
-        }
-        
-        .blog-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.8;
-        }
-        
-        .blog-section {
-            margin-bottom: 40px;
-        }
-        
-        .blog-section h2 {
-            color: #007bff;
-            font-size: 2rem;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #007bff;
-            padding-bottom: 10px;
-        }
-        
-        .blog-section h3 {
-            color: #0056b3;
-            font-size: 1.5rem;
-            margin: 25px 0 15px 0;
-        }
-        
-        .blog-section p {
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .highlight-box {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 25px;
-            border-radius: 8px;
-            border-left: 6px solid #007bff;
-            margin: 25px 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .highlight-box h4 {
-            color: #007bff;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .back-link {
-            display: inline-block;
-            background: #007bff;
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 6px;
-            margin-bottom: 30px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .back-link:hover {
-            background: #0056b3;
-        }
-        
-        .example-list {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        
-        .example-list ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-        
-        .example-list li {
-            margin-bottom: 8px;
-            color: #333;
-        }
-        
-        .code-example {
-            background: #f4f4f4;
-            padding: 15px;
-            border-radius: 6px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            border-left: 4px solid #007bff;
-        }
-    </style>
-</head>
-<body>
-    <div class="blog-header">
-        <img src="images/Inclusivity photo" alt="Designing for inclusivity - creating accessible websites for everyone">
-        <h1 class="blog-title">Designing for Inclusivity</h1>
+<section style="font-family: 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(120deg, #fdfdfd, #f0f4ff); padding: 50px; color: #333;">
+
+  <!-- Exit Button -->
+  <button onclick="exitBlog()" 
+    style="position: fixed; top: 20px; left: 20px; 
+           background: #333; color: #fff; 
+           border: none; padding: 10px 20px; 
+           border-radius: 8px; font-size: 1rem; 
+           cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
+           transition: background 0.3s;">
+    ← Exit
+  </button>
+
+  <script>
+    function exitBlog() {
+      // Option 1: close tab
+      window.close();
+      // Option 2: redirect to homepage
+      // window.location.href = "index.html"; 
+    }
+  </script>
+
+  <!-- Hero Section -->
+  <div style="max-width: 1000px; margin: auto; text-align: center; padding: 40px 20px;">
+    <h1 style="font-size: 3rem; color: #2d72d9; margin-bottom: 20px;">
+      🌟 Designing for Inclusivity
+    </h1>
+    <p style="font-size: 1.15rem; line-height: 1.8; max-width: 750px; margin: auto;">
+      Inclusive design is more than accessibility—it’s about creating solutions that embrace human diversity.  
+      It means designing products, spaces, and digital tools that adapt to people of different <strong>ages, cultures, and abilities</strong>.  
+      <br><br>
+      When we design inclusively, we don’t just remove barriers—we open doors to innovation and stronger connections for everyone.
+    </p>
+  </div>
+
+  <!-- Principles Section -->
+  <div style="max-width: 1000px; margin: 60px auto; text-align: center;">
+    <h2 style="color: #2d72d9; font-size: 2rem;">Core Principles of Inclusive Design</h2>
+    <p style="line-height: 1.8; font-size: 1.05rem; margin-top: 15px; max-width: 850px; margin: auto;">
+      Inclusive design follows guiding principles that shift the way we build. Instead of designing for the “average user,” we design for the <em>full spectrum of people</em>.
+    </p>
+    <ul style="text-align: left; margin-top: 25px; line-height: 1.8; font-size: 1.05rem;">
+      <li>🤝 <strong>Recognize Diversity</strong> – Every user’s background, culture, and needs shape their experience.</li>
+      <li>🛠️ <strong>Flexibility</strong> – Provide multiple ways to interact with a product, tool, or space.</li>
+      <li>📣 <strong>Co-creation</strong> – Involve people with lived experiences in the design process.</li>
+      <li>🚀 <strong>Anticipate Barriers</strong> – Design with potential challenges in mind from the very beginning.</li>
+    </ul>
+  </div>
+
+  <!-- Impact Stats Section -->
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1000px; margin: 50px auto;">
+    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; flex: 1; min-width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+      <h3 style="color: #2d72d9; font-size: 2.2rem;">1 in 4</h3>
+      <p>Adults live with some form of disability</p>
     </div>
-
-    <div class="blog-content">
-        <a href="index.html" class="back-link">← Back to Home</a>
-        
-        <div class="blog-section">
-            <h2>What is Inclusive Design?</h2>
-            <p>Inclusive design is a methodology that enables and draws on the full range of human diversity. It's about designing for people with a range of abilities, ages, cultures, and backgrounds. When we design inclusively, we create better experiences for everyone.</p>
-            
-            <div class="highlight-box">
-                <h4>Key Principle</h4>
-                <p>Inclusive design recognizes that exclusion happens when we solve problems using our own biases. By designing for people with disabilities, we often create better solutions for everyone.</p>
-            </div>
-        </div>
-
-        <div class="blog-section">
-            <h2>Color and Contrast in Accessible Design</h2>
-            
-            <h3>Understanding Color Contrast</h3>
-            <p>Color contrast is the difference in light between text (or graphics) and the background. For accessibility, we need sufficient contrast so that text is readable for people with low vision or color blindness.</p>
-
-            <div class="highlight-box">
-                <h4>WCAG Contrast Requirements</h4>
-                <ul>
-                    <li><strong>Normal text:</strong> 4.5:1 contrast ratio</li>
-                    <li><strong>Large text:</strong> 3:1 contrast ratio (18pt or 14pt bold)</li>
-                    <li><strong>Graphics and UI components:</strong> 3:1 contrast ratio</li>
-                </ul>
-            </div>
-
-            <h3>Color Blindness Considerations</h3>
-            <p>Approximately 8% of men and 0.5% of women have some form of color blindness. The most common types are:</p>
-            <div class="example-list">
-                <ul>
-                    <li><strong>Red-green color blindness:</strong> Difficulty distinguishing between red and green</li>
-                    <li><strong>Blue-yellow color blindness:</strong> Difficulty distinguishing between blue and yellow</li>
-                    <li><strong>Complete color blindness:</strong> Seeing only in grayscale</li>
-                </ul>
-            </div>
-
-            <h3>Best Practices for Color Usage</h3>
-            <div class="example-list">
-                <ul>
-                    <li>Don't rely solely on color to convey information</li>
-                    <li>Use high contrast colors for text and backgrounds</li>
-                    <li>Test your designs with color blindness simulators</li>
-                    <li>Provide alternative indicators (icons, patterns, text)</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="blog-section">
-            <h2>Typography and Readability</h2>
-            
-            <h3>Font Selection</h3>
-            <p>Choose fonts that are easy to read and widely supported. Sans-serif fonts like Arial, Helvetica, and Open Sans are generally more readable on screens.</p>
-
-            <div class="highlight-box">
-                <h4>Typography Best Practices</h4>
-                <ul>
-                    <li>Use a minimum font size of 16px for body text</li>
-                    <li>Ensure sufficient line spacing (1.5x line height recommended)</li>
-                    <li>Avoid all caps for large blocks of text</li>
-                    <li>Use proper heading hierarchy (H1, H2, H3, etc.)</li>
-                    <li>Limit line length to 50-75 characters</li>
-                </ul>
-            </div>
-
-            <h3>Responsive Typography</h3>
-            <p>Typography should scale appropriately across different screen sizes and zoom levels. Use relative units (em, rem) instead of fixed pixel values.</p>
-
-            <div class="code-example">
-                /* Good: Responsive typography */
-                body {
-                    font-size: 16px;
-                    line-height: 1.6;
-                }
-                
-                h1 {
-                    font-size: 2.5rem;
-                    margin-bottom: 1rem;
-                }
-                
-                /* Avoid: Fixed sizes */
-                body {
-                    font-size: 12px; /* Too small */
-                }
-            </div>
-        </div>
-
-        <div class="blog-section">
-            <h2>Navigation and Layout</h2>
-            
-            <h3>Logical Structure</h3>
-            <p>Create a clear, logical structure that users can easily understand and navigate. This includes proper heading hierarchy, consistent navigation patterns, and clear content organization.</p>
-
-            <div class="highlight-box">
-                <h4>Navigation Best Practices</h4>
-                <ul>
-                    <li>Use semantic HTML elements (nav, main, section, article)</li>
-                    <li>Provide skip links for keyboard users</li>
-                    <li>Ensure logical tab order</li>
-                    <li>Include breadcrumbs for complex sites</li>
-                    <li>Make navigation consistent across pages</li>
-                </ul>
-            </div>
-
-            <h3>Keyboard Navigation</h3>
-            <p>All interactive elements must be accessible via keyboard. This includes links, buttons, forms, and custom widgets.</p>
-
-            <div class="code-example">
-                /* Ensure focus indicators are visible */
-                button:focus,
-                a:focus,
-                input:focus {
-                    outline: 2px solid #007bff;
-                    outline-offset: 2px;
-                }
-                
-                /* Custom focus styles */
-                .custom-button:focus {
-                    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
-                }
-            </div>
-
-            <h3>Responsive Design</h3>
-            <p>Design should work well across all devices and screen sizes. This includes mobile phones, tablets, desktop computers, and assistive technology displays.</p>
-
-            <div class="example-list">
-                <ul>
-                    <li>Use flexible layouts (CSS Grid, Flexbox)</li>
-                    <li>Test on various screen sizes</li>
-                    <li>Ensure touch targets are at least 44x44px</li>
-                    <li>Provide adequate spacing between interactive elements</li>
-                    <li>Consider how content reflows on smaller screens</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="blog-section">
-            <h2>Forms and Interactive Elements</h2>
-            
-            <h3>Form Accessibility</h3>
-            <p>Forms are often the most critical part of a website for users with disabilities. Proper form design ensures everyone can complete necessary tasks.</p>
-
-            <div class="highlight-box">
-                <h4>Form Best Practices</h4>
-                <ul>
-                    <li>Use proper labels for all form controls</li>
-                    <li>Group related form fields with fieldset and legend</li>
-                    <li>Provide clear error messages</li>
-                    <li>Allow sufficient time for form completion</li>
-                    <li>Use appropriate input types (email, tel, url, etc.)</li>
-                </ul>
-            </div>
-
-            <div class="code-example">
-                <!-- Good: Properly labeled form field -->
-                <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" required>
-                
-                <!-- Good: Fieldset for grouping -->
-                <fieldset>
-                    <legend>Contact Information</legend>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name">
-                    
-                    <label for="phone">Phone:</label>
-                    <input type="tel" id="phone" name="phone">
-                </fieldset>
-            </div>
-
-            <h3>Interactive Elements</h3>
-            <p>Buttons, links, and other interactive elements must be clearly identifiable and functional for all users.</p>
-
-            <div class="example-list">
-                <ul>
-                    <li>Make buttons look clickable (use proper styling)</li>
-                    <li>Provide sufficient touch targets (minimum 44x44px)</li>
-                    <li>Use descriptive link text (avoid "click here")</li>
-                    <li>Ensure hover and focus states are distinct</li>
-                    <li>Provide loading states for asynchronous actions</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="blog-section">
-            <h2>Images and Multimedia</h2>
-            
-            <h3>Alternative Text</h3>
-            <p>Images must have appropriate alternative text that conveys the same information as the image.</p>
-
-            <div class="highlight-box">
-                <h4>Alt Text Guidelines</h4>
-                <ul>
-                    <li><strong>Informative images:</strong> Describe the content and function</li>
-                    <li><strong>Decorative images:</strong> Use empty alt="" attribute</li>
-                    <li><strong>Complex images:</strong> Provide detailed descriptions</li>
-                    <li><strong>Functional images:</strong> Describe the action</li>
-                </ul>
-            </div>
-
-            <div class="code-example">
-                <!-- Good: Informative image -->
-                <img src="chart.png" alt="Bar chart showing sales increased 25% in Q3">
-                
-                <!-- Good: Decorative image -->
-                <img src="decorative-border.png" alt="">
-                
-                <!-- Good: Functional image -->
-                <img src="print-icon.png" alt="Print this page">
-            </div>
-
-            <h3>Video and Audio Accessibility</h3>
-            <p>Multimedia content must be accessible to users who cannot see or hear the content.</p>
-
-            <div class="example-list">
-                <ul>
-                    <li>Provide captions for all video content</li>
-                    <li>Include audio descriptions for visual content</li>
-                    <li>Provide transcripts for audio and video</li>
-                    <li>Ensure media players are keyboard accessible</li>
-                    <li>Allow users to control playback speed</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="blog-section">
-            <h2>Testing and Validation</h2>
-            
-            <h3>Automated Testing Tools</h3>
-            <p>Use automated tools to identify common accessibility issues, but remember they can only catch about 30% of accessibility problems.</p>
-
-            <div class="example-list">
-                <ul>
-                    <li>WAVE Web Accessibility Evaluator</li>
-                    <li>axe DevTools</li>
-                    <li>Lighthouse Accessibility Audit</li>
-                    <li>Siteimprove Accessibility Checker</li>
-                    <li>Color Contrast Analyzer</li>
-                </ul>
-            </div>
-
-            <h3>Manual Testing</h3>
-            <p>Manual testing is essential for comprehensive accessibility evaluation.</p>
-
-            <div class="highlight-box">
-                <h4>Manual Testing Checklist</h4>
-                <ul>
-                    <li>Navigate using only the keyboard</li>
-                    <li>Test with a screen reader (NVDA, JAWS, VoiceOver)</li>
-                    <li>Check color contrast ratios</li>
-                    <li>Test with high contrast mode enabled</li>
-                    <li>Zoom to 200% and verify readability</li>
-                    <li>Test with different font sizes</li>
-                </ul>
-            </div>
-
-            <h3>User Testing</h3>
-            <p>Include people with disabilities in your testing process. They can provide valuable insights that automated tools cannot detect.</p>
-        </div>
-
-        <div class="blog-section">
-            <h2>Implementation Strategy</h2>
-            
-            <h3>Getting Started</h3>
-            <p>Implementing inclusive design doesn't have to be overwhelming. Start with the most critical areas:</p>
-
-            <div class="highlight-box">
-                <h4>Priority Implementation Order</h4>
-                <ol>
-                    <li>Fix keyboard navigation issues</li>
-                    <li>Improve color contrast</li>
-                    <li>Add proper alternative text</li>
-                    <li>Fix form accessibility</li>
-                    <li>Improve typography and readability</li>
-                    <li>Add captions and transcripts</li>
-                </ol>
-            </div>
-
-            <h3>Building a Culture of Accessibility</h3>
-            <p>Make accessibility a core part of your design and development process:</p>
-
-            <div class="example-list">
-                <ul>
-                    <li>Include accessibility requirements in project briefs</li>
-                    <li>Train your team on accessibility principles</li>
-                    <li>Create accessibility checklists for each project</li>
-                    <li>Conduct regular accessibility audits</li>
-                    <li>Celebrate accessibility improvements</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="blog-section">
-            <h2>Conclusion</h2>
-            <p>Designing for inclusivity is not just about meeting legal requirements—it's about creating better experiences for everyone. When we design with accessibility in mind, we often discover innovative solutions that benefit all users.</p>
-            
-            <p>Remember, inclusive design is an ongoing process. Start where you are, make incremental improvements, and always keep your users' diverse needs in mind. The goal is to create digital experiences that work for everyone, regardless of their abilities or circumstances.</p>
-        </div>
-
-        <div class="blog-section">
-            <h2>Additional Resources</h2>
-            <div class="example-list">
-                <ul>
-                    <li><a href="https://www.microsoft.com/en-us/design/inclusive" target="_blank" rel="noopener">Microsoft Inclusive Design</a></li>
-                    <li><a href="https://www.nngroup.com/articles/accessibility/" target="_blank" rel="noopener">Nielsen Norman Group Accessibility Articles</a></li>
-                    <li><a href="https://www.smashingmagazine.com/2011/03/designing-for-accessibility/" target="_blank" rel="noopener">Smashing Magazine Accessibility Guide</a></li>
-                    <li><a href="https://www.w3.org/WAI/tips/designing/" target="_blank" rel="noopener">W3C Design Tips</a></li>
-                    <li><a href="https://www.24a11y.com/" target="_blank" rel="noopener">24 Ways to Accessibility</a></li>
-                </ul>
-            </div>
-        </div>
+    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; flex: 1; min-width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+      <h3 style="color: #2d72d9; font-size: 2.2rem;">+30%</h3>
+      <p>More engagement when designs are inclusive</p>
     </div>
+    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; flex: 1; min-width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+      <h3 style="color: #2d72d9; font-size: 2.2rem;">100%</h3>
+      <p>People benefit when barriers are removed</p>
+    </div>
+  </div>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 Computer Accessibility. All rights reserved.</p>
-            <p>This blog post is designed to be accessible to everyone, following WCAG 2.1 Level AA guidelines.</p>
-        </div>
-    </footer>
-</body>
-</html>
+  <!-- Real World Section -->
+  <div style="max-width: 950px; margin: 60px auto; background: #f9fcff; padding: 30px; border-radius: 12px;">
+    <h2 style="color: #2d72d9; text-align:center;">🌍 Real-World Examples</h2>
+    <p style="line-height: 1.8; margin-top: 15px; font-size: 1.05rem;">
+      From closed captions on streaming services to adjustable office furniture, inclusive design already improves everyday life.  
+      A company that adopts these practices doesn’t just serve people with disabilities—they build loyalty and innovation for all users.
+    </p>
+  </div>
+
+  <!-- Call to Action -->
+  <div style="max-width: 950px; margin: 70px auto; text-align: center;">
+    <h2 style="color: #2d72d9; font-size: 2rem;">🚀 Designing Forward</h2>
+    <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 15px; max-width: 750px; margin: auto;">
+      Inclusivity is not a trend—it’s the future of design.  
+      Every decision, from color choices to navigation, shapes how people feel and interact.  
+    </p>
+    <p style="font-size: 1.2rem; font-weight: bold; margin-top: 25px;">
+      ✨ Let’s create a world where <strong>everyone belongs</strong> by design.  
+    </p>
+  </div>
+
+</section>
