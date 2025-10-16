@@ -1664,23 +1664,46 @@
             const lessons = {
                 // Website Designers Lessons
                 'design-1': {
-                    title: 'Understanding WCAG Guidelines',
-                    content: `<h2>What are WCAG Guidelines?</h2>
-<p>Have you ever visited a website and found it hard to read or use? Maybe the text was too small, the colors were hard to see, or you couldn't use it with just your keyboard. That's where accessibility comes in! Accessibility means making sure everyone, including people with disabilities, can use websites easily.</p>
-<p>To help designers and developers create accessible websites, there are special rules called the Web Content Accessibility Guidelines, or WCAG (pronounced "wuh-cag"). These guidelines are used all over the world to make the internet a friendlier place for everyone.</p>
-<p>WCAG is organized around four main ideas, called the POUR principles: Perceivable, Operable, Understandable, and Robust. These might sound complicated, but they're really just about making sure websites work for as many people as possible, no matter how they access the web.</p>
-<p>For example, "Perceivable" means that users must be able to see or hear the content, even if they can't do both. "Operable" means that all functionality should be available from a keyboard, not just a mouse. "Understandable" is about making content clear and easy to follow, and "Robust" means the website should work with different devices and assistive technologies.</p>
-<p>There are three levels of WCAG: A (basic), AA (mid-level), and AAA (the highest). Most websites aim for AA, which balances accessibility with design flexibility. Following these guidelines isn't just about following rules—it's about including everyone and making the web a better place.</p>
-<p>Did you know that nearly 1 in 6 people worldwide have some form of disability? That's a huge number of people who benefit from accessible websites. Even if you don't have a disability, accessible design can help you too—like when you're using your phone in bright sunlight or trying to watch a video in a noisy place.</p>
-<p>Learning about WCAG is the first step to becoming a more inclusive web designer. Let's explore what these guidelines mean and how you can use them in your own projects!</p>
-<p><strong>1. Quick intro:</strong> Have you heard of WCAG before? Write what you think it means: <input type="text" placeholder="Your answer here"></p>
-<p><strong>2. POUR principles:</strong> Can you guess what Perceivable, Operable, Understandable, and Robust mean for a website? Try matching each to a real-world example.</p>
-<p><strong>3. Explore a site:</strong> Visit a favorite website. Is all the content visible and usable without images or sound? What's missing?</p>
-<p><strong>4. Accessibility levels:</strong> Did you know there are three levels (A, AA, AAA)? Which do you think is most common? <select><option>A</option><option>AA</option><option>AAA</option></select></p>
-<p><strong>5. Find a guideline:</strong> Go to <a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank">WCAG Quick Reference</a> and pick one guideline. How would you apply it?</p>
-<p><strong>6. Team discussion:</strong> Share one WCAG principle with a colleague or friend. How would you explain it simply?</p>
-<p><strong>7. Reflection:</strong> Why do you think accessibility is important for everyone, not just people with disabilities?</p>`
-                },
+    title: 'Understanding WCAG Guidelines',
+    content: `
+    <section style="font-family: 'Segoe UI', Tahoma, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: auto; padding: 20px; background: #f9f9f9; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <h1 style="text-align: center; color: #1e3a8a;">Understanding WCAG Guidelines</h1>
+        
+        <h2 style="color: #2563eb;">What are WCAG Guidelines?</h2>
+        <p>Have you ever visited a website and found it hard to read or use? Maybe the text was too small, the colors were hard to see, or you couldn't use it with just your keyboard. That's where accessibility comes in! Accessibility means making sure everyone, including people with disabilities, can use websites easily.</p>
+        <p>To help designers and developers create accessible websites, there are special rules called the Web Content Accessibility Guidelines, or WCAG (pronounced "wuh-cag"). These guidelines are used all over the world to make the internet a friendlier place for everyone.</p>
+        <p>WCAG is organized around four main ideas, called the <strong>POUR principles</strong>: <em>Perceivable, Operable, Understandable, and Robust</em>. These might sound complicated, but they're really just about making sure websites work for as many people as possible, no matter how they access the web.</p>
+        
+        <h3 style="color: #2563eb;">POUR Explained</h3>
+        <ul>
+            <li><strong>Perceivable:</strong> Users must be able to see or hear the content, even if they can't do both.</li>
+            <li><strong>Operable:</strong> All functionality should be available from a keyboard, not just a mouse.</li>
+            <li><strong>Understandable:</strong> Content should be clear and easy to follow.</li>
+            <li><strong>Robust:</strong> Websites should work with different devices and assistive technologies.</li>
+        </ul>
+
+        <p>There are three levels of WCAG: <strong>A (basic)</strong>, <strong>AA (mid-level)</strong>, and <strong>AAA (highest)</strong>. Most websites aim for <strong>AA</strong>, which balances accessibility with design flexibility. Following these guidelines isn't just about rules—it's about including everyone and making the web a better place.</p>
+        <p>Did you know nearly 1 in 6 people worldwide have some form of disability? Accessible design helps them—and can also help you, like when using your phone in bright sunlight or watching a video in a noisy place.</p>
+
+        <h2 style="color: #2563eb;">Get Involved!</h2>
+        <ol>
+            <li><strong>Quick Intro:</strong> Have you heard of WCAG before? Write what you think it means: <input type="text" placeholder="Your answer here" style="width: 100%; padding: 6px; margin-top: 4px; border-radius: 4px; border: 1px solid #ccc;"></li>
+            <li><strong>POUR Principles:</strong> Can you match Perceivable, Operable, Understandable, and Robust to real-world examples?</li>
+            <li><strong>Explore a Site:</strong> Visit a favorite website. Is all content visible and usable without images or sound? What's missing?</li>
+            <li><strong>Accessibility Levels:</strong> Did you know there are three levels (A, AA, AAA)? Which is most common? 
+                <select style="padding: 6px; border-radius: 4px; border: 1px solid #ccc; margin-top: 4px;">
+                    <option>A</option>
+                    <option>AA</option>
+                    <option>AAA</option>
+                </select>
+            </li>
+            <li><strong>Find a Guideline:</strong> Go to <a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" style="color: #2563eb; text-decoration: underline;">WCAG Quick Reference</a> and pick one guideline. How would you apply it?</li>
+            <li><strong>Team Discussion:</strong> Share one WCAG principle with a colleague or friend. How would you explain it simply?</li>
+            <li><strong>Reflection:</strong> Why do you think accessibility is important for everyone, not just people with disabilities?</li>
+        </ol>
+    </section>
+    `
+},
                 'design-2': {
                     title: 'Color Contrast & Visual Design',
                     content: `<h2>Color Contrast & Visual Design</h2>
