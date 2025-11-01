@@ -30,8 +30,13 @@ def log_request_info():
 
 # Configure Gemini API
 if not GEMINI_API_KEY or GEMINI_API_KEY == '':
-    raise ValueError('Google Gemini API key not configured!')
-genai.configure(api_key=GEMINI_API_KEY)
+    print("WARNING: Google Gemini API key not configured! Chatbot functionality will be disabled.")
+    # genai.configure(api_key=GEMINI_API_KEY)  # Commented out to allow running without API key
+else:
+    genai.configure(api_key=GEMINI_API_KEY)
+    # Set the model configuration
+    import google.generativeai as genai
+    genai.configure(api_key=GEMINI_API_KEY)
 
 # Store conversation history (in a real app, you'd use a database)
 conversations = {}
@@ -81,9 +86,12 @@ def chat():
         prompt += f"User: {user_message}\nAssistant:"
         
         # Use Gemini's API with the correct method
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        gemini_response = model.generate_content(prompt)
-        assistant_message = gemini_response.text
+        if not GEMINI_API_KEY or GEMINI_API_KEY == '':
+            assistant_message = "I'm sorry, but the chatbot functionality is currently disabled because the Google Gemini API key is not configured. Please contact the administrator to set up the API key for full functionality."
+        else:
+            model = genai.GenerativeModel('gemini-pro')
+            gemini_response = model.generate_content(prompt)
+            assistant_message = gemini_response.text
         
         # Add assistant response to history
         conversations[conversation_id].append({
@@ -320,23 +328,87 @@ def score():
         prompt = f"{system_prompt}\n\nAnalyze this website: {url}"
         
         # Use Gemini to analyze the website
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        response = model.generate_content(prompt)
-        
-        # Parse the response (assuming it returns valid JSON)
-        try:
-            # Try to extract JSON from the response
-            response_text = response.text
-            # Look for JSON in the response (sometimes Gemini adds extra text)
-            import re
-            json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
-            if json_match:
-                import json
-                result = json.loads(json_match.group())
-            else:
-                # Fallback if no JSON found
-                result = {
-                    "score": 70,
+        if not GEMINI_API_KEY or GEMINI_API_KEY == '':
+            # Return a fallback response when API key is not available
+            result = {
+                "score": 50,
+                "score_explanation": "The website analysis is currently unavailable because the Google Gemini API key is not configured. Please contact the administrator to set up the API key for full functionality.",
+                "score_breakdown": {
+                    "critical_issues": 25,
+                    "structural_issues": 15,
+                    "content_issues": 7,
+                    "technical_issues": 3,
+                    "total_score": 50
+                },
+                "wcag_standards": {
+                    "compliant": [],
+                    "non_compliant": ["API_KEY_MISSING"],
+                    "partially_compliant": [],
+                    "details": {
+                        "API_KEY_MISSING": "Google Gemini API key is required for website analysis"
+                    }
+                },
+                "recommendations": {
+                    "short_term": "Configure Google Gemini API key for website analysis",
+                    "medium_term": "Set up proper API configuration",
+                    "long_term": "Enable full accessibility analysis functionality"
+                },
+                "details": {
+                    "short_term": "The AI analysis service requires a Google Gemini API key to function properly.",
+                    "medium_term": "Contact the system administrator to configure the required API key.",
+                    "long_term": "Once configured, the system will provide comprehensive accessibility analysis."
+                },
+                "priority_issues": [
+                    {
+                        "wcag_criterion": "API_KEY_MISSING",
+                        "title": "API Key Configuration Required",
+                        "description": "Google Gemini API key is not configured",
+                        "impact": "High",
+                        "effort": "Low",
+                        "severity": "Critical",
+                        "affected_elements": "All analysis functionality",
+                        "fix_example": "Set GEMINI_API_KEY environment variable",
+                        "estimated_time": "5 minutes"
+                    }
+                ],
+                "performance_impact": {
+                    "accessibility_improvements": "Analysis unavailable without API key",
+                    "recommendations": "Configure API key for full functionality",
+                    "estimated_performance_improvement": "N/A"
+                },
+                "mobile_accessibility": {
+                    "touch_targets": "Analysis unavailable",
+                    "viewport": "Analysis unavailable",
+                    "gestures": "Analysis unavailable",
+                    "responsive_design": "Analysis unavailable"
+                },
+                "screen_reader_compatibility": {
+                    "landmarks": "Analysis unavailable",
+                    "headings": "Analysis unavailable",
+                    "forms": "Analysis unavailable",
+                    "navigation": "Analysis unavailable"
+                },
+                "compliance_level": "Analysis Unavailable",
+                "next_steps": "Configure Google Gemini API key to enable website analysis functionality."
+            }
+        else:
+            model = genai.GenerativeModel('gemini-pro')
+            response = model.generate_content(prompt)
+            
+            # Parse the response (assuming it returns valid JSON)
+            try:
+                # Try to extract JSON from the response
+                response_text = response.text
+                # Look for JSON in the response (sometimes Gemini adds extra text)
+                import re
+                json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
+                if json_match:
+                    import json
+                    result = json.loads(json_match.group())
+                else:
+                    # Fallback if no JSON found
+                    result = {
+                        "score": 70,
                     "score_explanation": "The website achieves a score of 70/100, indicating good accessibility with several areas for improvement. The score reflects strong compliance in basic accessibility areas but reveals gaps in advanced features and comprehensive user experience.",
                     "score_breakdown": {
                         "critical_issues": 25,
@@ -412,11 +484,11 @@ def score():
                     },
                     "compliance_level": "WCAG 2.1 Level A (Partial AA)",
                     "next_steps": "Focus on critical issues first, then address structural improvements, followed by content and technical enhancements."
-                }
-        except Exception as parse_error:
-            # Fallback response if JSON parsing fails
-            result = {
-                "score": 65,
+                    }
+            except Exception as parse_error:
+                # Fallback response if JSON parsing fails
+                result = {
+                    "score": 65,
                 "score_explanation": "The website achieves a score of 65/100, indicating fair accessibility with multiple areas requiring improvement. The score reflects basic compliance but reveals significant gaps in comprehensive accessibility implementation.",
                 "score_breakdown": {
                     "critical_issues": 30,
@@ -798,5 +870,5 @@ if __name__ == '__main__':
     print(f"Starting server on {HOST}:{PORT}")
     print(f"Gemini API Key Status: {'Configured' if GEMINI_API_KEY else 'NOT CONFIGURED'}")
     if not GEMINI_API_KEY:
-        print("⚠️  WARNING: Please update config.py with your Gemini API key")
+        print("WARNING: Please update config.py with your Gemini API key")
     app.run(debug=FLASK_DEBUG, host=HOST, port=PORT) 

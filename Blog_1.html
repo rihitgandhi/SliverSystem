@@ -1,138 +1,483 @@
-<section style="font-family: 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(135deg, #eef2ff, #f9f9f9); padding: 50px; color: #333;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Computer Accessibility - SliverSystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-   <button onclick="exitBlog()" 
-    style="position: fixed; top: 20px; left: 20px; 
-           background: #ff4d4d; color: white; 
-           border: none; padding: 10px 18px; 
-           border-radius: 8px; font-size: 1rem; 
-           cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
-           transition: background 0.3s;">
-    ✖ Exit
-  </button>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #74b9ff 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
 
-  <script>
-  function exitBlog() {
-    window.close();
-    window.location.href = "index.html";
-  }
-</script>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-  
-  
-  <!-- Hero Section -->
-  <div style="max-width: 1000px; margin: auto; text-align: center; padding: 40px 20px;">
-    <h1 style="font-size: 3rem; color: #1a73e8; margin-bottom: 20px;">
-      🌍 Breaking Barriers: Understanding Computer Accessibility
-    </h1>
-    <p style="font-size: 1.2rem; line-height: 1.8; max-width: 750px; margin: auto;">
-      Computers have reshaped how we learn, connect, and work—but not everyone experiences the digital world equally.  
-      For over <strong>1.5 billion people with disabilities</strong>, technology can be either a lifeline or a locked gate.  
-      <br><br>
-      Accessibility means ensuring technology welcomes everyone. Let’s dive into what it really means, why it matters, and how innovations like **AI are rewriting the rules of inclusion**.  
-    </p>
+        .exit-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
 
+        .exit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
+        }
 
-  </div>
+        .hero-section {
+            text-align: center;
+            padding: 80px 0;
+            color: white;
+        }
 
-  <!-- Why Accessibility Matters -->
-  <div style="max-width: 1000px; margin: 60px auto; text-align: center;">
-    <h2 style="color: #1a73e8; font-size: 2rem;">Why Accessibility Matters</h2>
-    <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 15px; max-width: 850px; margin: auto;">
-      Accessibility isn’t just a checkbox. It’s about ensuring <em>equal participation</em>.  
-      Imagine trying to buy groceries online, but the checkout button can’t be accessed without a mouse. Or taking an online exam where the instructions aren’t readable by a screen reader.  
-      These barriers create **real-world inequality**. But when technology is inclusive, it empowers independence, boosts confidence, and unlocks opportunities.  
-    </p>
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff, #e3f2fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
 
-  </div>
+        .hero-subtitle {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
 
-  <!-- Common Barriers Section -->
-  <div style="max-width: 1000px; margin: 60px auto;">
-    <h2 style="color: #1a73e8; font-size: 2rem; text-align:center;">🚧 Common Barriers People Face</h2>
-    <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 20px;">
-      Accessibility challenges come in many forms. Some of the most common include:
-    </p>
-    <ul style="line-height: 1.8; font-size: 1.1rem; margin-left: 20px;">
-      <li>🔉 <strong>Hearing Barriers</strong> – Missing captions or poor audio descriptions exclude deaf or hard-of-hearing users.</li>
-      <li>👁️ <strong>Visual Barriers</strong> – Low color contrast, missing alt-text, or cluttered design make sites unusable for people with low vision or blindness.</li>
-      <li>🖱️ <strong>Motor Barriers</strong> – Interfaces that demand precise mouse clicks but don’t allow keyboard navigation block users with mobility impairments.</li>
-      <li>🧠 <strong>Cognitive Barriers</strong> – Overly complex layouts and jargon make tools harder for people with learning or cognitive disabilities.</li>
-    </ul>
+        .content-section {
+            background: white;
+            margin: 40px 0;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.8s ease-out;
+        }
 
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
 
-  <!-- Stats Section -->
-  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1000px; margin: auto;">
-    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; flex: 1; min-width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-      <h3 style="color: #ff9800; font-size: 2.5rem;">1.5B+</h3>
-      <p>People with disabilities worldwide</p>
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #74b9ff);
+            border-radius: 2px;
+        }
+
+        .section-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .barriers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .barrier-card {
+            background: linear-gradient(135deg, #f0f8ff, #ffffff);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #74b9ff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .barrier-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .barrier-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .barrier-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #74b9ff);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .ai-section {
+            background: linear-gradient(135deg, #e3f2fd, #e8f4fd);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 50px 0;
+        }
+
+        .ai-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .ai-item {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .ai-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .ai-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #74b9ff;
+        }
+
+        .ai-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .impact-section {
+            background: linear-gradient(135deg, #e8f5e8, #f0f8ff);
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            border-radius: 20px;
+            padding: 60px;
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-highlight {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #f39c12;
+        }
+
+        .approach-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .approach-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .approach-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .approach-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #74b9ff;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .content-section {
+                padding: 40px 20px;
+            }
+            
+            .hero-section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="exit-btn" onclick="exitBlog()">
+        <i class="fas fa-times"></i> Exit
+    </button>
+
+    <script>
+        function exitBlog() {
+            window.close();
+            window.location.href = "index.html";
+        }
+    </script>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">
+                🌍 Breaking Barriers: Understanding Computer Accessibility
+            </h1>
+            <p class="hero-subtitle">
+                Computers have reshaped how we learn, connect, and work—but not everyone experiences the digital world equally.  
+                For over <strong>1.5 billion people with disabilities</strong>, technology can be either a lifeline or a locked gate.  
+                <br><br>
+                Accessibility means ensuring technology welcomes everyone. Let's dive into what it really means, why it matters, and how innovations like <strong>AI are rewriting the rules of inclusion</strong>.
+            </p>
+        </div>
+
+        <!-- Why Accessibility Matters -->
+        <div class="content-section">
+            <h2 class="section-title">Why Accessibility Matters</h2>
+            <p class="section-text">
+                Accessibility isn't just a checkbox. It's about ensuring <em>equal participation</em>.  
+                Imagine trying to buy groceries online, but the checkout button can't be accessed without a mouse. Or taking an online exam where the instructions aren't readable by a screen reader.  
+                These barriers create <strong>real-world inequality</strong>. But when technology is inclusive, it empowers independence, boosts confidence, and unlocks opportunities.
+            </p>
+        </div>
+
+        <!-- Common Barriers Section -->
+        <div class="content-section">
+            <h2 class="section-title">🚧 Common Barriers People Face</h2>
+            <p class="section-text">
+                Accessibility challenges come in many forms. Some of the most common include:
+            </p>
+            <div class="barriers-grid">
+                <div class="barrier-card">
+                    <div class="barrier-icon">🔉</div>
+                    <div class="barrier-title">Hearing Barriers</div>
+                    <p>Missing captions or poor audio descriptions exclude deaf or hard-of-hearing users.</p>
+                </div>
+                <div class="barrier-card">
+                    <div class="barrier-icon">👁️</div>
+                    <div class="barrier-title">Visual Barriers</div>
+                    <p>Low color contrast, missing alt-text, or cluttered design make sites unusable for people with low vision or blindness.</p>
+                </div>
+                <div class="barrier-card">
+                    <div class="barrier-icon">🖱️</div>
+                    <div class="barrier-title">Motor Barriers</div>
+                    <p>Interfaces that demand precise mouse clicks but don't allow keyboard navigation block users with mobility impairments.</p>
+                </div>
+                <div class="barrier-card">
+                    <div class="barrier-icon">🧠</div>
+                    <div class="barrier-title">Cognitive Barriers</div>
+                    <p>Overly complex layouts and jargon make tools harder for people with learning or cognitive disabilities.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="content-section">
+            <h2 class="section-title">📊 The Numbers Tell the Story</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1.5B+</div>
+                    <div class="stat-label">People with disabilities worldwide</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">97%</div>
+                    <div class="stat-label">Websites fail accessibility tests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">23%</div>
+                    <div class="stat-label">Sales boost from accessible e-commerce</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Inclusivity: our guiding principle</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI & Accessibility Section -->
+        <div class="ai-section">
+            <h2 class="section-title">🤖 How AI is Changing Accessibility</h2>
+            <p class="section-text">
+                Artificial Intelligence is becoming one of accessibility's greatest allies. Here's how:
+            </p>
+            <div class="ai-list">
+                <div class="ai-item">
+                    <div class="ai-icon">🎙️</div>
+                    <div class="ai-title">Voice-to-Text</div>
+                    <p>AI speech recognition turns spoken words into captions instantly, making videos accessible for deaf users.</p>
+                </div>
+                <div class="ai-item">
+                    <div class="ai-icon">📝</div>
+                    <div class="ai-title">Text-to-Speech</div>
+                    <p>AI-powered screen readers provide natural, human-like voices for people with vision impairments.</p>
+                </div>
+                <div class="ai-item">
+                    <div class="ai-icon">🖼️</div>
+                    <div class="ai-title">Image Recognition</div>
+                    <p>AI can auto-generate alt-text descriptions for images, reducing barriers in photo-heavy websites.</p>
+                </div>
+                <div class="ai-item">
+                    <div class="ai-icon">🌐</div>
+                    <div class="ai-title">Real-time Translation</div>
+                    <p>Breaking down language barriers benefits everyone, but especially those with cognitive disabilities.</p>
+                </div>
+                <div class="ai-item">
+                    <div class="ai-icon">💡</div>
+                    <div class="ai-title">Predictive Design</div>
+                    <p>AI can suggest layout improvements to developers, highlighting low-contrast colors or inaccessible menus.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real-World Impact -->
+        <div class="impact-section">
+            <h2 class="section-title">💡 Real Stories, Real Impact</h2>
+            <p class="section-text">
+                A 2023 study found that when young adults with intellectual disabilities participated in technology design workshops, 
+                their skills, confidence, and enthusiasm for digital tools grew dramatically.  
+                Accessibility isn't just about tools—it's about <strong>empowering people to contribute</strong>.
+            </p>
+        </div>
+
+        <!-- How We Drive Change -->
+        <div class="content-section">
+            <h2 class="section-title">🚀 How We Drive Change</h2>
+            <p class="section-text">
+                Change happens when accessibility is built into the process, not bolted on at the end. Our approach includes:
+            </p>
+            <div class="approach-list">
+                <div class="approach-item">
+                    <div class="approach-icon">🔎</div>
+                    <div class="barrier-title">Audit</div>
+                    <p>Digital tools for accessibility gaps.</p>
+                </div>
+                <div class="approach-item">
+                    <div class="approach-icon">⚡</div>
+                    <div class="barrier-title">Implement</div>
+                    <p>Inclusive features (captions, ARIA, alt-text, keyboard navigation).</p>
+                </div>
+                <div class="approach-item">
+                    <div class="approach-icon">📚</div>
+                    <div class="barrier-title">Educate</div>
+                    <p>Teams so inclusion becomes second nature.</p>
+                </div>
+                <div class="approach-item">
+                    <div class="approach-icon">🤝</div>
+                    <div class="barrier-title">Collaborate</div>
+                    <p>With users to co-design tools that actually work for them.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h2 class="cta-title">✨ The Vision Ahead</h2>
+            <p class="cta-text">
+                Accessibility is not an afterthought—it's the blueprint for a fair digital future.  
+                By building technology with inclusion at its core, we create spaces where everyone belongs.
+            </p>
+            <p class="cta-highlight">
+                💡 Join the movement: help build a digital world that welcomes everyone.
+            </p>
+        </div>
     </div>
-    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; flex: 1; min-width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-      <h3 style="color: #ff9800; font-size: 2.5rem;">97%</h3>
-      <p>Websites fail accessibility tests</p>
-    </div>
-    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; flex: 1; min-width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-      <h3 style="color: #ff9800; font-size: 2.5rem;">23%</h3>
-      <p>Sales boost from accessible e-commerce</p>
-    </div>
-    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; flex: 1; min-width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-      <h3 style="color: #ff9800; font-size: 2.5rem;">100%</h3>
-      <p>Inclusivity: our guiding principle</p>
-    </div>
-  </div>
-
-  <!-- AI & Accessibility Section -->
-  <div style="max-width: 1000px; margin: 70px auto; padding: 40px; background: #f0f9ff; border-radius: 12px;">
-    <h2 style="color: #1a73e8; text-align:center;">🤖 How AI is Changing Accessibility</h2>
-    <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 20px;">
-      Artificial Intelligence is becoming one of accessibility’s greatest allies. Here’s how:  
-    </p>
-    <ul style="line-height: 1.8; font-size: 1.1rem; margin-left: 20px;">
-      <li>🎙️ **Voice-to-Text** – AI speech recognition turns spoken words into captions instantly, making videos accessible for deaf users.</li>
-      <li>📝 **Text-to-Speech** – AI-powered screen readers provide natural, human-like voices for people with vision impairments.</li>
-      <li>🖼️ **Image Recognition** – AI can auto-generate alt-text descriptions for images, reducing barriers in photo-heavy websites.</li>
-      <li>🌐 **Real-time Translation** – Breaking down language barriers benefits everyone, but especially those with cognitive disabilities.</li>
-      <li>💡 **Predictive Design** – AI can suggest layout improvements to developers, highlighting low-contrast colors or inaccessible menus.</li>
-    </ul>
-
-  </div>
-
-  <!-- Real-World Impact -->
-  <div style="max-width: 950px; margin: 60px auto; background: #eaf3ff; padding: 30px; border-radius: 12px;">
-    <h2 style="color: #1a73e8; text-align:center;">💡 Real Stories, Real Impact</h2>
-    <p style="line-height: 1.8; margin-top: 15px; font-size: 1.1rem;">
-      A 2023 study found that when young adults with intellectual disabilities participated in technology design workshops, 
-      their skills, confidence, and enthusiasm for digital tools grew dramatically.  
-      Accessibility isn’t just about tools—it’s about **empowering people to contribute**.  
-    </p>
-
-  </div>
-
-  <!-- How We Drive Change -->
-  <div style="max-width: 950px; margin: 60px auto; text-align: center;">
-    <h2 style="color: #1a73e8; font-size: 2rem;">🚀 How We Drive Change</h2>
-    <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 15px;">
-      Change happens when accessibility is built into the process, not bolted on at the end. Our approach includes:  
-    </p>
-    <ul style="line-height: 1.8; font-size: 1.1rem; list-style: none; padding: 0; margin-top: 20px;">
-      <li>🔎 <strong>Audit</strong> digital tools for accessibility gaps.</li>
-      <li>⚡ <strong>Implement</strong> inclusive features (captions, ARIA, alt-text, keyboard navigation).</li>
-      <li>📚 <strong>Educate</strong> teams so inclusion becomes second nature.</li>
-      <li>🤝 <strong>Collaborate</strong> with users to co-design tools that actually work for them.</li>
-    </ul>
-
-  </div>
-
-  <!-- Call to Action -->
-  <div style="max-width: 950px; margin: 70px auto; text-align: center;">
-    <h2 style="color: #1a73e8; font-size: 2rem;">✨ The Vision Ahead</h2>
-    <p style="line-height: 1.8; font-size: 1.15rem; margin-top: 15px; max-width: 750px; margin: auto;">
-      Accessibility is not an afterthought—it’s the blueprint for a fair digital future.  
-      By building technology with inclusion at its core, we create spaces where everyone belongs.  
-    </p>
-    <p style="font-size: 1.2rem; font-weight: bold; margin-top: 25px;">
-      💡 Join the movement: help build a digital world that welcomes everyone.  
-    </p>
-  </div>
-
-</section>
-
-
+</body>
+</html>

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Google Gemini API Configuration
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', 'AIzaSyD77xnWvyPutXCe3jJfN1zB2l5lDVVwOm4')
 
 # Flask Configuration
 FLASK_SECRET_KEY = os.getenv('FLASK_SECRET_KEY', 'your-secret-key-here')
