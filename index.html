@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AcessAI - AI-powered accessibility assistant and inclusive design platform. Learn about WCAG, assistive tech, and make the web accessible for everyone.">
     <meta name="keywords" content="AcessAI, accessibility, web accessibility, assistive technology, WCAG, inclusive design, disability, AI assistant">
+    <!-- Backend URL (used by frontend to determine API endpoint).
+        This ensures GitHub Pages (including rihtigandhi.github.io/SliverSystem) calls Railway backend. -->
+    <meta name="backend-url" content="https://sliver-system-backend-production-9067.up.railway.app">
     <title>AcessAI - Making the Web Accessible for Everyone</title>
     <link rel="stylesheet" href="./css/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
@@ -1594,11 +1597,20 @@ class AccessibilityChatbot {
         this.init();
     }
     getBackendUrl() {
-        if (window.location.hostname.includes('github.io')) {
-            return 'https://sliversystem-backend.onrender.com';
-        } else {
-            return 'http://localhost:5000';
+        // Respect meta tag override first
+        try {
+            const meta = document.querySelector('meta[name="backend-url"]');
+            if (meta && meta.content) return meta.content;
+        } catch (e) {}
+
+        const host = window.location.hostname || '';
+        // Treat GitHub Pages hosts (including the user site path) as production
+        if (host.includes('github.io') || host === 'rihitgandhi.github.io') {
+            return 'https://sliver-system-backend-production-9067.up.railway.app';
         }
+
+        // Local development fallback
+        return 'http://localhost:5000';
     }
     init() {
         const messagesContainer = document.getElementById('chat-messages');
