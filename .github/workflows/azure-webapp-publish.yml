@@ -1,0 +1,44 @@
+name: Deploy to Azure Web App (Publish Profile)
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run quick lint (optional)
+        run: |
+          echo "Skipping lint by default; enable linting here if desired"
+
+      - name: Archive for deployment
+        run: |
+          # Create a zip package for deployment
+          zip -r deploy.zip . -x ".git/*" "venv/*" "*.pyc" "__pycache__/*" 
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: './deploy.zip'
+
+      - name: Deployment note
+        run: |
+          echo "Deployment finished."
+          echo "Ensure App Settings (GEMINI_API_KEY, FLASK_SECRET_KEY, APP_ENV) are configured in Azure Portal or via CLI."

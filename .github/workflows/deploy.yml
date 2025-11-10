@@ -1,0 +1,55 @@
+name: Deploy to remote server
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy (create .env on remote via SSH)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create remote .env and deploy
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          script: |
+            set -e
+            # Path where the app is deployed on the remote host - set this to your app path
+            APP_DIR=${{ secrets.DEPLOY_PATH }}
+            if [ -z "$APP_DIR" ]; then
+              echo "ERROR: DEPLOY_PATH is not set in secrets"
+              exit 1
+            fi
+            cd "$APP_DIR"
+
+            echo "Writing .env file from GitHub Secrets (this will NOT be committed to Git)..."
+            cat > .env <<'EOF'
+APP_ENV=production
+GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+FLASK_SECRET_KEY=${{ secrets.FLASK_SECRET_KEY }}
+HOST=0.0.0.0
+PORT=5000
+FLASK_DEBUG=False
+EOF
+
+            echo "Pulling latest code"
+            git pull origin main || true
+
+            # Activate virtualenv if present and restart service if systemd unit exists
+            if [ -f ./venv/bin/activate ]; then
+              source ./venv/bin/activate
+            fi
+
+            if sudo systemctl is-enabled --quiet sliversystem; then
+              echo "Restarting sliversystem service"
+              sudo systemctl restart sliversystem
+            else
+              echo "No sliversystem systemd service found; you might manually restart your app or run Gunicorn"
+            fi

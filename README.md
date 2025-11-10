@@ -84,6 +84,15 @@ this.backendUrl = 'http://localhost:5000';
 this.backendUrl = 'https://your-backend-url.com';
 ```
 
+You can also set the backend URL on a per-deploy basis by adding a meta tag to `index.html` (useful for GitHub Pages + Railway):
+
+```html
+<!-- In the <head> of index.html -->
+<meta name="backend-url" content="https://sliver-system-backend-production-9067.up.railway.app">
+```
+
+The frontend will prefer this meta tag. If the page is served from GitHub Pages (hostname contains `github.io`), the script will automatically use the configured Railway backend URL (`https://sliver-system-backend-production-9067.up.railway.app`). You can override the URL per-deploy by changing the meta tag value without editing `scripts/chatbot.js`.
+
 ## 📁 Project Structure
 
 ```

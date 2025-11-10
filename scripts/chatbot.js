@@ -25,18 +25,45 @@ class AccessibilityChatbot {
     }
 
     getBackendUrl() {
-        // Check if we're on GitHub Pages (production)
-        if (window.location.hostname.includes('github.io')) {
-            // Production: Update this URL to your deployed backend
-            const url = 'https://sliversystem-backend.onrender.com';
-            console.log('🌐 Using production backend URL:', url);
-            return url;
-        } else {
-            // Local development
+        // Priority order for selecting backend URL:
+        // 1. A <meta name="backend-url" content="https://..."> in the page head (allows override)
+        // 2. If hosted on GitHub Pages (hostname contains github.io) => use Railway/default production URL
+        // 3. If running on localhost/127.0.0.1 => use local backend
+        // 4. Fallback to local backend
+
+        // 1) meta tag override
+        try {
+            const meta = document.querySelector('meta[name="backend-url"]');
+            if (meta && meta.content) {
+                console.log('🌐 Using backend URL from meta tag:', meta.content);
+                return meta.content;
+            }
+        } catch (e) {
+            // ignore
+        }
+
+        const host = window.location.hostname || '';
+        const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '';
+        const isGithubPages = host.includes('github.io');
+
+        if (isGithubPages) {
+            // If this frontend is served via GitHub Pages, point the frontend to the Railway backend.
+            // This is set to the production Railway backend for this project.
+            const railwayUrl = 'https://sliver-system-backend-production-9067.up.railway.app';
+            console.log('🌐 Detected GitHub Pages host — using Railway backend URL:', railwayUrl);
+            return railwayUrl;
+        }
+
+        if (isLocal) {
             const url = 'http://localhost:5000';
             console.log('🏠 Using local backend URL:', url);
             return url;
         }
+
+        // Default fallback
+        const fallback = 'http://localhost:5000';
+        console.log('⚠️ Falling back to backend URL:', fallback);
+        return fallback;
     }
 
     init() {

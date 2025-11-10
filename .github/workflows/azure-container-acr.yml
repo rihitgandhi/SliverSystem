@@ -1,0 +1,46 @@
+name: Build and deploy Docker image to ACR and Web App for Containers
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Build and push image to ACR using az acr build
+        env:
+          ACR_NAME: ${{ secrets.ACR_NAME }}
+          IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+        run: |
+          set -e
+          echo "Building image and pushing to ACR: $ACR_NAME"
+          # Use the GitHub SHA to tag the image
+          TAG=${GITHUB_SHA::8}
+          az acr build --registry $ACR_NAME --image ${IMAGE_NAME}:$TAG .
+          echo "IMAGE_TAG=${ACR_NAME}.azurecr.io/${IMAGE_NAME}:$TAG" >> $GITHUB_ENV
+
+      - name: Configure Web App to use ACR image
+        env:
+          RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
+        run: |
+          set -e
+          IMAGE_URI=${{ env.IMAGE_TAG }}
+          echo "Configuring Web App $WEBAPP_NAME to use image $IMAGE_URI"
+          az webapp config container set -g $RESOURCE_GROUP -n $WEBAPP_NAME --docker-custom-image-name $IMAGE_URI
+          az webapp restart -g $RESOURCE_GROUP -n $WEBAPP_NAME
+
+      - name: Post-deploy note
+        run: |
+          echo "Deployed image to Web App for Containers. Check app logs in Azure portal or run 'az webapp log tail'."
+
+  
