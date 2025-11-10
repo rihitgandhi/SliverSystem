@@ -9,16 +9,21 @@ import google.generativeai as genai
 app = Flask(__name__, static_folder='.', static_url_path='')
 app.secret_key = FLASK_SECRET_KEY
 
-# Configure CORS to allow requests from GitHub Pages and other origins
-CORS(app, 
-     origins=[
-         'http://localhost:5000',
-         'http://127.0.0.1:5000',
-         'https://rihitgandhi.github.io',
-         'https://rihitgandhi.github.io/SliverSystem'
-     ], 
-     methods=['GET', 'POST', 'OPTIONS'], 
-     allow_headers=['Content-Type', 'Authorization'],
+# Configure CORS for API endpoints only and restrict to known origins
+# Allow GitHub Pages origin (rihitgandhi.github.io), the Railway frontend if needed,
+# and localhost for local testing. Restricting to /api/* reduces risk.
+allowed_origins = [
+    'http://localhost:5000',
+    'http://127.0.0.1:5000',
+    'https://rihitgandhi.github.io',
+    # include railway or other frontend hosts if necessary
+    'https://sliver-system-backend-production-9067.up.railway.app'
+]
+
+CORS(app,
+     resources={r"/api/*": {"origins": allowed_origins}},
+     methods=['GET', 'POST', 'OPTIONS'],
+     allow_headers=['Content-Type', 'Authorization', 'X-Requested-With'],
      supports_credentials=False)
 
 # Add debugging for CORS requests
