@@ -150,25 +150,18 @@
         }
         
         .code-example {
-            background: #1e1e1e;
-            color: #d4d4d4;
+            background: #2d2d2d;
+            color: #f8f8f2;
             padding: 20px;
             border-radius: 8px;
             overflow-x: auto;
             margin: 20px 0;
             font-family: 'Courier New', monospace;
-            border: 1px solid #3c3c3c;
         }
         
         .code-example code {
             font-size: 0.95rem;
             line-height: 1.6;
-            color: #d4d4d4;
-            display: block;
-        }
-        
-        .code-example code::before {
-            content: none;
         }
         
         .info-box {
@@ -230,27 +223,16 @@
         }
         
         .wcag-principle {
-            background: #ffffff;
+            background: white;
             border: 2px solid #e0e0e0;
             padding: 25px;
             border-radius: 10px;
             margin: 20px 0;
-            color: #333;
         }
         
         .wcag-principle h3 {
             color: #667eea;
             margin-top: 0;
-        }
-        
-        .wcag-principle h4 {
-            color: #444;
-            margin-top: 20px;
-        }
-        
-        .wcag-principle p,
-        .wcag-principle li {
-            color: #333;
         }
         
         .timeline {
@@ -378,14 +360,11 @@
         }
     </style>
 </head>
-<body class="homepage">
+<body>
     <div id="content-wrapper">
-        <!-- Skip to main content link for screen readers -->
-        <a href="#main-content" class="skip-link">Skip to main content</a>
-        
-        <header role="banner" class="modern-header sticky-header fundamental-nav" style="background: #357abd; box-shadow: 0 2px 12px rgba(53,122,189,0.10); position: sticky; top: 0; z-index: 1001;">
-            <nav role="navigation" aria-label="Main navigation">
-                <div class="nav-container nav-elevated fundamental-nav-container">
+        <header class="header fundamental-header" role="banner">
+            <nav class="nav fundamental-nav" role="navigation" aria-label="Main navigation">
+                <div class="nav-container fundamental-nav-container">
                     <div class="nav-brand fundamental-nav-brand">
                         <a href="index.html" aria-label="Go to Home" style="all: unset; cursor: pointer; display: inline-block;">
                             <h1 class="nav-title fundamental-nav-title" style="color: #fff; font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AcessAI</h1>
@@ -395,18 +374,6 @@
                         <a href="index.html" class="nav-item nav-link" role="menuitem">
                             <span class="nav-icon"><i class="fa fa-home"></i></span>
                             <span class="nav-text">Home</span>
-                        </a>
-                        <a href="index.html#ai" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-robot"></i></span>
-                            <span class="nav-text">AI in Accessibility</span>
-                        </a>
-                        <a href="index.html#blogs" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-pen-nib"></i></span>
-                            <span class="nav-text">Blogs</span>
-                        </a>
-                        <a href="index.html#mission" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-bullseye"></i></span>
-                            <span class="nav-text">Our Mission</span>
                         </a>
                         <a href="chat.html" class="nav-item nav-link" role="menuitem">
                             <span class="nav-icon"><i class="fa fa-comments"></i></span>
@@ -707,31 +674,6 @@
         <footer role="contentinfo">
             <div class="footer-content">
                 <p>&copy; 2024 Computer Accessibility. All rights reserved.</p>
-            </div>
-        </footer>
-    </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Common Issues, Testing, Resources and more sections will be added here -->
-                <div class="quick-links">
-                    <h3>🚀 Need More Help?</h3>
-                    <p>Our AI tools are here to assist you:</p>
-                    <div class="quick-links-grid">
-                        <a href="score.html" class="quick-link-btn">📊 Analyze Your Site</a>
-                        <a href="chat.html" class="quick-link-btn">💬 Ask AI Assistant</a>
-                        <a href="alt-text-generator.html" class="quick-link-btn">🖼️ Generate Alt Text</a>
-                        <a href="code-reviewer.html" class="quick-link-btn">🔍 Review Code</a>
-                        <a href="content-simplifier.html" class="quick-link-btn">📝 Simplify Content</a>
-                    </div>
-                </div>
-            </div>
-        </main>
-        
-        <footer role="contentinfo">
-            <div class="footer-content" style="text-align: center; padding: 20px; background: #f8f9fa;">
-                <p>&copy; 2024 AcessAI. Making the web accessible for everyone.</p>
             </div>
         </footer>
     </div>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Accessibility Score</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <style>
+        .score-page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .score-form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .score-form-section h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .url-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .url-input-group input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .url-input-group input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+        
+        .check-btn {
+            padding: 12px 30px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .check-btn:hover {
+            background: #357abd;
+        }
+        
+        .check-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .message.error {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+        }
+        
+        .message.success {
+            background: #efe;
+            border: 1px solid #cfc;
+            color: #3c3;
+        }
+        
+        .message.info {
+            background: #eef;
+            border: 1px solid #ccf;
+            color: #33c;
+        }
+        
+        .results-container {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .results-container.visible {
+            display: block;
+        }
+        
+        .score-display {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .score-circle {
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .score-value {
+            font-size: 72px;
+            font-weight: bold;
+        }
+        
+        .score-label {
+            font-size: 24px;
+        }
+        
+        .results-section {
+            margin-top: 30px;
+        }
+        
+        .results-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #4a90e2;
+            padding-bottom: 10px;
+        }
+        
+        .results-section h3 {
+            color: #4a90e2;
+            margin: 25px 0 15px 0;
+        }
+        
+        .wcag-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .wcag-column {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+        
+        .wcag-column h4 {
+            margin-bottom: 15px;
+        }
+        
+        .wcag-item {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #4a90e2;
+        }
+        
+        .wcag-item.compliant {
+            border-left-color: #4caf50;
+        }
+        
+        .wcag-item.non-compliant {
+            border-left-color: #f44336;
+        }
+        
+        .priority-issues {
+            margin: 20px 0;
+        }
+        
+        .issue-card {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .issue-card h4 {
+            margin-bottom: 10px;
+            color: #f57c00;
+        }
+        
+        .recommendations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .recommendation-card {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            border-top: 4px solid #4a90e2;
+        }
+        
+        .recommendation-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4a90e2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .nav-header {
+            background: white;
+            padding: 15px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-tab:hover {
+            background: #f0f0f0;
+        }
+        
+        .nav-tab.active {
+            background: #4a90e2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-header">
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab">← Back to Home</a>
+            <a href="chat.html" class="nav-tab">🤖 Chat with AI</a>
+            <a href="score.html" class="nav-tab active">📝 Accessibility Score</a>
+            <a href="help.html" class="nav-tab">❓ Help & Guidelines</a>
+        </div>
+    </nav>
+
+    <div class="score-page-container">
+        <!-- Form Section -->
+        <div class="score-form-section">
+            <h1>Website Accessibility Score</h1>
+            <p>Enter a website URL to analyze its accessibility compliance with WCAG 2.1 Level AA standards.</p>
+            
+            <div style="margin-top: 20px;">
+                <div class="url-input-group">
+                    <input 
+                        type="url" 
+                        id="url-input" 
+                        placeholder="https://example.com"
+                        autocomplete="off"
+                    >
+                    <button type="button" id="analyze-btn" class="check-btn">
+                        <span id="btn-text">Check Accessibility</span>
+                        <span id="btn-spinner" class="loading-spinner" style="display: none;"></span>
+                    </button>
+                </div>
+                
+                <div id="message" class="message"></div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="results-container">
+            <h2>Accessibility Analysis Results</h2>
+            
+            <!-- Score Display -->
+            <div class="score-display">
+                <div class="score-circle">
+                    <div class="score-value" id="score-value">0</div>
+                    <div class="score-label">/100</div>
+                </div>
+            </div>
+            
+            <div class="results-section">
+                <!-- Score Explanation -->
+                <div id="score-explanation"></div>
+                
+                <!-- WCAG Standards -->
+                <div id="wcag-section">
+                    <h2>WCAG 2.1 Level AA Compliance</h2>
+                    <div class="wcag-grid">
+                        <div class="wcag-column">
+                            <h4>✅ Compliant Standards</h4>
+                            <div id="compliant-list"></div>
+                        </div>
+                        <div class="wcag-column">
+                            <h4>❌ Non-Compliant Standards</h4>
+                            <div id="non-compliant-list"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Priority Issues -->
+                <div id="priority-section">
+                    <h2>Priority Issues</h2>
+                    <div id="priority-list" class="priority-issues"></div>
+                </div>
+                
+                <!-- Recommendations -->
+                <h2>Recommendations</h2>
+                <div class="recommendations">
+                    <div class="recommendation-card">
+                        <h3>Short-term (1-2 weeks)</h3>
+                        <div id="short-term"></div>
+                    </div>
+                    <div class="recommendation-card">
+                        <h3>Medium-term (1-3 months)</h3>
+                        <div id="medium-term"></div>
+                    </div>
+                    <div class="recommendation-card">
+                        <h3>Long-term (3-12 months)</h3>
+                        <div id="long-term"></div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <p>Need help understanding these recommendations? 
+                        <a href="help.html" style="color: #4a90e2;">View our comprehensive help guide</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize
+        console.log('Score page loaded successfully');
+        
+        const urlInput = document.getElementById('url-input');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnSpinner = document.getElementById('btn-spinner');
+        const messageDiv = document.getElementById('message');
+        const resultsDiv = document.getElementById('results');
+
+        // Determine backend URL
+        const hostname = window.location.hostname;
+        const backendUrl = hostname === 'rihitgandhi.github.io' 
+            ? 'https://sliver-system.onrender.com'
+            : window.location.origin;
+        
+        console.log('Backend URL:', backendUrl);
+
+        // Handle button click
+        analyzeBtn.addEventListener('click', async function() {
+            console.log('Analyze button clicked');
+            
+            const url = urlInput.value.trim();
+            
+            if (!url) {
+                showMessage('Please enter a valid URL', 'error');
+                return;
+            }
+            
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                showMessage('URL must start with http:// or https://', 'error');
+                return;
+            }
+            
+            // Start analysis
+            analyzeBtn.disabled = true;
+            btnText.textContent = 'Analyzing...';
+            btnSpinner.style.display = 'inline-block';
+            resultsDiv.classList.remove('visible');
+            hideMessage();
+            
+            try {
+                console.log('Sending request to:', backendUrl + '/api/score');
+                
+                const response = await fetch(backendUrl + '/api/score', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ url: url })
+                });
+                
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                if (data.success) {
+                    displayResults(data);
+                    showMessage('Analysis completed successfully!', 'success');
+                } else {
+                    showMessage(data.error || 'Analysis failed', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Error: ' + error.message, 'error');
+            } finally {
+                // Reset button
+                analyzeBtn.disabled = false;
+                btnText.textContent = 'Check Accessibility';
+                btnSpinner.style.display = 'none';
+            }
+        });
+        
+        // Allow Enter key in input
+        urlInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                analyzeBtn.click();
+            }
+        });
+        
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = 'message ' + type;
+            messageDiv.style.display = 'block';
+        }
+        
+        function hideMessage() {
+            messageDiv.style.display = 'none';
+        }
+        
+        function displayResults(data) {
+            // Show results container
+            resultsDiv.classList.add('visible');
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            
+            // Display score
+            document.getElementById('score-value').textContent = data.score || 0;
+            
+            // Display explanation
+            const explanationDiv = document.getElementById('score-explanation');
+            if (data.explanation) {
+                explanationDiv.innerHTML = '<h3>Score Explanation</h3><p>' + escapeHtml(data.explanation) + '</p>';
+            }
+            
+            // Display WCAG standards
+            if (data.wcag_standards) {
+                displayWCAGStandards(data.wcag_standards);
+            }
+            
+            // Display priority issues
+            if (data.priority_issues) {
+                displayPriorityIssues(data.priority_issues);
+            }
+            
+            // Display recommendations
+            if (data.recommendations) {
+                displayRecommendations(data.recommendations);
+            }
+        }
+        
+        function displayWCAGStandards(wcag) {
+            const compliantList = document.getElementById('compliant-list');
+            const nonCompliantList = document.getElementById('non-compliant-list');
+            
+            compliantList.innerHTML = '';
+            nonCompliantList.innerHTML = '';
+            
+            if (wcag.compliant && wcag.compliant.length > 0) {
+                wcag.compliant.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'wcag-item compliant';
+                    div.innerHTML = '<strong>' + escapeHtml(item.code) + '</strong>: ' + escapeHtml(item.description);
+                    compliantList.appendChild(div);
+                });
+            } else {
+                compliantList.innerHTML = '<p>No compliant standards found.</p>';
+            }
+            
+            if (wcag.non_compliant && wcag.non_compliant.length > 0) {
+                wcag.non_compliant.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'wcag-item non-compliant';
+                    div.innerHTML = '<strong>' + escapeHtml(item.code) + '</strong>: ' + escapeHtml(item.description);
+                    nonCompliantList.appendChild(div);
+                });
+            } else {
+                nonCompliantList.innerHTML = '<p>No non-compliant standards found.</p>';
+            }
+        }
+        
+        function displayPriorityIssues(issues) {
+            const priorityList = document.getElementById('priority-list');
+            priorityList.innerHTML = '';
+            
+            if (issues && issues.length > 0) {
+                issues.forEach(issue => {
+                    const card = document.createElement('div');
+                    card.className = 'issue-card';
+                    card.innerHTML = `
+                        <h4>${escapeHtml(issue.title || 'Issue')}</h4>
+                        <p>${escapeHtml(issue.description || '')}</p>
+                        ${issue.impact ? '<p><strong>Impact:</strong> ' + escapeHtml(issue.impact) + '</p>' : ''}
+                        ${issue.fix ? '<p><strong>How to fix:</strong> ' + escapeHtml(issue.fix) + '</p>' : ''}
+                    `;
+                    priorityList.appendChild(card);
+                });
+            } else {
+                priorityList.innerHTML = '<p>No priority issues identified.</p>';
+            }
+        }
+        
+        function displayRecommendations(recommendations) {
+            if (recommendations.short_term) {
+                document.getElementById('short-term').innerHTML = '<p>' + escapeHtml(recommendations.short_term) + '</p>';
+            }
+            
+            if (recommendations.medium_term) {
+                document.getElementById('medium-term').innerHTML = '<p>' + escapeHtml(recommendations.medium_term) + '</p>';
+            }
+            
+            if (recommendations.long_term) {
+                document.getElementById('long-term').innerHTML = '<p>' + escapeHtml(recommendations.long_term) + '</p>';
+            }
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        console.log('All event listeners attached successfully');
+    </script>
+</body>
+</html>

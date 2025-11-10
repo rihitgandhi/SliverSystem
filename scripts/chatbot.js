@@ -2,6 +2,18 @@ class AccessibilityChatbot {
     constructor() {
         this.conversationId = 'accessibility-chat-' + Date.now();
         this.isLoading = false;
+        this.progressInterval = null;
+        this.currentMessageIndex = 0;
+        
+        // Progress messages for AI thinking
+        this.thinkingMessages = [
+            'Processing your question...',
+            'Analyzing accessibility context...',
+            'Consulting WCAG guidelines...',
+            'Formulating detailed response...',
+            'Reviewing best practices...',
+            'Preparing recommendations...'
+        ];
         
         // Backend URL Configuration
         // For local development: http://localhost:5000
@@ -212,13 +224,30 @@ class AccessibilityChatbot {
         this.isLoading = true;
         const sendButton = document.getElementById('send-button');
         if (sendButton) {
-            sendButton.innerHTML = '<span class="loading-spinner">⏳</span>';
+            this.currentMessageIndex = 0;
+            sendButton.innerHTML = `<span class="loading-spinner">⏳</span> <span class="loading-text">${this.thinkingMessages[0]}</span>`;
             sendButton.disabled = true;
+            
+            // Start rotating progress messages every 5 seconds
+            this.progressInterval = setInterval(() => {
+                this.currentMessageIndex = (this.currentMessageIndex + 1) % this.thinkingMessages.length;
+                const loadingText = sendButton.querySelector('.loading-text');
+                if (loadingText) {
+                    loadingText.textContent = this.thinkingMessages[this.currentMessageIndex];
+                }
+            }, 5000);
         }
     }
 
     hideLoading() {
         this.isLoading = false;
+        
+        // Clear progress interval
+        if (this.progressInterval) {
+            clearInterval(this.progressInterval);
+            this.progressInterval = null;
+        }
+        
         const sendButton = document.getElementById('send-button');
         if (sendButton) {
             sendButton.innerHTML = '<span class="send-icon">📤</span>';

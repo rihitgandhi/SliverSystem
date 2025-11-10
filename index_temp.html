@@ -26,11 +26,19 @@
                             <h1 class="nav-title fundamental-nav-title" style="color: #fff; font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AcessAI</h1>
                         </button>
                     </div>
-                    <div class="nav-menu fundamental-nav-menu" role="menubar">
+                    <div class="nav-menu fundamental-nav-menu" role="tablist">
                         <button class="nav-item active" data-tab="home" role="tab" aria-selected="true" tabindex="0" id="home-tab">
                             <span class="nav-icon"><i class="fa fa-home"></i></span>
                             <span class="nav-text">Home</span>
                         </button>
+                        <a href="chat.html" class="nav-item nav-link" role="link" aria-label="Chat with AI Assistant">
+                            <span class="nav-icon"><i class="fa fa-comments"></i></span>
+                            <span class="nav-text">Chat with AI</span>
+                        </a>
+                        <a href="score.html" class="nav-item nav-link" role="link" aria-label="Check Website Accessibility Score">
+                            <span class="nav-icon"><i class="fa fa-chart-bar"></i></span>
+                            <span class="nav-text">Accessibility Score</span>
+                        </a>
                         <button class="nav-item" data-tab="ai" role="tab" aria-selected="false" tabindex="0" id="ai-tab">
                             <span class="nav-icon"><i class="fa fa-robot"></i></span>
                             <span class="nav-text">AI in Accessibility</span>
@@ -39,31 +47,7 @@
                             <span class="nav-icon"><i class="fa fa-pen-nib"></i></span>
                             <span class="nav-text">Blogs</span>
                         </button>
-                        <button class="nav-item" data-tab="mission" role="tab" aria-selected="false" tabindex="0" id="mission-tab">
-                            <span class="nav-icon"><i class="fa fa-bullseye"></i></span>
-                            <span class="nav-text">Our Mission</span>
-                        </button>
-                        <a href="chat.html" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-comments"></i></span>
-                            <span class="nav-text">Chat with AI</span>
-                        </a>
-                        <a href="score.html" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-chart-bar"></i></span>
-                            <span class="nav-text">Accessibility Score</span>
-                        </a>
-                        <a href="alt-text-generator.html" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-image"></i></span>
-                            <span class="nav-text">Alt Text Generator</span>
-                        </a>
-                        <a href="code-reviewer.html" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-code"></i></span>
-                            <span class="nav-text">Code Reviewer</span>
-                        </a>
-                        <a href="content-simplifier.html" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-file-alt"></i></span>
-                            <span class="nav-text">Content Simplifier</span>
-                        </a>
-                        <a href="help.html" class="nav-item nav-link" role="menuitem">
+                        <a href="help.html" class="nav-item nav-link" role="link" aria-label="Help and Guidelines">
                             <span class="nav-icon"><i class="fa fa-question-circle"></i></span>
                             <span class="nav-text">Help</span>
                         </a>
@@ -157,13 +141,13 @@
                                             </div>
                                         </div>
                                         <div class="quick-actions">
-                                            <a href="chat.html" class="quick-action"><i class="fa fa-list"></i> WCAG Principles</a>
-                                            <a href="chat.html" class="quick-action"><i class="fa fa-keyboard"></i> Keyboard Access</a>
-                                            <a href="chat.html" class="quick-action"><i class="fa fa-image"></i> Alt Text Guide</a>
+                                            <button type="button" class="quick-action" onclick="switchTab('chat'); setTimeout(function(){ document.getElementById('main-content').scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100); setTimeout(function(){ askQuickQuestion('What are the main WCAG principles?'); }, 300); return false;"><i class="fa fa-list"></i> WCAG Principles</button>
+                                            <button type="button" class="quick-action" onclick="switchTab('chat'); setTimeout(function(){ document.getElementById('main-content').scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100); setTimeout(function(){ askQuickQuestion('How do I make a website keyboard accessible?'); }, 300); return false;"><i class="fa fa-keyboard"></i> Keyboard Access</button>
+                                            <button type="button" class="quick-action" onclick="switchTab('chat'); setTimeout(function(){ document.getElementById('main-content').scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100); setTimeout(function(){ askQuickQuestion('What is alt text and why is it important?'); }, 300); return false;"><i class="fa fa-image"></i> Alt Text Guide</button>
                                         </div>
                                     </div>
                                     <div class="tool-actions">
-                                        <a href="chat.html" class="btn btn-primary"><i class="fa fa-comments"></i> Open Full Chat</a>
+                                        <button type="button" onclick="switchTab('chat'); setTimeout(function(){ document.getElementById('main-content').scrollIntoView({behavior: 'smooth', block: 'start'}); }, 50);" class="btn btn-primary"><i class="fa fa-comments"></i> Open Full Chat</button>
                                         <button class="btn btn-secondary" onclick="showExampleQuestions()"><i class="fa fa-lightbulb"></i> Example Questions</button>
                                     </div>
                                 </div>
@@ -290,7 +274,7 @@
             <!-- AI in Accessibility Tab Content -->
             <div id="ai" class="tab-content" role="tabpanel" aria-labelledby="ai-tab">
                 <div class="my-ai-card">
-                    <h1 class="bigblue">🤖 AI in Computer Accessibility</h1>
+                    <h1 class="bigblue">?? AI in Computer Accessibility</h1>
                     <hr class="my-ai-separator">
                     
                     <div class="my-ai-quote">
@@ -298,25 +282,25 @@
                     </div>
 
                     <section class="ai-benefits">
-                        <h2>✨ How AI is Transforming Accessibility</h2>
+                        <h2>?? How AI is Transforming Accessibility</h2>
                         <div class="ai-grid">
                             <div class="ai-item">
-                                <div class="ai-icon">🌐</div>
+                                <div class="ai-icon">??</div>
                                 <h3>Real-time Translation</h3>
                                 <p>AI-powered translation services can instantly convert text and speech between languages, making content accessible to users with different language needs. This technology supports over 100 languages and provides context-aware translations.</p>
                             </div>
                             <div class="ai-item">
-                                <div class="ai-icon">💬</div>
+                                <div class="ai-icon">??</div>
                                 <h3>Intelligent Captioning</h3>
                                 <p>Advanced AI can generate accurate captions for videos in real-time, including speaker identification and sound descriptions. This technology can recognize different accents, background noise, and even emotional context.</p>
                             </div>
                             <div class="ai-item">
-                                <div class="ai-icon">🧭</div>
+                                <div class="ai-icon">??</div>
                                 <h3>Smart Navigation</h3>
                                 <p>AI can analyze website content and provide intelligent navigation suggestions for users with cognitive disabilities. It learns user preferences and adapts the interface accordingly.</p>
                             </div>
                             <div class="ai-item">
-                                <div class="ai-icon">⚙️</div>
+                                <div class="ai-icon">??</div>
                                 <h3>Personalized Interfaces</h3>
                                 <p>Machine learning can adapt interfaces based on individual user needs and preferences, creating truly personalized experiences that improve over time.</p>
                             </div>
@@ -324,10 +308,10 @@
                     </section>
 
                     <section class="ai-technologies">
-                        <h2>🔬 Cutting-Edge AI Technologies</h2>
+                        <h2>?? Cutting-Edge AI Technologies</h2>
                         <div class="tech-grid">
                             <div class="tech-item">
-                                <div class="tech-icon">👁️</div>
+                                <div class="tech-icon">???</div>
                                 <h3>Computer Vision</h3>
                                 <p>AI-powered image recognition can describe visual content to blind users, identify objects, read text from images, and provide detailed scene descriptions. This technology can recognize faces, emotions, and complex visual patterns.</p>
                                 <div class="tech-features">
@@ -337,7 +321,7 @@
                                 </div>
                             </div>
                             <div class="tech-item">
-                                <div class="tech-icon">🗣️</div>
+                                <div class="tech-icon">???</div>
                                 <h3>Natural Language Processing</h3>
                                 <p>NLP enables more natural interactions with technology through voice commands, text prediction, and intelligent content summarization. It can simplify complex language and provide alternative explanations.</p>
                                 <div class="tech-features">
@@ -347,7 +331,7 @@
                                 </div>
                             </div>
                             <div class="tech-item">
-                                <div class="tech-icon">📊</div>
+                                <div class="tech-icon">??</div>
                                 <h3>Predictive Analytics</h3>
                                 <p>AI can predict user needs and automatically adjust accessibility settings based on usage patterns, time of day, and context. This proactive approach reduces the need for manual adjustments.</p>
                                 <div class="tech-features">
@@ -360,11 +344,11 @@
                     </section>
 
                     <section class="ai-applications">
-                        <h2>💡 Real-World AI Applications</h2>
+                        <h2>?? Real-World AI Applications</h2>
                         <div class="applications-grid">
                             <div class="app-card">
                                 <div class="app-header">
-                                    <div class="app-icon">📱</div>
+                                    <div class="app-icon">??</div>
                                     <h3>Mobile Accessibility</h3>
                                 </div>
                                 <p>AI-powered mobile apps can provide real-time assistance for users with visual, hearing, and motor impairments. Features include gesture recognition, voice control, and intelligent screen readers.</p>
@@ -377,7 +361,7 @@
                             </div>
                             <div class="app-card">
                                 <div class="app-header">
-                                    <div class="app-icon">🌐</div>
+                                    <div class="app-icon">??</div>
                                     <h3>Web Accessibility</h3>
                                 </div>
                                 <p>AI can automatically detect and fix accessibility issues on websites, provide alternative content formats, and create personalized browsing experiences for users with disabilities.</p>
@@ -390,7 +374,7 @@
                             </div>
                             <div class="app-card">
                                 <div class="app-header">
-                                    <div class="app-icon">🎓</div>
+                                    <div class="app-icon">??</div>
                                     <h3>Educational Technology</h3>
                                 </div>
                                 <p>AI-powered educational tools can adapt learning materials to individual needs, provide real-time assistance, and create inclusive learning environments for students with disabilities.</p>
@@ -405,20 +389,20 @@
                     </section>
 
                     <section class="ai-future">
-                        <h2>🚀 The Future of AI in Accessibility</h2>
+                        <h2>?? The Future of AI in Accessibility</h2>
                         <div class="future-content">
                             <div class="future-item">
-                                <div class="future-icon">🧠</div>
+                                <div class="future-icon">??</div>
                                 <h3>Brain-Computer Interfaces</h3>
                                 <p>Emerging AI technologies are enabling direct brain-to-computer communication, allowing users with severe motor impairments to control devices through thought alone. This revolutionary technology could transform accessibility for millions of people.</p>
                             </div>
                             <div class="future-item">
-                                <div class="future-icon">🤝</div>
+                                <div class="future-icon">??</div>
                                 <h3>AI Assistants</h3>
                                 <p>Advanced AI assistants will provide 24/7 accessibility support, learning individual preferences and needs to offer proactive assistance. These assistants will integrate seamlessly with all digital devices and services.</p>
                             </div>
                             <div class="future-item">
-                                <div class="future-icon">♿</div>
+                                <div class="future-icon">??</div>
                                 <h3>Universal Design</h3>
                                 <p>AI will enable truly universal design by automatically adapting interfaces to individual needs, creating experiences that work for everyone regardless of their abilities or disabilities.</p>
                             </div>
@@ -430,7 +414,7 @@
                     </div>
 
                     <section class="ai-stats">
-                        <h2>📈 AI Accessibility Impact</h2>
+                        <h2>?? AI Accessibility Impact</h2>
                         <div class="stats-grid">
                             <div class="stat-item">
                                 <div class="stat-number">85%</div>
@@ -530,7 +514,7 @@
                     <div class="mission-container">
                         <div class="mission-header">
                             <h2 class="mission-title">Our Mission</h2>
-                            <div class="mission-icon">🎯</div>
+                            <div class="mission-icon">??</div>
                         </div>
                         <div class="mission-content">
                             <p class="mission-text">
@@ -538,17 +522,17 @@
                             </p>
                             <div class="mission-principles">
                                 <div class="principle-card">
-                                    <div class="principle-icon">🌍</div>
+                                    <div class="principle-icon">??</div>
                                     <h3>Universal Access</h3>
                                     <p>Making the digital world accessible to all, regardless of physical, cognitive, or sensory abilities.</p>
                                 </div>
                                 <div class="principle-card">
-                                    <div class="principle-icon">📚</div>
+                                    <div class="principle-icon">??</div>
                                     <h3>Education First</h3>
                                     <p>Providing comprehensive, easy-to-understand resources that empower everyone to learn about accessibility.</p>
                                 </div>
                                 <div class="principle-card">
-                                    <div class="principle-icon">🤝</div>
+                                    <div class="principle-icon">??</div>
                                     <h3>Community Support</h3>
                                     <p>Building a supportive community where knowledge is shared and everyone can contribute to making technology better.</p>
                                 </div>
@@ -562,7 +546,7 @@
                     <h2 class="services-title">How We Help You</h2>
                     <div class="services-grid">
                         <div class="service-card">
-                            <div class="service-icon">💻</div>
+                            <div class="service-icon">?????</div>
                             <h3>For Developers</h3>
                             <p>Learn to build accessible websites and applications that work for everyone. Master WCAG guidelines, implement proper ARIA labels, and create inclusive user experiences.</p>
                             <ul class="service-features">
@@ -573,7 +557,7 @@
                             </ul>
                         </div>
                         <div class="service-card">
-                            <div class="service-icon">🎨</div>
+                            <div class="service-icon">??</div>
                             <h3>For Designers</h3>
                             <p>Create beautiful, inclusive designs that consider color contrast, typography, and user experience for people with diverse abilities and needs.</p>
                             <ul class="service-features">
@@ -584,7 +568,7 @@
                             </ul>
                         </div>
                         <div class="service-card">
-                            <div class="service-icon">🏢</div>
+                            <div class="service-icon">??</div>
                             <h3>For Organizations</h3>
                             <p>Understand accessibility requirements, implement compliance strategies, and create inclusive digital policies that benefit your entire organization.</p>
                             <ul class="service-features">
@@ -595,7 +579,7 @@
                             </ul>
                         </div>
                         <div class="service-card">
-                            <div class="service-icon">👤</div>
+                            <div class="service-icon">??</div>
                             <h3>For Individuals</h3>
                             <p>Discover tools and techniques to navigate the web more effectively, regardless of your abilities or the challenges you face.</p>
                             <ul class="service-features">
@@ -615,7 +599,7 @@
                         <p class="cta-text">Join us in creating a more inclusive digital world. Start learning, start building, start making technology accessible for everyone.</p>
                         <div class="cta-buttons">
                             <button class="cta-button secondary" onclick="openTab('blogs')">
-                                <span class="cta-icon">📖</span>
+                                <span class="cta-icon">??</span>
                                 Read Our Blog
                             </button>
                         </div>
@@ -623,588 +607,13 @@
                 </section>
             </div>
 
-            <div id="chat" class="tab-content" role="tabpanel" aria-labelledby="chat-tab" style="display: none;">
-                <section class="chat-hero">
-                    <div class="chat-hero-content">
-                        <h1 class="chat-title">💬 Accessibility AI Assistant</h1>
-                        <p class="chat-subtitle">Ask me anything about web accessibility, WCAG guidelines, assistive technologies, and inclusive design practices!</p>
-                    </div>
-                </section>
-                <section class="modern-chatbot-section">
-                    <div class="chatbot-container modern-chatbot">
-                        <div class="chatbot-header modern-header">
-                            <div class="header-content">
-                                <div class="ai-avatar">
-                                    <div class="avatar-circle">
-                                        <span class="avatar-icon">🤖</span>
-                                    </div>
-                                    <div class="status-indicator online"></div>
-                                </div>
-                                <div class="header-text">
-                                    <h3 class="modern-title">💬 Accessibility Assistant</h3>
-                                    <p class="modern-subtitle">Ask me anything about web accessibility, WCAG guidelines, or assistive technologies!</p>
-                                </div>
-                            </div>
-                            <div class="header-actions">
-                                <button class="btn btn-small" onclick="clearChatHistory()" title="Clear Chat">
-                                    <span class="btn-icon">🗑️</span>
-                                </button>
-                                <button class="btn btn-small" onclick="exportChatHistory()" title="Export Chat">
-                                    <span class="btn-icon">📥</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="chat-messages modern-messages" id="chat-messages">
-                            <div class="welcome-message">
-                                <div class="welcome-content">
-                                    <div class="welcome-icon">👋</div>
-                                    <h4>Welcome to the Accessibility Assistant!</h4>
-                                    <p>I'm here to help you with all things accessibility. Try asking me about:</p>
-                                    <div class="quick-actions">
-                                        <button class="quick-action-btn" onclick="askQuickQuestion('What are the main WCAG principles?')">
-                                            <span class="quick-icon">📋</span>
-                                            WCAG Principles
-                                        </button>
-                                        <button class="quick-action-btn" onclick="askQuickQuestion('How do I make a website keyboard accessible?')">
-                                            <span class="quick-icon">⌨️</span>
-                                            Keyboard Access
-                                        </button>
-                                        <button class="quick-action-btn" onclick="askQuickQuestion('What is alt text and why is it important?')">
-                                            <span class="quick-icon">🖼️</span>
-                                            Alt Text Guide
-                                        </button>
-                                        <button class="quick-action-btn" onclick="askQuickQuestion('How do I test my website for accessibility?')">
-                                            <span class="quick-icon">🧪</span>
-                                            Testing Tips
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat-input-container modern-input">
-                            <div class="input-wrapper modern-wrapper">
-                                <div class="input-field-container">
-                                    <textarea id="chat-input" placeholder="Type your question here..." maxlength="500" rows="1" class="modern-textarea"></textarea>
-                                    <div class="input-actions">
-                                        <button class="send-button modern-send" id="send-button">
-                                            <span class="send-icon">📤</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="input-footer">
-                                <div class="char-counter">
-                                    <span id="char-count">0</span>/500
-                                </div>
-                                <div class="input-tips">
-                                    <span class="tip">💡 Press Enter to send, Shift+Enter for new line</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat-history-section modern-history">
-                            <div class="chat-history-header">
-                                <h4>📜 Chat History</h4>
-                                <button class="toggle-history-btn modern-toggle" onclick="toggleChatHistory()">
-                                    <span class="toggle-icon">?</span>
-                                    Show/Hide
-                                </button>
-                            </div>
-                            <div class="chat-history-content" id="chat-history-content" style="display: none;">
-                                <div class="history-list" id="history-list"></div>
-                                <div class="history-actions">
-                                    <button class="btn btn-secondary" onclick="exportChatHistory()">
-                                        <span class="btn-icon">📥</span>
-                                        Export History
-                                    </button>
-                                    <button class="btn btn-secondary" onclick="clearChatHistory()">
-                                        <span class="btn-icon">🗑️</span>
-                                        Clear History
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section class="back-to-site">
-                    <div class="back-content">
-                        <h2>Explore More Accessibility Resources</h2>
-                        <p>Visit our main website for comprehensive guides, lessons, and resources about computer accessibility.</p>
-                        <a href="#" class="btn btn-primary" onclick="switchTab('home'); return false;">
-                            <span class="btn-icon">🏠</span>
-                            <span class="back-text">Back to Main Website</span>
-                        </a>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Score Tab Content -->
-            <div id="score" class="tab-content" role="tabpanel" aria-labelledby="score-tab" style="display: none;">
-                <section class="score-section">
-                    <h1>Website Accessibility Score</h1>
-                    <form id="score-form" class="score-form">
-                        <div class="form-group">
-                            <label for="url" class="form-label">Enter website URL:</label>
-                            <input type="url" id="url" name="url" placeholder="https://example.com" required class="form-input">
-                        </div>
-                        <button type="submit" id="submit-btn" class="btn btn-primary">
-                            <span class="btn-icon">🔍</span>
-                            <span class="btn-text">Check Accessibility</span>
-                            <span class="loading-spinner" style="display: none;">?</span>
-                        </button>
-                    </form>
-                    <div id="error-message" class="error-message" style="display: none;"></div>
-                    <div id="success-message" class="success-message" style="display: none;"></div>
-                    <div id="results" class="results-section" style="display: none;">
-                        <div class="results-header">
-                            <h2>Accessibility Analysis Results</h2>
-                            <div class="export-actions">
-                                <button id="export-pdf-btn" class="btn btn-secondary" onclick="exportToPDF()">
-                                    <span class="btn-icon">📄</span>
-                                    Export PDF Report
-                                </button>
-                                <button id="export-json-btn" class="btn btn-secondary" onclick="exportToJSON()">
-                                    <span class="btn-icon">📊</span>
-                                    Export JSON Data
-                                </button>
-                            </div>
-                        </div>
-                        <div class="score-display">
-                            <div class="score-circle">
-                                <span id="score-value">0</span>
-                                <span class="score-label">/100</span>
-                            </div>
-                            <div id="score-explanation" class="score-explanation" style="display: none;"></div>
-                            <div id="compliance-level" class="compliance-level" style="display: none;"></div>
-                            <div id="next-steps" class="next-steps" style="display: none;"></div>
-                        </div>
-                        <div id="detailed-score-breakdown" class="detailed-score-breakdown" style="display: none;">
-                            <h3>📊 Detailed Score Breakdown</h3>
-                            <div class="score-categories">
-                                <div class="score-category">
-                                    <h4>🔴 Critical Issues (40 points)</h4>
-                                    <div class="category-score">
-                                        <span id="critical-score">0</span>/40
-                                    </div>
-                                    <div id="critical-details" class="category-details"></div>
-                                </div>
-                                <div class="score-category">
-                                    <h4>🟡 Structural Issues (30 points)</h4>
-                                    <div class="category-score">
-                                        <span id="structural-score">0</span>/30
-                                    </div>
-                                    <div id="structural-details" class="category-details"></div>
-                                </div>
-                                <div class="score-category">
-                                    <h4>🔵 Content Issues (20 points)</h4>
-                                    <div class="category-score">
-                                        <span id="content-score">0</span>/20
-                                    </div>
-                                    <div id="content-details" class="category-details"></div>
-                                </div>
-                                <div class="score-category">
-                                    <h4>🟢 Technical Issues (10 points)</h4>
-                                    <div class="category-score">
-                                        <span id="technical-score">0</span>/10
-                                    </div>
-                                    <div id="technical-details" class="category-details"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="accessibility-metrics" class="accessibility-metrics" style="display: none;">
-                            <h3>📈 Accessibility Metrics</h3>
-                            <div class="metrics-grid">
-                                <div class="metric-card">
-                                    <div class="metric-icon">👁️</div>
-                                    <div class="metric-content">
-                                        <h4>Visual Accessibility</h4>
-                                        <div class="metric-score" id="visual-score">0%</div>
-                                        <div class="metric-details" id="visual-details"></div>
-                                    </div>
-                                </div>
-                                <div class="metric-card">
-                                    <div class="metric-icon">👂</div>
-                                    <div class="metric-content">
-                                        <h4>Auditory Accessibility</h4>
-                                        <div class="metric-score" id="auditory-score">0%</div>
-                                        <div class="metric-details" id="auditory-details"></div>
-                                    </div>
-                                </div>
-                                <div class="metric-card">
-                                    <div class="metric-icon">⌨️</div>
-                                    <div class="metric-content">
-                                        <h4>Keyboard Navigation</h4>
-                                        <div class="metric-score" id="keyboard-score">0%</div>
-                                        <div class="metric-details" id="keyboard-details"></div>
-                                    </div>
-                                </div>
-                                <div class="metric-card">
-                                    <div class="metric-icon">🧠</div>
-                                    <div class="metric-content">
-                                        <h4>Cognitive Accessibility</h4>
-                                        <div class="metric-score" id="cognitive-score">0%</div>
-                                        <div class="metric-details" id="cognitive-details"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wcag-standards-section">
-                            <h3>WCAG 2.1 Level AA Compliance</h3>
-                            <div class="standards-grid">
-                                <div class="compliant-standards">
-                                    <h4>? Compliant Standards</h4>
-                                    <div id="compliant-list" class="standards-list"></div>
-                                </div>
-                                <div class="non-compliant-standards">
-                                    <h4>? Non-Compliant Standards</h4>
-                                    <div id="non-compliant-list" class="standards-list"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="priority-issues-section">
-                            <h3>Priority Issues</h3>
-                            <div id="priority-issues-list" class="priority-issues-grid"></div>
-                        </div>
-                        <div class="recommendations">
-                            <div class="recommendation-card">
-                                <h3>Short-term (1-2 weeks)</h3>
-                                <p id="short-term-rec"></p>
-                                <details>
-                                    <summary>Learn more</summary>
-                                    <p id="short-term-details"></p>
-                                </details>
-                            </div>
-                            <div class="recommendation-card">
-                                <h3>Medium-term (1-3 months)</h3>
-                                <p id="medium-term-rec"></p>
-                                <details>
-                                    <summary>Learn more</summary>
-                                    <p id="medium-term-details"></p>
-                                </details>
-                            </div>
-                            <div class="recommendation-card">
-                                <h3>Long-term (3-12 months)</h3>
-                                <p id="long-term-rec"></p>
-                                <details>
-                                    <summary>Learn more</summary>
-                                    <p id="long-term-details"></p>
-                                </details>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+            <!-- DUPLICATE CHAT TAB REMOVED: Chat functionality available at chat.html -->
+            <!-- DUPLICATE SCORE TAB REMOVED: Accessibility Score available at score.html -->
         </main>
 
-        <!-- Footer -->
-        <footer role="contentinfo">
-            <div class="footer-content">
-                <p>&copy; 2024 Computer Accessibility. All rights reserved.</p>
-                <p>This website is designed to be accessible to everyone, following WCAG 2.1 Level AA guidelines.</p>
-                <p>For accessibility feedback, please contact us.</p>
-            </div>
-        </footer>
-    </div>
+        <!--Duplicate tabs removed: Chat available at chat.html, Score available at score.html -->
+        <!-- Duplicate tabs removed - use chat.html and score.html instead -->
 
-    <!-- Accessibility Widget -->
-    <div id="accessibility-widget" class="accessibility-widget">
-        <button id="acc-btn" aria-label="Open accessibility menu" aria-expanded="false">
-            <span class="widget-icon">?</span>
-            <span class="widget-text">Accessibility</span>
-        </button>
-        <div id="acc-menu" class="acc-menu" role="menu">
-            <div class="acc-section">
-                <h4>Visual Adjustments</h4>
-                <button role="menuitem" onclick="toggleFeature('high-contrast')" id="high-contrast-btn">
-                    <span class="acc-icon">🎨</span>
-                    <span class="acc-text">High Contrast</span>
-                    <span class="acc-status" id="high-contrast-status">Off</span>
-                </button>
-                <button role="menuitem" onclick="toggleFeature('grayscale')" id="grayscale-btn">
-                    <span class="acc-icon">?</span>
-                    <span class="acc-text">Grayscale</span>
-                    <span class="acc-status" id="grayscale-status">Off</span>
-                </button>
-                <button role="menuitem" onclick="toggleFeature('invert-colors')" id="invert-colors-btn">
-                    <span class="acc-icon">🔄</span>
-                    <span class="acc-text">Invert Colors</span>
-                    <span class="acc-status" id="invert-colors-status">Off</span>
-                </button>
-                <button role="menuitem" onclick="toggleFeature('brightness')" id="brightness-btn">
-                    <span class="acc-icon">☀️</span>
-                    <span class="acc-text">Brightness</span>
-                    <span class="acc-status" id="brightness-status">Off</span>
-                </button>
-            </div>
-            
-            <div class="acc-section">
-                <h4>Text & Reading</h4>
-                <div class="font-controls">
-                    <button role="menuitem" onclick="adjustFontSize('decrease')" class="font-btn">
-                        <span class="acc-icon">A-</span>
-                        <span class="acc-text">Smaller</span>
-                    </button>
-                    <button role="menuitem" onclick="adjustFontSize('reset')" class="font-btn">
-                        <span class="acc-icon">A</span>
-                        <span class="acc-text">Reset</span>
-                    </button>
-                    <button role="menuitem" onclick="adjustFontSize('increase')" class="font-btn">
-                        <span class="acc-icon">A+</span>
-                        <span class="acc-text">Larger</span>
-                    </button>
-                </div>
-                <button role="menuitem" onclick="toggleFeature('reading-line')" id="reading-line-btn">
-                    <span class="acc-icon">📏</span>
-                    <span class="acc-text">Reading Line</span>
-                    <span class="acc-status" id="reading-line-status">Off</span>
-                </button>
-                <button role="menuitem" onclick="toggleFeature('readable-fonts')" id="readable-fonts-btn">
-                    <span class="acc-icon">📝</span>
-                    <span class="acc-text">Readable Fonts</span>
-                    <span class="acc-status" id="readable-fonts-status">Off</span>
-                </button>
-                <button role="menuitem" onclick="toggleFeature('highlight-links')" id="highlight-links-btn">
-                    <span class="acc-icon">🔗</span>
-                    <span class="acc-text">Highlight Links</span>
-                    <span class="acc-status" id="highlight-links-status">Off</span>
-                </button>
-            </div>
-            
-            <div class="acc-section">
-                <h4>Navigation & Cursor</h4>
-                <button role="menuitem" onclick="toggleFeature('big-cursor')" id="big-cursor-btn">
-                    <span class="acc-icon">🖱️</span>
-                    <span class="acc-text">Big Cursor</span>
-                    <span class="acc-status" id="big-cursor-status">Off</span>
-                </button>
-                <button role="menuitem" onclick="toggleFeature('focus-indicator')" id="focus-indicator-btn">
-                    <span class="acc-icon">🎯</span>
-                    <span class="acc-text">Focus Indicator</span>
-                    <span class="acc-status" id="focus-indicator-status">Off</span>
-                </button>
-                <button role="menuitem" onclick="toggleFeature('tooltips')" id="tooltips-btn">
-                    <span class="acc-icon">💭</span>
-                    <span class="acc-text">Tooltips</span>
-                    <span class="acc-status" id="tooltips-status">Off</span>
-                </button>
-            </div>
-            
-            <div class="acc-section">
-                <h4>Content & Media</h4>
-                <button role="menuitem" onclick="toggleFeature('hide-images')" id="hide-images-btn">
-                    <span class="acc-icon">🖼️</span>
-                    <span class="acc-text">Hide Images</span>
-                    <span class="acc-status" id="hide-images-status">Off</span>
-                </button>
-                <button role="menuitem" onclick="toggleFeature('text-to-speech')" id="text-to-speech-btn">
-                    <span class="acc-icon">🔊</span>
-                    <span class="acc-text">Text to Speech</span>
-                    <span class="acc-status" id="text-to-speech-status">Off</span>
-                </button>
-                <button role="menuitem" onclick="toggleFeature('pause-animations')" id="pause-animations-btn">
-                    <span class="acc-icon">⏸️</span>
-                    <span class="acc-text">Pause Animations</span>
-                    <span class="acc-status" id="pause-animations-status">Off</span>
-                </button>
-            </div>
-            
-            <div class="acc-section">
-                <h4>Quick Actions</h4>
-                <button role="menuitem" onclick="resetAllSettings()" class="reset-btn">
-                    <span class="acc-icon">🔄</span>
-                    <span class="acc-text">Reset All</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Modern navigation functionality
-        function initNavigation() {
-            const navItems = document.querySelectorAll('.nav-item[data-tab]');
-            const navToggle = document.querySelector('.nav-toggle');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            // Add click handlers for navigation items
-            navItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const tabName = this.getAttribute('data-tab');
-                    switchTab(tabName);
-                    
-                    // Close mobile menu if open
-                    if (navMenu.classList.contains('active')) {
-                        toggleMobileMenu();
-                    }
-                });
-            });
-            
-            // Mobile menu toggle
-            if (navToggle) {
-                navToggle.addEventListener('click', toggleMobileMenu);
-            }
-            
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.nav-container') && navMenu.classList.contains('active')) {
-                    toggleMobileMenu();
-                }
-            });
-            
-            // Keyboard navigation
-            navItems.forEach(item => {
-                item.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        const tabName = this.getAttribute('data-tab');
-                        switchTab(tabName);
-                    }
-                });
-            });
-
-            // Scroll fade overlays for nav: show left/right fade when content is scrollable
-            function updateNavFades() {
-                const navContainer = document.querySelector('.nav-container');
-                if (!navContainer || !navMenu) return;
-
-                const scrollLeft = navMenu.scrollLeft;
-                const maxScrollLeft = navMenu.scrollWidth - navMenu.clientWidth;
-
-                // Horizontal fades (for single-row nav)
-                if (scrollLeft > 4) {
-                    navContainer.classList.add('show-left-fade');
-                } else {
-                    navContainer.classList.remove('show-left-fade');
-                }
-
-                if (maxScrollLeft > 4 && scrollLeft < maxScrollLeft - 4) {
-                    navContainer.classList.add('show-right-fade');
-                } else {
-                    navContainer.classList.remove('show-right-fade');
-                }
-
-                // Vertical fades (for mobile vertical nav)
-                const scrollTop = navMenu.scrollTop;
-                const maxScrollTop = navMenu.scrollHeight - navMenu.clientHeight;
-
-                if (maxScrollTop > 4 && scrollTop > 4) {
-                    navMenu.classList.add('show-top-fade');
-                } else {
-                    navMenu.classList.remove('show-top-fade');
-                }
-
-                if (maxScrollTop > 4 && scrollTop < maxScrollTop - 4) {
-                    navMenu.classList.add('show-bottom-fade');
-                } else {
-                    navMenu.classList.remove('show-bottom-fade');
-                }
-            }
-
-            if (navMenu) {
-                // Initial update
-                setTimeout(updateNavFades, 50);
-                navMenu.addEventListener('scroll', updateNavFades, { passive: true });
-                window.addEventListener('resize', updateNavFades);
-            }
-        }
-        
-        function switchTab(tabName) {
-            console.log('Switching to tab:', tabName);
-            
-            // Hide all tab content
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => {
-                content.style.display = 'none';
-                content.classList.remove('active');
-            });
-            
-            // Remove active class from all nav items
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                item.setAttribute('aria-selected', 'false');
-            });
-            
-            // Show selected tab content
-            const selectedTab = document.getElementById(tabName);
-            if (selectedTab) {
-                selectedTab.style.display = 'block';
-                selectedTab.classList.add('active');
-            }
-            
-            // Activate corresponding nav item
-            const activeNavItem = document.querySelector(`[data-tab="${tabName}"]`);
-            if (activeNavItem) {
-                activeNavItem.classList.add('active');
-                activeNavItem.setAttribute('aria-selected', 'true');
-            }
-            
-            // Initialize chatbot if needed
-            setTimeout(initChatbotIfNeeded, 100);
-        }
-        
-        function toggleMobileMenu() {
-            const navToggle = document.querySelector('.nav-toggle');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-            navToggle.setAttribute('aria-expanded', !isExpanded);
-            navMenu.classList.toggle('active');
-        }
-
-        // Accessibility widget functionality
-        let widgetOpen = false;
-        let currentFontSize = 1;
-        let speechSynthesis = window.speechSynthesis;
-        let speaking = false;
-
-        // Load saved settings
-        function loadSettings() {
-            const settings = JSON.parse(localStorage.getItem('accessibilitySettings') || '{}');
-            
-            // Apply saved settings
-            Object.keys(settings).forEach(feature => {
-                if (settings[feature]) {
-                    document.body.classList.add(feature);
-                    updateStatus(feature, true);
-                }
-            });
-            
-            // Apply saved font size
-            if (settings.fontSize) {
-                currentFontSize = settings.fontSize;
-                applyFontSize();
-            }
-        }
-
-        // Save settings
-        function saveSettings() {
-            const settings = {};
-            const features = ['high-contrast', 'grayscale', 'invert-colors', 'brightness', 
-                            'readable-fonts', 'highlight-links', 'big-cursor', 'focus-indicator', 
-                            'tooltips', 'hide-images', 'pause-animations'];
-            
-            features.forEach(feature => {
-                settings[feature] = document.body.classList.contains(feature);
-            });
-            
-            settings.fontSize = currentFontSize;
-            localStorage.setItem('accessibilitySettings', JSON.stringify(settings));
-        }
-
-        // Toggle accessibility features
-        function toggleFeature(feature) {
-            const body = document.body;
-            const isActive = body.classList.contains(feature);
-            
-            // Handle special cases
-            if (feature === 'text-to-speech') {
-                toggleTextToSpeech();
-                return;
-            }
-            
-            if (feature === 'reading-line') {
-                toggleReadingLine();
-                return;
             }
             
             // Toggle the feature
@@ -1419,8 +828,12 @@
             // Initialize modern navigation
             initNavigation();
             
-            // Initialize accessibility widget
-            initAccessibilityWidget();
+            // Initialize accessibility widget (if function exists)
+            if (typeof initAccessibilityWidget === 'function') {
+                initAccessibilityWidget();
+            } else {
+                console.log('Accessibility widget not initialized - function not defined');
+            }
             
             // Initialize home tab as active
             const homeContent = document.getElementById("home");
@@ -1556,33 +969,183 @@
             window.location.href = 'chat.html';
         }
 
-        // Accessibility Checker for Home Tab - Redirect to score.html
+        // Accessibility Checker for Home Tab (scoped)
         (function() {
             const form = document.getElementById('home-accessibility-checker-form');
             if (!form) return;
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                let url = document.getElementById('home-website-url').value.trim();
+                const url = document.getElementById('home-website-url').value;
+                const submitBtn = document.getElementById('home-checker-btn');
+                const btnText = submitBtn.querySelector('.btn-text');
+                const loadingSpinner = submitBtn.querySelector('.loading-spinner');
+                const resultsDiv = document.getElementById('home-results');
+                const errorDiv = document.getElementById('home-error-message');
+                const successDiv = document.getElementById('home-success-message');
                 if (!url) {
-                    alert('Please enter a URL');
+                    showError('Please enter a URL');
                     return;
                 }
-                // Automatically add https:// if no protocol is specified
-                if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                    url = 'https://' + url;
-                }
-                // Validate URL format
                 try { new URL(url); } catch (e) {
-                    alert('Please enter a valid URL (e.g., example.com or https://example.com)');
+                    showError('Please enter a valid URL (e.g., https://example.com)');
                     return;
                 }
-                // Redirect to score.html with URL parameter
-                window.location.href = `score.html?url=${encodeURIComponent(url)}`;
+                errorDiv.style.display = 'none';
+                successDiv.style.display = 'none';
+                resultsDiv.style.display = 'none';
+                btnText.textContent = 'Analyzing...';
+                loadingSpinner.style.display = 'inline';
+                submitBtn.disabled = true;
+                try {
+                    let backendUrl;
+                    const hostname = window.location.hostname;
+                    if (hostname.includes('github.io') || hostname.includes('github.com')) {
+                        backendUrl = 'https://sliversystem-backend.onrender.com';
+                    } else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+                        backendUrl = 'http://localhost:5000';
+                    } else {
+                        backendUrl = window.location.origin;
+                    }
+                    const requestData = { url: url };
+                    const response = await fetch(`${backendUrl}/api/score`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(requestData)
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        renderResults(data, resultsDiv);
+                        showSuccess('Analysis completed successfully!');
+                        resultsDiv.style.display = 'block';
+                        resultsDiv.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        showError('Error: ' + (data.error || 'Failed to analyze website'));
+                    }
+                } catch (error) {
+                    if (error.message.includes('Unexpected token')) {
+                        showError('Error: Received HTML instead of JSON. This usually means the request went to the wrong server. Please try again.');
+                    } else if (error.message.includes('Failed to fetch')) {
+                        showError('Error: Failed to connect to server. Please check your internet connection and try again.');
+                    } else {
+                        showError('Error: ' + error.message);
+                    }
+                } finally {
+                    btnText.textContent = 'Check Accessibility';
+                    loadingSpinner.style.display = 'none';
+                    submitBtn.disabled = false;
+                }
+                function showError(message) {
+                    errorDiv.textContent = message;
+                    errorDiv.style.display = 'block';
+                    errorDiv.scrollIntoView({ behavior: 'smooth' });
+                }
+                function showSuccess(message) {
+                    successDiv.textContent = message;
+                    successDiv.style.display = 'block';
+                    successDiv.scrollIntoView({ behavior: 'smooth' });
+                }
+                function renderResults(data, container) {
+                    // Detailed summary rendering with code examples for quick fixes
+                    let html = `
+                        <h2>Accessibility Analysis Results</h2>
+                        <div class="score-display">
+                            <div class="score-circle">
+                                <span id="score-value">${data.score}</span>
+                                <span class="score-label">/100</span>
+                            </div>
+                            <div class="score-explanation">${data.score_explanation || ''}</div>
+                        </div>
+                        <div class="score-breakdown">
+                            <h4>Score Breakdown</h4>
+                            <div>Critical Issues: ${data.score_breakdown?.critical_issues ?? '-'} / 40</div>
+                            <div>Structural Issues: ${data.score_breakdown?.structural_issues ?? '-'} / 30</div>
+                            <div>Content Issues: ${data.score_breakdown?.content_issues ?? '-'} / 20</div>
+                            <div>Technical Issues: ${data.score_breakdown?.technical_issues ?? '-'} / 10</div>
+                        </div>
+                        <div class="compliance-level">${data.compliance_level ? 'Compliance Level: ' + data.compliance_level : ''}</div>
+                        <div class="next-steps">${data.next_steps ? 'Next Steps: ' + data.next_steps : ''}</div>
+                        <div class="recommendations">
+                            <div><strong>Short-term:</strong> ${data.recommendations?.short_term ?? ''}</div>
+                            <div><strong>Medium-term:</strong> ${data.recommendations?.medium_term ?? ''}</div>
+                            <div><strong>Long-term:</strong> ${data.recommendations?.long_term ?? ''}</div>
+                        </div>
+                    `;
+                    // WCAG Standards
+                    if (data.wcag_standards) {
+                        html += `<div class="wcag-standards-section">
+                            <h3>WCAG 2.1 Level AA Compliance</h3>
+                            <div class="standards-grid">
+                                <div class="compliant-standards">
+                                    <h4>? Compliant Standards</h4>
+                                    <div class="standards-list">`;
+                        if (data.wcag_standards.compliant && data.wcag_standards.compliant.length > 0) {
+                            data.wcag_standards.compliant.forEach(criterion => {
+                                html += `<div class="standard-item compliant"><strong>${criterion}</strong> <span>${data.wcag_standards.details?.[criterion] || 'Compliant'}</span></div>`;
+                            });
+                        } else {
+                            html += '<p class="no-standards">No compliant standards found</p>';
+                        }
+                        html += `</div></div><div class="non-compliant-standards">
+                                    <h4>? Non-Compliant Standards</h4>
+                                    <div class="standards-list">`;
+                        if (data.wcag_standards.non_compliant && data.wcag_standards.non_compliant.length > 0) {
+                            data.wcag_standards.non_compliant.forEach(criterion => {
+                                html += `<div class="standard-item non-compliant"><strong>${criterion}</strong> <span>${data.wcag_standards.details?.[criterion] || 'Non-compliant'}</span></div>`;
+                            });
+                        } else {
+                            html += '<p class="no-standards">All standards are compliant!</p>';
+                        }
+                        html += `</div></div></div></div>`;
+                    }
+                    // Priority Issues with code examples
+                    if (data.priority_issues && data.priority_issues.length > 0) {
+                        html += `<div class="priority-issues-section"><h3>Priority Issues</h3><div class="priority-issues-grid">`;
+                        data.priority_issues.forEach(issue => {
+                            html += `<div class="priority-issue-card">
+                                <div class="issue-header"><h4>${issue.title}</h4><span class="wcag-criterion">WCAG ${issue.wcag_criterion}</span></div>
+                                <p class="issue-description">${issue.description}</p>
+                                <div class="issue-metrics">
+                                    <span class="impact ${issue.impact?.toLowerCase()}">Impact: ${issue.impact}</span>
+                                    <span class="effort ${issue.effort?.toLowerCase()}">Effort: ${issue.effort}</span>
+                                    ${issue.severity ? `<span class="severity ${issue.severity.toLowerCase()}">Severity: ${issue.severity}</span>` : ''}
+                                </div>
+                                ${issue.affected_elements ? `<div class="affected-elements"><strong>Affected:</strong> ${issue.affected_elements}</div>` : ''}
+                                ${issue.estimated_time ? `<div class="estimated-time"><strong>Estimated Time:</strong> ${issue.estimated_time}</div>` : ''}
+                            </div>`;
+                        });
+                        html += `</div></div>`;
+                    }
+                    // Show code examples for easy fixes if available (from data.code_examples)
+                    if (data.code_examples && data.code_examples.length > 0) {
+                        html += `<div class="code-examples-section"><h3><i class="fas fa-code"></i> Code Examples & Fixes</h3>`;
+                        data.code_examples.forEach(example => {
+                            html += `<div class="code-example-card">
+                                <div class="example-header"><h4>${example.title}</h4><span class="wcag-criterion">WCAG ${example.wcag_criterion}</span><span class="severity ${example.severity.toLowerCase()}">${example.severity}</span></div>
+                                <p class="example-description">${example.description}</p>
+                                <div class="examples-list"><h5>Code Examples:</h5>`;
+                            example.examples.forEach(ex => {
+                                html += `<div class="example-item">
+                                    <h6>${ex.issue}</h6>
+                                    <div class="code-comparison">
+                                        <div class="bad-code"><label>? Bad Code:</label><pre><code>${ex.bad_code}</code></pre></div>
+                                        <div class="good-code"><label>? Good Code:</label><pre><code>${ex.good_code}</code></pre></div>
+                                    </div>
+                                    <p class="explanation">${ex.explanation}</p>
+                                </div>`;
+                            });
+                            html += `</div>`;
+                            if (example.implementation_steps && example.implementation_steps.length > 0) {
+                                html += `<div class="implementation-steps"><h5>Implementation Steps:</h5><ol>${example.implementation_steps.map(step => `<li>${step}</li>`).join('')}</ol></div>`;
+                            }
+                            html += `</div>`;
+                        });
+                        html += `</div>`;
+                    }
+                    container.innerHTML = html;
+                }
             });
         })();
     </script>
-
-    <!-- Chatbot Script (inlined for Home tab functionality) -->
     
     <!-- Chatbot Script (inlined for Home tab functionality) -->
     <script>
@@ -1692,7 +1255,7 @@ class AccessibilityChatbot {
         this.isLoading = false;
         const sendButton = document.getElementById('send-button');
         if (sendButton) {
-            sendButton.innerHTML = '<span class="send-icon">📤</span>';
+            sendButton.innerHTML = '<span class="send-icon">??</span>';
             sendButton.disabled = false;
         }
     }
@@ -1804,59 +1367,5 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- END OF MAIN CONTENT -->
         </main>
     </div>
-            <!-- Custom cursor ring script -->
-            <script>
-            (function(){
-                try {
-                    const ring = document.createElement('div');
-                    ring.id = 'cursor-ring';
-                    document.body.appendChild(ring);
-
-                    let mouseX = 0, mouseY = 0, raf = false;
-                    document.addEventListener('mousemove', (e) => {
-                        mouseX = e.clientX; mouseY = e.clientY;
-                        if (!raf) {
-                            raf = requestAnimationFrame(() => {
-                                ring.style.left = mouseX + 'px';
-                                ring.style.top = mouseY + 'px';
-                                raf = false;
-                            });
-                        }
-                    }, { passive: true });
-
-                    const interactiveSelector = 'a, button, input, textarea, select, summary, [role="button"], [role="link"], .nav-item, .nav-toggle, .quick-action, .quick-action-btn';
-                    function activate() { ring.classList.add('cursor-active'); }
-                    function deactivate() { ring.classList.remove('cursor-active'); }
-
-                    function bindInteractive(el){
-                        el.addEventListener('mouseenter', activate);
-                        el.addEventListener('mouseleave', deactivate);
-                        el.addEventListener('focus', activate);
-                        el.addEventListener('blur', deactivate);
-                    }
-
-                    document.querySelectorAll(interactiveSelector).forEach(bindInteractive);
-
-                    // Keep ring visible when mouse re-enters window
-                    document.addEventListener('mouseleave', () => { ring.style.opacity = '0'; });
-                    document.addEventListener('mouseenter', () => { ring.style.opacity = '0.95'; });
-
-                    // Observe DOM for dynamically added interactive elements
-                    const observer = new MutationObserver((mutations) => {
-                        mutations.forEach(m => {
-                            m.addedNodes.forEach(node => {
-                                if (node.nodeType === 1) {
-                                    if (node.matches && node.matches(interactiveSelector)) bindInteractive(node);
-                                    node.querySelectorAll && node.querySelectorAll(interactiveSelector).forEach(bindInteractive);
-                                }
-                            });
-                        });
-                    });
-                    observer.observe(document.body, { childList: true, subtree: true });
-                } catch (e) {
-                    console.error('Cursor ring init error', e);
-                }
-            })();
-            </script>
 </body>
 </html>

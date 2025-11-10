@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Score Page Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-section {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        pre {
+            background: white;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Score Page Diagnostics</h1>
+    
+    <div class="test-section">
+        <h2>1. Check if score.html loads</h2>
+        <button onclick="testScorePageLoad()">Test Score Page Load</button>
+        <div id="load-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Test API Endpoint</h2>
+        <input type="text" id="test-url" value="http://www.example.com" style="width: 300px; padding: 8px;">
+        <button onclick="testAPI()">Test API</button>
+        <div id="api-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Open score.html in new tab</h2>
+        <button onclick="window.open('score.html', '_blank')">Open Score Page</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Console Logs</h2>
+        <p>Open browser console (F12) to see detailed logs</p>
+    </div>
+    
+    <script>
+        async function testScorePageLoad() {
+            const resultDiv = document.getElementById('load-result');
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                const response = await fetch('score.html');
+                const html = await response.text();
+                
+                if (html.includes('Website Accessibility Score')) {
+                    resultDiv.innerHTML = '<p class="success">✓ Score page HTML loaded successfully</p>';
+                    console.log('Score page HTML preview:', html.substring(0, 500));
+                } else {
+                    resultDiv.innerHTML = '<p class="error">✗ Score page HTML does not contain expected content</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<p class="error">✗ Error: ' + error.message + '</p>';
+            }
+        }
+        
+        async function testAPI() {
+            const resultDiv = document.getElementById('api-result');
+            const url = document.getElementById('test-url').value;
+            resultDiv.innerHTML = '<p>Testing API...</p>';
+            
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/score', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ url: url })
+                });
+                
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <p class="success">✓ API Response received</p>
+                    <p>Score: ${data.score}/100</p>
+                    <details>
+                        <summary>View Full Response</summary>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </details>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = '<p class="error">✗ Error: ' + error.message + '</p>';
+            }
+        }
+    </script>
+</body>
+</html>

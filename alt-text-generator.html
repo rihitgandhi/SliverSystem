@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Alt Text Generator - SliverSystem</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .tool-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .tool-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .tool-header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .upload-section {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .upload-area {
+            border: 3px dashed #4a90e2;
+            border-radius: 10px;
+            padding: 60px 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+        
+        .upload-area:hover {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+        
+        .upload-area.dragover {
+            background: #bbdefb;
+            border-color: #0d47a1;
+        }
+        
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .upload-text {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .upload-hint {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        #file-input {
+            display: none;
+        }
+        
+        .image-preview {
+            display: none;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .options-section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .option-group {
+            margin-bottom: 20px;
+        }
+        
+        .option-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .option-group select,
+        .option-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .results-section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .results-section.visible {
+            display: block;
+        }
+        
+        .alt-text-result {
+            background: #f8f9fa;
+            border-left: 4px solid #4a90e2;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .alt-text-result h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .alt-text-content {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+        
+        .copy-btn {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #357abd;
+        }
+        
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4a90e2;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .tips-section {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .tips-section h4 {
+            margin-top: 0;
+            color: #f57c00;
+        }
+        
+        .tips-section ul {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body class="homepage">
+    <div id="content-wrapper">
+        <!-- Skip to main content link for screen readers -->
+        <a href="#main-content" class="skip-link">Skip to main content</a>
+        
+        <!-- Navigation -->
+    <header role="banner" class="modern-header sticky-header fundamental-nav" style="background: #357abd; box-shadow: 0 2px 12px rgba(53,122,189,0.10); position: sticky; top: 0; z-index: 1001;">
+        <nav role="navigation" aria-label="Main navigation">
+            <div class="nav-container nav-elevated fundamental-nav-container">
+                <div class="nav-brand fundamental-nav-brand">
+                    <a href="index.html" aria-label="Go to Home" style="all: unset; cursor: pointer; display: inline-block;">
+                        <h1 class="nav-title fundamental-nav-title" style="color: #fff; font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AcessAI</h1>
+                    </a>
+                </div>
+                <div class="nav-menu fundamental-nav-menu" role="menubar">
+                    <a href="index.html" class="nav-item nav-link" role="menuitem">
+                        <span class="nav-icon"><i class="fa fa-home"></i></span>
+                        <span class="nav-text">Home</span>
+                    </a>
+                    <a href="index.html#ai" class="nav-item nav-link" role="menuitem">
+                        <span class="nav-icon"><i class="fa fa-robot"></i></span>
+                        <span class="nav-text">AI in Accessibility</span>
+                    </a>
+                    <a href="index.html#blogs" class="nav-item nav-link" role="menuitem">
+                        <span class="nav-icon"><i class="fa fa-pen-nib"></i></span>
+                        <span class="nav-text">Blogs</span>
+                    </a>
+                    <a href="index.html#mission" class="nav-item nav-link" role="menuitem">
+                        <span class="nav-icon"><i class="fa fa-bullseye"></i></span>
+                        <span class="nav-text">Our Mission</span>
+                    </a>
+                    <a href="chat.html" class="nav-item nav-link" role="menuitem">
+                        <span class="nav-icon"><i class="fa fa-comments"></i></span>
+                        <span class="nav-text">Chat with AI</span>
+                    </a>
+                    <a href="score.html" class="nav-item nav-link" role="menuitem">
+                        <span class="nav-icon"><i class="fa fa-chart-bar"></i></span>
+                        <span class="nav-text">Accessibility Score</span>
+                    </a>
+                    <a href="alt-text-generator.html" class="nav-item nav-link active" role="menuitem" aria-current="page">
+                        <span class="nav-icon"><i class="fa fa-image"></i></span>
+                        <span class="nav-text">Alt Text Generator</span>
+                    </a>
+                    <a href="code-reviewer.html" class="nav-item nav-link" role="menuitem">
+                        <span class="nav-icon"><i class="fa fa-code"></i></span>
+                        <span class="nav-text">Code Reviewer</span>
+                    </a>
+                    <a href="content-simplifier.html" class="nav-item nav-link" role="menuitem">
+                        <span class="nav-icon"><i class="fa fa-file-alt"></i></span>
+                        <span class="nav-text">Content Simplifier</span>
+                    </a>
+                    <a href="help.html" class="nav-item nav-link" role="menuitem">
+                        <span class="nav-icon"><i class="fa fa-question-circle"></i></span>
+                        <span class="nav-text">Help</span>
+                    </a>
+                </div>
+                <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main" class="tool-container">
+        <div class="tool-header">
+            <h1>🖼️ AI Alt Text Generator</h1>
+            <p>Generate descriptive, accessible alt text for your images using AI</p>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <div class="upload-area" id="upload-area">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Click to upload or drag and drop</div>
+                <div class="upload-hint">Supports JPG, PNG, GIF, WebP (max 5MB)</div>
+            </div>
+            <input type="file" id="file-input" accept="image/*">
+            
+            <div class="image-preview" id="image-preview">
+                <img id="preview-img" src="" alt="Preview">
+            </div>
+        </div>
+
+        <!-- Options Section -->
+        <div class="options-section">
+            <h2>Generation Options</h2>
+            
+            <div class="option-group">
+                <label for="detail-level">Detail Level:</label>
+                <select id="detail-level">
+                    <option value="concise">Concise (10-20 words)</option>
+                    <option value="standard" selected>Standard (20-40 words)</option>
+                    <option value="detailed">Detailed (40-80 words)</option>
+                </select>
+            </div>
+            
+            <div class="option-group">
+                <label for="context">Context (optional):</label>
+                <input type="text" id="context" placeholder="e.g., 'product photo', 'diagram', 'infographic'">
+            </div>
+            
+            <div class="option-group">
+                <label for="tone">Tone:</label>
+                <select id="tone">
+                    <option value="neutral" selected>Neutral</option>
+                    <option value="descriptive">Descriptive</option>
+                    <option value="technical">Technical</option>
+                    <option value="casual">Casual</option>
+                </select>
+            </div>
+            
+            <button class="generate-btn" id="generate-btn" disabled>
+                <span id="btn-text">Generate Alt Text</span>
+                <span id="btn-spinner" style="display: none;">⏳</span>
+            </button>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loading-spinner">
+            <div class="spinner"></div>
+            <p>Analyzing image and generating alt text...</p>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="results">
+            <h2>Generated Alt Text</h2>
+            
+            <div class="alt-text-result">
+                <h3>Recommended Alt Text:</h3>
+                <div class="alt-text-content" id="alt-text-main"></div>
+                <button class="copy-btn" onclick="copyToClipboard('alt-text-main')">📋 Copy to Clipboard</button>
+            </div>
+            
+            <div class="alt-text-result">
+                <h3>Alternative Versions:</h3>
+                <div id="alternatives"></div>
+            </div>
+            
+            <div class="tips-section">
+                <h4>💡 Best Practices for Alt Text</h4>
+                <ul>
+                    <li>Keep it concise but descriptive (aim for 125 characters or less)</li>
+                    <li>Don't start with "Image of" or "Picture of" (screen readers announce it's an image)</li>
+                    <li>Include relevant context that's not visible in surrounding text</li>
+                    <li>For decorative images, use empty alt text: alt=""</li>
+                    <li>For complex images (charts, diagrams), consider long descriptions</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const imagePreview = document.getElementById('image-preview');
+        const previewImg = document.getElementById('preview-img');
+        const generateBtn = document.getElementById('generate-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnSpinner = document.getElementById('btn-spinner');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const resultsSection = document.getElementById('results');
+        
+        let selectedFile = null;
+
+        // Determine backend URL
+        const hostname = window.location.hostname;
+        const backendUrl = hostname === 'rihitgandhi.github.io' 
+            ? 'https://sliver-system.onrender.com'
+            : window.location.origin;
+
+        // Upload area click
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            // Validate file
+            if (!file.type.startsWith('image/')) {
+                alert('Please upload an image file');
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB');
+                return;
+            }
+
+            selectedFile = file;
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                imagePreview.style.display = 'block';
+                generateBtn.disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Generate alt text
+        generateBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            // Show loading
+            generateBtn.disabled = true;
+            btnText.textContent = 'Generating...';
+            btnSpinner.style.display = 'inline';
+            loadingSpinner.style.display = 'block';
+            resultsSection.classList.remove('visible');
+
+            try {
+                // Convert image to base64
+                const base64 = await fileToBase64(selectedFile);
+
+                const response = await fetch(backendUrl + '/api/alt-text', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        image: base64,
+                        detail_level: document.getElementById('detail-level').value,
+                        context: document.getElementById('context').value,
+                        tone: document.getElementById('tone').value
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayResults(data);
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error generating alt text: ' + error.message);
+            } finally {
+                generateBtn.disabled = false;
+                btnText.textContent = 'Generate Alt Text';
+                btnSpinner.style.display = 'none';
+                loadingSpinner.style.display = 'none';
+            }
+        });
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function displayResults(data) {
+            document.getElementById('alt-text-main').textContent = data.main_alt_text;
+
+            const alternativesDiv = document.getElementById('alternatives');
+            alternativesDiv.innerHTML = '';
+
+            if (data.alternatives && data.alternatives.length > 0) {
+                data.alternatives.forEach((alt, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'alt-text-content';
+                    div.id = `alt-text-${index}`;
+                    div.textContent = alt;
+                    
+                    const copyBtn = document.createElement('button');
+                    copyBtn.className = 'copy-btn';
+                    copyBtn.textContent = '📋 Copy';
+                    copyBtn.onclick = () => copyToClipboard(`alt-text-${index}`);
+                    
+                    alternativesDiv.appendChild(div);
+                    alternativesDiv.appendChild(copyBtn);
+                });
+            }
+
+            resultsSection.classList.add('visible');
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+    </script>
+    </div>
+</body>
+</html>

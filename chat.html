@@ -11,18 +11,65 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
-<body>
+<body class="homepage">
     <div id="content-wrapper">
         <!-- Skip to main content link for screen readers -->
         <a href="#main-content" class="skip-link">Skip to main content</a>
         
         <!-- Header with navigation -->
-        <header role="banner">
+        <header role="banner" class="modern-header sticky-header fundamental-nav" style="background: #357abd; box-shadow: 0 2px 12px rgba(53,122,189,0.10); position: sticky; top: 0; z-index: 1001;">
             <nav role="navigation" aria-label="Main navigation">
-                <div class="container">
-                    <div class="tabs" role="tablist">
-                        <!-- Remove the back to website button -->
+                <div class="nav-container nav-elevated fundamental-nav-container">
+                    <div class="nav-brand fundamental-nav-brand">
+                        <a href="index.html" aria-label="Go to Home" style="all: unset; cursor: pointer; display: inline-block;">
+                            <h1 class="nav-title fundamental-nav-title" style="color: #fff; font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AcessAI</h1>
+                        </a>
                     </div>
+                    <div class="nav-menu fundamental-nav-menu" role="menubar">
+                        <a href="index.html" class="nav-item nav-link" role="menuitem">
+                            <span class="nav-icon"><i class="fa fa-home"></i></span>
+                            <span class="nav-text">Home</span>
+                        </a>
+                        <a href="index.html#ai" class="nav-item nav-link" role="menuitem">
+                            <span class="nav-icon"><i class="fa fa-robot"></i></span>
+                            <span class="nav-text">AI in Accessibility</span>
+                        </a>
+                        <a href="index.html#blogs" class="nav-item nav-link" role="menuitem">
+                            <span class="nav-icon"><i class="fa fa-pen-nib"></i></span>
+                            <span class="nav-text">Blogs</span>
+                        </a>
+                        <a href="index.html#mission" class="nav-item nav-link" role="menuitem">
+                            <span class="nav-icon"><i class="fa fa-bullseye"></i></span>
+                            <span class="nav-text">Our Mission</span>
+                        </a>
+                        <a href="chat.html" class="nav-item nav-link active" role="menuitem" aria-current="page">
+                            <span class="nav-icon"><i class="fa fa-comments"></i></span>
+                            <span class="nav-text">Chat with AI</span>
+                        </a>
+                        <a href="score.html" class="nav-item nav-link" role="menuitem">
+                            <span class="nav-icon"><i class="fa fa-chart-bar"></i></span>
+                            <span class="nav-text">Accessibility Score</span>
+                        </a>
+                        <a href="alt-text-generator.html" class="nav-item nav-link" role="menuitem">
+                            <span class="nav-icon"><i class="fa fa-image"></i></span>
+                            <span class="nav-text">Alt Text Generator</span>
+                        </a>
+                        <a href="code-reviewer.html" class="nav-item nav-link" role="menuitem">
+                            <span class="nav-icon"><i class="fa fa-code"></i></span>
+                            <span class="nav-text">Code Reviewer</span>
+                        </a>
+                        <a href="content-simplifier.html" class="nav-item nav-link" role="menuitem">
+                            <span class="nav-icon"><i class="fa fa-file-alt"></i></span>
+                            <span class="nav-text">Content Simplifier</span>
+                        </a>
+                        <a href="help.html" class="nav-item nav-link" role="menuitem">
+                            <span class="nav-icon"><i class="fa fa-question-circle"></i></span>
+                            <span class="nav-text">Help</span>
+                        </a>
+                    </div>
+                    <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                        <span class="hamburger"></span>
+                    </button>
                 </div>
             </nav>
         </header>

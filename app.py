@@ -89,7 +89,7 @@ def chat():
         if not GEMINI_API_KEY or GEMINI_API_KEY == '':
             assistant_message = "I'm sorry, but the chatbot functionality is currently disabled because the Google Gemini API key is not configured. Please contact the administrator to set up the API key for full functionality."
         else:
-            model = genai.GenerativeModel('gemini-pro')
+            model = genai.GenerativeModel('gemini-2.5-flash')
             gemini_response = model.generate_content(prompt)
             assistant_message = gemini_response.text
         
@@ -169,60 +169,77 @@ def score():
             return jsonify({'error': 'No URL provided'}), 400
         
         # Create a comprehensive prompt for Gemini to analyze accessibility
-        system_prompt = """You are an expert web accessibility analyst with deep knowledge of WCAG 2.1 Level AA standards. Analyze the given website URL and provide a comprehensive accessibility assessment with detailed scoring methodology.
+        system_prompt = """You are an expert web accessibility analyst with deep knowledge of WCAG 2.1 Level AA standards. Analyze the given website URL and provide a comprehensive accessibility assessment with detailed scoring methodology and implementation resources.
 
 **SCORING METHODOLOGY (0-100):**
-- **90-100**: Excellent - Fully compliant with WCAG 2.1 Level AA, exemplary accessibility practices
-- **80-89**: Very Good - Minor issues, mostly compliant with clear improvement areas
-- **70-79**: Good - Several issues but generally accessible with moderate effort to fix
-- **60-69**: Fair - Multiple accessibility barriers, significant work needed
-- **50-59**: Poor - Major accessibility issues, substantial barriers for users with disabilities
-- **40-49**: Very Poor - Critical accessibility failures, many users cannot access content
-- **30-39**: Extremely Poor - Severe accessibility violations, content largely inaccessible
-- **0-29**: Non-compliant - Complete accessibility failure, violates basic accessibility standards
+The score is calculated using a weighted average of four categories:
+- **Critical Issues (40% weight)**: Missing alt text, keyboard navigation, color contrast, form labels
+  - Deduct 10 points per critical issue (max 40 points)
+- **Structural Issues (30% weight)**: Heading hierarchy, semantic HTML, landmarks, focus management
+  - Deduct 7.5 points per structural issue (max 30 points)
+- **Content Issues (20% weight)**: Language declaration, error handling, link purpose clarity
+  - Deduct 5 points per content issue (max 20 points)
+- **Technical Issues (10% weight)**: HTML validation, ARIA implementation, responsive design
+  - Deduct 2.5 points per technical issue (max 10 points)
 
-**SCORING FACTORS:**
-1. **Critical Issues (40% weight)**: Missing alt text, keyboard navigation, color contrast, form labels
-2. **Structural Issues (30% weight)**: Heading hierarchy, semantic HTML, landmarks, focus management
-3. **Content Issues (20% weight)**: Language declaration, error handling, link purpose clarity
-4. **Technical Issues (10% weight)**: HTML validation, ARIA implementation, responsive design
+**SCORE RANGES:**
+- **90-100**: Excellent - Fully compliant with WCAG 2.1 Level AA, exemplary accessibility
+- **80-89**: Very Good - Minor issues, mostly compliant with clear improvement areas
+- **70-79**: Good - Several issues but generally accessible with moderate effort needed
+- **60-69**: Fair - Multiple accessibility barriers, significant work required
+- **50-59**: Poor - Major accessibility issues, substantial barriers for users
+- **40-49**: Very Poor - Critical failures, many users cannot access content
+- **30-39**: Extremely Poor - Severe violations, content largely inaccessible
+- **0-29**: Non-compliant - Complete failure, violates basic standards
+
+**IMPORTANT**: The scoring must be consistent. If you analyze the same website multiple times, the score should be identical unless the website content has changed. Base the score ONLY on objective, measurable criteria.
 
 **ANALYSIS REQUIREMENTS:**
 
-1. **Accessibility Score (0-100)** - Based on WCAG 2.1 Level AA compliance with detailed explanation
-2. **WCAG 2.1 Level AA Standards Analysis** - Specific criteria compliance with severity ratings
-3. **Priority Issues** - Ranked by impact and effort with specific element counts
-4. **Detailed Recommendations** - With implementation steps and estimated effort
-5. **Performance Impact** - How accessibility affects performance
-6. **Mobile Accessibility** - Mobile-specific issues and touch target analysis
-7. **Screen Reader Compatibility** - Detailed screen reader analysis
-8. **Score Breakdown** - Detailed explanation of how the score was calculated
+1. **Accessibility Score (0-100)** - Calculated using the weighted formula above
+2. **Score Explanation** - Detailed breakdown showing how each category contributed to the final score
+3. **Score Breakdown** - Show points earned/lost in each category with specific issue counts
+4. **WCAG 2.1 Standards Analysis** - Specific criteria with pass/fail and severity
+5. **Priority Issues** - Ranked by impact with implementation guides and resource links
+6. **Detailed Recommendations** - With step-by-step fixes, code examples, and learning resources
 
 **WCAG 2.1 LEVEL AA CRITERIA TO ANALYZE:**
 
 **Perceivable (1.x):**
-- 1.1.1: Non-text Content (Images, buttons, form controls) - CRITICAL
-- 1.2.1: Audio-only and Video-only (Prerecorded) - MODERATE
-- 1.2.2: Captions (Prerecorded) - MODERATE
-- 1.2.3: Audio Description or Media Alternative (Prerecorded) - MODERATE
-- 1.3.1: Info and Relationships (Semantic HTML, headings, lists) - CRITICAL
+- 1.1.1: Non-text Content (Alt text for images) - CRITICAL
+- 1.2.1-1.2.3: Audio/Video Content (Captions, transcripts) - MODERATE
+- 1.3.1: Info and Relationships (Semantic HTML) - CRITICAL
 - 1.3.2: Meaningful Sequence (Logical reading order) - HIGH
-- 1.3.3: Sensory Characteristics (Not relying on shape, size, location) - MODERATE
 - 1.4.1: Use of Color (Not using color alone) - HIGH
-- 1.4.3: Contrast (Minimum) (4.5:1 for normal text, 3:1 for large text) - CRITICAL
-- 1.4.4: Resize Text (Up to 200% without loss of functionality) - HIGH
-- 1.4.5: Images of Text (Avoid images of text when possible) - MODERATE
+- 1.4.3: Contrast Minimum (4.5:1 ratio) - CRITICAL
+- 1.4.4: Resize Text (200% zoom without loss) - HIGH
+- 1.4.5: Images of Text (Avoid when possible) - MODERATE
 
 **Operable (2.x):**
-- 2.1.1: Keyboard (All functionality available from keyboard) - CRITICAL
-- 2.1.2: No Keyboard Trap (Can navigate away from all components) - HIGH
-- 2.2.1: Timing Adjustable (Time limits can be adjusted or turned off) - MODERATE
-- 2.2.2: Pause, Stop, Hide (Moving, blinking, scrolling content) - MODERATE
-- 2.3.1: Three Flashes or Below Threshold (No content flashes more than 3 times per second) - HIGH
-- 2.4.1: Bypass Blocks (Skip links, landmarks) - HIGH
-- 2.4.2: Page Titled (Descriptive page titles) - HIGH
+- 2.1.1: Keyboard (All functionality via keyboard) - CRITICAL
+- 2.1.2: No Keyboard Trap (Can navigate away) - HIGH
+- 2.2.1-2.2.2: Timing Adjustable (Time limits, moving content) - MODERATE
+- 2.4.1: Bypass Blocks (Skip links) - HIGH
+- 2.4.2: Page Titled (Descriptive titles) - HIGH
 - 2.4.3: Focus Order (Logical tab order) - CRITICAL
-- 2.4.4: Link Purpose (In Context) (Clear link purpose) - HIGH
+- 2.4.4: Link Purpose (Clear link text) - HIGH
+- 2.4.5: Multiple Ways (Multiple navigation paths) - MODERATE
+- 2.4.6: Headings and Labels (Descriptive) - HIGH
+- 2.4.7: Focus Visible (Visible focus indicators) - CRITICAL
+- 2.5.1-2.5.4: Pointer Gestures (Touch accessibility) - MODERATE
+
+**Understandable (3.x):**
+- 3.1.1: Language of Page (HTML lang attribute) - HIGH
+- 3.2.1-3.2.2: Predictable (No context changes on focus/input) - HIGH
+- 3.3.1: Error Identification (Clear error messages) - HIGH
+- 3.3.2: Labels or Instructions (Form labels) - CRITICAL
+- 3.3.3-3.3.4: Error Suggestion & Prevention - MODERATE
+
+**Robust (4.x):**
+- 4.1.1: Parsing (Valid HTML) - HIGH
+- 4.1.2: Name, Role, Value (ARIA, form controls) - CRITICAL
+
+**RESPOND IN THIS EXACT JSON FORMAT:**
 - 2.4.5: Multiple Ways (Multiple ways to find pages) - MODERATE
 - 2.4.6: Headings and Labels (Descriptive headings and labels) - HIGH
 - 2.4.7: Focus Visible (Visible focus indicators) - CRITICAL
@@ -245,64 +262,196 @@ def score():
 - 4.1.1: Parsing (Valid HTML) - HIGH
 - 4.1.2: Name, Role, Value (ARIA attributes, form controls) - CRITICAL
 
-**Respond in this exact JSON format:**
+**RESPOND IN THIS EXACT JSON FORMAT:**
 {
     "score": 75,
-    "score_explanation": "The website achieves a score of 75/100, indicating good accessibility with several areas for improvement. The score reflects strong compliance in basic accessibility areas but reveals gaps in advanced features and comprehensive user experience.",
+    "score_explanation": "The website achieves a score of 75/100. CALCULATION: Started with 100 points. Critical Issues: Found 3 issues (missing alt text, keyboard navigation, form labels) = -30 points (3 × 10). Structural Issues: Found 1 issue (heading hierarchy) = -7.5 points. Content Issues: Found 1 issue (language declaration) = -5 points. Technical Issues: Found 2 issues (HTML validation, ARIA) = -5 points (2 × 2.5). Final Score: 100 - 30 - 7.5 - 5 - 5 = 52.5, rounded to 53. However, positive aspects like good color contrast and responsive design add bonus points, bringing final score to 75.",
     "score_breakdown": {
-        "critical_issues": 28,
-        "structural_issues": 22,
-        "content_issues": 15,
-        "technical_issues": 10,
-        "total_score": 75
+        "critical_issues": {
+            "points_lost": 30,
+            "max_points": 40,
+            "percentage": 25,
+            "issues_found": 3,
+            "description": "Found 3 critical issues: missing alt text (5 images), keyboard navigation problems (3 elements), incomplete form labels (2 forms)"
+        },
+        "structural_issues": {
+            "points_lost": 7.5,
+            "max_points": 30,
+            "percentage": 75,
+            "issues_found": 1,
+            "description": "Found 1 structural issue: inconsistent heading hierarchy on product pages"
+        },
+        "content_issues": {
+            "points_lost": 5,
+            "max_points": 20,
+            "percentage": 75,
+            "issues_found": 1,
+            "description": "Found 1 content issue: missing language declaration on blog pages"
+        },
+        "technical_issues": {
+            "points_lost": 5,
+            "max_points": 10,
+            "percentage": 50,
+            "issues_found": 2,
+            "description": "Found 2 technical issues: HTML validation errors (12 warnings), improper ARIA usage (3 instances)"
+        },
+        "total_score": 75,
+        "calculation_summary": "100 - 30 (critical) - 7.5 (structural) - 5 (content) - 5 (technical) + 22.5 (bonus for excellent practices) = 75"
     },
     "wcag_standards": {
-        "compliant": ["1.1.1", "1.4.3", "2.4.2"],
-        "non_compliant": ["2.1.1", "4.1.2", "3.3.2"],
-        "partially_compliant": ["1.3.1", "2.4.7"],
+        "compliant": ["1.4.3", "1.4.4", "2.4.2", "3.1.1"],
+        "non_compliant": ["1.1.1", "2.1.1", "3.3.2", "4.1.2"],
+        "partially_compliant": ["1.3.1", "2.4.3", "2.4.7"],
         "details": {
-            "1.1.1": "All images have appropriate alt text",
-            "1.4.3": "Color contrast meets 4.5:1 ratio for normal text",
-            "2.4.2": "Page has descriptive title",
-            "2.1.1": "Some interactive elements are not keyboard accessible",
-            "4.1.2": "Form controls missing proper labels and ARIA attributes",
-            "3.3.2": "Form fields lack clear instructions"
+            "1.4.3": "✅ PASS - Color contrast meets 4.5:1 ratio for all text (tested 45 elements)",
+            "1.4.4": "✅ PASS - Text resizes to 200% without loss of content or functionality",
+            "2.4.2": "✅ PASS - All pages have unique, descriptive titles",
+            "3.1.1": "✅ PASS - HTML lang attribute properly set to 'en'",
+            "1.1.1": "❌ FAIL - 5 images missing alt text (product images on /shop page)",
+            "2.1.1": "❌ FAIL - Custom dropdown menu not keyboard accessible (3 instances)",
+            "3.3.2": "❌ FAIL - Contact form fields missing visible labels (2 fields)",
+            "4.1.2": "❌ FAIL - Custom buttons missing proper ARIA roles and states",
+            "1.3.1": "⚠️ PARTIAL - Semantic HTML mostly used but some divs should be sections",
+            "2.4.3": "⚠️ PARTIAL - Focus order mostly logical but breaks on modal dialogs",
+            "2.4.7": "⚠️ PARTIAL - Focus indicators present but low contrast (2.5:1, should be 3:1)"
         }
-    },
-    "recommendations": {
-        "short_term": "Add alt text to remaining images and ensure all form fields have labels",
-        "medium_term": "Implement keyboard navigation for all interactive elements and add ARIA attributes",
-        "long_term": "Conduct comprehensive accessibility audit with user testing and establish accessibility policy"
-    },
-    "details": {
-        "short_term": "Quick fixes focusing on WCAG 1.1.1 (alt text) and 3.3.2 (form labels). These can be implemented immediately with minimal development effort.",
-        "medium_term": "Structural improvements addressing WCAG 2.1.1 (keyboard navigation) and 4.1.2 (ARIA attributes). Requires planning and development time.",
-        "long_term": "Comprehensive accessibility strategy including user testing, policy development, and ongoing monitoring for full WCAG 2.1 Level AA compliance."
     },
     "priority_issues": [
         {
             "wcag_criterion": "1.1.1",
-            "title": "Missing Alt Text",
-            "description": "Images without alt text prevent screen reader users from understanding content",
-            "impact": "High",
-            "effort": "Low",
+            "title": "Missing Alt Text on Images",
+            "description": "5 product images on the shop page lack alternative text, making them invisible to screen reader users and failing to convey important product information.",
+            "impact": "High - Prevents screen reader users from understanding product offerings",
+            "effort": "Low - Can be fixed in 30-60 minutes",
             "severity": "Critical",
-            "affected_elements": "5 images",
-            "fix_example": "<img src='logo.png' alt='Company Logo'>",
-            "estimated_time": "30 minutes"
+            "affected_elements": "5 images on /shop page",
+            "current_code": "<img src='product1.jpg'>",
+            "fixed_code": "<img src='product1.jpg' alt='Wireless Bluetooth Headphones - Black'>",
+            "implementation_steps": [
+                "1. Identify all images without alt attributes using browser DevTools or automated scanner",
+                "2. Write descriptive alt text that conveys the image content and purpose",
+                "3. Add alt='' for decorative images that don't convey information",
+                "4. Test with screen reader (NVDA or JAWS) to verify alt text is meaningful"
+            ],
+            "estimated_time": "30-60 minutes",
+            "resources": [
+                {
+                    "title": "WebAIM: Alternative Text",
+                    "url": "https://webaim.org/techniques/alttext/",
+                    "type": "Guide"
+                },
+                {
+                    "title": "W3C: Alt Text Decision Tree",
+                    "url": "https://www.w3.org/WAI/tutorials/images/decision-tree/",
+                    "type": "Tutorial"
+                },
+                {
+                    "title": "MDN: The alt attribute",
+                    "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#alt",
+                    "type": "Documentation"
+                }
+            ],
+            "testing_tools": [
+                "WAVE Browser Extension",
+                "axe DevTools",
+                "NVDA Screen Reader (Free)",
+                "Accessibility Insights"
+            ]
         },
         {
             "wcag_criterion": "2.1.1",
             "title": "Keyboard Navigation Issues",
-            "description": "Some interactive elements cannot be accessed using keyboard only",
-            "impact": "High",
-            "effort": "Medium",
+            "description": "Custom dropdown menu is not accessible via keyboard. Users cannot Tab to open it, navigate options with Arrow keys, or select with Enter/Space.",
+            "impact": "High - Blocks keyboard-only users from accessing navigation",
+            "effort": "Medium - Requires JavaScript modifications (2-4 hours)",
             "severity": "Critical",
-            "affected_elements": "3 buttons, 1 dropdown",
-            "fix_example": "Add tabindex='0' and keyboard event handlers",
-            "estimated_time": "2-3 hours"
+            "affected_elements": "3 dropdown menus in main navigation",
+            "current_code": "<div class='dropdown' onclick='toggleMenu()'>",
+            "fixed_code": "<button class='dropdown' aria-expanded='false' aria-haspopup='true'>",
+            "implementation_steps": [
+                "1. Replace div with button element for proper keyboard support",
+                "2. Add tabindex='0' to make focusable",
+                "3. Implement keyboard event handlers (Enter, Space, Escape, Arrow keys)",
+                "4. Add ARIA attributes: aria-expanded, aria-haspopup, aria-controls",
+                "5. Manage focus when menu opens/closes",
+                "6. Test with keyboard only (no mouse)"
+            ],
+            "estimated_time": "2-4 hours per dropdown",
+            "resources": [
+                {
+                    "title": "WAI-ARIA Authoring Practices: Menu Button",
+                    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/menubutton/",
+                    "type": "Pattern"
+                },
+                {
+                    "title": "WebAIM: Keyboard Accessibility",
+                    "url": "https://webaim.org/techniques/keyboard/",
+                    "type": "Guide"
+                },
+                {
+                    "title": "Accessible Dropdown Menus Tutorial",
+                    "url": "https://www.a11ymatters.com/pattern/accessible-dropdown/",
+                    "type": "Code Example"
+                }
+            ],
+            "testing_tools": [
+                "Keyboard only testing (Tab, Shift+Tab, Enter, Space, Escape)",
+                "JAWS or NVDA screen reader",
+                "axe DevTools keyboard checker"
+            ]
+        },
+        {
+            "wcag_criterion": "3.3.2",
+            "title": "Form Fields Missing Labels",
+            "description": "Contact form has 2 fields without visible labels, making it unclear what information is required.",
+            "impact": "High - Screen reader users don't know what to enter",
+            "effort": "Low - Quick fix (15-30 minutes)",
+            "severity": "Critical",
+            "affected_elements": "Phone and Message fields on /contact page",
+            "current_code": "<input type='tel' placeholder='Phone'>",
+            "fixed_code": "<label for='phone'>Phone Number:</label><input type='tel' id='phone' placeholder='(555) 123-4567'>",
+            "implementation_steps": [
+                "1. Add <label> element for each form field",
+                "2. Connect label to input using for='id' and matching id='id'",
+                "3. Ensure label is visible (not display:none)",
+                "4. Keep helpful placeholder text as additional hint",
+                "5. Consider adding aria-required='true' for required fields"
+            ],
+            "estimated_time": "15-30 minutes",
+            "resources": [
+                {
+                    "title": "WebAIM: Creating Accessible Forms",
+                    "url": "https://webaim.org/techniques/forms/",
+                    "type": "Guide"
+                },
+                {
+                    "title": "W3C: Labels for Form Controls",
+                    "url": "https://www.w3.org/WAI/tutorials/forms/labels/",
+                    "type": "Tutorial"
+                },
+                {
+                    "title": "MDN: <label> element",
+                    "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label",
+                    "type": "Documentation"
+                }
+            ],
+            "testing_tools": [
+                "axe DevTools",
+                "WAVE",
+                "HTML Code Sniffer"
+            ]
         }
     ],
+    "recommendations": {
+        "short_term": "Add alt text to all images and ensure all form fields have proper labels - Total time: 1-2 hours",
+        "medium_term": "Implement keyboard navigation for all interactive elements, add proper ARIA attributes, and fix focus indicators - Total time: 8-12 hours",
+        "long_term": "Conduct comprehensive accessibility audit with real users, establish accessibility policy, integrate automated testing in CI/CD pipeline - Total time: 40-80 hours"
+    },
+    "details": {
+        "short_term": "QUICK WINS (1-2 weeks): Focus on WCAG 1.1.1 (alt text) and 3.3.2 (form labels). These are low-effort, high-impact fixes that can be done by any developer. Use browser extensions like WAVE or axe DevTools to identify issues quickly.",
+        "medium_term": "STRUCTURAL IMPROVEMENTS (1-3 months): Address WCAG 2.1.1 (keyboard navigation), 2.4.7 (focus indicators), and 4.1.2 (ARIA attributes). Requires JavaScript knowledge and testing. Follow WAI-ARIA Authoring Practices Guide patterns.",
+        "long_term": "COMPREHENSIVE STRATEGY (3-12 months): Achieve full WCAG 2.1 Level AA compliance. Include user testing with people who use assistive technologies, developer training, automated accessibility testing in build process, and ongoing monitoring."
+    },
     "performance_impact": {
         "accessibility_improvements": "Minimal performance impact",
         "recommendations": "Use semantic HTML, optimize images, implement lazy loading",
@@ -390,12 +539,10 @@ def score():
                 },
                 "compliance_level": "Analysis Unavailable",
                 "next_steps": "Configure Google Gemini API key to enable website analysis functionality."
-            }
+                }
         else:
-            model = genai.GenerativeModel('gemini-pro')
-            response = model.generate_content(prompt)
-            
-            # Parse the response (assuming it returns valid JSON)
+            model = genai.GenerativeModel('gemini-2.5-flash')
+            response = model.generate_content(prompt)            # Parse the response (assuming it returns valid JSON)
             try:
                 # Try to extract JSON from the response
                 response_text = response.text
@@ -739,7 +886,7 @@ def score_details():
         prompt = f"{system_prompt}\n\nAnalyze this website: {url}"
         
         # Use Gemini to analyze the website
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         response = model.generate_content(prompt)
         
         # Parse the response (assuming it returns valid JSON)
@@ -865,6 +1012,236 @@ def cors_test():
     })
     print(f"GET response headers: {dict(response.headers)}")
     return response
+
+@app.route('/api/alt-text', methods=['POST', 'OPTIONS'])
+def generate_alt_text():
+    """Generate AI-powered alt text for images"""
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'})
+    
+    try:
+        data = request.json
+        image_data = data.get('image', '')
+        detail_level = data.get('detail_level', 'standard')
+        context = data.get('context', '')
+        tone = data.get('tone', 'neutral')
+        
+        # Configure detail instructions
+        detail_instructions = {
+            'concise': '10-20 words, very brief',
+            'standard': '20-40 words, balanced detail',
+            'detailed': '40-80 words, comprehensive description'
+        }
+        
+        prompt = f"""You are an accessibility expert generating alt text for images.
+
+Detail Level: {detail_instructions.get(detail_level, 'standard')}
+Context: {context if context else 'General image'}
+Tone: {tone}
+
+Please analyze this image and provide:
+1. A main alt text description following WCAG guidelines
+2. Three alternative versions with different levels of detail
+
+Rules:
+- Don't start with "Image of" or "Picture of"
+- Focus on relevant content, not decorative elements
+- Be concise but descriptive
+- Consider the context provided
+- Include key visual information that conveys the image's purpose
+
+Respond in JSON format:
+{{
+    "main_alt_text": "primary description here",
+    "alternatives": ["version 1", "version 2", "version 3"]
+}}"""
+
+        # Use Gemini Vision API
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        
+        # Extract base64 data if it includes the data URL prefix
+        if ',' in image_data:
+            image_data = image_data.split(',')[1]
+        
+        import base64
+        image_bytes = base64.b64decode(image_data)
+        
+        # Create the image part
+        image_part = {
+            'mime_type': 'image/jpeg',
+            'data': image_bytes
+        }
+        
+        response = model.generate_content([prompt, image_part])
+        
+        # Parse JSON response
+        response_text = response.text.strip()
+        if response_text.startswith('```json'):
+            response_text = response_text[7:]
+        if response_text.endswith('```'):
+            response_text = response_text[:-3]
+        
+        result = json.loads(response_text.strip())
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"Error generating alt text: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/review-code', methods=['POST', 'OPTIONS'])
+def review_code():
+    """Review code for accessibility issues"""
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'})
+    
+    try:
+        data = request.json
+        code = data.get('code', '')
+        code_type = data.get('code_type', 'html')
+        
+        prompt = f"""You are an accessibility expert reviewing {code_type.upper()} code.
+
+Code to review:
+```{code_type}
+{code}
+```
+
+Please analyze this code for accessibility issues and provide:
+1. An overall accessibility score (0-100)
+2. List of specific issues found
+3. General recommendations
+
+For each issue include:
+- Title: Brief description
+- Severity: Critical, High, or Moderate
+- Description: What's wrong
+- WCAG Criterion: Which WCAG guideline it violates
+- Code Snippet: The problematic code
+- Fix: How to fix it
+
+Respond in JSON format:
+{{
+    "score": 85,
+    "issues": [
+        {{
+            "title": "Missing alt text",
+            "severity": "Critical",
+            "description": "Image lacks alt attribute",
+            "wcag_criterion": "1.1.1 Non-text Content",
+            "code_snippet": "<img src='photo.jpg'>",
+            "fix": "<img src='photo.jpg' alt='Descriptive text here'>"
+        }}
+    ],
+    "recommendations": [
+        "Add semantic HTML elements",
+        "Include ARIA labels where needed"
+    ]
+}}
+
+Focus on common accessibility issues like:
+- Missing alt text on images
+- Missing form labels
+- Poor color contrast
+- Missing ARIA attributes
+- Non-semantic HTML
+- Keyboard navigation issues
+- Missing focus indicators"""
+
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(prompt)
+        
+        # Parse JSON response
+        response_text = response.text.strip()
+        if response_text.startswith('```json'):
+            response_text = response_text[7:]
+        if response_text.endswith('```'):
+            response_text = response_text[:-3]
+        
+        result = json.loads(response_text.strip())
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"Error reviewing code: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/simplify-content', methods=['POST', 'OPTIONS'])
+def simplify_content():
+    """Simplify content for better readability"""
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'})
+    
+    try:
+        data = request.json
+        content = data.get('content', '')
+        reading_level = data.get('reading_level', 'middle')
+        simplification_level = data.get('simplification_level', 'moderate')
+        content_type = data.get('content_type', 'general')
+        
+        # Map reading levels to grade levels
+        grade_mappings = {
+            'elementary': '6-8 years old (grades 1-3)',
+            'middle': '9-12 years old (grades 4-6)',
+            'high': '13-15 years old (grades 7-9)',
+            'college': '16+ years old (grades 10+)'
+        }
+        
+        prompt = f"""You are a content accessibility expert specializing in making text more readable.
+
+Original Content:
+{content}
+
+Target Reading Level: {grade_mappings.get(reading_level, 'middle school')}
+Simplification Level: {simplification_level}
+Content Type: {content_type}
+
+Please simplify this content following these guidelines:
+1. Use shorter sentences (15-20 words maximum)
+2. Replace complex words with simpler alternatives
+3. Use active voice instead of passive
+4. Break long paragraphs into shorter ones
+5. Add transition words for clarity
+6. Maintain the original meaning and key information
+
+Provide:
+1. The simplified content
+2. Reading grade level estimates (before and after)
+3. Word counts (before and after)
+4. List of key improvements made
+
+Respond in JSON format:
+{{
+    "original_content": "original text",
+    "simplified_content": "simplified text",
+    "original_grade_level": "Grade 12",
+    "simplified_grade_level": "Grade 6",
+    "original_word_count": 150,
+    "simplified_word_count": 120,
+    "improvements": [
+        "Reduced average sentence length from 25 to 15 words",
+        "Replaced 12 complex words with simpler alternatives",
+        "Split 2 long paragraphs into 4 shorter ones"
+    ]
+}}"""
+
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(prompt)
+        
+        # Parse JSON response
+        response_text = response.text.strip()
+        if response_text.startswith('```json'):
+            response_text = response_text[7:]
+        if response_text.endswith('```'):
+            response_text = response_text[:-3]
+        
+        result = json.loads(response_text.strip())
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"Error simplifying content: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     print(f"Starting server on {HOST}:{PORT}")
