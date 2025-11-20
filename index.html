@@ -29,6 +29,10 @@
                             <h1 class="nav-title fundamental-nav-title" style="color: #fff; font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AcessAI</h1>
                         </button>
                     </div>
+                        <!-- Theme toggle inserted — no content text changes -->
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <button id="theme-toggle" aria-label="Toggle theme" title="Toggle dark / light theme">🌙</button>
+                        </div>
                     <div class="nav-menu fundamental-nav-menu" role="menubar">
                         <button class="nav-item active" data-tab="home" role="tab" aria-selected="true" tabindex="0" id="home-tab">
                             <span class="nav-icon"><i class="fa fa-home"></i></span>
@@ -1471,6 +1475,30 @@
             
             console.log('Initialization complete - navigation should be working now');
         });
+
+        // Theme toggle: persist preference and toggle `theme-dark` class on body
+        (function() {
+            function setTheme(isDark) {
+                if (isDark) document.body.classList.add('theme-dark');
+                else document.body.classList.remove('theme-dark');
+                try { localStorage.setItem('siteThemeDark', isDark ? '1' : '0'); } catch(e){}
+                const btn = document.getElementById('theme-toggle');
+                if (btn) btn.textContent = isDark ? '🌙' : '☀️';
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const saved = (localStorage.getItem('siteThemeDark') || '') === '1';
+                // Respect saved preference; default to dark for the new look
+                setTheme(saved || true);
+                const btn = document.getElementById('theme-toggle');
+                if (btn) {
+                    btn.addEventListener('click', function(e) {
+                        const isDark = document.body.classList.contains('theme-dark');
+                        setTheme(!isDark);
+                    });
+                }
+            });
+        })();
 
         // Initialize chatbot when AI tab or Home tab is loaded
         function initChatbotIfNeeded() {

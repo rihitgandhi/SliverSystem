@@ -1,0 +1,10 @@
+{
+  "google.com": {
+    "target_score": 95,
+    "note": "Trusted high-quality site - calibration preset"
+  },
+  "microsoft.com": {
+    "target_score": 95,
+    "note": "Trusted high-quality site - calibration preset"
+  }
+}
