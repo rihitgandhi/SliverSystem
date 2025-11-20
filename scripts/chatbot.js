@@ -68,12 +68,6 @@ class AccessibilityChatbot {
 
     init() {
         console.log('Chatbot init() called');
-        // Setup cursor ring and interaction wiring
-        try {
-            this.setupCursor();
-        } catch (e) {
-            console.warn('Cursor setup failed:', e);
-        }
         const messagesContainer = document.getElementById('chat-messages');
         if (messagesContainer && messagesContainer.children.length === 0) {
             // Insert initial bot message if empty
@@ -87,66 +81,6 @@ class AccessibilityChatbot {
         }
         this.bindEvents();
         this.loadChatHistory();
-    }
-
-    setupCursor() {
-        // Don't show custom cursor on touch devices
-        if (typeof window === 'undefined' || 'ontouchstart' in window) return;
-
-        // Create ring element if missing
-        if (!document.getElementById('cursor-ring')) {
-            const ring = document.createElement('div');
-            ring.id = 'cursor-ring';
-            document.body.appendChild(ring);
-            this._cursorRing = ring;
-        } else {
-            this._cursorRing = document.getElementById('cursor-ring');
-        }
-
-        // Position update
-        document.addEventListener('mousemove', (e) => {
-            const r = this._cursorRing;
-            if (!r) return;
-            // Use transform for smoother motion
-            r.style.left = e.clientX + 'px';
-            r.style.top = e.clientY + 'px';
-            if (!r.style.opacity) r.style.opacity = '0.98';
-        }, { passive: true });
-
-        const interactiveSelector = 'a, button, .nav-item, .nav-link, .modern-btn, .question-chip, .tool-card, .feature-card, input, textarea, .send-button';
-
-        // Pointer enter/leave (delegated)
-        document.addEventListener('mouseover', (e) => {
-            const el = e.target.closest && e.target.closest(interactiveSelector);
-            if (el) this.setCursorActive(true);
-        });
-        document.addEventListener('mouseout', (e) => {
-            const el = e.target.closest && e.target.closest(interactiveSelector);
-            if (el) this.setCursorActive(false);
-        });
-
-        // Keyboard focus support
-        document.addEventListener('focusin', (e) => {
-            const el = e.target.closest && e.target.closest(interactiveSelector);
-            if (el) this.setCursorActive(true);
-        });
-        document.addEventListener('focusout', (e) => {
-            const el = e.target.closest && e.target.closest(interactiveSelector);
-            if (el) this.setCursorActive(false);
-        });
-    }
-
-    setCursorActive(active) {
-        const r = this._cursorRing;
-        if (!r) return;
-        if (active) {
-            r.classList.add('cursor-active');
-            // add pulse if present in CSS
-            r.classList.add('pulse');
-        } else {
-            r.classList.remove('cursor-active');
-            r.classList.remove('pulse');
-        }
     }
 
     createChatInterface() {
