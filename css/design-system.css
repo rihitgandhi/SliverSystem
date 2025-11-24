@@ -1,0 +1,125 @@
+/* Design system for Access AI
+   - Responsive 12-column grid
+   - Color vars, typography scale, spacing system
+   - Component styles (buttons, cards, nav, forms)
+   - Accessibility helpers
+*/
+:root{
+  /* Color palette: Innovation blue, Trust indigo, Aqua accent, Neutral */
+  --color-bg: #0f1724; /* deep indigo/charcoal */
+  --color-surface: #0b1220;
+  --color-muted: #94a3b8;
+  --color-primary: #2563eb; /* electric blue */
+  --color-accent: #06b6d4; /* aqua */
+  --color-success: #16a34a;
+  --color-contrast: #ffffff;
+  --color-card: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+
+  /* Spacing scale */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --radius: 12px;
+
+  /* Typography */
+  --font-heading: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --font-body: 'Lato', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --ff-mono: 'Roboto Mono', monospace;
+  --type-scale-base: 16px;
+}
+
+/* Base resets and readable defaults */
+html,body{height:100%;}
+body{
+  font-family: var(--font-body);
+  font-size:var(--type-scale-base);
+  color:var(--color-contrast);
+  background: linear-gradient(180deg,var(--color-bg), #071021 120%);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
+  margin:0;
+}
+
+/* Utility container */
+.container{max-width:1200px;margin:0 auto;padding:0 var(--space-lg);}
+
+/* 12-column responsive grid using CSS Grid */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-lg);
+}
+.col-12{grid-column: span 12;}
+.col-6{grid-column: span 6;}
+.col-4{grid-column: span 4;}
+.col-3{grid-column: span 3;}
+@media (max-width:900px){
+  .grid{grid-template-columns: repeat(6,1fr);}
+  .col-6{grid-column: span 6;}
+  .col-4{grid-column: span 6;}
+  .col-3{grid-column: span 6;}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns: repeat(4,1fr);}
+  .col-12,.col-6,.col-4,.col-3{grid-column: span 4;}
+}
+
+/* Headings */
+h1,h2,h3{font-family:var(--font-heading);margin:0 0 var(--space-sm) 0;color:var(--color-contrast)}
+h1{font-size:clamp(2.25rem, 3.8vw, 3.25rem);line-height:1.03}
+h2{font-size:1.75rem}
+h3{font-size:1.125rem}
+
+/* Hero */
+.hero{padding:var(--space-xl) 0;display:flex;align-items:center;gap:var(--space-lg);}
+.hero .hero-left{flex:1}
+.hero .hero-right{flex:1;display:flex;align-items:center;justify-content:center}
+.hero .kicker{display:inline-block;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,0.04);color:var(--color-accent);font-weight:700;margin-bottom:var(--space-sm)}
+.hero .lead{color:var(--color-muted);margin-bottom:var(--space-md);font-size:1.05rem}
+
+/* Cards */
+.card{background:var(--color-card);padding:var(--space-md);border-radius:var(--radius);box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+
+/* Feature list */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md)}
+@media (max-width:900px){.features{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.features{grid-template-columns:repeat(1,1fr)}}
+.feature{display:flex;gap:var(--space-md);align-items:flex-start}
+.feature .icon{width:52px;height:52px;border-radius:12px;background:rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;color:var(--color-primary);font-size:1.25rem}
+.feature h3{font-size:1.05rem;margin-bottom:4px}
+.feature p{color:var(--color-muted);margin:0}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:10px;font-weight:700;border:0;cursor:pointer;transition:all 240ms cubic-bezier(.2,.9,.2,1)}
+.btn-primary{background:linear-gradient(90deg,var(--color-primary),#60a5fa);color:var(--color-contrast);box-shadow:0 8px 22px rgba(37,99,235,0.16);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(37,99,235,0.22)}
+.btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--color-contrast)}
+
+/* Cards with subtle hover */
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(2,6,23,0.7)}
+
+/* Nav */
+.site-header{background:transparent;padding:12px 0;position:sticky;top:0;z-index:1200}
+.site-nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nav-list{display:flex;gap:12px;align-items:center}
+.nav-link{color:var(--color-contrast);text-decoration:none;padding:8px 12px;border-radius:8px}
+.nav-link:focus, .nav-link:hover{background:rgba(255,255,255,0.03);outline:none}
+
+/* Forms */
+.input{padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--color-contrast)}
+
+/* Footer */
+.site-footer{padding:var(--space-lg) 0;color:var(--color-muted);text-align:center}
+
+/* Small helpers */
+.center{display:flex;align-items:center;justify-content:center}
+.muted{color:var(--color-muted)}
+
+/* Motion & reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important}
+}

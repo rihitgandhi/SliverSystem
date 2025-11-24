@@ -10,6 +10,7 @@
     <meta name="backend-url" content="https://sliver-system-backend-production-9067.up.railway.app">
     <title>AcessAI - Making the Web Accessible for Everyone</title>
     <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/design-system.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,27 +80,57 @@
         </header>
 
         <main id="main-content" role="main">
-            <div id="home" class="tab-content active fundamental-home" role="tabpanel" aria-labelledby="home-tab">
-                <!-- Custom Hero Section -->
-                <section class="custom-hero-section" style="position: relative; width: 100%; min-height: 720px; overflow: hidden;">
-                    <img src="images/circuit-board-1188x792-1024x683.jpg" alt="Circuit board background" style="width: 100%; height: 720px; object-fit: cover; object-position: center; display: block; filter: brightness(0.93) contrast(1.05);">
-                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center;">
-                        <div style="text-align: center; color: #fff; z-index: 2; width: 100%; text-shadow: 0 4px 24px rgba(0,0,0,0.45);">
-                            <h1 style="font-size: 8rem; font-weight: 900; margin-bottom: 0; color: #fff;">AcessAI</h1>
+            <div id="home" role="tabpanel" aria-labelledby="home-tab">
+                <!-- New Hero (semantic, accessible) -->
+                <section class="hero container" aria-labelledby="hero-heading">
+                    <div class="hero-left">
+                        <span class="kicker" aria-hidden="true">AI • Accessibility</span>
+                        <h1 id="hero-heading">Make your website accessible with AI-powered guidance</h1>
+                        <p class="lead">AcessAI combines automated analysis and practical recommendations to help teams deliver inclusive web experiences faster and with confidence.</p>
+                        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                            <a class="btn btn-primary" href="chat.html">Start Chatting <span aria-hidden="true">→</span></a>
+                            <a class="btn btn-outline" href="score.html">Run an Accessibility Test</a>
+                        </div>
+                    </div>
+                    <div class="hero-right">
+                        <div class="card" style="width:100%;max-width:520px;">
+                            <h3 style="margin-bottom:8px;">Quick Check</h3>
+                            <form id="quick-check-form" class="" action="score.html" method="get" aria-label="Quick accessibility check form">
+                                <label for="url" class="muted">Enter a site URL</label>
+                                <div style="display:flex;gap:8px;margin-top:8px;">
+                                    <input id="url" name="url" class="input" type="url" placeholder="https://example.com" required>
+                                    <button class="btn btn-primary" type="submit">Check</button>
+                                </div>
+                                <p class="muted" style="margin-top:8px;font-size:0.9rem">Fast automated analysis with human-friendly guidance.</p>
+                            </form>
                         </div>
                     </div>
                 </section>
 
-                <!-- CTA Section (now immediately after hero) -->
-                <section class="modern-cta-section fundamental-section fundamental-cta" style="position: relative; overflow: hidden; min-height: 320px; margin-top: 48px;">
-                    <img src="images/hero-agency.jpg" alt="Creative digital agency workspace" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0.28; z-index: 1; pointer-events: none;">
-                    <div class="cta-container fundamental-container" style="position: relative; z-index: 2;">
-                        <div class="cta-content fundamental-cta-content" style="text-align: center;">
-                            <h2 style="color: #357abd; font-size: 2rem; font-weight: 900;">Ready to Make Your Website Accessible?</h2>
-                            <p class="cta-content" style="color: #357abd;">Join the movement for a more inclusive digital world.</p>
-                            <div class="cta-buttons fundamental-cta-buttons">
-                                <a href="chat.html" class="cta-btn primary fundamental-btn"><i class="fa fa-comments"></i> Start Chatting with AI</a>
-                                <a href="score.html" class="cta-btn secondary fundamental-btn"><i class="fa fa-chart-bar"></i> Test Your Website</a>
+                <!-- Features -->
+                <section class="container" aria-labelledby="features-heading" style="padding-top:var(--space-lg)">
+                    <h2 id="features-heading">What we offer</h2>
+                    <p class="muted" style="margin-bottom:var(--space-md)">Tools, automated checks, and an AI assistant to help you prioritize accessibility work.</p>
+                    <div class="features" role="list">
+                        <div class="feature card" role="listitem">
+                            <div class="icon" aria-hidden="true">🧭</div>
+                            <div>
+                                <h3>Automated Site Scans</h3>
+                                <p>Fast, actionable reports that highlight issues and remediation steps.</p>
+                            </div>
+                        </div>
+                        <div class="feature card" role="listitem">
+                            <div class="icon" aria-hidden="true">🤖</div>
+                            <div>
+                                <h3>AI Accessibility Assistant</h3>
+                                <p>Get contextual guidance, examples, and code snippets for fixes.</p>
+                            </div>
+                        </div>
+                        <div class="feature card" role="listitem">
+                            <div class="icon" aria-hidden="true">📚</div>
+                            <div>
+                                <h3>Learning Resources</h3>
+                                <p>Guides and reference material to build lasting accessibility knowledge.</p>
                             </div>
                         </div>
                     </div>

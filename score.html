@@ -5,25 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website Accessibility Score</title>
     <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/design-system.css">
     <style>
-        .score-page-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        .score-page-container { padding: var(--space-lg); }
         
-        .score-form-section {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
+        .score-form-section { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
         
-        .score-form-section h1 {
-            margin-bottom: 20px;
-            color: #333;
-        }
+        .score-form-section h1 { margin-bottom: 12px; color:var(--color-contrast); }
         
         .url-input-group {
             display: flex;
@@ -31,29 +19,14 @@
             margin-bottom: 15px;
         }
         
-        .url-input-group input {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
+        .url-input-group input { flex:1;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--color-contrast) }
         
         .url-input-group input:focus {
             outline: none;
             border-color: #4a90e2;
         }
         
-        .check-btn {
-            padding: 12px 30px;
-            background: #4a90e2;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
+        .check-btn { padding:12px 20px;border-radius:8px;background:linear-gradient(90deg,var(--color-primary),#60a5fa);color:white;border:0;cursor:pointer }
         
         .check-btn:hover {
             background: #357abd;
@@ -89,13 +62,7 @@
             color: #33c;
         }
         
-        .results-container {
-            display: none;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+        .results-container { display:none;background:rgba(255,255,255,0.02);padding:20px;border-radius:10px }
         
         .results-container.visible {
             display: block;
@@ -106,24 +73,9 @@
             margin: 30px 0;
         }
         
-        .score-circle {
-            display: inline-block;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4a90e2, #357abd);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            color: white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        }
+        .score-circle { display:inline-block;width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,var(--color-primary),#60a5fa);display:flex;align-items:center;justify-content:center;flex-direction:column;color:white }
         
-        .score-value {
-            font-size: 72px;
-            font-weight: bold;
-        }
+        .score-value { font-size:48px;font-weight:900 }
         
         .score-label {
             font-size: 24px;
@@ -133,12 +85,7 @@
             margin-top: 30px;
         }
         
-        .results-section h2 {
-            color: #333;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #4a90e2;
-            padding-bottom: 10px;
-        }
+        .results-section h2 { color:var(--color-contrast);margin-bottom:12px;border-bottom:3px solid rgba(255,255,255,0.03);padding-bottom:8px }
         
         .results-section h3 {
             color: #4a90e2;
