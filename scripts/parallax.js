@@ -177,13 +177,20 @@
   /* ──────────────────────────────────────────────
      4. SCROLL REVEAL — Intersection Observer
   ────────────────────────────────────────────── */
+  let scrollRevealObserver = null;
+
   function initScrollReveal() {
-    const io = new IntersectionObserver(
+    // Disconnect any existing observer before re-creating
+    if (scrollRevealObserver) {
+      scrollRevealObserver.disconnect();
+    }
+
+    scrollRevealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            io.unobserve(entry.target);
+            scrollRevealObserver.unobserve(entry.target);
           }
         });
       },
@@ -195,10 +202,8 @@
       '.tool-card',
       '.feature-card',
       '.blog-post',
-      '.ai-item',
-      '.tech-item',
       '.app-card',
-      '.future-item',
+      '.tech-item',
       '.stat-item',
       '.stat-card',
       '.metric-card',
@@ -207,6 +212,9 @@
       '.service-card',
       '.recommendation-card'
     ];
+
+    const aiAlternatingSelectors = ['.ai-item', '.future-item'];
+    const aiAlternatingSet = new Set(qsa(aiAlternatingSelectors.join(',')));
 
     const sectionSelectors = [
       '.section-header',
@@ -217,28 +225,35 @@
       '.results-header'
     ];
 
-    // Cards — stagger by index within parent
+    // Cards — stagger by index within parent (exclude ai-item/future-item handled separately)
     cardSelectors.forEach(sel => {
-      qsa(sel).forEach((el, i) => {
-        el.classList.add('reveal');
-        const parent = el.parentElement;
-        if (parent) parent.classList.add('stagger-children');
-        io.observe(el);
+      qsa(sel).forEach(el => {
+        if (!el.classList.contains('reveal') && !el.classList.contains('reveal-left') && !el.classList.contains('reveal-right')) {
+          el.classList.add('reveal');
+          const parent = el.parentElement;
+          if (parent) parent.classList.add('stagger-children');
+        }
+        scrollRevealObserver.observe(el);
       });
     });
 
     sectionSelectors.forEach(sel => {
       qsa(sel).forEach(el => {
-        el.classList.add('reveal');
-        io.observe(el);
+        if (!el.classList.contains('reveal')) {
+          el.classList.add('reveal');
+        }
+        scrollRevealObserver.observe(el);
       });
     });
 
-    // Alternating left/right for feature rows
-    qsa('.ai-item, .future-item').forEach((el, i) => {
+    // Alternating left/right for .ai-item and .future-item
+    qsa(aiAlternatingSelectors.join(',')).forEach((el, i) => {
       el.classList.remove('reveal');
-      el.classList.add(i % 2 === 0 ? 'reveal-left' : 'reveal-right');
-      io.observe(el);
+      const dirClass = i % 2 === 0 ? 'reveal-left' : 'reveal-right';
+      if (!el.classList.contains(dirClass)) {
+        el.classList.add(dirClass);
+      }
+      scrollRevealObserver.observe(el);
     });
   }
 

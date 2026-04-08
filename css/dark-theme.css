@@ -2387,3 +2387,230 @@ tr:hover td {
   scrollbar-width: thin;
   scrollbar-color: var(--accent-blue) var(--bg-void);
 }
+
+/* =====================================================
+   BLOG PAGES — Deep overrides for inline style blocks
+   ===================================================== */
+
+/* Body override — covers #667eea, #74b9ff gradients etc. */
+body {
+  background: var(--bg-deep) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Navigation on blog pages */
+.nav-header,
+.site-nav,
+header nav,
+.navbar,
+.top-nav {
+  background: rgba(6,12,26,0.92) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4) !important;
+}
+
+/* Blog hero sections with purple/blue gradient */
+.hero,
+.page-hero,
+.blog-hero,
+.article-hero,
+section[style*="#667eea"],
+section[style*="667eea"],
+.header-section,
+[style*="background: linear-gradient(135deg, #667eea"],
+[style*="background: linear-gradient(135deg, #ff6b6b"],
+[style*="background: linear-gradient(135deg, #4a90e2"] {
+  background: linear-gradient(135deg, #060c1a 0%, #0a1228 60%, #0d1a36 100%) !important;
+}
+
+/* White boxes in blog */
+[style*="background: white"],
+[style*="background:white"],
+[style*="background: #fff"],
+[style*="background:#fff"],
+[style*="background: linear-gradient(135deg, #fff"],
+[style*="background: linear-gradient(135deg, #f0f8ff"],
+[style*="background: linear-gradient(135deg, #e8f5e8"],
+[style*="background: #f0f8ff"],
+[style*="background: #e8f5e8"],
+[style*="background: #e3f2fd"],
+[style*="background: #f9f9f9"],
+[style*="background: #f5f5f5"] {
+  background: rgba(10,18,40,0.80) !important;
+  border: 1px solid var(--border-subtle) !important;
+}
+
+/* Dark text override */
+[style*="color: #333"],
+[style*="color:#333"],
+[style*="color: #444"],
+[style*="color: #555"],
+[style*="color: #666"],
+[style*="color: #777"],
+[style*="color: #222"],
+[style*="color: black"],
+[style*="color:black"] {
+  color: var(--text-secondary) !important;
+}
+
+/* Headings with dark inline colors */
+[style*="color: #2c3e50"],
+[style*="color: #1a202c"],
+[style*="color: #2d3748"] {
+  color: var(--text-white) !important;
+}
+
+/* Blog-specific card/content area patterns */
+.content-card,
+.info-card,
+.feature-box,
+.highlight-box,
+.note-box,
+.tip-box {
+  background: rgba(10,18,40,0.70) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Exit button on blog pages */
+.exit-btn,
+.back-btn,
+.btn-exit,
+.close-btn {
+  background: linear-gradient(135deg, var(--accent-blue), #1d4ed8) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.4) !important;
+}
+
+.exit-btn:hover,
+.back-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 30px rgba(37,99,235,0.55) !important;
+}
+
+/* Override any linear-gradient backgrounds set via inline style on sections */
+.blog-section,
+.content-section,
+.summary-section,
+.overview-section,
+.guide-section {
+  background: transparent !important;
+}
+
+/* =====================================================
+   ALT-TEXT GENERATOR / CODE REVIEWER / SIMPLIFIER
+   ===================================================== */
+.tool-section,
+.generator-section,
+.reviewer-section,
+.simplifier-section {
+  background: transparent !important;
+}
+
+.upload-area,
+.drop-zone,
+.file-upload {
+  background: rgba(6,12,26,0.60) !important;
+  border: 2px dashed var(--border-mid) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text-secondary) !important;
+}
+
+.upload-area:hover,
+.drop-zone:hover {
+  border-color: var(--accent-blue) !important;
+  background: rgba(37,99,235,0.06) !important;
+}
+
+pre, code {
+  background: rgba(3,6,15,0.80) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--accent-sky) !important;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace !important;
+}
+
+/* =====================================================
+   HELP PAGE
+   ===================================================== */
+.help-section,
+.faq-section,
+.guide-container {
+  background: transparent !important;
+}
+
+.faq-item,
+.accordion-item,
+.help-card {
+  background: rgba(10,18,40,0.70) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.faq-question,
+.accordion-header {
+  color: var(--text-white) !important;
+  font-weight: 600 !important;
+}
+
+.faq-answer,
+.accordion-body {
+  color: var(--text-secondary) !important;
+}
+
+/* =====================================================
+   SCORE PAGE — Additional specific class overrides
+   ===================================================== */
+.score-badge {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-sky)) !important;
+  color: #fff !important;
+  border-radius: 30px !important;
+}
+
+.wcag-level-badge,
+.compliance-badge {
+  border-radius: 20px !important;
+  font-weight: 700 !important;
+  padding: 4px 16px !important;
+}
+
+.issue-item,
+.violation-item {
+  background: rgba(10,18,40,0.70) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 1rem !important;
+  margin-bottom: 0.8rem !important;
+  color: var(--text-primary) !important;
+}
+
+/* Color severity indicators */
+.severity-critical { border-left: 4px solid #ef4444 !important; }
+.severity-serious  { border-left: 4px solid #f97316 !important; }
+.severity-moderate { border-left: 4px solid #eab308 !important; }
+.severity-minor    { border-left: 4px solid #22c55e !important; }
+
+/* =====================================================
+   GLOBAL: Force dark backgrounds on any remaining light elements
+   ===================================================== */
+section,
+article,
+aside,
+main {
+  background-color: transparent;
+}
+
+/* Nav links that point to external pages */
+a.nav-item,
+a.nav-link {
+  color: var(--text-secondary) !important;
+}
+a.nav-item:hover,
+a.nav-link:hover {
+  color: var(--text-white) !important;
+  background: rgba(37,99,235,0.12) !important;
+}
