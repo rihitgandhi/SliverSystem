@@ -18,6 +18,13 @@
     <link rel="stylesheet" href="./css/dark-theme.css">
 </head>
 <body class="homepage">
+    <!-- Preloader -->
+    <div id="preloader" role="status" aria-label="Loading AcessAI">
+        <div class="preloader-logo" aria-hidden="true">AcessAI</div>
+        <div class="preloader-ring" aria-hidden="true"></div>
+        <p class="preloader-tagline" aria-hidden="true">Making the Web Accessible for Everyone</p>
+    </div>
+
     <div id="content-wrapper">
         <!-- Skip to main content link for screen readers -->
         <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -85,6 +92,8 @@
                 <!-- Custom Hero Section -->
                 <section class="custom-hero-section" style="position: relative; width: 100%; min-height: 720px; overflow: hidden;">
                     <img src="images/circuit-board-1188x792-1024x683.jpg" alt="Circuit board background" style="width: 100%; height: 720px; object-fit: cover; object-position: center; display: block; filter: brightness(0.93) contrast(1.05);">
+                    <!-- Floating particles overlay -->
+                    <div class="hero-particles" aria-hidden="true" id="hero-particles"></div>
                     <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center;">
                         <div style="text-align: center; color: #fff; z-index: 2; width: 100%; text-shadow: 0 4px 24px rgba(0,0,0,0.45);">
                             <h1 style="font-size: 8rem; font-weight: 900; margin-bottom: 0; color: #fff;">AcessAI</h1>
@@ -113,9 +122,9 @@
                             <h2 class="section-title fundamental-section-title">Accessibility Tools</h2>
                             <p class="section-subtitle fundamental-section-subtitle">Powerful tools to make your website accessible to everyone</p>
                         </div>
-                        <div class="tools-grid fundamental-grid">
+                        <div class="tools-grid fundamental-grid reveal-stagger">
                             <!-- Website Checker Tool -->
-                            <div class="tool-card checker-tool card-bg-1">
+                            <div class="tool-card checker-tool card-bg-1 reveal">
                                 <div class="tool-header">
                                     <div class="tool-icon"><i class="fa fa-search"></i></div>
                                     <div class="tool-info">
@@ -145,7 +154,7 @@
                                 </div>
                             </div>
                             <!-- AI Assistant Tool -->
-                            <div class="tool-card ai-tool card-bg-2">
+                            <div class="tool-card ai-tool card-bg-2 reveal">
                                 <div class="tool-header">
                                     <div class="tool-icon"><i class="fa fa-robot"></i></div>
                                     <div class="tool-info">
@@ -188,40 +197,36 @@
                             <h2 class="section-title fundamental-section-title">Why Choose Our Platform?</h2>
                             <p class="section-subtitle fundamental-section-subtitle">Comprehensive accessibility solutions designed for modern web development</p>
                         </div>
-                        <div class="features-grid fundamental-grid">
-                            <div class="feature-card card-bg-3"><div class="feature-icon"><i class="fa fa-check-circle"></i></div><h3>Comprehensive Testing</h3><p>Test your website against WCAG 2.1 guidelines with detailed reports and actionable recommendations</p></div>
-                            <div class="feature-card card-bg-4"><div class="feature-icon"><i class="fa fa-brain"></i></div><h3>AI-Powered Insights</h3><p>Get intelligent suggestions and explanations from our advanced AI assistant</p></div>
-                            <div class="feature-card card-bg-5"><div class="feature-icon"><i class="fa fa-book-open"></i></div><h3>Educational Resources</h3><p>Learn accessibility best practices through our comprehensive guides and tutorials</p></div>
-                            <div class="feature-card card-bg-1"><div class="feature-icon"><i class="fa fa-bolt"></i></div><h3>Real-time Analysis</h3><p>Get instant feedback on your website's accessibility with our fast analysis engine</p></div>
+                        <div class="features-grid fundamental-grid reveal-stagger">
+                            <div class="feature-card card-bg-3 reveal"><div class="feature-icon"><i class="fa fa-check-circle"></i></div><h3>Comprehensive Testing</h3><p>Test your website against WCAG 2.1 guidelines with detailed reports and actionable recommendations</p></div>
+                            <div class="feature-card card-bg-4 reveal"><div class="feature-icon"><i class="fa fa-brain"></i></div><h3>AI-Powered Insights</h3><p>Get intelligent suggestions and explanations from our advanced AI assistant</p></div>
+                            <div class="feature-card card-bg-5 reveal"><div class="feature-icon"><i class="fa fa-book-open"></i></div><h3>Educational Resources</h3><p>Learn accessibility best practices through our comprehensive guides and tutorials</p></div>
+                            <div class="feature-card card-bg-1 reveal"><div class="feature-icon"><i class="fa fa-bolt"></i></div><h3>Real-time Analysis</h3><p>Get instant feedback on your website's accessibility with our fast analysis engine</p></div>
                         </div>
                     </div>
                 </section>
-                <!-- Blog Preview Section -->
+                <!-- Blog Preview Section — 3D Carousel -->
                 <section class="modern-blog-preview fundamental-section" style="position: relative;">
                     <div class="fundamental-container">
-                        <div class="section-header fundamental-section-header" style="text-align: center;">
+                        <div class="section-header fundamental-section-header reveal" style="text-align: center;">
                             <h2 class="section-title fundamental-section-title">From Our Blog</h2>
                             <p class="section-subtitle fundamental-section-subtitle">Latest insights on accessibility and inclusive design</p>
                         </div>
-        
-                        <div class="blog-container" style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
-                            <article class="blog-post" style="max-width: 320px;">
-                                <a href="Blog_1.html" class="blog-link">
-                                    <img src="images/computer_acsess_photo.jpeg" alt="Understanding Computer Accessibility - A comprehensive guide" class="blog-image">
-                                    <h2>Understanding Computer Accessibility</h2>
-                                    <p>A deep dive into the importance and challenges of computer accessibility, including WCAG guidelines and implementation strategies.</p>
-                                    <span class="tooltip">Read Article</span>
-                                </a>
-                            </article>
-                            <article class="blog-post" style="max-width: 320px;">
-                                <a href="Blog_2.html" class="blog-link">
-                                    <img src="images/Inclusivity photo" alt="Designing for Inclusivity - Creating accessible websites" class="blog-image">
-                                    <h2>Designing for Inclusivity</h2>
-                                    <p>Learn how to design accessible websites that everyone can use, including color contrast, typography, and navigation best practices.</p>
-                                    <span class="tooltip">Read Article</span>
-                                </a>
-                            </article>
+
+                        <!-- 3D Carousel -->
+                        <div class="carousel-wrapper">
+                            <div class="carousel-scene" aria-roledescription="carousel" aria-label="Blog posts">
+                                <div class="carousel-stage" id="carousel-stage">
+                                    <!-- Cells injected by JS -->
+                                </div>
+                            </div>
+                            <div class="carousel-controls" role="group" aria-label="Carousel controls">
+                                <button class="carousel-btn" id="carousel-prev" aria-label="Previous blog post">&#8592;</button>
+                                <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Blog post navigation"></div>
+                                <button class="carousel-btn" id="carousel-next" aria-label="Next blog post">&#8594;</button>
+                            </div>
                         </div>
+
                         <!-- Floating Blog Tab Button -->
                         <button onclick="switchTab('blogs');" aria-label="Open full blog" style="position: absolute; bottom: 18px; right: 18px; z-index: 10; background: #007bff; color: #fff; border: none; border-radius: 50%; width: 48px; height: 48px; box-shadow: 0 2px 8px rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; transition: background 0.2s; outline: none;" onfocus="this.style.background='#0056b3'" onblur="this.style.background='#007bff'" onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#007bff'">
                             <span class="fa fa-book" aria-hidden="true"></span>
@@ -1814,6 +1819,306 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <!-- <script src="scripts/chatbot.js"></script> -->
+
+<!-- ========================================================
+     Visual Effects: Preloader · 3D Carousel · Scroll Reveals · Particles
+     ======================================================== -->
+<script>
+(function () {
+  'use strict';
+
+  const PRELOADER_DISMISS_DELAY = 400; // ms
+
+  /* --------------------------------------------------------
+     PRELOADER
+  -------------------------------------------------------- */
+  function initPreloader() {
+    const preloader = document.getElementById('preloader');
+    if (!preloader) return;
+
+    function dismiss() {
+      preloader.classList.add('preloader-hidden');
+      preloader.addEventListener('transitionend', () => {
+        preloader.remove();
+      }, { once: true });
+    }
+
+    if (document.readyState === 'complete') {
+      // Already loaded — short artificial delay so animation is visible
+      setTimeout(dismiss, PRELOADER_DISMISS_DELAY);
+    } else {
+      window.addEventListener('load', () => setTimeout(dismiss, PRELOADER_DISMISS_DELAY), { once: true });
+      // Safety fallback: hide after 4 s regardless
+      setTimeout(dismiss, 4000);
+    }
+  }
+
+  /* --------------------------------------------------------
+     FLOATING PARTICLES (Hero)
+  -------------------------------------------------------- */
+  function initParticles() {
+    const container = document.getElementById('hero-particles');
+    if (!container) return;
+    // Skip on reduced-motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const COUNT = 18;
+    for (let i = 0; i < COUNT; i++) {
+      const span = document.createElement('span');
+      const size = 5 + Math.random() * 8;
+      span.style.cssText = [
+        'left:' + (Math.random() * 100) + '%',
+        'width:' + size + 'px',
+        'height:' + size + 'px',
+        '--dur:' + (5 + Math.random() * 8) + 's',
+        '--delay:' + (Math.random() * 7) + 's',
+      ].join(';');
+      container.appendChild(span);
+    }
+  }
+
+  /* --------------------------------------------------------
+     3D CAROUSEL
+  -------------------------------------------------------- */
+  const BLOG_POSTS = [
+    {
+      href: 'Blog_1.html',
+      img: 'images/computer_acsess_photo.jpeg',
+      alt: 'Understanding Computer Accessibility',
+      title: 'Understanding Computer Accessibility',
+      desc: 'A deep dive into WCAG guidelines, assistive technologies, and strategies for inclusive web development.',
+    },
+    {
+      href: 'Blog_2.html',
+      img: 'images/Inclusivity photo',
+      alt: 'Designing for Inclusivity',
+      title: 'Designing for Inclusivity',
+      desc: 'Color contrast, typography, and navigation best practices that make websites usable by everyone.',
+    },
+    {
+      href: 'Blog_3.html',
+      img: 'images/Assitive_tech photo.jpg',
+      alt: 'Assistive Technologies Overview',
+      title: 'Assistive Technologies Overview',
+      desc: 'Explore screen readers, voice recognition, and other tools that empower users with disabilities.',
+    },
+    {
+      href: 'Blog_4.html',
+      img: 'images/Legal.webp',
+      alt: 'Legal Aspects of Accessibility',
+      title: 'Legal Aspects of Accessibility',
+      desc: 'Understanding ADA compliance, international standards, and the legal landscape of web accessibility.',
+    },
+    {
+      href: 'Blog_5.html',
+      img: 'images/circuit-board-1188x792-1024x683.jpg',
+      alt: 'Essential Guide for Designers',
+      title: 'Essential Guide for Designers',
+      desc: 'Practical WCAG wins, testing tools, and quick improvements you can implement today.',
+    },
+    {
+      href: 'Blog_6.html',
+      img: 'images/a11y.jpg',
+      alt: 'Navigating the Web Tools',
+      title: 'Navigating the Web Tools',
+      desc: 'Browser features, keyboard shortcuts, and mobile tools to enhance your web experience.',
+    },
+  ];
+
+  function initCarousel() {
+    const stage = document.getElementById('carousel-stage');
+    const dotsContainer = document.getElementById('carousel-dots');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    if (!stage || !dotsContainer || !prevBtn || !nextBtn) return;
+
+    const n = BLOG_POSTS.length;
+    let current = 0;
+    let autoTimer = null;
+    const RADIUS = 320; // px — distance from center axis
+
+    // Build cells
+    BLOG_POSTS.forEach((post, i) => {
+      const cell = document.createElement('article');
+      cell.className = 'carousel-cell';
+      cell.setAttribute('aria-roledescription', 'slide');
+      cell.setAttribute('aria-label', (i + 1) + ' of ' + n);
+      cell.innerHTML =
+        '<img src="' + post.img + '" alt="' + post.alt + '" loading="lazy">' +
+        '<div class="carousel-cell-body">' +
+          '<h3>' + post.title + '</h3>' +
+          '<p>' + post.desc + '</p>' +
+          '<a href="' + post.href + '" class="carousel-link">Read Article</a>' +
+        '</div>';
+      stage.appendChild(cell);
+
+      // Dot
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    });
+
+    function positionCells(idx) {
+      const cells = stage.querySelectorAll('.carousel-cell');
+      const angleStep = 360 / n;
+      cells.forEach((cell, i) => {
+        const angle = angleStep * (i - idx);
+        const rad = angle * Math.PI / 180;
+        const x = Math.sin(rad) * RADIUS;
+        const z = Math.cos(rad) * RADIUS - RADIUS;
+        const scale = 0.72 + 0.28 * Math.cos(rad);
+        const opacity = 0.35 + 0.65 * ((Math.cos(rad) + 1) / 2);
+        cell.style.transform = 'translateX(calc(-50% + ' + x + 'px)) translateZ(' + z + 'px) scale(' + scale + ')';
+        cell.style.opacity = opacity;
+        cell.style.zIndex = Math.round(scale * 10);
+        cell.setAttribute('aria-hidden', i === idx ? 'false' : 'true');
+      });
+
+      // Update dots
+      const dots = dotsContainer.querySelectorAll('.carousel-dot');
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === idx);
+        dot.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+      });
+    }
+
+    function goTo(idx) {
+      current = ((idx % n) + n) % n;
+      positionCells(current);
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    prevBtn.addEventListener('click', () => { prev(); resetAuto(); });
+    nextBtn.addEventListener('click', () => { next(); resetAuto(); });
+
+    // Keyboard support on stage
+    stage.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { next(); resetAuto(); }
+      if (e.key === 'ArrowLeft')  { prev(); resetAuto(); }
+    });
+
+    // Touch/swipe
+    let touchStartX = 0;
+    stage.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', (e) => {
+      const delta = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(delta) > 40) { delta < 0 ? next() : prev(); resetAuto(); }
+    }, { passive: true });
+
+    function startAuto() {
+      autoTimer = setInterval(next, 5000); // ≥5 s per WCAG 2.2.2
+    }
+    function resetAuto() {
+      clearInterval(autoTimer);
+      startAuto();
+    }
+
+    positionCells(0);
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      startAuto();
+    }
+
+    // Pause on hover/focus within carousel
+    const scene = stage.closest('.carousel-scene');
+    if (scene) {
+      scene.addEventListener('mouseenter', () => clearInterval(autoTimer));
+      scene.addEventListener('mouseleave', startAuto);
+      scene.addEventListener('focusin',  () => clearInterval(autoTimer));
+      scene.addEventListener('focusout', startAuto);
+    }
+  }
+
+  /* --------------------------------------------------------
+     SCROLL-TRIGGERED REVEAL (IntersectionObserver)
+  -------------------------------------------------------- */
+  function initScrollReveal() {
+    if (!('IntersectionObserver' in window)) {
+      // Fallback: just show everything
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  }
+
+  /* --------------------------------------------------------
+     ANIMATED STAT COUNTERS
+  -------------------------------------------------------- */
+  function initCounters() {
+    if (!('IntersectionObserver' in window)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Map display text to numeric target
+    const parseTarget = (text) => {
+      text = text.trim();
+      if (text.endsWith('%'))  return { value: parseFloat(text), suffix: '%', prefix: '' };
+      if (text.endsWith('x'))  return { value: parseFloat(text), suffix: 'x', prefix: '' };
+      if (text.endsWith('B+')) return { value: parseFloat(text), suffix: 'B+', prefix: '' };
+      const m = text.match(/^(\D*)([\d.]+)(\D*)$/);
+      if (m) return { value: parseFloat(m[2]), suffix: m[3], prefix: m[1] };
+      return null;
+    };
+
+    const statNumbers = document.querySelectorAll('.stat-number, .stat-item .stat-number');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        obs.unobserve(entry.target);
+        const el = entry.target;
+        const parsed = parseTarget(el.textContent);
+        if (!parsed || parsed.value === 0) return;
+
+        const duration = 1400;
+        const start = performance.now();
+        const from = 0;
+        const to = parsed.value;
+
+        function tick(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease-out cubic
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = from + (to - from) * eased;
+          const display = Number.isInteger(to)
+            ? Math.round(current)
+            : (to % 1 !== 0 ? current.toFixed(1) : Math.round(current));
+          el.textContent = parsed.prefix + display + parsed.suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.5 });
+
+    statNumbers.forEach(el => obs.observe(el));
+  }
+
+  /* --------------------------------------------------------
+     BOOT
+  -------------------------------------------------------- */
+  document.addEventListener('DOMContentLoaded', function () {
+    initPreloader();
+    initParticles();
+    initCarousel();
+    initScrollReveal();
+    initCounters();
+  });
+})();
+</script>
 
             <!-- END OF MAIN CONTENT -->
         </main>
