@@ -1826,6 +1826,8 @@ document.addEventListener('DOMContentLoaded', function() {
 (function () {
   'use strict';
 
+  const PRELOADER_DISMISS_DELAY = 400; // ms
+
   /* --------------------------------------------------------
      PRELOADER
   -------------------------------------------------------- */
@@ -1842,9 +1844,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (document.readyState === 'complete') {
       // Already loaded — short artificial delay so animation is visible
-      setTimeout(dismiss, 400);
+      setTimeout(dismiss, PRELOADER_DISMISS_DELAY);
     } else {
-      window.addEventListener('load', () => setTimeout(dismiss, 400), { once: true });
+      window.addEventListener('load', () => setTimeout(dismiss, PRELOADER_DISMISS_DELAY), { once: true });
       // Safety fallback: hide after 4 s regardless
       setTimeout(dismiss, 4000);
     }
@@ -1887,7 +1889,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       href: 'Blog_2.html',
-      img: 'images/Inclusivity photo.jpg',
+      img: 'images/Inclusivity photo',
       alt: 'Designing for Inclusivity',
       title: 'Designing for Inclusivity',
       desc: 'Color contrast, typography, and navigation best practices that make websites usable by everyone.',
@@ -2009,7 +2011,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { passive: true });
 
     function startAuto() {
-      autoTimer = setInterval(next, 3500);
+      autoTimer = setInterval(next, 5000); // ≥5 s per WCAG 2.2.2
     }
     function resetAuto() {
       clearInterval(autoTimer);
@@ -2093,7 +2095,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const current = from + (to - from) * eased;
           const display = Number.isInteger(to)
             ? Math.round(current)
-            : current.toFixed(1);
+            : (to % 1 !== 0 ? current.toFixed(1) : Math.round(current));
           el.textContent = parsed.prefix + display + parsed.suffix;
           if (progress < 1) requestAnimationFrame(tick);
         }

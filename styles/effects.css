@@ -258,6 +258,7 @@
     background: rgba(255, 255, 255, 0.45);
     animation: particle-rise var(--dur, 6s) linear var(--delay, 0s) infinite;
     opacity: 0;
+    will-change: transform, opacity;
 }
 
 @keyframes particle-rise {
