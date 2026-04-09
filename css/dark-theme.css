@@ -236,7 +236,13 @@ header[role="banner"] {
 }
 
 .custom-hero-section img {
-  filter: brightness(0.25) saturate(0.7) !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  filter: brightness(0.38) saturate(0.75) !important;
   transition: transform 0.1s ease-out !important;
   will-change: transform !important;
   transform-origin: center center !important;
@@ -680,6 +686,8 @@ textarea:focus,
   border-radius: var(--radius-lg) !important;
   overflow: hidden !important;
   transition: all var(--transition-med) !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .blog-post:hover {
@@ -693,33 +701,40 @@ textarea:focus,
   font-family: var(--font-display) !important;
   font-weight: 700 !important;
   font-size: 1.15rem !important;
-  padding: 0 1.2rem !important;
-  margin-bottom: 0.5rem !important;
+  padding: 1rem 1.2rem 0.4rem !important;
+  margin-bottom: 0 !important;
 }
 
 .blog-post p {
   color: var(--text-secondary) !important;
-  padding: 0 1.2rem 1.2rem !important;
+  padding: 0 1.2rem 1rem !important;
   font-size: 0.92rem !important;
+  flex: 1 !important;
 }
 
 .blog-image {
   width: 100% !important;
-  height: 180px !important;
+  height: 200px !important;
   object-fit: cover !important;
-  filter: brightness(0.7) saturate(0.8) !important;
+  border-radius: 0 !important;
+  margin-bottom: 0 !important;
+  flex-shrink: 0 !important;
+  filter: brightness(0.75) saturate(0.85) !important;
   transition: all var(--transition-med) !important;
 }
 
 .blog-post:hover .blog-image {
-  filter: brightness(0.9) saturate(1.1) !important;
-  transform: scale(1.03) !important;
+  filter: brightness(0.95) saturate(1.1) !important;
+  transform: scale(1.04) !important;
 }
 
 .blog-link {
-  display: block !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
   text-decoration: none !important;
   color: inherit !important;
+  padding: 0 !important;
 }
 
 .tooltip {
@@ -728,11 +743,17 @@ textarea:focus,
   border-radius: var(--radius-sm) !important;
   font-size: 0.82rem !important;
   font-weight: 600 !important;
-  padding: 4px 14px !important;
+  padding: 6px 14px !important;
   display: block !important;
   text-align: center !important;
-  margin: 0 1.2rem 1.2rem !important;
+  margin: auto 1.2rem 1.2rem !important;
   letter-spacing: 0.05em !important;
+  opacity: 0 !important;
+  transition: opacity var(--transition-fast) !important;
+}
+
+.blog-post:hover .tooltip {
+  opacity: 1 !important;
 }
 
 /* Blog section big header */
@@ -758,7 +779,9 @@ textarea:focus,
 /* Blog tab grid */
 #blogs .blog-container {
   display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+  grid-auto-rows: 1fr !important;
+  align-items: stretch !important;
   gap: 1.8rem !important;
   padding: 1rem 2rem 3rem !important;
   max-width: 1200px !important;
@@ -1029,6 +1052,25 @@ textarea:focus,
   margin-bottom: 1rem !important;
   filter: brightness(0) invert(1) !important;
   opacity: 0.7 !important;
+}
+
+/* Font Awesome number icons replacing old number images */
+.box-number-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 56px !important;
+  height: 56px !important;
+  margin: 0 auto 1.2rem !important;
+  border-radius: 50% !important;
+  background: rgba(37, 99, 235, 0.18) !important;
+  border: 2px solid var(--border-mid) !important;
+}
+
+.box-number-icon i {
+  font-size: 1.6rem !important;
+  font-weight: 900 !important;
+  color: var(--accent-sky) !important;
 }
 
 .box_font,
