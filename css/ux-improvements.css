@@ -27,24 +27,12 @@ body::after {
 
 /* -------------------------------------------------------
    ANIMATED GRADIENT BORDER ON KEY CARDS
+   Cross-browser approach: animated box-shadow glow ring
+   on hover — avoids @property (not in Firefox) entirely.
    ------------------------------------------------------- */
-@keyframes borderRotate {
-  0%   { --angle: 0deg; }
-  100% { --angle: 360deg; }
-}
-
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
 .tool-card,
 .feature-card {
-  --angle: 0deg;
-  border: 1px solid transparent !important;
-  background-clip: padding-box !important;
-  position: relative !important;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1) !important;
 }
 
 .tool-card::after,
@@ -53,21 +41,22 @@ body::after {
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 0%,
-    rgba(37,99,235,0.5) 15%,
-    rgba(56,189,248,0.6) 30%,
-    rgba(129,140,248,0.4) 50%,
-    transparent 65%
+  background: linear-gradient(135deg,
+    rgba(37,99,235,0.6),
+    rgba(56,189,248,0.6),
+    rgba(129,140,248,0.5),
+    rgba(37,99,235,0.6)
   );
+  background-size: 300% 300%;
+  /* Mask creates a 1px border-only effect: shows background where padding is, hides content area */
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
+  /* xor = exclude in standard mask-composite; both values needed for full coverage */
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   padding: 1px;
-  animation: borderRotate 6s linear infinite paused;
+  animation: gradientBorderShift 4s ease infinite paused;
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
@@ -78,6 +67,12 @@ body::after {
 .feature-card:hover::after {
   opacity: 1;
   animation-play-state: running;
+}
+
+@keyframes gradientBorderShift {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
 }
 
 /* -------------------------------------------------------
