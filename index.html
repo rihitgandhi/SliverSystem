@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Dark Theme & Visual Enhancements -->
     <link rel="stylesheet" href="./css/dark-theme.css">
+    <!-- UX Improvements: animations, glassmorphism, micro-interactions -->
+    <link rel="stylesheet" href="./css/ux-improvements.css">
+    <link rel="stylesheet" href="./styles/effects.css">
 </head>
 <body class="homepage">
     <!-- Preloader -->
@@ -44,7 +47,7 @@
                             <span class="nav-text">Home</span>
                         </button>
                         <button class="nav-item" data-tab="ai" role="tab" aria-selected="false" tabindex="0" id="ai-tab">
-                            <span class="nav-icon"><i class="fa fa-robot"></i></span>
+                            <span class="nav-icon"><i class="fa fa-lightbulb"></i></span>
                             <span class="nav-text">AI in Accessibility</span>
                         </button>
                         <button class="nav-item" data-tab="blogs" role="tab" aria-selected="false" tabindex="0" id="blogs-tab">
@@ -92,12 +95,21 @@
                 <!-- Custom Hero Section -->
                 <section class="custom-hero-section" style="position: relative; width: 100%; min-height: 720px; overflow: hidden;">
                     <img src="images/circuit-board-1188x792-1024x683.jpg" alt="Circuit board background" style="width: 100%; height: 720px; object-fit: cover; object-position: center; display: block; filter: brightness(0.93) contrast(1.05);">
+                    <!-- Floating glow orbs -->
+                    <div class="orb orb-1" aria-hidden="true"></div>
+                    <div class="orb orb-2" aria-hidden="true"></div>
+                    <div class="orb orb-3" aria-hidden="true"></div>
                     <!-- Floating particles overlay -->
                     <div class="hero-particles" aria-hidden="true" id="hero-particles"></div>
                     <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center;">
                         <div style="text-align: center; color: #fff; z-index: 2; width: 100%; text-shadow: 0 4px 24px rgba(0,0,0,0.45);">
                             <h1 style="font-size: 8rem; font-weight: 900; margin-bottom: 0; color: #fff;">AcessAI</h1>
+                            <p class="hero-subtitle-line" aria-label="Making the web accessible for everyone">Making the Web Accessible for Everyone</p>
                         </div>
+                    </div>
+                    <!-- Scroll indicator -->
+                    <div class="hero-scroll-indicator" aria-hidden="true">
+                        <span>Scroll</span>
                     </div>
                 </section>
 
@@ -156,7 +168,7 @@
                             <!-- AI Assistant Tool -->
                             <div class="tool-card ai-tool card-bg-2 reveal">
                                 <div class="tool-header">
-                                    <div class="tool-icon"><i class="fa fa-robot"></i></div>
+                                    <div class="tool-icon"><i class="fa fa-comment-dots"></i></div>
                                     <div class="tool-info">
                                         <h3>AI Accessibility Assistant</h3>
                                         <p>Get instant answers about accessibility guidelines, best practices, and implementation tips</p>
@@ -165,7 +177,7 @@
                                 <div class="tool-content">
                                     <div class="ai-preview">
                                         <div class="ai-message">
-                                            <div class="ai-avatar"><i class="fa fa-robot"></i></div>
+                                            <div class="ai-avatar"><i class="fa fa-comment-dots"></i></div>
                                             <div class="message-content">
                                                 <p>Hello! I'm your accessibility assistant. Ask me anything about WCAG guidelines, assistive technologies, or inclusive design!</p>
                                             </div>
@@ -199,7 +211,7 @@
                         </div>
                         <div class="features-grid fundamental-grid reveal-stagger">
                             <div class="feature-card card-bg-3 reveal"><div class="feature-icon"><i class="fa fa-check-circle"></i></div><h3>Comprehensive Testing</h3><p>Test your website against WCAG 2.1 guidelines with detailed reports and actionable recommendations</p></div>
-                            <div class="feature-card card-bg-4 reveal"><div class="feature-icon"><i class="fa fa-brain"></i></div><h3>AI-Powered Insights</h3><p>Get intelligent suggestions and explanations from our advanced AI assistant</p></div>
+                            <div class="feature-card card-bg-4 reveal"><div class="feature-icon"><i class="fa fa-lightbulb"></i></div><h3>AI-Powered Insights</h3><p>Get intelligent suggestions and explanations from our advanced AI assistant</p></div>
                             <div class="feature-card card-bg-5 reveal"><div class="feature-icon"><i class="fa fa-book-open"></i></div><h3>Educational Resources</h3><p>Learn accessibility best practices through our comprehensive guides and tutorials</p></div>
                             <div class="feature-card card-bg-1 reveal"><div class="feature-icon"><i class="fa fa-bolt"></i></div><h3>Real-time Analysis</h3><p>Get instant feedback on your website's accessibility with our fast analysis engine</p></div>
                         </div>
@@ -300,7 +312,7 @@
             <!-- AI in Accessibility Tab Content -->
             <div id="ai" class="tab-content" role="tabpanel" aria-labelledby="ai-tab">
                 <div class="my-ai-card">
-                    <h1 class="bigblue">🤖 AI in Computer Accessibility</h1>
+                    <h1 class="bigblue">✨ AI in Computer Accessibility</h1>
                     <hr class="my-ai-separator">
                     
                     <div class="my-ai-quote">
@@ -646,7 +658,7 @@
                             <div class="header-content">
                                 <div class="ai-avatar">
                                     <div class="avatar-circle">
-                                        <span class="avatar-icon">🤖</span>
+                                        <span class="avatar-icon">💬</span>
                                     </div>
                                     <div class="status-indicator online"></div>
                                 </div>
