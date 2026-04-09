@@ -32,7 +32,7 @@ body::after {
    ------------------------------------------------------- */
 .tool-card,
 .feature-card {
-  transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1) !important;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1);
 }
 
 .tool-card::after,
@@ -48,7 +48,15 @@ body::after {
     rgba(37,99,235,0.6)
   );
   background-size: 300% 300%;
-  /* Mask creates a 1px border-only effect: shows background where padding is, hides content area */
+  /*
+   * Mask-based 1px border technique (cross-browser):
+   * Two overlapping mask layers with mask-composite: exclude
+   * reveal only the padding area (1px inset), hiding the content box.
+   * This lets the animated gradient show only as a border ring without
+   * requiring @property (unavailable in Firefox) or a border-image hack.
+   * -webkit-mask-composite: xor is the WebKit equivalent of
+   * the standard mask-composite: exclude.
+   */
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -573,9 +581,11 @@ textarea:focus {
 }
 
 /* -------------------------------------------------------
-   MODERN SCROLLBAR
+   MODERN SCROLLBAR — scoped to html/body to avoid
+   applying unnecessary scrollbar-width resets to every
+   element on the page.
    ------------------------------------------------------- */
-* {
+html {
   scrollbar-width: thin;
   scrollbar-color: var(--accent-blue) var(--bg-void);
 }
