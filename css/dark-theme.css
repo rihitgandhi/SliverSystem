@@ -82,7 +82,7 @@ body::before {
 }
 
 /* Ensure icon fonts are not overridden by accessibility font toggles */
-.fa, .fas, .far, .fal, .fat, .fa-solid, .fa-regular, .fa-light, .fa-thin, .fa-duotone {
+.fa, .fas, .far, .fal, .fa-solid, .fa-regular, .fa-light, .fa-duotone {
   font-family: "Font Awesome 6 Free" !important;
 }
 
