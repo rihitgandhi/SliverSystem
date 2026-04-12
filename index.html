@@ -379,6 +379,16 @@
                                     <span class="tech-tag">Context Awareness</span>
                                 </div>
                             </div>
+                            <div class="tech-item">
+                                <div class="tech-icon">🎧</div>
+                                <h3>Audio Intelligence</h3>
+                                <p>AI audio models can isolate speech from background noise, enhance clarity, and provide adaptive listening modes for users with hearing differences in calls, videos, and live events.</p>
+                                <div class="tech-features">
+                                    <span class="tech-tag">Noise Reduction</span>
+                                    <span class="tech-tag">Voice Enhancement</span>
+                                    <span class="tech-tag">Adaptive Audio</span>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
@@ -424,6 +434,19 @@
                                     <li>Progress tracking and analytics</li>
                                 </ul>
                             </div>
+                            <div class="app-card">
+                                <div class="app-header">
+                                    <div class="app-icon">🏥</div>
+                                    <h3>Healthcare Accessibility</h3>
+                                </div>
+                                <p>AI helps make patient portals, appointment systems, and medical instructions easier to understand and navigate through simplified language, voice guidance, and personalized support.</p>
+                                <ul class="app-features">
+                                    <li>Plain-language summaries</li>
+                                    <li>Voice-assisted form completion</li>
+                                    <li>Accessible appointment workflows</li>
+                                    <li>Multilingual guidance</li>
+                                </ul>
+                            </div>
                         </div>
                     </section>
 
@@ -444,6 +467,11 @@
                                 <div class="future-icon">♿</div>
                                 <h3>Universal Design</h3>
                                 <p>AI will enable truly universal design by automatically adapting interfaces to individual needs, creating experiences that work for everyone regardless of their abilities or disabilities.</p>
+                            </div>
+                            <div class="future-item">
+                                <div class="future-icon">🌍</div>
+                                <h3>Global Communication Support</h3>
+                                <p>Future systems will combine speech, text, and sign-language assistance in real time, helping people communicate across languages and communication styles without extra tools.</p>
                             </div>
                         </div>
                     </section>
@@ -637,7 +665,7 @@
                         <h2 class="cta-title">Ready to Make a Difference?</h2>
                         <p class="cta-text">Join us in creating a more inclusive digital world. Start learning, start building, start making technology accessible for everyone.</p>
                         <div class="cta-buttons">
-                            <button class="cta-button secondary" onclick="openTab('blogs')">
+                            <button class="cta-button secondary" onclick="switchTab('blogs')">
                                 <span class="cta-icon">📖</span>
                                 Read Our Blog
                             </button>
@@ -1443,37 +1471,15 @@
             initNavigation();
             
             // Initialize accessibility widget
-            initAccessibilityWidget();
-            
-            // Initialize home tab as active
-            const homeContent = document.getElementById("home");
-            const homeTab = document.getElementById("home-tab");
-            
-            if (homeContent && homeTab) {
-                // Hide all tab content first
-                const allTabContent = document.querySelectorAll('.tab-content');
-                allTabContent.forEach(content => {
-                    content.style.display = 'none';
-                    content.classList.remove('active');
-                });
-                
-                // Remove active class from all nav items
-                const allNavItems = document.querySelectorAll('.nav-item');
-                allNavItems.forEach(item => {
-                    item.classList.remove('active');
-                    item.setAttribute('aria-selected', 'false');
-                });
-                
-                // Show home content and activate home tab
-                homeContent.style.display = 'block';
-                homeContent.classList.add("active");
-                homeTab.classList.add("active");
-                homeTab.setAttribute('aria-selected', 'true');
-                
-                console.log('Home tab and content activated');
-            } else {
-                console.log('Home tab or content not found');
+            if (typeof initAccessibilityWidget === 'function') {
+                initAccessibilityWidget();
             }
+            
+            // Initialize from URL hash (e.g., index.html#blogs), fallback to home
+            const validTabs = new Set(['home', 'ai', 'blogs', 'mission', 'chat', 'score']);
+            const hashTab = window.location.hash ? window.location.hash.substring(1).toLowerCase() : '';
+            const initialTab = validTabs.has(hashTab) ? hashTab : 'home';
+            switchTab(initialTab);
             
             // Add CSS animations
             const style = document.createElement('style');
