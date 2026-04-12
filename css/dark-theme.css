@@ -949,6 +949,11 @@ textarea:focus,
   min-height: 60vh !important;
   position: relative;
   overflow: hidden;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  margin-bottom: 0 !important;
 }
 
 .mission-hero::before {
@@ -958,6 +963,14 @@ textarea:focus,
   background:
     radial-gradient(ellipse 70% 60% at 50% 50%, rgba(37,99,235,0.15) 0%, transparent 70%);
   pointer-events: none;
+}
+
+.mission-hero-content {
+  position: relative;
+  z-index: 2;
+  width: min(92%, 980px);
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .mission-hero-title {
@@ -1180,12 +1193,17 @@ textarea:focus,
 }
 
 .mission-container {
-  background: transparent !important;
+  background: linear-gradient(145deg, rgba(10,18,40,0.78), rgba(13,26,54,0.86)) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 18px 46px rgba(0,0,0,0.34) !important;
+  padding: clamp(1.5rem, 3vw, 2.5rem) !important;
 }
 
 .mission-header {
   display: flex !important;
   align-items: center !important;
+  justify-content: center !important;
   gap: 1rem !important;
   margin-bottom: 2rem !important;
 }
@@ -1204,22 +1222,23 @@ textarea:focus,
 }
 
 .mission-text {
-  color: var(--text-secondary) !important;
-  font-size: 1.05rem !important;
-  line-height: 1.8 !important;
+  color: var(--text-primary) !important;
+  font-size: clamp(1.06rem, 1.1vw, 1.18rem) !important;
+  line-height: 1.9 !important;
   max-width: 800px !important;
-  margin-bottom: 2rem !important;
-  background: transparent !important;
-  padding: 0 !important;
-  border-left: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+  margin: 0 auto 2rem auto !important;
+  background: rgba(255,255,255,0.04) !important;
+  padding: 1.25rem 1.5rem !important;
+  border-left: 3px solid var(--accent-sky) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
 }
 
 .mission-principles {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
   gap: 1.5rem !important;
+  margin-top: 1rem !important;
 }
 
 .services-grid {
