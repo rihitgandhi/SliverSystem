@@ -82,7 +82,7 @@ body::before {
 }
 
 /* Ensure icon fonts are not overridden by accessibility font toggles */
-.far, .fal, .fa-regular, .fa-light, .fa-duotone {
+.far, .fa-regular {
   font-family: "Font Awesome 6 Free" !important;
 }
 
