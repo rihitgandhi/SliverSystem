@@ -697,13 +697,14 @@ textarea:focus,
    BLOG POSTS
    ===================================================== */
 .blog-post {
-  background: rgba(10,18,40,0.70) !important;
-  border: 1px solid var(--border-subtle) !important;
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border-mid) !important;
   border-radius: var(--radius-lg) !important;
   overflow: hidden !important;
   transition: all var(--transition-med) !important;
   display: flex !important;
   flex-direction: column !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(37,99,235,0.10) !important;
 }
 
 .blog-post:hover {
@@ -735,7 +736,7 @@ textarea:focus,
   border-radius: 0 !important;
   margin-bottom: 0 !important;
   flex-shrink: 0 !important;
-  filter: brightness(0.75) saturate(0.85) !important;
+  filter: brightness(0.92) saturate(1.0) !important;
   transition: all var(--transition-med) !important;
 }
 
@@ -776,6 +777,8 @@ textarea:focus,
 .big {
   font-family: var(--font-display) !important;
   color: var(--text-white) !important;
+  -webkit-text-fill-color: var(--text-white) !important;
+  background: none !important;
   font-size: clamp(2rem, 5vw, 3.5rem) !important;
   font-weight: 800 !important;
   letter-spacing: -0.03em !important;
