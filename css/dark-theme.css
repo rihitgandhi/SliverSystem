@@ -796,12 +796,29 @@ textarea:focus,
 #blogs .blog-container {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
-  grid-auto-rows: 1fr !important;
+  grid-auto-rows: auto !important;
   align-items: stretch !important;
   gap: 1.8rem !important;
-  padding: 1rem 2rem 3rem !important;
+  padding: 0.5rem 2rem 3rem !important;
+  margin-top: 0 !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
+}
+
+#blogs .blog-post {
+  min-height: 380px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+#blogs .big {
+  margin: 0 !important;
+  padding: 1.5rem 2rem 0.5rem !important;
+}
+
+#blogs .blog-intro {
+  margin-bottom: 0.5rem !important;
+  padding-bottom: 1rem !important;
 }
 
 /* =====================================================
