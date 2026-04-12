@@ -1984,6 +1984,28 @@ section button[onclick*="switchTab('blogs')"] {
     margin: 0;
   }
 
+  .nav-menu .nav-item .nav-text {
+    display: inline !important;
+  }
+
+  .nav-menu .nav-item .nav-icon {
+    margin-right: 0.5rem !important;
+    min-width: 1rem;
+    text-align: center;
+  }
+
+  .nav-menu {
+    right: 0 !important;
+    transform: translateX(110%);
+    transition: transform 0.3s ease-in-out !important;
+    pointer-events: none;
+  }
+
+  .nav-menu.active {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
   #blogs .blog-container {
     grid-template-columns: 1fr !important;
     padding: 1rem !important;
@@ -2005,6 +2027,12 @@ section button[onclick*="switchTab('blogs')"] {
   .help-stats {
     flex-direction: column !important;
     align-items: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-menu {
+    transform: translateX(100%);
   }
 }
 
