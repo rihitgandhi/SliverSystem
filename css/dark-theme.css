@@ -1226,7 +1226,7 @@ textarea:focus,
   font-size: clamp(1.06rem, 1.1vw, 1.18rem) !important;
   line-height: 1.9 !important;
   max-width: 800px !important;
-  margin: 0 auto 2rem auto !important;
+  margin: 0 auto 2rem !important;
   background: rgba(255,255,255,0.04) !important;
   padding: 1.25rem 1.5rem !important;
   border-left: 3px solid var(--accent-sky) !important;
