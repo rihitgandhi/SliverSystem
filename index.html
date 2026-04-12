@@ -1158,16 +1158,29 @@
             }
         }
         
+        function applyTabVisibilityState(tabName) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                const isActive = content.id === tabName;
+                content.style.display = isActive ? 'block' : 'none';
+                if (isActive) {
+                    content.removeAttribute('hidden');
+                    content.setAttribute('aria-hidden', 'false');
+                } else {
+                    content.setAttribute('hidden', '');
+                    content.setAttribute('aria-hidden', 'true');
+                }
+            });
+        }
+        window.applyTabVisibilityState = applyTabVisibilityState;
+
         function switchTab(tabName) {
             console.log('Switching to tab:', tabName);
             
-            // Hide all tab content
+            // Reset tab active states
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => {
-                content.style.display = 'none';
                 content.classList.remove('active');
-                content.setAttribute('hidden', '');
-                content.setAttribute('aria-hidden', 'true');
             });
             
             // Remove active class from all nav items
@@ -1180,11 +1193,9 @@
             // Show selected tab content
             const selectedTab = document.getElementById(tabName);
             if (selectedTab) {
-                selectedTab.style.display = 'block';
                 selectedTab.classList.add('active');
-                selectedTab.removeAttribute('hidden');
-                selectedTab.setAttribute('aria-hidden', 'false');
             }
+            applyTabVisibilityState(tabName);
             
             // Activate corresponding nav item
             const activeNavItem = document.querySelector(`[data-tab="${tabName}"]`);
