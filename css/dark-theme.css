@@ -1,3 +1,5 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/v4-shims.min.css');
+
 /* =====================================================
    AcessAI — Award-Winning Dark Theme
    Dark Blue & Black Color System
@@ -77,6 +79,19 @@ body::before {
     radial-gradient(ellipse 50% 80% at 50% 50%, rgba(10,18,40,0.60) 0%, transparent 100%);
   pointer-events: none;
   z-index: 0;
+}
+
+/* Ensure icon fonts are not overridden by accessibility font toggles */
+.fa, .fas, .far, .fal, .fat, .fa-solid, .fa-regular, .fa-light, .fa-thin, .fa-duotone {
+  font-family: "Font Awesome 6 Free" !important;
+}
+
+.fab, .fa-brands {
+  font-family: "Font Awesome 6 Brands" !important;
+}
+
+.fa, .fas, .fa-solid {
+  font-weight: 900 !important;
 }
 
 /* Content wrapper – strip white-card wrapper, use full-bleed dark */
@@ -1709,6 +1724,11 @@ section button[onclick*="switchTab('blogs')"] {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
   gap: 1.8rem !important;
+}
+
+.tools-grid {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 520px)) !important;
+  justify-content: center !important;
 }
 
 .tool-card,
