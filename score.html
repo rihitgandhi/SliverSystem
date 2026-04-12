@@ -52,7 +52,7 @@
         .wcag-column { background: #f9f9f9; padding: 20px; border-radius: 8px; border: 2px solid #ddd; }
         .wcag-item {
             padding: 10px; margin: 8px 0; background: white; border-radius: 5px;
-            border-left: 4px solid #4a90e2; word-wrap: break-word;
+            border-left: 4px solid #4a90e2; overflow-wrap: break-word;
         }
         .wcag-item.compliant { border-left-color: #4caf50; }
         .wcag-item.non-compliant { border-left-color: #f44336; }
@@ -61,7 +61,7 @@
             background: #fff8e1; border-left: 4px solid #ffc107; padding: 15px; margin: 12px 0;
             border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: visible;
         }
-        .issue-card h4 { margin: 0 0 10px; color: #f57c00; font-size: 1.2rem; word-wrap: break-word; }
+        .issue-card h4 { margin: 0 0 10px; color: #f57c00; font-size: 1.2rem; overflow-wrap: break-word; }
         .issue-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
         .badge { padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; }
         .severity-critical { background: #f44336; color: white; }
@@ -78,7 +78,7 @@
         .code-example { margin-bottom: 10px; }
         .code-example pre {
             background: #2d2d2d; color: #f8f8f2; padding: 10px; border-radius: 4px;
-            overflow-x: auto; white-space: pre-wrap; word-break: break-word;
+            overflow-x: auto; white-space: pre;
         }
         .implementation-details, .resources-details, .testing-details {
             margin-top: 10px; border: 1px solid #e0e0e0; border-radius: 4px; background: #fafafa;
@@ -98,7 +98,7 @@
         }
         .recommendation-card {
             background: #f5f5f5; padding: 20px; border-radius: 8px; border-top: 4px solid #4a90e2;
-            overflow-wrap: anywhere;
+            overflow-wrap: break-word;
         }
         .loading-spinner {
             display: inline-block; width: 20px; height: 20px; border: 3px solid #f3f3f3;
@@ -116,7 +116,7 @@
                 <div class="nav-container nav-elevated fundamental-nav-container">
                     <div class="nav-brand fundamental-nav-brand">
                         <a href="index.html" aria-label="Go to Home" style="all: unset; cursor: pointer; display: inline-block;">
-                            <h1 class="nav-title fundamental-nav-title" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AcessAI</h1>
+                            <h1 class="nav-title fundamental-nav-title" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AccessAI</h1>
                         </a>
                     </div>
                     <div class="nav-menu fundamental-nav-menu" role="menubar">
@@ -427,7 +427,7 @@
 
         function escapeHtml(text) {
             const div = document.createElement('div');
-            div.textContent = text == null ? '' : String(text);
+            div.textContent = String(text ?? '');
             return div.innerHTML;
         }
 
