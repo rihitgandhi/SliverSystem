@@ -800,7 +800,6 @@ textarea:focus,
   align-items: stretch !important;
   gap: 1.8rem !important;
   padding: 0.5rem 2rem 3rem !important;
-  margin-top: 0 !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
 }
