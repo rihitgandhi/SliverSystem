@@ -736,7 +736,7 @@ textarea:focus,
   border-radius: 0 !important;
   margin-bottom: 0 !important;
   flex-shrink: 0 !important;
-  filter: brightness(0.92) saturate(1.0) !important;
+  filter: brightness(0.92) !important;
   transition: all var(--transition-med) !important;
 }
 
