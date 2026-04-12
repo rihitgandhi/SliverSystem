@@ -377,6 +377,9 @@
 
       setTimeout(() => {
         origSwitch(tabName);
+        if (typeof window.applyTabVisibilityState === 'function') {
+          window.applyTabVisibilityState(tabName);
+        }
         const next = document.getElementById(tabName);
         if (next) {
           next.style.opacity = '0';

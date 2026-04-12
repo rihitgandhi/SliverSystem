@@ -146,9 +146,9 @@
                                     </div>
                                 </div>
                                 <div class="tool-content">
-                                    <form id="home-accessibility-checker-form" class="modern-checker-form">
+                                    <form id="home-accessibility-checker-form" class="modern-checker-form" autocomplete="off">
                                         <div class="input-group">
-                                            <input type="url" id="home-website-url" name="website-url" placeholder="https://example.com" required class="modern-checker-input">
+                                            <input type="url" id="home-website-url" name="website-url" placeholder="https://example.com" required class="modern-checker-input" autocomplete="off">
                                             <button type="submit" id="home-checker-btn" class="btn btn-primary">
                                                 <span class="btn-icon"><i class="fa fa-search"></i></span>
                                                 <span class="btn-text">Check Accessibility</span>
@@ -733,7 +733,7 @@
                         <div class="chat-input-container modern-input">
                             <div class="input-wrapper modern-wrapper">
                                 <div class="input-field-container">
-                                    <textarea id="chat-input" placeholder="Type your question here..." maxlength="500" rows="1" class="modern-textarea"></textarea>
+                                    <textarea id="chat-input" placeholder="Type your question here..." maxlength="500" rows="1" class="modern-textarea" autocomplete="off"></textarea>
                                     <div class="input-actions">
                                         <button class="send-button modern-send" id="send-button">
                                             <span class="send-icon">📤</span>
@@ -790,10 +790,10 @@
             <div id="score" class="tab-content" role="tabpanel" aria-labelledby="score-tab" style="display: none;">
                 <section class="score-section">
                     <h1>Website Accessibility Score</h1>
-                    <form id="score-form" class="score-form">
+                    <form id="score-form" class="score-form" autocomplete="off">
                         <div class="form-group">
                             <label for="url" class="form-label">Enter website URL:</label>
-                            <input type="url" id="url" name="url" placeholder="https://example.com" required class="form-input">
+                            <input type="url" id="url" name="url" placeholder="https://example.com" required class="form-input" autocomplete="off">
                         </div>
                         <button type="submit" id="submit-btn" class="btn btn-primary">
                             <span class="btn-icon">🔍</span>
@@ -1156,13 +1156,28 @@
             }
         }
         
+        function applyTabVisibilityState(tabName) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                const isActive = content.id === tabName;
+                content.style.display = isActive ? 'block' : 'none';
+                if (isActive) {
+                    content.removeAttribute('hidden');
+                    content.setAttribute('aria-hidden', 'false');
+                } else {
+                    content.setAttribute('hidden', '');
+                    content.setAttribute('aria-hidden', 'true');
+                }
+            });
+        }
+        window.applyTabVisibilityState = applyTabVisibilityState;
+
         function switchTab(tabName) {
             console.log('Switching to tab:', tabName);
             
-            // Hide all tab content
+            // Reset tab active states
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => {
-                content.style.display = 'none';
                 content.classList.remove('active');
             });
             
@@ -1176,9 +1191,9 @@
             // Show selected tab content
             const selectedTab = document.getElementById(tabName);
             if (selectedTab) {
-                selectedTab.style.display = 'block';
                 selectedTab.classList.add('active');
             }
+            applyTabVisibilityState(tabName);
             
             // Activate corresponding nav item
             const activeNavItem = document.querySelector(`[data-tab="${tabName}"]`);
