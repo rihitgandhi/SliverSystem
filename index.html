@@ -234,9 +234,7 @@
                                 </div>
                             </div>
                             <div class="carousel-controls" role="group" aria-label="Carousel controls">
-                                <button class="carousel-btn" id="carousel-prev" aria-label="Previous blog post">&#8592;</button>
                                 <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Blog post navigation"></div>
-                                <button class="carousel-btn" id="carousel-next" aria-label="Next blog post">&#8594;</button>
                             </div>
                         </div>
 
@@ -1947,9 +1945,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function initCarousel() {
     const stage = document.getElementById('carousel-stage');
     const dotsContainer = document.getElementById('carousel-dots');
-    const prevBtn = document.getElementById('carousel-prev');
-    const nextBtn = document.getElementById('carousel-next');
-    if (!stage || !dotsContainer || !prevBtn || !nextBtn) return;
+    if (!stage || !dotsContainer) return;
 
     const n = BLOG_POSTS.length;
     let current = 0;
@@ -2012,9 +2008,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function next() { goTo(current + 1); }
     function prev() { goTo(current - 1); }
-
-    prevBtn.addEventListener('click', () => { prev(); resetAuto(); });
-    nextBtn.addEventListener('click', () => { next(); resetAuto(); });
 
     // Keyboard support on stage
     stage.addEventListener('keydown', (e) => {
