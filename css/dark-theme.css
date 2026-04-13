@@ -1215,6 +1215,7 @@ textarea:focus,
   padding: 3rem 2rem !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
+  background: transparent !important;
 }
 
 .mission-container {
