@@ -1220,6 +1220,9 @@
             'readable-fonts', 'highlight-links', 'big-cursor', 'focus-indicator',
             'tooltips', 'hide-images', 'pause-animations'
         ];
+        const MIN_FONT_SIZE = 0.8;
+        const MAX_FONT_SIZE = 2.0;
+        const BASE_FONT_SIZE_PX = 16;
 
         // Accessibility widget functionality
         let widgetOpen = false;
@@ -1241,7 +1244,7 @@
             
             // Apply saved font size
             if (typeof settings.fontSize === 'number') {
-                currentFontSize = Math.max(0.8, Math.min(settings.fontSize, 2.0));
+                currentFontSize = Math.max(MIN_FONT_SIZE, Math.min(settings.fontSize, MAX_FONT_SIZE));
                 applyFontSize();
             }
         }
@@ -1300,10 +1303,10 @@
         function adjustFontSize(action) {
             switch(action) {
                 case 'increase':
-                    currentFontSize = Math.min(currentFontSize + 0.2, 2.0);
+                    currentFontSize = Math.min(currentFontSize + 0.2, MAX_FONT_SIZE);
                     break;
                 case 'decrease':
-                    currentFontSize = Math.max(currentFontSize - 0.2, 0.8);
+                    currentFontSize = Math.max(currentFontSize - 0.2, MIN_FONT_SIZE);
                     break;
                 case 'reset':
                     currentFontSize = 1.0;
@@ -1323,7 +1326,7 @@
             });
 
             // Keep root font-size scaling stable and avoid recursive descendant scaling.
-            document.documentElement.style.fontSize = `${(16 * currentFontSize).toFixed(1)}px`;
+            document.documentElement.style.fontSize = `${(BASE_FONT_SIZE_PX * currentFontSize).toFixed(1)}px`;
         }
 
         // Reading line functionality
