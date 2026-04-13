@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Accessibility: Touch Targets, Gestures, and Responsive Inclusion - SliverSystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/dark-theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #74b9ff 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.7;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .exit-btn {
+            position: fixed; top: 20px; left: 20px; background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white; border: none; padding: 12px 20px; border-radius: 50px; font-size: 1rem;
+            font-weight: 600; cursor: pointer; box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease; z-index: 1000;
+        }
+        .hero-section { text-align: center; padding: 90px 0 45px; color: white; }
+        .hero-title { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; margin-bottom: 20px; }
+        .hero-subtitle { font-size: 1.15rem; max-width: 860px; margin: 0 auto; opacity: 0.96; }
+        .hero-image-wrap { margin: 30px auto 0; max-width: 900px; }
+        .hero-image { width: 100%; border-radius: 18px; box-shadow: 0 18px 45px rgba(0,0,0,0.22); }
+        .content-section {
+            background: white; margin: 26px 0; padding: 44px 34px; border-radius: 20px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+        .section-title { font-size: 2rem; font-weight: 700; color: #2c3e50; margin-bottom: 16px; }
+        .section-text { font-size: 1.08rem; color: #4b5563; }
+        .cta {
+            margin: 36px 0 48px; background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white; border-radius: 18px; padding: 40px 30px; text-align: center;
+        }
+        .cta h2 { font-size: 2rem; margin-bottom: 12px; }
+        .cta p { font-size: 1.08rem; opacity: 0.95; }
+        @media (max-width: 768px) {
+            .content-section { padding: 32px 20px; }
+            .section-title { font-size: 1.65rem; }
+        }
+    </style>
+</head>
+<body>
+    <button class="exit-btn" onclick="exitBlog()"><i class="fas fa-times"></i> Exit</button>
+    <script>
+        function exitBlog() {
+            window.close();
+            window.location.href = "index.html";
+        }
+    </script>
+
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="hero-title">📱 Mobile Accessibility: Touch Targets, Gestures, and Responsive Inclusion</h1>
+            <p class="hero-subtitle">Designing small-screen experiences that remain usable for everyone.</p>
+            <div class="hero-image-wrap">
+                <img src="images/blog12_mobile.jpg" alt="Accessible mobile interface with large touch targets" class="hero-image">
+            </div>
+        </div>
+
+        <section class="content-section">
+            <h2 class="section-title">Why mobile accessibility is unique</h2>
+            <p class="section-text">Mobile contexts include movement, one-handed use, glare, and varied input methods. Users may rely on switch controls, voice commands, magnification, or screen readers. Accessibility issues that seem minor on desktop can become major blockers on phones, especially when controls are tiny or content reflows poorly.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Touch target sizing and spacing</h2>
+            <p class="section-text">Buttons and links need sufficient size and spacing to reduce accidental taps. Crowded controls increase error rates for users with motor impairments and for anyone using devices in motion. Keep primary actions prominent and avoid placing critical controls near screen edges where accidental gestures are common.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Gesture alternatives and orientation</h2>
+            <p class="section-text">Complex gestures like pinch, long press, or multi-finger actions should always have simple alternatives. Users should not be locked out if they cannot perform a gesture precisely. Support both portrait and landscape where feasible, especially for content-heavy workflows. Orientation lock can interfere with magnification and mounted-device use cases.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Responsive content and zoom behavior</h2>
+            <p class="section-text">Responsive layouts should preserve reading order and control relationships as screen width changes. Text must remain readable when users zoom significantly, and content should not require horizontal scrolling for core tasks. Ensure off-canvas menus, sticky headers, and floating buttons do not cover key content at high zoom levels.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Field testing on real devices</h2>
+            <p class="section-text">Desktop simulation is not enough for mobile accessibility. Test on actual iOS and Android devices with built-in assistive technologies. Validate common scenarios: account creation, checkout, search, and media playback. Capture task completion barriers and prioritize fixes by user impact, not implementation convenience.</p>
+        </section>
+
+        <div class="cta">
+            <h2>Keep Accessibility in Every Decision</h2>
+            <p>Accessible products are built when design, engineering, content, and research teams treat inclusion as a shared responsibility from day one.</p>
+        </div>
+    </div>
+</body>
+</html>
