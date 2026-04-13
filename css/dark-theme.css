@@ -286,8 +286,8 @@ header[role="banner"] {
   font-size: clamp(5rem, 14vw, 11rem) !important;
   font-weight: 900 !important;
   letter-spacing: -0.04em !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
+  color: var(--text-white) !important;
+  -webkit-text-fill-color: var(--text-white) !important;
   text-shadow: none !important;
   animation: heroTitleReveal 1.2s cubic-bezier(0.22,1,0.36,1) both;
   filter: drop-shadow(0 0 60px rgba(37,99,235,0.5));
