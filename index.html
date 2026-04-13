@@ -1219,10 +1219,19 @@
 
         function ensureBlogCardsRendered() {
             const blogContainer = document.querySelector('#blogs .blog-container');
-            if (!blogContainer || blogContainer.querySelector('.blog-post')) return;
+            if (!blogContainer) return;
+
+            const existingLinks = new Set(
+                Array.from(blogContainer.querySelectorAll('.blog-link'))
+                    .map(link => link.getAttribute('href'))
+                    .filter(Boolean)
+            );
+            if (existingLinks.size >= BLOG_FALLBACK_POSTS.length) return;
 
             const fragment = document.createDocumentFragment();
             BLOG_FALLBACK_POSTS.forEach(post => {
+                if (existingLinks.has(post.href)) return;
+
                 const article = document.createElement('article');
                 article.className = 'blog-post';
 
