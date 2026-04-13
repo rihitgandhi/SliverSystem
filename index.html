@@ -1230,6 +1230,10 @@
         let speechSynthesis = window.speechSynthesis;
         let speaking = false;
 
+        function clampFontSize(value) {
+            return Math.max(MIN_FONT_SIZE, Math.min(value, MAX_FONT_SIZE));
+        }
+
         // Load saved settings
         function loadSettings() {
             const settings = JSON.parse(localStorage.getItem('accessibilitySettings') || '{}');
@@ -1244,7 +1248,7 @@
             
             // Apply saved font size
             if (typeof settings.fontSize === 'number') {
-                currentFontSize = Math.max(MIN_FONT_SIZE, Math.min(settings.fontSize, MAX_FONT_SIZE));
+                currentFontSize = clampFontSize(settings.fontSize);
                 applyFontSize();
             }
         }
@@ -1319,7 +1323,7 @@
         }
 
         function applyFontSize() {
-            const normalizedFontSize = Math.max(MIN_FONT_SIZE, Math.min(currentFontSize, MAX_FONT_SIZE));
+            const normalizedFontSize = clampFontSize(currentFontSize);
             currentFontSize = normalizedFontSize;
 
             [...document.body.classList].forEach(className => {
@@ -1328,7 +1332,7 @@
                 }
             });
 
-            // Keep root font-size scaling stable and avoid recursive descendant scaling.
+            // Apply scale at the root so rem/em sizing inherits once, avoiding nested compounding.
             document.documentElement.style.fontSize = `${(BASE_FONT_SIZE_PX * normalizedFontSize).toFixed(1)}px`;
         }
 
