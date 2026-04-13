@@ -1221,18 +1221,39 @@
             const blogContainer = document.querySelector('#blogs .blog-container');
             if (!blogContainer || blogContainer.querySelector('.blog-post')) return;
 
-            const cardsMarkup = BLOG_FALLBACK_POSTS.map(post => `
-                <article class="blog-post">
-                    <a href="${post.href}" class="blog-link">
-                        <img src="${post.image}" alt="${post.alt}" class="blog-image">
-                        <h2>${post.title}</h2>
-                        <p>${post.description}</p>
-                        <span class="tooltip">Read Article</span>
-                    </a>
-                </article>
-            `).join('');
+            const fragment = document.createDocumentFragment();
+            BLOG_FALLBACK_POSTS.forEach(post => {
+                const article = document.createElement('article');
+                article.className = 'blog-post';
 
-            blogContainer.innerHTML = cardsMarkup;
+                const link = document.createElement('a');
+                link.className = 'blog-link';
+                link.href = post.href;
+
+                const image = document.createElement('img');
+                image.className = 'blog-image';
+                image.src = post.image;
+                image.alt = post.alt;
+
+                const title = document.createElement('h2');
+                title.textContent = post.title;
+
+                const description = document.createElement('p');
+                description.textContent = post.description;
+
+                const tooltip = document.createElement('span');
+                tooltip.className = 'tooltip';
+                tooltip.textContent = 'Read Article';
+
+                link.appendChild(image);
+                link.appendChild(title);
+                link.appendChild(description);
+                link.appendChild(tooltip);
+                article.appendChild(link);
+                fragment.appendChild(article);
+            });
+
+            blogContainer.appendChild(fragment);
         }
 
         function switchTab(tabName) {
