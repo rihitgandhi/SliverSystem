@@ -176,7 +176,7 @@ button.btn-primary {
 /* Hero subtitle fade in */
 .hero-subtitle-line {
   animation: fadeInUp 1.2s 0.5s cubic-bezier(0.22,1,0.36,1) both;
-  color: var(--text-secondary);
+  color: #ffffff;
   font-size: clamp(1rem, 2vw, 1.2rem);
   margin-top: 1rem;
   letter-spacing: 0.04em;
