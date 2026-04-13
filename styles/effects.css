@@ -197,6 +197,69 @@
 }
 
 /* --------------------------------------------------
+   2.5 ABOUT ME CARD (Home)
+   -------------------------------------------------- */
+.about-me-card {
+    display: grid;
+    grid-template-columns: minmax(240px, 330px) 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+    background: linear-gradient(150deg, rgba(17, 25, 40, 0.94), rgba(20, 40, 72, 0.88));
+    color: #eef6ff;
+    border-radius: 24px;
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 12px 34px rgba(10, 20, 35, 0.28);
+}
+
+.about-me-media {
+    border-radius: 16px;
+    overflow: hidden;
+    min-height: 260px;
+    background: #111;
+}
+
+.about-me-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 76%;
+    display: block;
+}
+
+.about-me-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.85rem;
+}
+
+.about-me-content p {
+    margin: 0;
+    line-height: 1.65;
+    color: #e3ecf8;
+}
+
+.about-me-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.35rem;
+}
+
+.about-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 199, 255, 0.36);
+    background: rgba(95, 174, 255, 0.12);
+    color: #d9ecff;
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+/* --------------------------------------------------
    3. SCROLL-TRIGGERED MOTION ANIMATIONS
    -------------------------------------------------- */
 
@@ -296,5 +359,16 @@
     .reveal.is-visible {
         opacity: 1;
         transform: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .about-me-card {
+        grid-template-columns: 1fr;
+    }
+
+    .about-me-media {
+        min-height: 220px;
+        max-height: 300px;
     }
 }
