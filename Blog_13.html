@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Documents and PDFs: From Structure to Distribution - SliverSystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/dark-theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #74b9ff 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.7;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .exit-btn {
+            position: fixed; top: 20px; left: 20px; background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white; border: none; padding: 12px 20px; border-radius: 50px; font-size: 1rem;
+            font-weight: 600; cursor: pointer; box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease; z-index: 1000;
+        }
+        .hero-section { text-align: center; padding: 90px 0 45px; color: white; }
+        .hero-title { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; margin-bottom: 20px; }
+        .hero-subtitle { font-size: 1.15rem; max-width: 860px; margin: 0 auto; opacity: 0.96; }
+        .hero-image-wrap { margin: 30px auto 0; max-width: 900px; }
+        .hero-image { width: 100%; border-radius: 18px; box-shadow: 0 18px 45px rgba(0,0,0,0.22); }
+        .content-section {
+            background: white; margin: 26px 0; padding: 44px 34px; border-radius: 20px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+        .section-title { font-size: 2rem; font-weight: 700; color: #2c3e50; margin-bottom: 16px; }
+        .section-text { font-size: 1.08rem; color: #4b5563; }
+        .cta {
+            margin: 36px 0 48px; background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white; border-radius: 18px; padding: 40px 30px; text-align: center;
+        }
+        .cta h2 { font-size: 2rem; margin-bottom: 12px; }
+        .cta p { font-size: 1.08rem; opacity: 0.95; }
+        @media (max-width: 768px) {
+            .content-section { padding: 32px 20px; }
+            .section-title { font-size: 1.65rem; }
+        }
+    </style>
+</head>
+<body>
+    <button class="exit-btn" onclick="exitBlog()"><i class="fas fa-times"></i> Exit</button>
+    <script>
+        function exitBlog() {
+            window.close();
+            window.location.href = "index.html";
+        }
+    </script>
+
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="hero-title">📄 Accessible Documents and PDFs: From Structure to Distribution</h1>
+            <p class="hero-subtitle">How to publish documents that are readable, navigable, and assistive-tech friendly.</p>
+            <div class="hero-image-wrap">
+                <img src="images/blog13_documents.jpg" alt="Accessible document workflow and PDF structure" class="hero-image">
+            </div>
+        </div>
+
+        <section class="content-section">
+            <h2 class="section-title">Document accessibility starts at authoring</h2>
+            <p class="section-text">Most PDF accessibility issues originate in source files. Use heading styles, list structures, table headers, and meaningful link text in the original document editor. Avoid manually styled text that looks like headings but has no semantic role. Building structure early reduces remediation time and improves consistency.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Tagged PDFs and reading order</h2>
+            <p class="section-text">A tagged PDF includes the semantic map screen readers need. Correct reading order is critical, especially in multi-column layouts, sidebars, and footnotes. Decorative elements should be marked appropriately to reduce noise. Document language metadata and title settings improve pronunciation and identification in assistive software.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Images, charts, and table accessibility</h2>
+            <p class="section-text">Images require concise alt text focused on purpose. Complex charts should include text summaries and data tables when necessary. Tables need clear headers and simple structures; merged cells and nested tables often break screen reader interpretation. If a document is data-heavy, consider providing an accessible HTML alternative.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Forms and signatures in documents</h2>
+            <p class="section-text">Interactive PDF forms should have labeled fields, keyboard operability, and clear instructions. Error messaging and required-field indicators must be explicit and machine-readable. E-signature flows should support assistive technology and not rely on inaccessible drag-and-drop gestures.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Publishing and maintenance strategy</h2>
+            <p class="section-text">Before publishing, run accessibility checks and perform manual review with a screen reader. Host documents in contexts that explain format and provide alternatives if needed. Track document versions and re-validate accessibility when templates change. A sustainable document policy prevents inaccessible files from reappearing over time.</p>
+        </section>
+
+        <div class="cta">
+            <h2>Keep Accessibility in Every Decision</h2>
+            <p>Accessible products are built when design, engineering, content, and research teams treat inclusion as a shared responsibility from day one.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inclusive User Research: Testing With People, Not Assumptions - SliverSystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/dark-theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #74b9ff 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.7;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .exit-btn {
+            position: fixed; top: 20px; left: 20px; background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white; border: none; padding: 12px 20px; border-radius: 50px; font-size: 1rem;
+            font-weight: 600; cursor: pointer; box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease; z-index: 1000;
+        }
+        .hero-section { text-align: center; padding: 90px 0 45px; color: white; }
+        .hero-title { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; margin-bottom: 20px; }
+        .hero-subtitle { font-size: 1.15rem; max-width: 860px; margin: 0 auto; opacity: 0.96; }
+        .hero-image-wrap { margin: 30px auto 0; max-width: 900px; }
+        .hero-image { width: 100%; border-radius: 18px; box-shadow: 0 18px 45px rgba(0,0,0,0.22); }
+        .content-section {
+            background: white; margin: 26px 0; padding: 44px 34px; border-radius: 20px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+        .section-title { font-size: 2rem; font-weight: 700; color: #2c3e50; margin-bottom: 16px; }
+        .section-text { font-size: 1.08rem; color: #4b5563; }
+        .cta {
+            margin: 36px 0 48px; background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white; border-radius: 18px; padding: 40px 30px; text-align: center;
+        }
+        .cta h2 { font-size: 2rem; margin-bottom: 12px; }
+        .cta p { font-size: 1.08rem; opacity: 0.95; }
+        @media (max-width: 768px) {
+            .content-section { padding: 32px 20px; }
+            .section-title { font-size: 1.65rem; }
+        }
+    </style>
+</head>
+<body>
+    <button class="exit-btn" onclick="exitBlog()"><i class="fas fa-times"></i> Exit</button>
+    <script>
+        function exitBlog() {
+            window.close();
+            window.location.href = "index.html";
+        }
+    </script>
+
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="hero-title">🧪 Inclusive User Research: Testing With People, Not Assumptions</h1>
+            <p class="hero-subtitle">How to include disabled participants and turn insights into product decisions.</p>
+            <div class="hero-image-wrap">
+                <img src="images/blog14_research.jpg" alt="Inclusive user research session for accessibility testing" class="hero-image">
+            </div>
+        </div>
+
+        <section class="content-section">
+            <h2 class="section-title">Why inclusive research changes outcomes</h2>
+            <p class="section-text">Teams often design for hypothetical users, which leads to blind spots. Inclusive research brings lived experience into decision-making. Participants with disabilities can reveal blockers that automated tools miss, such as confusing language, workflow friction, or inaccessible support channels. These findings often improve usability for all users.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Recruitment and compensation practices</h2>
+            <p class="section-text">Recruitment should intentionally include diverse disability profiles, devices, and assistive technologies. Partner with community organizations and provide clear participation requirements. Compensation should reflect participant expertise and time. Accessibility support—captions, interpreters, flexible scheduling—must be planned and budgeted from the start.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Accessible research operations</h2>
+            <p class="section-text">Research materials, consent forms, prototypes, and interview platforms must be accessible themselves. If participants cannot access the session setup, results are biased before testing begins. Provide multiple communication options and offer accommodations proactively. Respectful logistics improve data quality and participant trust.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">From findings to prioritization</h2>
+            <p class="section-text">Research insights should translate into actionable product backlog items with severity and user-impact context. Avoid summarizing findings as generic suggestions. Tie each issue to task outcomes, such as failure to complete payment or inability to submit assignments. This helps stakeholders prioritize accessibility work alongside other product goals.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Building a continuous feedback loop</h2>
+            <p class="section-text">One-time studies are useful but insufficient. Establish recurring accessibility research checkpoints across discovery, design, and post-release phases. Share findings across teams and maintain a repository of patterns and known issues. Continuous engagement prevents regressions and keeps products aligned with real user needs.</p>
+        </section>
+
+        <div class="cta">
+            <h2>Keep Accessibility in Every Decision</h2>
+            <p>Accessible products are built when design, engineering, content, and research teams treat inclusion as a shared responsibility from day one.</p>
+        </div>
+    </div>
+</body>
+</html>

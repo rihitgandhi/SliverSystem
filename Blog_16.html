@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building an Accessibility Roadmap: Strategy, Metrics, and Team Ownership - SliverSystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/dark-theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #74b9ff 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.7;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .exit-btn {
+            position: fixed; top: 20px; left: 20px; background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white; border: none; padding: 12px 20px; border-radius: 50px; font-size: 1rem;
+            font-weight: 600; cursor: pointer; box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease; z-index: 1000;
+        }
+        .hero-section { text-align: center; padding: 90px 0 45px; color: white; }
+        .hero-title { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; margin-bottom: 20px; }
+        .hero-subtitle { font-size: 1.15rem; max-width: 860px; margin: 0 auto; opacity: 0.96; }
+        .hero-image-wrap { margin: 30px auto 0; max-width: 900px; }
+        .hero-image { width: 100%; border-radius: 18px; box-shadow: 0 18px 45px rgba(0,0,0,0.22); }
+        .content-section {
+            background: white; margin: 26px 0; padding: 44px 34px; border-radius: 20px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+        .section-title { font-size: 2rem; font-weight: 700; color: #2c3e50; margin-bottom: 16px; }
+        .section-text { font-size: 1.08rem; color: #4b5563; }
+        .cta {
+            margin: 36px 0 48px; background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white; border-radius: 18px; padding: 40px 30px; text-align: center;
+        }
+        .cta h2 { font-size: 2rem; margin-bottom: 12px; }
+        .cta p { font-size: 1.08rem; opacity: 0.95; }
+        @media (max-width: 768px) {
+            .content-section { padding: 32px 20px; }
+            .section-title { font-size: 1.65rem; }
+        }
+    </style>
+</head>
+<body>
+    <button class="exit-btn" onclick="exitBlog()"><i class="fas fa-times"></i> Exit</button>
+    <script>
+        function exitBlog() {
+            window.close();
+            window.location.href = "index.html";
+        }
+    </script>
+
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="hero-title">🗺️ Building an Accessibility Roadmap: Strategy, Metrics, and Team Ownership</h1>
+            <p class="hero-subtitle">A practical way to move from isolated fixes to sustained accessibility maturity.</p>
+            <div class="hero-image-wrap">
+                <img src="images/blog16_roadmap.jpg" alt="Accessibility roadmap planning across product teams" class="hero-image">
+            </div>
+        </div>
+
+        <section class="content-section">
+            <h2 class="section-title">Set scope and baseline first</h2>
+            <p class="section-text">An effective accessibility roadmap begins with understanding current state. Audit critical user journeys, identify legal and policy obligations, and map known barriers by severity. Separate urgent blockers from long-term structural improvements. A clear baseline prevents teams from confusing activity with progress.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Define ownership across functions</h2>
+            <p class="section-text">Accessibility cannot sit with one specialist. Product managers prioritize and schedule work, designers create inclusive patterns, engineers implement semantic and interactive behavior, QA validates outcomes, and content teams maintain clarity. Assign explicit owners for each domain and define escalation paths for critical accessibility defects.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Prioritize by user impact</h2>
+            <p class="section-text">Use a prioritization model that weighs task criticality, affected audience size, and severity of barrier. Fixes that unblock account access, payments, education, or safety information should move first. This approach keeps roadmaps grounded in real human impact rather than only in technical convenience or visibility.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Measure what matters</h2>
+            <p class="section-text">Track metrics that reflect user outcomes: task completion rates for assistive-tech scenarios, accessibility defect aging, time-to-fix for severe issues, and coverage of automated and manual checks. Pair quantitative metrics with qualitative research feedback. Metrics should drive decisions, not just dashboards.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Institutionalize and iterate</h2>
+            <p class="section-text">Roadmaps should evolve with product changes, new standards, and user feedback. Bake accessibility requirements into design systems, release checklists, and procurement practices. Celebrate improvements, but also document regressions transparently. Long-term success comes from iterative governance, not one milestone release.</p>
+        </section>
+
+        <div class="cta">
+            <h2>Keep Accessibility in Every Decision</h2>
+            <p>Accessible products are built when design, engineering, content, and research teams treat inclusion as a shared responsibility from day one.</p>
+        </div>
+    </div>
+</body>
+</html>

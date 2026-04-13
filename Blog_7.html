@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Video and Audio: Captions, Transcripts, and Audio Description - SliverSystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/dark-theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #74b9ff 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.7;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .exit-btn {
+            position: fixed; top: 20px; left: 20px; background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white; border: none; padding: 12px 20px; border-radius: 50px; font-size: 1rem;
+            font-weight: 600; cursor: pointer; box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease; z-index: 1000;
+        }
+        .hero-section { text-align: center; padding: 90px 0 45px; color: white; }
+        .hero-title { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; margin-bottom: 20px; }
+        .hero-subtitle { font-size: 1.15rem; max-width: 860px; margin: 0 auto; opacity: 0.96; }
+        .hero-image-wrap { margin: 30px auto 0; max-width: 900px; }
+        .hero-image { width: 100%; border-radius: 18px; box-shadow: 0 18px 45px rgba(0,0,0,0.22); }
+        .content-section {
+            background: white; margin: 26px 0; padding: 44px 34px; border-radius: 20px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+        .section-title { font-size: 2rem; font-weight: 700; color: #2c3e50; margin-bottom: 16px; }
+        .section-text { font-size: 1.08rem; color: #4b5563; }
+        .cta {
+            margin: 36px 0 48px; background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white; border-radius: 18px; padding: 40px 30px; text-align: center;
+        }
+        .cta h2 { font-size: 2rem; margin-bottom: 12px; }
+        .cta p { font-size: 1.08rem; opacity: 0.95; }
+        @media (max-width: 768px) {
+            .content-section { padding: 32px 20px; }
+            .section-title { font-size: 1.65rem; }
+        }
+    </style>
+</head>
+<body>
+    <button class="exit-btn" onclick="exitBlog()"><i class="fas fa-times"></i> Exit</button>
+    <script>
+        function exitBlog() {
+            window.close();
+            window.location.href = "index.html";
+        }
+    </script>
+
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="hero-title">🎬 Accessible Video and Audio: Captions, Transcripts, and Audio Description</h1>
+            <p class="hero-subtitle">How to make media content inclusive for deaf, hard-of-hearing, blind, and low-vision users.</p>
+            <div class="hero-image-wrap">
+                <img src="images/blog7_captions.jpg" alt="Closed captions shown on a digital media interface" class="hero-image">
+            </div>
+        </div>
+
+        <section class="content-section">
+            <h2 class="section-title">Why media accessibility matters</h2>
+            <p class="section-text">Video and audio now power classrooms, customer support, onboarding, and social communication. When media is not accessible, entire groups are excluded from learning and participation. Captions support deaf and hard-of-hearing users, but they also help multilingual audiences, people in noisy places, and users watching with sound off. Transcripts enable quick scanning and searching, while audio description gives blind and low-vision users access to visual details that are essential for understanding context.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Caption quality standards</h2>
+            <p class="section-text">High-quality captions are accurate, synchronized, complete, and readable. They should include meaningful non-speech information, such as speaker changes and relevant sounds. Timing should align with speech pacing so users are not forced to read too quickly. Keep line lengths manageable and avoid covering key visual content. Automated captions can provide a starting point, but review and editing remain essential, especially for names, jargon, and technical terms.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Transcripts for flexibility and indexing</h2>
+            <p class="section-text">A transcript is more than a compliance checkbox. It provides a text version of spoken content that users can read at their own pace. This helps learners with cognitive disabilities, supports note-taking, and improves discoverability through search. For podcasts and webinars, transcripts become a reusable content asset. Structuring transcripts with headings, speaker labels, and timestamps makes them far more useful than a plain block of text.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Audio description implementation</h2>
+            <p class="section-text">Audio description explains important visual information that is not spoken in dialogue. Effective description is concise and objective. It should be inserted in natural pauses or offered as an alternate track. For educational videos, include charts, gestures, and on-screen text in the description workflow. Teams should plan description scripts during production rather than retrofitting after publishing, because late fixes are costlier and often less accurate.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Operational workflow for teams</h2>
+            <p class="section-text">Build a repeatable process: script with accessibility in mind, generate draft captions, edit for accuracy, publish captions and transcripts together, and run quality checks before release. Assign ownership and create templates so each new video follows the same standard. Track metrics such as caption error rate and transcript publishing time. Accessibility becomes sustainable when it is integrated into content operations, not treated as a one-time project.</p>
+        </section>
+
+        <div class="cta">
+            <h2>Keep Accessibility in Every Decision</h2>
+            <p>Accessible products are built when design, engineering, content, and research teams treat inclusion as a shared responsibility from day one.</p>
+        </div>
+    </div>
+</body>
+</html>
