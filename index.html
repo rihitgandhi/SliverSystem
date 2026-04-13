@@ -1235,6 +1235,7 @@
 
                 const article = document.createElement('article');
                 article.className = 'blog-post';
+                article.setAttribute('aria-label', post.title);
 
                 const link = document.createElement('a');
                 link.className = 'blog-link';
@@ -1244,6 +1245,7 @@
                 image.className = 'blog-image';
                 image.src = post.image;
                 image.alt = post.alt;
+                image.loading = 'lazy';
 
                 const title = document.createElement('h2');
                 title.textContent = post.title;
