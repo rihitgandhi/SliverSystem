@@ -1226,7 +1226,8 @@
                     .map(link => link.getAttribute('href'))
                     .filter(Boolean)
             );
-            if (existingLinks.size >= BLOG_FALLBACK_POSTS.length) return;
+            const hasAllFallbackPosts = BLOG_FALLBACK_POSTS.every(post => existingLinks.has(post.href));
+            if (hasAllFallbackPosts) return;
 
             const fragment = document.createDocumentFragment();
             BLOG_FALLBACK_POSTS.forEach(post => {
