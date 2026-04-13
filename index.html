@@ -1172,6 +1172,69 @@
         }
         window.applyTabVisibilityState = applyTabVisibilityState;
 
+        const BLOG_FALLBACK_POSTS = [
+            {
+                href: 'Blog_1.html',
+                image: 'images/blog1_accessibility.jpg',
+                alt: 'Understanding Computer Accessibility - A comprehensive guide',
+                title: 'Understanding Computer Accessibility',
+                description: 'A deep dive into the importance and challenges of computer accessibility, including WCAG guidelines and implementation strategies.'
+            },
+            {
+                href: 'Blog_2.html',
+                image: 'images/blog2_inclusivity.jpg',
+                alt: 'Designing for Inclusivity - Creating accessible websites',
+                title: 'Designing for Inclusivity',
+                description: 'Learn how to design accessible websites that everyone can use, including color contrast, typography, and navigation best practices.'
+            },
+            {
+                href: 'Blog_3.html',
+                image: 'images/blog3_assistive.jpg',
+                alt: 'Assistive Technologies Overview - Tools and technologies for accessibility',
+                title: 'Assistive Technologies Overview',
+                description: 'Explore tools and technologies that aid accessibility online, from screen readers to voice recognition software.'
+            },
+            {
+                href: 'Blog_4.html',
+                image: 'images/blog4_legal.jpg',
+                alt: 'Legal Aspects of Accessibility - Laws and regulations',
+                title: 'Legal Aspects of Accessibility',
+                description: 'Understanding laws and regulations about web accessibility, including ADA compliance and international standards.'
+            },
+            {
+                href: 'Blog_5.html',
+                image: 'images/blog5_designers.jpg',
+                alt: 'Essential Accessibility Guide for Website Designers',
+                title: 'Essential Guide for Designers',
+                description: 'A practical guide to making your websites accessible with WCAG standards, testing tools, and quick wins you can implement today.'
+            },
+            {
+                href: 'Blog_6.html',
+                image: 'images/blog6_navigation.jpg',
+                alt: 'Navigating the Web: Essential Tools for Everyone',
+                title: 'Navigating the Web Tools',
+                description: 'Discover browser features, keyboard shortcuts, screen readers, and mobile accessibility tools to enhance your web experience.'
+            }
+        ];
+
+        function ensureBlogCardsRendered() {
+            const blogContainer = document.querySelector('#blogs .blog-container');
+            if (!blogContainer || blogContainer.querySelector('.blog-post')) return;
+
+            const cardsMarkup = BLOG_FALLBACK_POSTS.map(post => `
+                <article class="blog-post">
+                    <a href="${post.href}" class="blog-link">
+                        <img src="${post.image}" alt="${post.alt}" class="blog-image">
+                        <h2>${post.title}</h2>
+                        <p>${post.description}</p>
+                        <span class="tooltip">Read Article</span>
+                    </a>
+                </article>
+            `).join('');
+
+            blogContainer.innerHTML = cardsMarkup;
+        }
+
         function switchTab(tabName) {
             console.log('Switching to tab:', tabName);
             
@@ -1476,6 +1539,7 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, initializing...');
+            ensureBlogCardsRendered();
             
             // Load saved settings
             loadSettings();
