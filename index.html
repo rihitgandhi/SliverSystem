@@ -1319,14 +1319,17 @@
         }
 
         function applyFontSize() {
+            const normalizedFontSize = Math.max(MIN_FONT_SIZE, Math.min(currentFontSize, MAX_FONT_SIZE));
+            currentFontSize = normalizedFontSize;
+
             [...document.body.classList].forEach(className => {
-                if (/^font-size-\d+(\.\d+)?$/.test(className)) {
+                if (className.startsWith('font-size-')) {
                     document.body.classList.remove(className);
                 }
             });
 
             // Keep root font-size scaling stable and avoid recursive descendant scaling.
-            document.documentElement.style.fontSize = `${(BASE_FONT_SIZE_PX * currentFontSize).toFixed(1)}px`;
+            document.documentElement.style.fontSize = `${(BASE_FONT_SIZE_PX * normalizedFontSize).toFixed(1)}px`;
         }
 
         // Reading line functionality
