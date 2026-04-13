@@ -889,6 +889,14 @@ textarea:focus,
 .future-content { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important; }
 .stats-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important; }
 
+@media (min-width: 1100px) {
+  .tech-grid,
+  .applications-grid,
+  .future-content {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
 .ai-item,
 .future-item {
   background: rgba(10,18,40,0.60) !important;
