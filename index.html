@@ -1305,27 +1305,40 @@
             navMenu.classList.toggle('active');
         }
 
+        const accessibilityFeatures = [
+            'high-contrast', 'grayscale', 'invert-colors', 'brightness',
+            'readable-fonts', 'highlight-links', 'big-cursor', 'focus-indicator',
+            'tooltips', 'hide-images', 'pause-animations'
+        ];
+        const MIN_FONT_SIZE = 0.8;
+        const MAX_FONT_SIZE = 2.0;
+        const BASE_FONT_SIZE_PX = 16;
+
         // Accessibility widget functionality
         let widgetOpen = false;
         let currentFontSize = 1;
         let speechSynthesis = window.speechSynthesis;
         let speaking = false;
 
+        function clampFontSize(value) {
+            return Math.max(MIN_FONT_SIZE, Math.min(value, MAX_FONT_SIZE));
+        }
+
         // Load saved settings
         function loadSettings() {
             const settings = JSON.parse(localStorage.getItem('accessibilitySettings') || '{}');
             
             // Apply saved settings
-            Object.keys(settings).forEach(feature => {
-                if (settings[feature]) {
+            accessibilityFeatures.forEach(feature => {
+                if (settings[feature] === true) {
                     document.body.classList.add(feature);
                     updateStatus(feature, true);
                 }
             });
             
             // Apply saved font size
-            if (settings.fontSize) {
-                currentFontSize = settings.fontSize;
+            if (typeof settings.fontSize === 'number') {
+                currentFontSize = clampFontSize(settings.fontSize);
                 applyFontSize();
             }
         }
@@ -1333,11 +1346,8 @@
         // Save settings
         function saveSettings() {
             const settings = {};
-            const features = ['high-contrast', 'grayscale', 'invert-colors', 'brightness', 
-                            'readable-fonts', 'highlight-links', 'big-cursor', 'focus-indicator', 
-                            'tooltips', 'hide-images', 'pause-animations'];
             
-            features.forEach(feature => {
+            accessibilityFeatures.forEach(feature => {
                 settings[feature] = document.body.classList.contains(feature);
             });
             
@@ -1387,10 +1397,10 @@
         function adjustFontSize(action) {
             switch(action) {
                 case 'increase':
-                    currentFontSize = Math.min(currentFontSize + 0.2, 2.0);
+                    currentFontSize = Math.min(currentFontSize + 0.2, MAX_FONT_SIZE);
                     break;
                 case 'decrease':
-                    currentFontSize = Math.max(currentFontSize - 0.2, 0.8);
+                    currentFontSize = Math.max(currentFontSize - 0.2, MIN_FONT_SIZE);
                     break;
                 case 'reset':
                     currentFontSize = 1.0;
@@ -1403,8 +1413,17 @@
         }
 
         function applyFontSize() {
-            document.body.className = document.body.className.replace(/font-size-\d+\.\d+/g, '');
-            document.body.classList.add(`font-size-${currentFontSize.toFixed(1)}`);
+            const normalizedFontSize = clampFontSize(currentFontSize);
+            currentFontSize = normalizedFontSize;
+
+            [...document.body.classList].forEach(className => {
+                if (className.startsWith('font-size-')) {
+                    document.body.classList.remove(className);
+                }
+            });
+
+            // Apply scale at the root so rem/em sizing inherits once, avoiding nested compounding.
+            document.documentElement.style.fontSize = `${(BASE_FONT_SIZE_PX * normalizedFontSize).toFixed(1)}px`;
         }
 
         // Reading line functionality
