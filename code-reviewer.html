@@ -156,6 +156,30 @@
         .sample-link:hover {
             background: #1976d2;
     </style>
+    <style>
+        #code-input {
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-blue, #2563eb) var(--bg-void, #060c1a);
+        }
+
+        #code-input::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #code-input::-webkit-scrollbar-track {
+            background: var(--bg-void, #060c1a);
+            border-radius: 8px;
+        }
+
+        #code-input::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent-blue, #2563eb), var(--accent-sky, #38bdf8));
+            border-radius: 8px;
+        }
+
+        #code-input::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #3b82f6, var(--accent-cyan, #22d3ee));
+        }
+    </style>
 </head>
 <body class="homepage">
     <div id="content-wrapper">
