@@ -1215,6 +1215,12 @@
             navMenu.classList.toggle('active');
         }
 
+        const accessibilityFeatures = [
+            'high-contrast', 'grayscale', 'invert-colors', 'brightness',
+            'readable-fonts', 'highlight-links', 'big-cursor', 'focus-indicator',
+            'tooltips', 'hide-images', 'pause-animations'
+        ];
+
         // Accessibility widget functionality
         let widgetOpen = false;
         let currentFontSize = 1;
@@ -1226,16 +1232,16 @@
             const settings = JSON.parse(localStorage.getItem('accessibilitySettings') || '{}');
             
             // Apply saved settings
-            Object.keys(settings).forEach(feature => {
-                if (settings[feature]) {
+            accessibilityFeatures.forEach(feature => {
+                if (settings[feature] === true) {
                     document.body.classList.add(feature);
                     updateStatus(feature, true);
                 }
             });
             
             // Apply saved font size
-            if (settings.fontSize) {
-                currentFontSize = settings.fontSize;
+            if (typeof settings.fontSize === 'number') {
+                currentFontSize = Math.max(0.8, Math.min(settings.fontSize, 2.0));
                 applyFontSize();
             }
         }
@@ -1243,11 +1249,8 @@
         // Save settings
         function saveSettings() {
             const settings = {};
-            const features = ['high-contrast', 'grayscale', 'invert-colors', 'brightness', 
-                            'readable-fonts', 'highlight-links', 'big-cursor', 'focus-indicator', 
-                            'tooltips', 'hide-images', 'pause-animations'];
             
-            features.forEach(feature => {
+            accessibilityFeatures.forEach(feature => {
                 settings[feature] = document.body.classList.contains(feature);
             });
             
@@ -1313,8 +1316,14 @@
         }
 
         function applyFontSize() {
-            document.body.className = document.body.className.replace(/font-size-\d+\.\d+/g, '');
-            document.body.classList.add(`font-size-${currentFontSize.toFixed(1)}`);
+            [...document.body.classList].forEach(className => {
+                if (/^font-size-\d+(\.\d+)?$/.test(className)) {
+                    document.body.classList.remove(className);
+                }
+            });
+
+            // Keep root font-size scaling stable and avoid recursive descendant scaling.
+            document.documentElement.style.fontSize = `${(16 * currentFontSize).toFixed(1)}px`;
         }
 
         // Reading line functionality
