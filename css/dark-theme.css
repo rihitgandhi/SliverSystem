@@ -697,13 +697,14 @@ textarea:focus,
    BLOG POSTS
    ===================================================== */
 .blog-post {
-  background: rgba(10,18,40,0.70) !important;
-  border: 1px solid var(--border-subtle) !important;
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border-mid) !important;
   border-radius: var(--radius-lg) !important;
   overflow: hidden !important;
   transition: all var(--transition-med) !important;
   display: flex !important;
   flex-direction: column !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(37,99,235,0.10) !important;
 }
 
 .blog-post:hover {
@@ -735,7 +736,7 @@ textarea:focus,
   border-radius: 0 !important;
   margin-bottom: 0 !important;
   flex-shrink: 0 !important;
-  filter: brightness(0.75) saturate(0.85) !important;
+  filter: brightness(0.92) !important;
   transition: all var(--transition-med) !important;
 }
 
@@ -776,6 +777,8 @@ textarea:focus,
 .big {
   font-family: var(--font-display) !important;
   color: var(--text-white) !important;
+  -webkit-text-fill-color: var(--text-white) !important;
+  background: none !important;
   font-size: clamp(2rem, 5vw, 3.5rem) !important;
   font-weight: 800 !important;
   letter-spacing: -0.03em !important;
@@ -796,12 +799,28 @@ textarea:focus,
 #blogs .blog-container {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
-  grid-auto-rows: 1fr !important;
+  grid-auto-rows: auto !important;
   align-items: stretch !important;
   gap: 1.8rem !important;
-  padding: 1rem 2rem 3rem !important;
+  padding: 0.5rem 2rem 3rem !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
+}
+
+#blogs .blog-post {
+  min-height: 380px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+#blogs .big {
+  margin: 0 !important;
+  padding: 1.5rem 2rem 0.5rem !important;
+}
+
+#blogs .blog-intro {
+  margin-bottom: 0.5rem !important;
+  padding-bottom: 1rem !important;
 }
 
 /* =====================================================
