@@ -2755,3 +2755,158 @@ a.nav-link:hover {
   color: var(--text-white) !important;
   background: rgba(37,99,235,0.12) !important;
 }
+
+/* =====================================================
+   ABOUT ME — FEATURED PROFILE CARD
+   ===================================================== */
+.about-me-section {
+  padding: 4.5rem 2rem !important;
+}
+
+.about-me-card {
+  display: grid !important;
+  grid-template-columns: minmax(240px, 0.95fr) minmax(320px, 1.25fr) !important;
+  gap: 2rem !important;
+  align-items: stretch !important;
+  background:
+    linear-gradient(145deg, rgba(10,18,40,0.90), rgba(6,12,26,0.88)) !important;
+  border: 1px solid var(--border-mid) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.55), var(--glow-subtle) !important;
+  overflow: hidden !important;
+  padding: 1.2rem !important;
+  position: relative;
+}
+
+.about-me-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 90% at 80% 20%, rgba(56,189,248,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.about-me-media {
+  border-radius: calc(var(--radius-lg) - 8px) !important;
+  overflow: hidden !important;
+  border: 1px solid var(--border-subtle) !important;
+  background: rgba(6,12,26,0.75) !important;
+  min-height: 320px;
+}
+
+.about-me-image {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 320px !important;
+  object-fit: cover !important;
+  filter: grayscale(0.25) contrast(1.05) brightness(0.86) !important;
+}
+
+.about-me-content {
+  position: relative;
+  z-index: 1;
+  padding: 0.5rem 0.4rem !important;
+}
+
+.about-me-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.about-me-name {
+  margin: 0 !important;
+  font-family: var(--font-display) !important;
+  font-size: clamp(1.8rem, 3vw, 2.4rem) !important;
+  font-weight: 800 !important;
+  color: var(--text-white) !important;
+  letter-spacing: -0.02em;
+}
+
+.about-me-role {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-mid);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  color: var(--accent-sky) !important;
+  background: rgba(37,99,235,0.12);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.about-me-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.about-meta-item {
+  background: rgba(6,12,26,0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.65rem;
+}
+
+.about-meta-label {
+  display: block;
+  color: var(--text-muted) !important;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.about-meta-value {
+  display: block;
+  color: var(--text-primary) !important;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.about-me-content p {
+  color: var(--text-secondary) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.7 !important;
+  margin: 0 0 0.9rem !important;
+}
+
+.about-me-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+
+.about-tag {
+  border: 1px solid rgba(56,189,248,0.28) !important;
+  background: rgba(37,99,235,0.13) !important;
+  color: var(--accent-sky) !important;
+  border-radius: 999px !important;
+  padding: 0.3rem 0.72rem !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+}
+
+@media (max-width: 900px) {
+  .about-me-card {
+    grid-template-columns: 1fr !important;
+    padding: 1rem !important;
+    gap: 1rem !important;
+  }
+
+  .about-me-media,
+  .about-me-image {
+    min-height: 260px !important;
+  }
+
+  .about-me-meta-grid {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+}
