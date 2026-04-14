@@ -32,6 +32,32 @@
 
 A comprehensive web application focused on computer accessibility, featuring an AI-powered chatbot and advanced accessibility analysis capabilities.
 
+## Team Roles
+- Project Lead
+- Frontend Developer
+- Backend Developer
+- QA Tester
+- Code Reviewer
+
+## Workflow
+1. Pick an issue
+2. Create a feature branch
+3. Develop using GitHub Copilot
+4. Open a Pull Request
+5. Get review + approval
+6. Merge into dev
+
+## Branches
+- main (stable)
+- dev (active development)
+- feature/* (new features)
+- fix/* (bug fixes)
+
+## Rules
+- No direct commits to main
+- All code must be reviewed
+- All features must be tested
+
 ## 🚀 Latest Update
 - **Deployment Status**: Updated for Render deployment with advanced accessibility analysis
 - **Features**: AI chatbot, accessibility scoring, WCAG compliance analysis
