@@ -2303,6 +2303,17 @@ header.scrolled {
   background: transparent !important;
 }
 
+/* Keep homepage background constant and non-white */
+body.homepage,
+body.homepage #main-content,
+body.homepage #home {
+  background: var(--bg-deep) !important;
+}
+
+body.homepage #home > section {
+  background: transparent !important;
+}
+
 /* Status indicator */
 .status-indicator.online {
   background: #22c55e !important;
