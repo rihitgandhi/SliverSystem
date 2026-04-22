@@ -11,11 +11,9 @@
 
     if (!prefersReducedMotion.matches) {
       body.classList.add('page-entering');
-      requestAnimationFrame(() => body.classList.add('page-entering-active'));
       window.addEventListener('pageshow', () => {
         body.classList.remove('page-transitioning');
         body.classList.add('page-entering');
-        requestAnimationFrame(() => body.classList.add('page-entering-active'));
       });
     }
 
@@ -29,7 +27,12 @@
       const href = (anchor.getAttribute('href') || '').trim();
       if (!href || href.startsWith('#')) return false;
 
-      const url = new URL(href, window.location.href);
+      let url;
+      try {
+        url = new URL(href, window.location.href);
+      } catch (_) {
+        return false;
+      }
       if (!['http:', 'https:'].includes(url.protocol)) return false;
       if (url.origin !== window.location.origin) return false;
 
