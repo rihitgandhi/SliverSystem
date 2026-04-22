@@ -424,6 +424,7 @@
         const next = document.getElementById(tabName);
         if (next) {
           clearTransitionClasses(next);
+          // Force reflow so the browser registers class removal before re-applying animation classes.
           void next.offsetWidth;
           next.classList.add('tab-transition-in', inClass);
         }
