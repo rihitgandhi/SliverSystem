@@ -363,37 +363,85 @@
      9. SMOOTH TAB TRANSITIONS
   ────────────────────────────────────────────── */
   function initTabTransitions() {
-    // Patch switchTab to add fade animation
     const origSwitch = window.switchTab;
-    if (!origSwitch) return;
+    if (!origSwitch || origSwitch.__cinematicTransitions) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const TAB_EXIT_STAGE_DELAY_MS = 220;
+    const TAB_TRANSITION_CLEANUP_DELAY_MS = 760;
+    let isTransitioning = false;
+
+    const clearTransitionClasses = (el) => {
+      if (!el) return;
+      el.classList.remove(
+        'tab-transition-in',
+        'tab-transition-out',
+        'tab-transition-in-left',
+        'tab-transition-in-right',
+        'tab-transition-out-left',
+        'tab-transition-out-right'
+      );
+    };
+
+    const getDirection = (fromTabId, toTabId) => {
+      const orderedTabs = qsa('.nav-item[data-tab]').map(item => item.getAttribute('data-tab')).filter(Boolean);
+      const fromIdx = orderedTabs.indexOf(fromTabId);
+      const toIdx = orderedTabs.indexOf(toTabId);
+      if (fromIdx === -1 || toIdx === -1) return 'forward';
+      return toIdx >= fromIdx ? 'forward' : 'backward';
+    };
 
     window.switchTab = function (tabName) {
-      // Fade out current active tab
       const current = qs('.tab-content.active');
-      if (current) {
-        current.style.opacity = '0';
-        current.style.transition = 'opacity 0.2s ease';
+      if (isTransitioning) return;
+      if (current && current.id === tabName) return;
+
+      if (reduceMotion.matches || !current) {
+        origSwitch(tabName);
+        if (typeof window.applyTabVisibilityState === 'function') {
+          window.applyTabVisibilityState(tabName);
+        }
+        setTimeout(initScrollReveal, 100);
+        return;
       }
 
+      const direction = getDirection(current.id, tabName);
+      const outClass = direction === 'forward' ? 'tab-transition-out-left' : 'tab-transition-out-right';
+      const inClass = direction === 'forward' ? 'tab-transition-in-right' : 'tab-transition-in-left';
+
+      isTransitioning = true;
+      document.body.classList.add('tab-transitioning');
+      clearTransitionClasses(current);
+      current.classList.add('tab-transition-out', outClass);
+
+      // Delay switch until exit animation has started and visually resolved.
       setTimeout(() => {
         origSwitch(tabName);
         if (typeof window.applyTabVisibilityState === 'function') {
           window.applyTabVisibilityState(tabName);
         }
+
         const next = document.getElementById(tabName);
         if (next) {
-          next.style.opacity = '0';
-          next.style.transition = 'opacity 0.3s ease';
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              next.style.opacity = '1';
-            });
-          });
+          clearTransitionClasses(next);
+          // Force reflow so the browser registers class removal before re-applying animation classes.
+          void next.offsetWidth;
+          next.classList.add('tab-transition-in', inClass);
         }
-        // Re-trigger scroll reveal for newly visible elements
+
         setTimeout(initScrollReveal, 100);
-      }, 150);
+      }, TAB_EXIT_STAGE_DELAY_MS);
+
+      // Cleanup after exit + entry choreography has completed.
+      setTimeout(() => {
+        clearTransitionClasses(current);
+        clearTransitionClasses(document.getElementById(tabName));
+        document.body.classList.remove('tab-transitioning');
+        isTransitioning = false;
+      }, TAB_TRANSITION_CLEANUP_DELAY_MS);
     };
+
+    window.switchTab.__cinematicTransitions = true;
   }
 
   /* ──────────────────────────────────────────────
