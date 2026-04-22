@@ -546,15 +546,97 @@ textarea:focus {
 }
 
 /* -------------------------------------------------------
-   PAGE TRANSITION (tab switches)
+   PAGE + TAB TRANSITIONS (cinematic motion)
    ------------------------------------------------------- */
-.tab-content.active {
-  animation: tabFadeIn 0.4s cubic-bezier(0.22,1,0.36,1) both;
+.tab-content {
+  transform-origin: 50% 55%;
+  backface-visibility: hidden;
+  will-change: transform, opacity, filter;
 }
 
-@keyframes tabFadeIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+.tab-content.active {
+  animation: tabCinematicIdleIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.tab-content.tab-transition-out.tab-transition-out-left {
+  animation: tabCinematicOutLeft 0.48s cubic-bezier(0.6, 0.02, 0.35, 1) both;
+}
+
+.tab-content.tab-transition-out.tab-transition-out-right {
+  animation: tabCinematicOutRight 0.48s cubic-bezier(0.6, 0.02, 0.35, 1) both;
+}
+
+.tab-content.tab-transition-in.tab-transition-in-left {
+  animation: tabCinematicInLeft 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.tab-content.tab-transition-in.tab-transition-in-right {
+  animation: tabCinematicInRight 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+body.tab-transitioning .tab-content.active {
+  pointer-events: none;
+}
+
+@keyframes tabCinematicIdleIn {
+  from { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.99); filter: blur(2px); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+}
+
+@keyframes tabCinematicOutLeft {
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotateX(0deg); filter: blur(0); }
+  to   { opacity: 0; transform: translate3d(-64px, -12px, 0) scale(0.965) rotateX(1.8deg); filter: blur(5px); }
+}
+
+@keyframes tabCinematicOutRight {
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotateX(0deg); filter: blur(0); }
+  to   { opacity: 0; transform: translate3d(64px, -12px, 0) scale(0.965) rotateX(1.8deg); filter: blur(5px); }
+}
+
+@keyframes tabCinematicInRight {
+  from { opacity: 0; transform: translate3d(70px, 18px, 0) scale(1.02) rotateX(-2deg); filter: blur(6px); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotateX(0deg); filter: blur(0); }
+}
+
+@keyframes tabCinematicInLeft {
+  from { opacity: 0; transform: translate3d(-70px, 18px, 0) scale(1.02) rotateX(-2deg); filter: blur(6px); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotateX(0deg); filter: blur(0); }
+}
+
+body.page-entering #content-wrapper {
+  animation: pageLiftIn 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+body.page-transitioning::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(56, 189, 248, 0.26), transparent 42%),
+    radial-gradient(circle at 86% 78%, rgba(37, 99, 235, 0.24), transparent 46%),
+    linear-gradient(145deg, rgba(3, 8, 22, 0.58), rgba(7, 13, 28, 0.84));
+  animation: pageExitOverlay 0.46s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+body.page-transitioning #content-wrapper {
+  animation: pageExitContent 0.46s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes pageLiftIn {
+  0%   { opacity: 0; transform: translate3d(0, 20px, 0) scale(0.992); filter: blur(5px); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+}
+
+@keyframes pageExitOverlay {
+  from { opacity: 0; transform: scale(1.04); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pageExitContent {
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+  to   { opacity: 0; transform: translate3d(0, -16px, 0) scale(0.985); filter: blur(5px); }
 }
 
 /* -------------------------------------------------------
@@ -562,6 +644,9 @@ textarea:focus {
    ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   body::after,
+  body.page-transitioning::before,
+  body.page-entering #content-wrapper,
+  body.page-transitioning #content-wrapper,
   .tool-card::after,
   .feature-card::after,
   .btn::before,
@@ -573,9 +658,16 @@ textarea:focus {
   .mission-hero::after {
     animation: none !important;
     transition: none !important;
+    filter: none !important;
+    transform: none !important;
   }
 
   .tab-content.active {
+    animation: none !important;
+  }
+
+  .tab-content.tab-transition-out,
+  .tab-content.tab-transition-in {
     animation: none !important;
   }
 }
