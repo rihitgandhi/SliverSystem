@@ -123,7 +123,7 @@ class AppEndpointTests(unittest.TestCase):
 
     @patch("app.genai.GenerativeModel")
     def test_score_details_parse_error_returns_500(self, model_cls):
-        model_cls.return_value.generate_content.return_value = _FakeResponse("not json")
+        model_cls.return_value.generate_content.return_value = _FakeResponse("{not json}")
         response = self.client.post(
             "/api/score-details",
             json={"url": "https://example.com", "non_compliant_standards": ["1.1.1"]},
