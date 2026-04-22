@@ -367,6 +367,8 @@
     if (!origSwitch || origSwitch.__cinematicTransitions) return;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const TAB_EXIT_STAGE_DELAY_MS = 220;
+    const TAB_TRANSITION_CLEANUP_DELAY_MS = 760;
     let isTransitioning = false;
 
     const clearTransitionClasses = (el) => {
@@ -412,6 +414,7 @@
       clearTransitionClasses(current);
       current.classList.add('tab-transition-out', outClass);
 
+      // Delay switch until exit animation has started and visually resolved.
       setTimeout(() => {
         origSwitch(tabName);
         if (typeof window.applyTabVisibilityState === 'function') {
@@ -426,14 +429,15 @@
         }
 
         setTimeout(initScrollReveal, 100);
-      }, 220);
+      }, TAB_EXIT_STAGE_DELAY_MS);
 
+      // Cleanup after exit + entry choreography has completed.
       setTimeout(() => {
         clearTransitionClasses(current);
         clearTransitionClasses(document.getElementById(tabName));
         document.body.classList.remove('tab-transitioning');
         isTransitioning = false;
-      }, 760);
+      }, TAB_TRANSITION_CLEANUP_DELAY_MS);
     };
 
     window.switchTab.__cinematicTransitions = true;

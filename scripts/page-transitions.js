@@ -3,6 +3,7 @@
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const body = document.body;
+  const PAGE_EXIT_DURATION_MS = 460;
 
   if (!body) return;
 
@@ -23,12 +24,11 @@
     if (anchor.getAttribute('rel') === 'external') return false;
     if (anchor.dataset.noTransition === 'true') return false;
 
-    const href = anchor.getAttribute('href') || '';
-    if (href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) {
-      return false;
-    }
+    const href = (anchor.getAttribute('href') || '').trim();
+    if (!href || href.startsWith('#')) return false;
 
-    const url = new URL(anchor.href, window.location.href);
+    const url = new URL(href, window.location.href);
+    if (!['http:', 'https:'].includes(url.protocol)) return false;
     if (url.origin !== window.location.origin) return false;
 
     const samePath = url.pathname === window.location.pathname;
@@ -50,6 +50,6 @@
 
     setTimeout(() => {
       window.location.assign(anchor.href);
-    }, 460);
+    }, PAGE_EXIT_DURATION_MS);
   }, { capture: true });
 })();
