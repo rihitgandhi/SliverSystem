@@ -4,7 +4,7 @@ from unittest.mock import patch
 import app as app_module
 
 
-class _FakeResponse:
+class FakeGeminiResponse:
     def __init__(self, text):
         self.text = text
 
@@ -26,6 +26,15 @@ class AppEndpointTests(unittest.TestCase):
         self.assertEqual(payload["status"], "healthy")
         self.assertIn("timestamp", payload)
         self.assertIn("api_key", payload)
+
+    def test_static_routes(self):
+        for route in ["/", "/chat.html", "/simple-chat.html", "/test-chatbot.html", "/score.html", "/help.html"]:
+            with self.subTest(route=route):
+                response = self.client.get(route)
+                self.assertEqual(response.status_code, 200)
+                self.assertIn("text/html", response.content_type)
+                self.assertIn("<html", response.get_data(as_text=True).lower())
+                response.close()
 
     def test_chat_options(self):
         response = self.client.open("/api/chat", method="OPTIONS")
@@ -49,7 +58,7 @@ class AppEndpointTests(unittest.TestCase):
     @patch("app.genai.GenerativeModel")
     def test_chat_with_model_response(self, model_cls):
         app_module.GEMINI_API_KEY = "configured"
-        model_cls.return_value.generate_content.return_value = _FakeResponse("assistant output")
+        model_cls.return_value.generate_content.return_value = FakeGeminiResponse("assistant output")
         response = self.client.post("/api/chat", json={"message": "Hi", "conversation_id": "c2"})
         self.assertEqual(response.status_code, 200)
         payload = response.get_json()
@@ -91,10 +100,18 @@ class AppEndpointTests(unittest.TestCase):
     @patch("app.genai.GenerativeModel")
     def test_score_uses_model_when_api_key_present(self, model_cls):
         app_module.GEMINI_API_KEY = "configured"
-        model_cls.return_value.generate_content.return_value = _FakeResponse('{"score": 88, "wcag_standards": {"non_compliant": []}}')
+        model_cls.return_value.generate_content.return_value = FakeGeminiResponse('{"score": 88, "wcag_standards": {"non_compliant": []}}')
         response = self.client.post("/api/score", json={"url": "https://example.com"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()["score"], 88)
+
+    @patch("app.genai.GenerativeModel")
+    def test_score_model_non_json_fallback(self, model_cls):
+        app_module.GEMINI_API_KEY = "configured"
+        model_cls.return_value.generate_content.return_value = FakeGeminiResponse("plain text response")
+        response = self.client.post("/api/score", json={"url": "https://example.com"})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()["score"], 70)
 
     def test_score_details_options(self):
         response = self.client.open("/api/score-details", method="OPTIONS")
@@ -105,6 +122,9 @@ class AppEndpointTests(unittest.TestCase):
         non_json = self.client.post("/api/score-details", data="x", content_type="text/plain")
         self.assertEqual(non_json.status_code, 400)
 
+        invalid_json = self.client.post("/api/score-details", data="{", content_type="application/json")
+        self.assertEqual(invalid_json.status_code, 400)
+
         no_url = self.client.post("/api/score-details", json={"url": "", "non_compliant_standards": ["1.1.1"]})
         self.assertEqual(no_url.status_code, 400)
 
@@ -113,7 +133,7 @@ class AppEndpointTests(unittest.TestCase):
 
     @patch("app.genai.GenerativeModel")
     def test_score_details_success_with_model_json(self, model_cls):
-        model_cls.return_value.generate_content.return_value = _FakeResponse('{"summary": "ok", "fixes": []}')
+        model_cls.return_value.generate_content.return_value = FakeGeminiResponse('{"summary": "ok", "fixes": []}')
         response = self.client.post(
             "/api/score-details",
             json={"url": "https://example.com", "non_compliant_standards": ["1.1.1"]},
@@ -122,8 +142,19 @@ class AppEndpointTests(unittest.TestCase):
         self.assertEqual(response.get_json()["summary"], "ok")
 
     @patch("app.genai.GenerativeModel")
+    def test_score_details_fallback_when_no_json_found(self, model_cls):
+        model_cls.return_value.generate_content.return_value = FakeGeminiResponse("analysis without json")
+        response = self.client.post(
+            "/api/score-details",
+            json={"url": "https://example.com", "non_compliant_standards": ["1.1.1"]},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("summary", response.get_json())
+
+    @patch("app.genai.GenerativeModel")
     def test_score_details_parse_error_returns_500(self, model_cls):
-        model_cls.return_value.generate_content.return_value = _FakeResponse("{not json}")
+        # Deliberately malformed JSON to exercise parse-error handling.
+        model_cls.return_value.generate_content.return_value = FakeGeminiResponse('{"key": invalid}')
         response = self.client.post(
             "/api/score-details",
             json={"url": "https://example.com", "non_compliant_standards": ["1.1.1"]},
@@ -140,8 +171,8 @@ class AppEndpointTests(unittest.TestCase):
 
     @patch("app.genai.GenerativeModel")
     def test_alt_text_endpoint_success(self, model_cls):
-        model_cls.return_value.generate_content.return_value = _FakeResponse(
-            '```json{"main_alt_text":"A chart","alternatives":["a","b","c"]}```'
+        model_cls.return_value.generate_content.return_value = FakeGeminiResponse(
+            '```json\n{"main_alt_text":"A chart","alternatives":["a","b","c"]}\n```'
         )
         response = self.client.post(
             "/api/alt-text",
@@ -155,9 +186,19 @@ class AppEndpointTests(unittest.TestCase):
         self.assertEqual(response.status_code, 500)
         self.assertIn("error", response.get_json())
 
+    def test_alt_text_options(self):
+        response = self.client.open("/api/alt-text", method="OPTIONS")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()["status"], "ok")
+
+    def test_review_code_options(self):
+        response = self.client.open("/api/review-code", method="OPTIONS")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()["status"], "ok")
+
     @patch("app.genai.GenerativeModel")
     def test_review_code_endpoint_success(self, model_cls):
-        model_cls.return_value.generate_content.return_value = _FakeResponse(
+        model_cls.return_value.generate_content.return_value = FakeGeminiResponse(
             '{"score":90,"issues":[],"recommendations":["Good semantic markup"]}'
         )
         response = self.client.post("/api/review-code", json={"code": "<img alt='x'>", "code_type": "html"})
@@ -165,8 +206,20 @@ class AppEndpointTests(unittest.TestCase):
         self.assertEqual(response.get_json()["score"], 90)
 
     @patch("app.genai.GenerativeModel")
+    def test_review_code_endpoint_error(self, model_cls):
+        model_cls.return_value.generate_content.return_value = FakeGeminiResponse("invalid")
+        response = self.client.post("/api/review-code", json={"code": "<img>", "code_type": "html"})
+        self.assertEqual(response.status_code, 500)
+        self.assertIn("error", response.get_json())
+
+    def test_simplify_content_options(self):
+        response = self.client.open("/api/simplify-content", method="OPTIONS")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()["status"], "ok")
+
+    @patch("app.genai.GenerativeModel")
     def test_simplify_content_endpoint_success(self, model_cls):
-        model_cls.return_value.generate_content.return_value = _FakeResponse(
+        model_cls.return_value.generate_content.return_value = FakeGeminiResponse(
             '{"original_content":"Hard text","simplified_content":"Simple text","improvements":["Shorter sentences"]}'
         )
         response = self.client.post(
@@ -175,6 +228,16 @@ class AppEndpointTests(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()["simplified_content"], "Simple text")
+
+    @patch("app.genai.GenerativeModel")
+    def test_simplify_content_endpoint_error(self, model_cls):
+        model_cls.return_value.generate_content.return_value = FakeGeminiResponse("invalid")
+        response = self.client.post(
+            "/api/simplify-content",
+            json={"content": "Hard text", "reading_level": "middle", "simplification_level": "moderate"},
+        )
+        self.assertEqual(response.status_code, 500)
+        self.assertIn("error", response.get_json())
 
 
 if __name__ == "__main__":
