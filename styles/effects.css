@@ -32,9 +32,67 @@
     animation: preloader-pulse 1.4s ease-in-out infinite;
 }
 
+.title-with-symbol {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.18em;
+    line-height: 1;
+}
+
+.title-symbol {
+    display: inline-block;
+    font-size: 0.4em;
+    line-height: 1;
+    color: #9ae6ff;
+    text-shadow: 0 0 12px rgba(122, 221, 255, 0.75);
+    transform-origin: center;
+    animation:
+        title-symbol-pop 0.9s cubic-bezier(0.22, 1, 0.36, 1) both,
+        title-symbol-orbit 4.2s ease-in-out 0.9s infinite;
+}
+
+.preloader-logo .title-symbol {
+    color: #fff;
+    text-shadow: 0 0 14px rgba(255, 255, 255, 0.8);
+    animation:
+        title-symbol-pop 0.8s cubic-bezier(0.22, 1, 0.36, 1) both,
+        title-symbol-spin 2.1s linear 0.8s infinite;
+}
+
+.nav-title .title-symbol {
+    font-size: 0.48em;
+    margin-top: 0.12em;
+}
+
+.hero-main-title .title-symbol {
+    margin-top: 0.16em;
+    color: #d8f5ff;
+}
+
 @keyframes preloader-pulse {
     0%, 100% { opacity: 1; transform: scale(1); }
     50%       { opacity: 0.7; transform: scale(0.97); }
+}
+
+@keyframes title-symbol-pop {
+    0% {
+        opacity: 0;
+        transform: translateY(-14px) scale(0.5) rotate(-25deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+}
+
+@keyframes title-symbol-orbit {
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    50%      { transform: translateY(-4px) rotate(10deg) scale(1.08); }
+}
+
+@keyframes title-symbol-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
 }
 
 .preloader-ring {
@@ -344,6 +402,7 @@
 @media (prefers-reduced-motion: reduce) {
     .preloader-ring,
     .preloader-logo,
+    .title-symbol,
     .hero-particles span,
     .carousel-stage,
     .reveal,
