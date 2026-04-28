@@ -1265,7 +1265,6 @@ textarea:focus,
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 1.5rem !important;
   margin-top: 1rem !important;
-  justify-content: center !important;
 }
 
 .services-grid {
