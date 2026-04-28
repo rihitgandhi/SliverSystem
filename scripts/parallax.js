@@ -1,5 +1,5 @@
 /**
- * AcessAI — Parallax, Animations & Visual Effects
+ * AccessAI — Parallax, Animations & Visual Effects
  * Award-winning interaction layer
  */
 
