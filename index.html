@@ -24,9 +24,25 @@
 <body class="homepage">
     <!-- Preloader -->
     <div id="preloader" role="status" aria-label="Loading AccessAI">
+        <!-- Floating background particles -->
+        <div class="preloader-particles" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <!-- Concentric spinning rings + orbiting dot -->
+        <div class="preloader-rings" aria-hidden="true">
+            <div class="preloader-ring-outer"></div>
+            <div class="preloader-ring-mid"></div>
+            <div class="preloader-ring-inner"></div>
+            <div class="preloader-orbit"><div class="preloader-orbit-dot"></div></div>
+            <div class="preloader-core"></div>
+        </div>
         <div class="preloader-logo" aria-hidden="true">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></div>
-        <div class="preloader-ring" aria-hidden="true"></div>
         <p class="preloader-tagline" aria-hidden="true">Making the Web Accessible for Everyone</p>
+        <!-- Animated progress bar -->
+        <div class="preloader-bar-track" aria-hidden="true">
+            <div class="preloader-bar"></div>
+        </div>
     </div>
 
     <div id="content-wrapper">

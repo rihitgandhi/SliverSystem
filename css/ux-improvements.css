@@ -293,7 +293,7 @@ select:focus-visible {
 }
 
 /* -------------------------------------------------------
-   PRELOADER — DARK NAVY THEME
+   PRELOADER — DARK NAVY THEME (ring colour overrides)
    ------------------------------------------------------- */
 #preloader {
   background: linear-gradient(135deg, #03060f 0%, #060c1a 50%, #0a1228 100%) !important;
@@ -301,29 +301,23 @@ select:focus-visible {
   overflow: hidden;
 }
 
-#preloader::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 60% at 30% 40%, rgba(37,99,235,0.2) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 50% at 70% 70%, rgba(56,189,248,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
 .preloader-logo {
   font-family: 'Space Grotesk', sans-serif !important;
-  background: linear-gradient(135deg, #fff, #38bdf8) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  filter: drop-shadow(0 0 30px rgba(56,189,248,0.5)) !important;
 }
 
-.preloader-ring {
-  border-color: rgba(56,189,248,0.2) !important;
+.preloader-ring-outer {
   border-top-color: #38bdf8 !important;
-  box-shadow: 0 0 20px rgba(56,189,248,0.3) !important;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.7)) !important;
+}
+
+.preloader-ring-mid {
+  border-bottom-color: #8b5cf6 !important;
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.7)) !important;
+}
+
+.preloader-ring-inner {
+  border-right-color: #38bdf8 !important;
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.9)) !important;
 }
 
 /* -------------------------------------------------------
