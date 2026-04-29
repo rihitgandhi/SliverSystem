@@ -9,7 +9,7 @@
         This ensures GitHub Pages (including rihtigandhi.github.io/SliverSystem) calls Railway backend. -->
     <meta name="backend-url" content="https://sliver-system-backend-production-9067.up.railway.app">
     <title>✦ AccessAI - Making the Web Accessible for Everyone</title>
-    <link rel="icon" type="image/svg+xml" href="./images/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="./images/favicon.svg" sizes="any">
     <link rel="stylesheet" href="./css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,9 +24,25 @@
 <body class="homepage">
     <!-- Preloader -->
     <div id="preloader" role="status" aria-label="Loading AccessAI">
+        <!-- Floating background particles -->
+        <div class="preloader-particles" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <!-- Concentric spinning rings + orbiting dot -->
+        <div class="preloader-rings" aria-hidden="true">
+            <div class="preloader-ring-outer"></div>
+            <div class="preloader-ring-mid"></div>
+            <div class="preloader-ring-inner"></div>
+            <div class="preloader-orbit"><div class="preloader-orbit-dot"></div></div>
+            <div class="preloader-core"></div>
+        </div>
         <div class="preloader-logo" aria-hidden="true">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></div>
-        <div class="preloader-ring" aria-hidden="true"></div>
         <p class="preloader-tagline" aria-hidden="true">Making the Web Accessible for Everyone</p>
+        <!-- Animated progress bar -->
+        <div class="preloader-bar-track" aria-hidden="true">
+            <div class="preloader-bar"></div>
+        </div>
     </div>
 
     <div id="content-wrapper">
@@ -701,10 +717,6 @@
                 <!-- Our Mission Section -->
                 <section class="mission-section">
                     <div class="mission-container">
-                        <div class="mission-header">
-                            <h2 class="mission-title">Our Mission</h2>
-                            <div class="mission-icon">🎯</div>
-                        </div>
                         <div class="mission-content">
                             <p class="mission-text">
                                 We believe that technology should be accessible to everyone, regardless of their abilities or disabilities. Our mission is to bridge the digital divide by educating, empowering, and equipping individuals and organizations with the knowledge and tools they need to create inclusive digital experiences.

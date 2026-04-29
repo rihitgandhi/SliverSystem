@@ -1262,7 +1262,7 @@ textarea:focus,
 
 .mission-principles {
   display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+  grid-template-columns: repeat(3, 1fr) !important;
   gap: 1.5rem !important;
   margin-top: 1rem !important;
 }
