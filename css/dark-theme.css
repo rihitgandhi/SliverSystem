@@ -1,7 +1,7 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/v4-shims.min.css');
 
 /* =====================================================
-   AcessAI — Award-Winning Dark Theme
+   AccessAI — Award-Winning Dark Theme
    Dark Blue & Black Color System
    ===================================================== */
 
@@ -2919,5 +2919,327 @@ a.nav-link:hover {
 
   .about-me-meta-grid {
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+}
+
+/* =====================================================
+   NAV TOOLS DROPDOWN
+   ===================================================== */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-trigger {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-dropdown-arrow {
+  font-size: 0.65rem;
+  transition: transform var(--transition-fast);
+  opacity: 0.7;
+}
+
+.nav-dropdown-trigger[aria-expanded="true"] .nav-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  list-style: none;
+  padding: 0.5rem;
+  min-width: 210px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  z-index: 1100;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown-trigger[aria-expanded="true"] ~ .nav-dropdown-menu,
+.nav-dropdown-menu:focus-within {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown-item {
+  display: flex !important;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.85rem;
+  color: var(--text-secondary) !important;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem !important;
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.nav-dropdown-item:hover,
+.nav-dropdown-item:focus {
+  background: rgba(37,99,235,0.14);
+  color: var(--text-white) !important;
+}
+
+.nav-dropdown-item.active {
+  color: var(--accent-sky) !important;
+  background: rgba(37,99,235,0.2);
+}
+
+/* =====================================================
+   THEME TOGGLE BUTTON
+   ===================================================== */
+.theme-toggle {
+  background: none !important;
+  border: 1px solid var(--border-mid) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-secondary) !important;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem !important;
+  font-size: 1rem !important;
+  transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast) !important;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent-sky) !important;
+  color: var(--accent-sky) !important;
+}
+
+/* =====================================================
+   TOOL PAGE CARD OVERRIDES  (fix light-bg cards)
+   ===================================================== */
+.upload-section,
+.options-section,
+.input-section,
+.results-section,
+.score-form-section,
+.results-container,
+.wcag-column,
+.recommendation-card,
+.issue-card {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.wcag-column {
+  border: 2px solid var(--border-mid) !important;
+}
+
+.issue-card {
+  background: var(--bg-elevated) !important;
+  border-left: 4px solid #ffc107 !important;
+  border-right: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+.issue-card h4 { color: #ffc107 !important; }
+
+.recommendation-card {
+  border-top: 4px solid var(--accent-blue) !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+}
+
+.results-section.visible,
+.results-container.visible {
+  display: block !important;
+}
+
+.score-circle {
+  background: linear-gradient(135deg, var(--accent-blue), #1d4ed8) !important;
+}
+
+/* =====================================================
+   HELP PAGE DARK OVERRIDES
+   ===================================================== */
+.help-section,
+.help-nav-card,
+.resource-card,
+.wcag-principle {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-mid) !important;
+  color: var(--text-primary) !important;
+}
+
+.help-section h2 { color: var(--accent-sky) !important; border-color: var(--accent-blue) !important; }
+.help-section h3 { color: var(--text-white) !important; }
+.help-section h4 { color: var(--text-primary) !important; }
+.help-nav-card h3 { color: var(--accent-sky) !important; }
+.help-nav-card p  { color: var(--text-secondary) !important; }
+.help-nav-card:hover { border-color: var(--accent-sky) !important; }
+.wcag-principle h3 { color: var(--accent-sky) !important; }
+.resource-card h4  { color: var(--accent-sky) !important; }
+.resource-card      { background: var(--bg-surface) !important; color: var(--text-primary) !important; border-color: var(--border-mid) !important; }
+.resource-card:hover { border-color: var(--accent-sky) !important; }
+.toc               { background: var(--bg-elevated) !important; border-color: var(--accent-blue) !important; }
+.toc h3            { color: var(--accent-sky) !important; }
+.toc a             { color: var(--text-secondary) !important; }
+.toc a:hover       { color: var(--accent-sky) !important; }
+.feature-item      { background: var(--bg-elevated) !important; border-left-color: var(--accent-blue) !important; }
+.feature-item h4   { color: var(--accent-sky) !important; }
+.timeline-item     { border-left-color: var(--accent-blue) !important; }
+.timeline-item::before { background: var(--accent-blue) !important; }
+.timeline-item h4  { color: var(--accent-sky) !important; }
+.info-box          { background: rgba(33,150,243,0.10) !important; border-color: #2196f3 !important; }
+.info-box h4       { color: #60c6f9 !important; }
+.warning-box       { background: rgba(255,193,7,0.08) !important; border-color: #ffc107 !important; }
+.warning-box h4    { color: #ffd54f !important; }
+.success-box       { background: rgba(76,175,80,0.08) !important; border-color: #4caf50 !important; }
+.success-box h4    { color: #81c784 !important; }
+.quick-links       { background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%) !important; }
+
+/* =====================================================
+   SCORE PAGE FORM DARK OVERRIDES
+   ===================================================== */
+.url-input-group input {
+  background: var(--bg-elevated) !important;
+  border-color: var(--border-mid) !important;
+  color: var(--text-primary) !important;
+}
+.url-input-group input:focus {
+  border-color: var(--accent-sky) !important;
+}
+.check-btn {
+  background: var(--accent-blue) !important;
+}
+.check-btn:hover { background: var(--accent-glow) !important; }
+.check-btn:disabled { background: var(--text-muted) !important; }
+#progress-text { color: var(--text-secondary) !important; }
+.results-section h2,
+.score-form-section h1 { color: var(--text-white) !important; }
+.results-section h3 { color: var(--accent-sky) !important; }
+.wcag-item { background: var(--bg-elevated) !important; color: var(--text-primary) !important; }
+.wcag-item.compliant { border-left-color: #4caf50; }
+.wcag-item.non-compliant { border-left-color: #f44336; }
+.code-examples { background: var(--bg-elevated) !important; }
+.code-examples pre { background: var(--bg-void) !important; }
+.implementation-details,
+.resources-details,
+.testing-details { background: var(--bg-elevated) !important; border-color: var(--border-mid) !important; }
+.resource-list a { color: var(--accent-sky) !important; }
+
+/* =====================================================
+   INLINE NOTIFICATION MESSAGES (tool pages)
+   ===================================================== */
+.tool-notification {
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  margin: 12px 0;
+  display: none;
+  font-size: 0.95rem;
+}
+.tool-notification.error {
+  background: rgba(244,67,54,0.12);
+  border: 1px solid rgba(244,67,54,0.4);
+  color: #ef9a9a;
+}
+.tool-notification.success {
+  background: rgba(76,175,80,0.12);
+  border: 1px solid rgba(76,175,80,0.4);
+  color: #a5d6a7;
+}
+.tool-notification.visible { display: block; }
+
+/* =====================================================
+   LIGHT MODE  (data-theme="light" on <html>)
+   ===================================================== */
+[data-theme="light"] {
+  --bg-void:        #f0f4ff;
+  --bg-deep:        #e8eeff;
+  --bg-base:        #f5f7ff;
+  --bg-surface:     #ffffff;
+  --bg-elevated:    #f0f4ff;
+  --bg-overlay:     rgba(240,244,255,0.90);
+
+  --border-subtle:  rgba(37,99,235,0.12);
+  --border-mid:     rgba(37,99,235,0.25);
+  --border-bright:  rgba(37,99,235,0.50);
+
+  --accent-blue:    #1d4ed8;
+  --accent-sky:     #0284c7;
+  --accent-glow:    #3b82f6;
+  --accent-purple:  #6366f1;
+  --accent-cyan:    #0891b2;
+
+  --text-white:     #0f172a;
+  --text-primary:   #1e293b;
+  --text-secondary: #475569;
+  --text-muted:     #94a3b8;
+
+  --glow-blue:      0 0 20px rgba(37,99,235,0.20);
+  --glow-sky:       0 0 20px rgba(2,132,199,0.20);
+  --glow-subtle:    0 0 30px rgba(37,99,235,0.08);
+}
+
+[data-theme="light"] body,
+[data-theme="light"] #content-wrapper {
+  background: var(--bg-base) !important;
+}
+
+[data-theme="light"] .modern-header,
+[data-theme="light"] .fundamental-nav {
+  background: rgba(255,255,255,0.95) !important;
+  border-bottom: 1px solid var(--border-mid) !important;
+}
+
+[data-theme="light"] .nav-item,
+[data-theme="light"] .nav-title {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .nav-dropdown-menu {
+  background: #ffffff !important;
+  border-color: var(--border-mid) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+}
+
+[data-theme="light"] body::after {
+  background-image:
+    linear-gradient(rgba(37,99,235,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,0.05) 1px, transparent 1px) !important;
+}
+
+[data-theme="light"] #preloader {
+  background: var(--bg-base) !important;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg-void:        #f0f4ff;
+    --bg-deep:        #e8eeff;
+    --bg-base:        #f5f7ff;
+    --bg-surface:     #ffffff;
+    --bg-elevated:    #f0f4ff;
+    --bg-overlay:     rgba(240,244,255,0.90);
+    --border-subtle:  rgba(37,99,235,0.12);
+    --border-mid:     rgba(37,99,235,0.25);
+    --border-bright:  rgba(37,99,235,0.50);
+    --accent-blue:    #1d4ed8;
+    --accent-sky:     #0284c7;
+    --accent-glow:    #3b82f6;
+    --accent-purple:  #6366f1;
+    --accent-cyan:    #0891b2;
+    --text-white:     #0f172a;
+    --text-primary:   #1e293b;
+    --text-secondary: #475569;
+    --text-muted:     #94a3b8;
   }
 }
