@@ -1315,7 +1315,7 @@
         window.applyTabVisibilityState = applyTabVisibilityState;
 
         // Instantly show a tab with no animation (used for reduced-motion or fallback)
-        function _switchTabDirect(tabName) {
+        function _switchTabDirect(tabName, prefersReduced) {
             // Clean up any in-flight transition classes first
             document.querySelectorAll('.tab-content').forEach(el => {
                 el.classList.remove(
@@ -1332,7 +1332,7 @@
                 // Apply the idle-in animation only on the very first tab shown (page load).
                 // Using a separate class prevents the animation from re-firing when
                 // directional transition-in classes are later cleaned up.
-                if (_currentTabName === null && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                if (_currentTabName === null && !prefersReduced) {
                     selectedTab.classList.add('tab-initial-in');
                     selectedTab.addEventListener('animationend', () => {
                         selectedTab.classList.remove('tab-initial-in');
@@ -1353,12 +1353,13 @@
 
         function switchTab(tabName) {
             const prevTabName = _currentTabName;
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
             // Cancel any in-flight transition and do a direct switch for rapid navigation
             if (_tabTransitionTimer !== null) {
                 clearTimeout(_tabTransitionTimer);
                 _tabTransitionTimer = null;
-                _switchTabDirect(tabName);
+                _switchTabDirect(tabName, prefersReduced);
                 setTimeout(initChatbotIfNeeded, 100);
                 return;
             }
@@ -1373,11 +1374,9 @@
             // Scroll to top so the new tab content is fully visible
             window.scrollTo(0, 0);
 
-            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
             // Skip animation when there's no previous tab, reduced-motion is on, or same tab
             if (!prevTabName || prevTabName === tabName || prefersReduced) {
-                _switchTabDirect(tabName);
+                _switchTabDirect(tabName, prefersReduced);
                 setTimeout(initChatbotIfNeeded, 100);
                 return;
             }
@@ -1386,7 +1385,7 @@
             const outEl = document.getElementById(prevTabName);
             const inEl  = document.getElementById(tabName);
             if (!outEl || !inEl) {
-                _switchTabDirect(tabName);
+                _switchTabDirect(tabName, prefersReduced);
                 setTimeout(initChatbotIfNeeded, 100);
                 return;
             }

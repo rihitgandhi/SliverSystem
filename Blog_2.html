@@ -13,10 +13,11 @@
   <script>
 function exitBlog() {
     const el = document.querySelector('section') || document.body;
-    el.style.transition = 'opacity 0.42s ease, transform 0.42s ease';
+    // Duration matches the 460ms navigation delay (same constant as page-transitions.js)
+    el.style.transition = 'opacity 0.44s ease, transform 0.44s ease';
     el.style.opacity = '0';
     el.style.transform = 'scale(0.985) translateY(-12px)';
-    setTimeout(function() { window.location.href = 'index.html'; }, 440);
+    setTimeout(function() { window.location.href = 'index.html'; }, 460);
 }
 </script>
 
