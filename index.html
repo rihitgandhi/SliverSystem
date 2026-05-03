@@ -1319,7 +1319,7 @@
             // Clean up any in-flight transition classes first
             document.querySelectorAll('.tab-content').forEach(el => {
                 el.classList.remove(
-                    'active',
+                    'active', 'tab-initial-in',
                     'tab-transition-out', 'tab-transition-out-left', 'tab-transition-out-right',
                     'tab-transition-in',  'tab-transition-in-left',  'tab-transition-in-right'
                 );
@@ -1327,7 +1327,18 @@
             document.body.classList.remove('tab-transitioning');
 
             const selectedTab = document.getElementById(tabName);
-            if (selectedTab) selectedTab.classList.add('active');
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+                // Apply the idle-in animation only on the very first tab shown (page load).
+                // Using a separate class prevents the animation from re-firing when
+                // directional transition-in classes are later cleaned up.
+                if (_currentTabName === null && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    selectedTab.classList.add('tab-initial-in');
+                    selectedTab.addEventListener('animationend', () => {
+                        selectedTab.classList.remove('tab-initial-in');
+                    }, { once: true });
+                }
+            }
             applyTabVisibilityState(tabName);
 
             // Update nav items

@@ -548,7 +548,13 @@ textarea:focus {
   will-change: transform, opacity, filter;
 }
 
-.tab-content.active {
+/*
+ * Initial page-load reveal: added by JS only on the very first switchTab call
+ * (when _currentTabName is null). Using a separate class rather than .active
+ * prevents the idle-in animation from re-firing when directional transition-in
+ * classes are removed during animated tab switches.
+ */
+.tab-content.tab-initial-in {
   animation: tabCinematicIdleIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -656,10 +662,7 @@ body.page-transitioning #content-wrapper {
     transform: none !important;
   }
 
-  .tab-content.active {
-    animation: none !important;
-  }
-
+  .tab-content.tab-initial-in,
   .tab-content.tab-transition-out,
   .tab-content.tab-transition-in {
     animation: none !important;

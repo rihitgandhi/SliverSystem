@@ -13,10 +13,14 @@
 
   <!-- Exit Script -->
   <script>
-    function exitBlog() {
-      window.location.href = "index.html";
-    }
-  </script>
+function exitBlog() {
+    const el = document.querySelector('section') || document.body;
+    el.style.transition = 'opacity 0.42s ease, transform 0.42s ease';
+    el.style.opacity = '0';
+    el.style.transform = 'scale(0.985) translateY(-12px)';
+    setTimeout(function() { window.location.href = 'index.html'; }, 440);
+}
+</script>
 
   <!-- Hero Section -->
   <div style="max-width: 1000px; margin: auto; text-align: center; padding: 40px 20px;">

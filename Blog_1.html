@@ -306,18 +306,11 @@
     <link rel="stylesheet" href="./css/dark-theme.css">
 </head>
 <body>
-    <button class="exit-btn" onclick="exitBlog()">
+    <a href="index.html" class="exit-btn">
         <i class="fas fa-times"></i> Exit
-    </button>
+    </a>
 
-    <script>
-        function exitBlog() {
-            window.close();
-            window.location.href = "index.html";
-        }
-    </script>
-
-    <div class="container">
+    <div id="content-wrapper"><div class="container">
         <!-- Hero Section -->
         <div class="hero-section">
             <h1 class="hero-title">
@@ -481,5 +474,32 @@
             </p>
         </div>
     </div>
+    </div>
+    <style>
+        body.page-entering #content-wrapper {
+            animation: blogEnter 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        body.page-transitioning #content-wrapper {
+            animation: blogExit 0.46s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+        }
+        @keyframes blogEnter {
+            from { opacity: 0; transform: translateY(20px) scale(0.992); filter: blur(2px); }
+            to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+        @keyframes blogExit {
+            from { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+            to   { opacity: 0; transform: translateY(-16px) scale(0.985); filter: blur(2px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            body.page-entering #content-wrapper,
+            body.page-transitioning #content-wrapper {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+            }
+        }
+    </style>
+    <script src="scripts/page-transitions.js"></script>
 </body>
 </html>
