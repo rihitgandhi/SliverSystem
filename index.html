@@ -1292,6 +1292,12 @@
             }
         }
         
+        // Tab order used to determine slide direction (left ↔ right)
+        const TAB_ORDER = ['home', 'ai', 'blogs', 'mission'];
+        // Track the currently visible tab name and whether a transition is in flight
+        let _currentTabName = null;
+        let _tabTransitionTimer = null;
+
         function applyTabVisibilityState(tabName) {
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => {
@@ -1308,37 +1314,110 @@
         }
         window.applyTabVisibilityState = applyTabVisibilityState;
 
-        function switchTab(tabName) {
-            console.log('Switching to tab:', tabName);
-            
-            // Reset tab active states
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => {
-                content.classList.remove('active');
+        // Instantly show a tab with no animation (used for reduced-motion or fallback)
+        function _switchTabDirect(tabName) {
+            // Clean up any in-flight transition classes first
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove(
+                    'active',
+                    'tab-transition-out', 'tab-transition-out-left', 'tab-transition-out-right',
+                    'tab-transition-in',  'tab-transition-in-left',  'tab-transition-in-right'
+                );
             });
-            
-            // Remove active class from all nav items
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                item.setAttribute('aria-selected', 'false');
-            });
-            
-            // Show selected tab content
+            document.body.classList.remove('tab-transitioning');
+
             const selectedTab = document.getElementById(tabName);
-            if (selectedTab) {
-                selectedTab.classList.add('active');
-            }
+            if (selectedTab) selectedTab.classList.add('active');
             applyTabVisibilityState(tabName);
-            
-            // Activate corresponding nav item
-            const activeNavItem = document.querySelector(`[data-tab="${tabName}"]`);
-            if (activeNavItem) {
-                activeNavItem.classList.add('active');
-                activeNavItem.setAttribute('aria-selected', 'true');
+
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                const isActive = item.getAttribute('data-tab') === tabName;
+                item.classList.toggle('active', isActive);
+                item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+
+            _currentTabName = tabName;
+        }
+
+        function switchTab(tabName) {
+            const prevTabName = _currentTabName;
+
+            // Cancel any in-flight transition and do a direct switch for rapid navigation
+            if (_tabTransitionTimer !== null) {
+                clearTimeout(_tabTransitionTimer);
+                _tabTransitionTimer = null;
+                _switchTabDirect(tabName);
+                setTimeout(initChatbotIfNeeded, 100);
+                return;
             }
-            
-            // Initialize chatbot if needed
+
+            // Update nav items immediately so the UI feels responsive
+            document.querySelectorAll('.nav-item').forEach(item => {
+                const isActive = item.getAttribute('data-tab') === tabName;
+                item.classList.toggle('active', isActive);
+                item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+
+            // Scroll to top so the new tab content is fully visible
+            window.scrollTo(0, 0);
+
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Skip animation when there's no previous tab, reduced-motion is on, or same tab
+            if (!prevTabName || prevTabName === tabName || prefersReduced) {
+                _switchTabDirect(tabName);
+                setTimeout(initChatbotIfNeeded, 100);
+                return;
+            }
+
+            // ---- Cinematic tab transition ----
+            const outEl = document.getElementById(prevTabName);
+            const inEl  = document.getElementById(tabName);
+            if (!outEl || !inEl) {
+                _switchTabDirect(tabName);
+                setTimeout(initChatbotIfNeeded, 100);
+                return;
+            }
+
+            const fromIdx = TAB_ORDER.indexOf(prevTabName);
+            const toIdx   = TAB_ORDER.indexOf(tabName);
+            // When index increases (or unknown direction), slide old out to left and new in from right
+            const goRight  = (fromIdx === -1) || (toIdx > fromIdx);
+            const outClass = goRight ? 'tab-transition-out-left'  : 'tab-transition-out-right';
+            const inClass  = goRight ? 'tab-transition-in-right'  : 'tab-transition-in-left';
+
+            const OUT_MS = 480;
+            const IN_MS  = 620;
+
+            document.body.classList.add('tab-transitioning');
+            _currentTabName = tabName;
+
+            // Keep outgoing visible, remove active so its idle-in animation stops
+            outEl.classList.remove('active');
+            outEl.classList.add('tab-transition-out', outClass);
+
+            // Show incoming but start from its animated-in position (tab-transition-in overrides .active animation)
+            inEl.style.display = 'block';
+            inEl.removeAttribute('hidden');
+            inEl.setAttribute('aria-hidden', 'false');
+            inEl.classList.add('active', 'tab-transition-in', inClass);
+
+            // After out-animation: hide the old tab
+            _tabTransitionTimer = setTimeout(() => {
+                outEl.style.display = 'none';
+                outEl.setAttribute('hidden', '');
+                outEl.setAttribute('aria-hidden', 'true');
+                outEl.classList.remove('tab-transition-out', outClass);
+
+                // After in-animation: clean up transition classes
+                _tabTransitionTimer = setTimeout(() => {
+                    inEl.classList.remove('tab-transition-in', inClass);
+                    document.body.classList.remove('tab-transitioning');
+                    _tabTransitionTimer = null;
+                }, IN_MS);
+            }, OUT_MS);
+
             setTimeout(initChatbotIfNeeded, 100);
         }
         
@@ -1630,8 +1709,6 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing...');
-            
             // Load saved settings
             loadSettings();
             
@@ -1648,22 +1725,6 @@
             const hashTab = window.location.hash ? window.location.hash.substring(1).toLowerCase() : '';
             const initialTab = validTabs.has(hashTab) ? hashTab : 'home';
             switchTab(initialTab);
-            
-            // Add CSS animations
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-                @keyframes slideOut {
-                    from { transform: translateX(0); opacity: 1; }
-                    to { transform: translateX(100%); opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-            
-            console.log('Initialization complete - navigation should be working now');
         });
 
         // Initialize chatbot when AI tab or Home tab is loaded
@@ -1696,25 +1757,6 @@
                         });
                     }
                 });
-            });
-            
-            // Add intersection observer for animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-in');
-                    }
-                });
-            }, observerOptions);
-            
-            // Observe elements for animation
-            document.querySelectorAll('.tool-card, .feature-card, .floating-card').forEach(el => {
-                observer.observe(el);
             });
             
             // Initialize tool interactions

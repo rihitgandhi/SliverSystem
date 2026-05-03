@@ -5,17 +5,35 @@
   // Keep in sync with css/ux-improvements.css `pageExitContent` and `pageExitOverlay` durations.
   const PAGE_EXIT_DURATION_MS = 460;
 
+  function startEnterAnimation(body) {
+    // Remove the class first and force a reflow so that re-adding it restarts the animation.
+    // This is critical for bfcache restores where the class may already be present.
+    body.classList.remove('page-entering');
+    // eslint-disable-next-line no-unused-expressions
+    body.offsetWidth; // force reflow
+    body.classList.add('page-entering');
+
+    // Clean up the class once the animation finishes so it doesn't linger on the element.
+    body.addEventListener('animationend', () => {
+      body.classList.remove('page-entering');
+    }, { once: true });
+  }
+
   function init() {
     const body = document.body;
     if (!body) return;
 
     if (!prefersReducedMotion.matches) {
-      body.classList.add('page-entering');
-      window.addEventListener('pageshow', () => {
-        body.classList.remove('page-transitioning');
-        body.classList.add('page-entering');
-      });
+      startEnterAnimation(body);
     }
+
+    // Re-run enter animation on bfcache restores (back/forward navigation)
+    window.addEventListener('pageshow', (e) => {
+      body.classList.remove('page-transitioning');
+      if (!prefersReducedMotion.matches) {
+        startEnterAnimation(body);
+      }
+    });
 
     const isNavigableLink = (anchor) => {
       if (!anchor || !anchor.href) return false;
