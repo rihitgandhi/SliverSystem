@@ -130,8 +130,38 @@
                     </div>
                 </section>
 
+                <!-- Scrolling Marquee / Ticker Strip -->
+                <div class="hero-marquee" aria-hidden="true">
+                    <div class="hero-marquee-inner">
+                        <div class="hero-marquee-track">
+                            <span>WCAG Compliance</span>
+                            <span>AI-Powered Tools</span>
+                            <span>Screen Reader Ready</span>
+                            <span>Keyboard Navigation</span>
+                            <span>Color Contrast</span>
+                            <span>Inclusive Design</span>
+                            <span>Alt Text Generation</span>
+                            <span>Code Review</span>
+                            <span>Real-time Analysis</span>
+                            <span>Universal Access</span>
+                        </div>
+                        <div class="hero-marquee-track">
+                            <span>WCAG Compliance</span>
+                            <span>AI-Powered Tools</span>
+                            <span>Screen Reader Ready</span>
+                            <span>Keyboard Navigation</span>
+                            <span>Color Contrast</span>
+                            <span>Inclusive Design</span>
+                            <span>Alt Text Generation</span>
+                            <span>Code Review</span>
+                            <span>Real-time Analysis</span>
+                            <span>Universal Access</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- CTA Section (now immediately after hero) -->
-                <section class="modern-cta-section fundamental-section fundamental-cta" style="position: relative; overflow: hidden; min-height: 320px; margin-top: 48px;">
+                <section class="modern-cta-section fundamental-section fundamental-cta" style="position: relative; overflow: hidden; min-height: 320px; margin-top: 0;">
                     <img src="images/hero-agency.jpg" alt="Creative digital agency workspace" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0.28; z-index: 1; pointer-events: none;">
                     <div class="cta-container fundamental-container" style="position: relative; z-index: 2;">
                         <div class="cta-content fundamental-cta-content" style="text-align: center;">
@@ -2432,5 +2462,99 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- Parallax, animations & visual enhancements -->
     <script src="scripts/page-transitions.js"></script>
     <script src="scripts/parallax.js"></script>
+
+    <!-- Modern homepage interaction enhancements -->
+    <script>
+    (function () {
+      'use strict';
+
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ── Nav transparency on scroll ── */
+      function initNavTransparency() {
+        var header = document.querySelector('header');
+        if (!header) return;
+        var THRESHOLD = 80;
+
+        function update() {
+          if (window.scrollY < THRESHOLD) {
+            header.classList.add('nav-at-top');
+          } else {
+            header.classList.remove('nav-at-top');
+          }
+        }
+
+        update();
+        window.addEventListener('scroll', update, { passive: true });
+      }
+
+      /* ── Scroll-indicator fade on scroll ── */
+      function initScrollIndicatorFade() {
+        var THRESHOLD = 120;
+        function update() {
+          if (window.scrollY > THRESHOLD) {
+            document.body.classList.add('hero-scrolled');
+          } else {
+            document.body.classList.remove('hero-scrolled');
+          }
+        }
+        window.addEventListener('scroll', update, { passive: true });
+      }
+
+      /* ── Hero word-by-word reveal ── */
+      function wrapElement(el, baseDelay, wordDelay) {
+        if (!el) return;
+
+        // Collect raw child nodes before we empty the element
+        var nodes = Array.prototype.slice.call(el.childNodes);
+        el.innerHTML = '';
+
+        var wordIndex = 0;
+
+        nodes.forEach(function (node) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            // Split preserving spaces
+            var parts = node.textContent.split(/(\s+)/);
+            parts.forEach(function (part) {
+              if (/^\s+$/.test(part)) {
+                el.appendChild(document.createTextNode(part));
+              } else if (part.length > 0) {
+                var wrap = document.createElement('span');
+                wrap.className = 'word-reveal-wrap';
+                var inner = document.createElement('span');
+                inner.className = 'word-reveal-inner';
+                inner.textContent = part;
+                inner.style.animationDelay = (baseDelay + wordIndex * wordDelay) + 'ms';
+                wrap.appendChild(inner);
+                el.appendChild(wrap);
+                wordIndex++;
+              }
+            });
+          } else {
+            // Preserve child elements (e.g. .title-symbol) — already snapshotted above
+            el.appendChild(node);
+          }
+        });
+
+        el.classList.add('has-word-reveal');
+      }
+
+      function initHeroWordReveal() {
+        var heroTitle    = document.querySelector('.hero-main-title');
+        var heroSubtitle = document.querySelector('.hero-subtitle-line');
+        wrapElement(heroTitle,    0,   100);
+        wrapElement(heroSubtitle, 480,  60);
+      }
+
+      /* ── Boot ── */
+      document.addEventListener('DOMContentLoaded', function () {
+        initNavTransparency();
+        initScrollIndicatorFade();
+        if (!prefersReducedMotion) {
+          initHeroWordReveal();
+        }
+      });
+    })();
+    </script>
 </body>
 </html>

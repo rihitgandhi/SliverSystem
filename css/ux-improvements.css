@@ -746,3 +746,168 @@ html {
     transform: scale(0.98) !important;
   }
 }
+
+/* -------------------------------------------------------
+   HERO WORD-BY-WORD REVEAL
+   Clip-style slide-up — modern agency feel
+   ------------------------------------------------------- */
+.word-reveal-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: inherit;
+}
+
+.word-reveal-inner {
+  display: inline-block;
+  animation: wordSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+
+@keyframes wordSlideUp {
+  from {
+    transform: translateY(110%) skewY(5deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) skewY(0deg);
+    opacity: 1;
+  }
+}
+
+/* Suppress conflicting CSS animations on elements that have JS word-reveal */
+.custom-hero-section h1.has-word-reveal,
+.hero-subtitle-line.has-word-reveal {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* -------------------------------------------------------
+   NAV — TRANSPARENT AT TOP OF PAGE
+   Transitions to solid glassmorphism on scroll
+   ------------------------------------------------------- */
+header.nav-at-top {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+}
+
+header {
+  transition:
+    background 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.55s ease,
+    box-shadow 0.55s ease;
+}
+
+/* -------------------------------------------------------
+   HERO MARQUEE / TICKER STRIP
+   Scrolling keyword band between hero and first section
+   ------------------------------------------------------- */
+.hero-marquee {
+  width: 100%;
+  overflow: hidden;
+  padding: 0.9rem 0;
+  background: rgba(37, 99, 235, 0.06);
+  border-top: 1px solid rgba(56, 189, 248, 0.10);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.10);
+  position: relative;
+  z-index: 2;
+}
+
+/* Edge fade masks */
+.hero-marquee::before,
+.hero-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 90px;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg-deep, #060c1a), transparent);
+}
+
+.hero-marquee::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--bg-deep, #060c1a), transparent);
+}
+
+.hero-marquee-inner {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 34s linear infinite;
+}
+
+.hero-marquee-inner:hover,
+.hero-marquee-inner:focus-within {
+  animation-play-state: paused;
+}
+
+.hero-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 2.8rem;
+  padding-right: 2.8rem;
+  white-space: nowrap;
+}
+
+.hero-marquee-track span {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #8892b0);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.hero-marquee-track span::before {
+  content: '✦';
+  color: var(--accent-sky, #38bdf8);
+  font-size: 0.5rem;
+  opacity: 0.65;
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* -------------------------------------------------------
+   SCROLL INDICATOR — FADE OUT WHEN USER SCROLLS
+   ------------------------------------------------------- */
+body.hero-scrolled .hero-scroll-indicator {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* -------------------------------------------------------
+   REDUCED MOTION — disable all new animations
+   ------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .word-reveal-inner {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .hero-marquee-inner {
+    animation: none !important;
+  }
+
+  header.nav-at-top {
+    background: rgba(6, 12, 26, 0.92) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  }
+}
