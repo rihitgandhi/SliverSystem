@@ -1,0 +1,8 @@
+[health] status=200 body={"api_key":"configured","status":"healthy","timestamp":"2026-05-09T11:45:00.216063"}
+
+[chat1] status=200 body={"conversation_id":"smoke1","response":"WCAG stands for **Web Content Accessibility Guidelines**. It\u2019s a set of sta
+[chat2] status=200 body={"conversation_id":"smoke1","response":"Use **sufficient color contrast** between text and its background.\n\nPeople wit
+[score] status=200 body={"compliance_level":"WCAG 2.1 Level A (Partial)","differentiator":"This report is built from real evidence: we fetched t
+[alt-text] EXC status=400 msg=Response status code does not indicate success: 400 (BAD REQUEST).
+[review-code] status=200 body={"differentiator":"We ran a deterministic accessibility lint against your code first \u2014 detecting 0 issue(s) at exac
+[simplify] status=200 body={"after_evidence":{"frequent_words":[{"count":1,"word":"take"},{"count":1,"word":"action"},{"count":1,"word":"under"},{"
