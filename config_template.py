@@ -5,10 +5,13 @@ import os
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv(override=True)
 
-# API Keys - Use environment variables in production
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', 'your-api-key-here')
+# API Keys - Use environment variables in production (Azure OpenAI)
+AZURE_OPENAI_ENDPOINT = os.getenv('AZURE_OPENAI_ENDPOINT', 'https://your-resource.cognitiveservices.azure.com/')
+AZURE_OPENAI_API_KEY = os.getenv('AZURE_OPENAI_API_KEY', 'your-api-key-here')
+AZURE_OPENAI_DEPLOYMENT = os.getenv('AZURE_OPENAI_DEPLOYMENT', 'your-deployment-name')
+AZURE_OPENAI_API_VERSION = os.getenv('AZURE_OPENAI_API_VERSION', '2024-12-01-preview')
 
 # Flask Configuration
 FLASK_SECRET_KEY = os.getenv('FLASK_SECRET_KEY', 'your-secret-key-here')

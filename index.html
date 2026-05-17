@@ -5,45 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AccessAI - AI-powered accessibility assistant and inclusive design platform. Learn about WCAG, assistive tech, and make the web accessible for everyone.">
     <meta name="keywords" content="AccessAI, accessibility, web accessibility, assistive technology, WCAG, inclusive design, disability, AI assistant">
-    <!-- Backend URL (used by frontend to determine API endpoint).
-        This ensures GitHub Pages (including rihtigandhi.github.io/SliverSystem) calls Railway backend. -->
-    <meta name="backend-url" content="https://sliver-system-backend-production-9067.up.railway.app">
+    <!-- Backend URL override.
+         When served from GitHub Pages, JS auto-routes API calls to the Railway backend.
+         When served from any other host (local Flask, Railway, Render), JS uses the
+         page's own origin — so we deliberately do NOT set a meta tag here. -->
+    <meta name="theme-color" content="#060c1a" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#060c1a">
+    <meta name="color-scheme" content="dark light">
     <title>✦ AccessAI - Making the Web Accessible for Everyone</title>
     <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
     <link rel="stylesheet" href="./css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <!-- Dark Theme & Visual Enhancements -->
     <link rel="stylesheet" href="./css/dark-theme.css">
+    <!-- Navigation redesign (overrides nav styles) -->
+    <link rel="stylesheet" href="./css/nav-redesign.css">
+    <link rel="stylesheet" href="./css/ux-consistency.css">
     <!-- UX Improvements: animations, glassmorphism, micro-interactions -->
     <link rel="stylesheet" href="./css/ux-improvements.css">
     <link rel="stylesheet" href="./styles/effects.css">
+    <style>
+        /* Lightweight preloader — fades out quickly without blocking interaction */
+        #preloader {
+            position: fixed; inset: 0; z-index: 9999;
+            background: linear-gradient(135deg, #03060f 0%, #060c1a 50%, #0a1228 100%);
+            opacity: 1; transition: opacity 0.25s ease;
+            pointer-events: none;
+        }
+        #preloader.preloader-hidden { opacity: 0; }
+    </style>
 </head>
 <body class="homepage">
-    <!-- Preloader -->
-    <div id="preloader" role="status" aria-label="Loading AccessAI">
-        <!-- Floating background particles -->
-        <div class="preloader-particles" aria-hidden="true">
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-        </div>
-        <!-- Concentric spinning rings + orbiting dot -->
-        <div class="preloader-rings" aria-hidden="true">
-            <div class="preloader-ring-outer"></div>
-            <div class="preloader-ring-mid"></div>
-            <div class="preloader-ring-inner"></div>
-            <div class="preloader-orbit"><div class="preloader-orbit-dot"></div></div>
-            <div class="preloader-core"></div>
-        </div>
-        <div class="preloader-logo" aria-hidden="true">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></div>
-        <p class="preloader-tagline" aria-hidden="true">Making the Web Accessible for Everyone</p>
-        <!-- Animated progress bar -->
-        <div class="preloader-bar-track" aria-hidden="true">
-            <div class="preloader-bar"></div>
-        </div>
-    </div>
+    <!-- Lightweight loading veil — fades out as soon as styles are ready -->
+    <div id="preloader" role="status" aria-label="Loading AccessAI" aria-hidden="true"></div>
 
     <div id="content-wrapper">
         <!-- Skip to main content link for screen readers -->
@@ -54,7 +52,7 @@
             <nav role="navigation" aria-label="Main navigation">
                 <div class="nav-container nav-elevated fundamental-nav-container">
                     <div class="nav-brand fundamental-nav-brand">
-                        <button onclick="switchTab('home');" aria-label="Go to Home" style="all: unset; cursor: pointer; display: inline-block;">
+                        <button onclick="switchTab('home');" aria-label="Go to Home" style="background: none; border: none; padding: 0; cursor: pointer; display: inline-block; color: inherit; font: inherit;">
                             <h1 class="nav-title fundamental-nav-title title-with-symbol" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h1>
                         </button>
                     </div>
@@ -111,7 +109,7 @@
             <div id="home" class="tab-content active fundamental-home" role="tabpanel" aria-labelledby="home-tab">
                 <!-- Custom Hero Section -->
                 <section class="custom-hero-section" style="position: relative; width: 100%; min-height: 100vh; overflow: hidden;">
-                    <img src="images/circuit-board-1188x792-1024x683.jpg" alt="Circuit board background" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;">
+                    <img src="images/circuit-board-1188x792-1024x683.jpg" alt="Circuit board background" decoding="async" fetchpriority="high" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;">
                     <!-- Floating glow orbs -->
                     <div class="orb orb-1" aria-hidden="true"></div>
                     <div class="orb orb-2" aria-hidden="true"></div>
@@ -120,7 +118,7 @@
                     <div class="hero-particles" aria-hidden="true" id="hero-particles"></div>
                     <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center;">
                         <div style="text-align: center; color: #fff; z-index: 2; width: 100%; text-shadow: 0 4px 24px rgba(0,0,0,0.45);">
-                            <h1 class="hero-main-title title-with-symbol" style="font-size: 8rem; font-weight: 900; margin-bottom: 0; color: #fff;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h1>
+                            <h1 class="hero-main-title title-with-symbol" style="font-size: clamp(2.75rem, 11vw, 8rem); font-weight: 900; margin-bottom: 0; color: #fff; line-height: 1.05;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h1>
                             <p class="hero-subtitle-line" aria-label="Making the web accessible for everyone">Making the Web Accessible for Everyone</p>
                         </div>
                     </div>
@@ -162,7 +160,7 @@
 
                 <!-- CTA Section (now immediately after hero) -->
                 <section class="modern-cta-section fundamental-section fundamental-cta" style="position: relative; overflow: hidden; min-height: 320px; margin-top: 0;">
-                    <img src="images/hero-agency.jpg" alt="Creative digital agency workspace" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0.28; z-index: 1; pointer-events: none;">
+                    <img src="images/hero-agency.jpg" alt="Creative digital agency workspace" decoding="async" loading="lazy" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0.28; z-index: 1; pointer-events: none;">
                     <div class="cta-container fundamental-container" style="position: relative; z-index: 2;">
                         <div class="cta-content fundamental-cta-content" style="text-align: center;">
                             <h2 style="font-size: 2rem; font-weight: 900;">Ready to Make Your Website Accessible?</h2>
@@ -178,7 +176,7 @@
                     <div class="fundamental-container">
                         <article class="about-me-card reveal reveal-scale">
                             <div class="about-me-media">
-                                <img src="https://github.com/user-attachments/assets/91d41e5c-1e00-4f81-aaf4-bb924c82d2b5" alt="Rihit standing at a scenic ocean overlook" loading="lazy" class="about-me-image">
+                                <img src="https://github.com/user-attachments/assets/91d41e5c-1e00-4f81-aaf4-bb924c82d2b5" alt="Rihit standing at a scenic ocean overlook" loading="lazy" decoding="async" width="800" height="800" class="about-me-image">
                             </div>
                             <div class="about-me-content">
                                 <div class="about-me-header-row">
@@ -319,8 +317,8 @@
                         </div>
 
                         <!-- Floating Blog Tab Button -->
-                        <button onclick="switchTab('blogs');" aria-label="Open full blog" style="position: absolute; bottom: 18px; right: 18px; z-index: 10; background: #007bff; color: #fff; border: none; border-radius: 50%; width: 48px; height: 48px; box-shadow: 0 2px 8px rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; transition: background 0.2s; outline: none;" onfocus="this.style.background='#0056b3'" onblur="this.style.background='#007bff'" onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#007bff'">
-                            <span class="fa fa-book" aria-hidden="true"></span>
+                        <button onclick="switchTab('blogs');" aria-label="Open full blog" class="floating-blog-btn" style="position: absolute; bottom: 18px; right: 18px; z-index: 10; background: #2563eb; color: #fff; border: none; border-radius: 50%; width: 48px; height: 48px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='#2563eb'; this.style.transform='translateY(0)';">
+                            <i class="fa fa-book" aria-hidden="true"></i>
                         </button>
                     </div>
                 </section>
@@ -334,7 +332,7 @@
                 <div class="blog-container">
                     <article class="blog-post">
                         <a href="Blog_1.html" class="blog-link">
-                            <img src="images/blog1_accessibility.jpg" alt="Understanding Computer Accessibility - A comprehensive guide" class="blog-image">
+                            <img src="images/blog1_accessibility.jpg" alt="Understanding Computer Accessibility - A comprehensive guide" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Understanding Computer Accessibility</h2>
                             <p>A deep dive into the importance and challenges of computer accessibility, including WCAG guidelines and implementation strategies.</p>
                             <span class="tooltip">Read Article</span>
@@ -343,7 +341,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_2.html" class="blog-link">
-                            <img src="images/blog2_inclusivity.jpg" alt="Designing for Inclusivity - Creating accessible websites" class="blog-image">
+                            <img src="images/blog2_inclusivity.jpg" alt="Designing for Inclusivity - Creating accessible websites" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Designing for Inclusivity</h2>
                             <p>Learn how to design accessible websites that everyone can use, including color contrast, typography, and navigation best practices.</p>
                             <span class="tooltip">Read Article</span>
@@ -352,7 +350,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_3.html" class="blog-link">
-                            <img src="images/blog3_assistive.jpg" alt="Assistive Technologies Overview - Tools and technologies for accessibility" class="blog-image">
+                            <img src="images/blog3_assistive.jpg" alt="Assistive Technologies Overview - Tools and technologies for accessibility" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Assistive Technologies Overview</h2>
                             <p>Explore tools and technologies that aid accessibility online, from screen readers to voice recognition software.</p>
                             <span class="tooltip">Read Article</span>
@@ -361,7 +359,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_4.html" class="blog-link">
-                            <img src="images/blog4_legal.jpg" alt="Legal Aspects of Accessibility - Laws and regulations" class="blog-image">
+                            <img src="images/blog4_legal.jpg" alt="Legal Aspects of Accessibility - Laws and regulations" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Legal Aspects of Accessibility</h2>
                             <p>Understanding laws and regulations about web accessibility, including ADA compliance and international standards.</p>
                             <span class="tooltip">Read Article</span>
@@ -370,7 +368,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_5.html" class="blog-link">
-                            <img src="images/blog5_designers.jpg" alt="Essential Accessibility Guide for Website Designers" class="blog-image">
+                            <img src="images/blog5_designers.jpg" alt="Essential Accessibility Guide for Website Designers" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Essential Guide for Designers</h2>
                             <p>A practical guide to making your websites accessible with WCAG standards, testing tools, and quick wins you can implement today.</p>
                             <span class="tooltip">Read Article</span>
@@ -379,7 +377,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_6.html" class="blog-link">
-                            <img src="images/blog6_navigation.jpg" alt="Navigating the Web: Essential Tools for Everyone" class="blog-image">
+                            <img src="images/blog6_navigation.jpg" alt="Navigating the Web: Essential Tools for Everyone" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Navigating the Web Tools</h2>
                             <p>Discover browser features, keyboard shortcuts, screen readers, and mobile accessibility tools to enhance your web experience.</p>
                             <span class="tooltip">Read Article</span>
@@ -388,7 +386,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_7.html" class="blog-link">
-                            <img src="images/blog7_captions.jpg" alt="Accessible Video and Audio guide" class="blog-image">
+                            <img src="images/blog7_captions.jpg" alt="Accessible Video and Audio guide" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Accessible Video and Audio</h2>
                             <p>Learn how captions, transcripts, and audio descriptions make media inclusive for deaf, hard-of-hearing, blind, and low-vision users.</p>
                             <span class="tooltip">Read Article</span>
@@ -397,7 +395,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_8.html" class="blog-link">
-                            <img src="images/blog8_keyboard.jpg" alt="Keyboard-first UX and navigation" class="blog-image">
+                            <img src="images/blog8_keyboard.jpg" alt="Keyboard-first UX and navigation" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Keyboard-First UX</h2>
                             <p>A practical framework for logical focus, visible focus states, and keyboard support for advanced interactive components.</p>
                             <span class="tooltip">Read Article</span>
@@ -406,7 +404,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_9.html" class="blog-link">
-                            <img src="images/blog9_contrast.jpg" alt="Color contrast and readable typography" class="blog-image">
+                            <img src="images/blog9_contrast.jpg" alt="Color contrast and readable typography" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Contrast and Typography</h2>
                             <p>Design choices that improve readability across low vision, cognitive differences, dark mode, and real-world viewing conditions.</p>
                             <span class="tooltip">Read Article</span>
@@ -415,7 +413,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_10.html" class="blog-link">
-                            <img src="images/blog10_forms.jpg" alt="Accessible form design and validation" class="blog-image">
+                            <img src="images/blog10_forms.jpg" alt="Accessible form design and validation" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Accessible Forms</h2>
                             <p>Build forms with clear labels, better validation, and error recovery patterns that support all users and devices.</p>
                             <span class="tooltip">Read Article</span>
@@ -424,7 +422,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_11.html" class="blog-link">
-                            <img src="images/blog11_screenreaders.jpg" alt="Screen reader-friendly content structure" class="blog-image">
+                            <img src="images/blog11_screenreaders.jpg" alt="Screen reader-friendly content structure" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Screen Reader-Friendly Content</h2>
                             <p>Improve headings, landmarks, link labels, and writing style so screen reader navigation stays efficient and understandable.</p>
                             <span class="tooltip">Read Article</span>
@@ -433,7 +431,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_12.html" class="blog-link">
-                            <img src="images/blog12_mobile.jpg" alt="Mobile accessibility and touch target best practices" class="blog-image">
+                            <img src="images/blog12_mobile.jpg" alt="Mobile accessibility and touch target best practices" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Mobile Accessibility</h2>
                             <p>Design inclusive mobile flows with larger touch targets, gesture alternatives, zoom support, and robust responsive behavior.</p>
                             <span class="tooltip">Read Article</span>
@@ -442,7 +440,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_13.html" class="blog-link">
-                            <img src="images/blog13_documents.jpg" alt="Accessible documents and PDFs" class="blog-image">
+                            <img src="images/blog13_documents.jpg" alt="Accessible documents and PDFs" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Accessible Documents and PDFs</h2>
                             <p>From authoring structure to tagged PDFs, learn how to publish documents that work reliably with assistive technology.</p>
                             <span class="tooltip">Read Article</span>
@@ -451,7 +449,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_14.html" class="blog-link">
-                            <img src="images/blog14_research.jpg" alt="Inclusive user research for accessibility" class="blog-image">
+                            <img src="images/blog14_research.jpg" alt="Inclusive user research for accessibility" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Inclusive User Research</h2>
                             <p>Run accessible studies with disabled participants and convert findings into product priorities with measurable impact.</p>
                             <span class="tooltip">Read Article</span>
@@ -460,7 +458,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_15.html" class="blog-link">
-                            <img src="images/blog15_aiethics.jpg" alt="AI and accessibility ethics" class="blog-image">
+                            <img src="images/blog15_aiethics.jpg" alt="AI and accessibility ethics" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>AI Accessibility Ethics</h2>
                             <p>Balance innovation with reliability, bias mitigation, transparency, and human oversight for AI-powered accessibility features.</p>
                             <span class="tooltip">Read Article</span>
@@ -469,7 +467,7 @@
 
                     <article class="blog-post">
                         <a href="Blog_16.html" class="blog-link">
-                            <img src="images/blog16_roadmap.jpg" alt="Accessibility roadmap and team ownership" class="blog-image">
+                            <img src="images/blog16_roadmap.jpg" alt="Accessibility roadmap and team ownership" loading="lazy" decoding="async" width="800" height="500" class="blog-image">
                             <h2>Accessibility Roadmap Strategy</h2>
                             <p>Build a sustainable roadmap with clear ownership, impact-based prioritization, and metrics that track real user outcomes.</p>
                             <span class="tooltip">Read Article</span>
@@ -1339,8 +1337,6 @@
         window.applyTabVisibilityState = applyTabVisibilityState;
 
         function switchTab(tabName) {
-            console.log('Switching to tab:', tabName);
-            
             // Reset tab active states
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => {
@@ -1618,7 +1614,6 @@
 
         // Widget toggle
         document.getElementById('acc-btn').addEventListener('click', function(e) {
-            console.log('Accessibility button clicked!'); // Test log
             e.preventDefault();
             e.stopPropagation();
             
@@ -1660,8 +1655,6 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing...');
-            
             // Load saved settings
             loadSettings();
             
@@ -1692,8 +1685,6 @@
                 }
             `;
             document.head.appendChild(style);
-            
-            console.log('Initialization complete - navigation should be working now');
         });
 
         // Initialize chatbot when AI tab or Home tab is loaded
@@ -2044,7 +2035,7 @@ document.addEventListener('DOMContentLoaded', function() {
 (function () {
   'use strict';
 
-  const PRELOADER_DISMISS_DELAY = 400; // ms
+  const PRELOADER_DISMISS_DELAY = 0; // ms — no artificial delay
 
   /* --------------------------------------------------------
      PRELOADER
@@ -2078,8 +2069,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!container) return;
     // Skip on reduced-motion preference
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Skip on small screens — cuts ~18 always-running paint operations on mobile.
+    if (window.innerWidth < 900) return;
 
-    const COUNT = 18;
+    const COUNT = 8;
     for (let i = 0; i < COUNT; i++) {
       const span = document.createElement('span');
       const size = 5 + Math.random() * 8;
@@ -2229,7 +2222,7 @@ document.addEventListener('DOMContentLoaded', function() {
       cell.setAttribute('aria-roledescription', 'slide');
       cell.setAttribute('aria-label', (i + 1) + ' of ' + n);
       cell.innerHTML =
-        '<img src="' + post.img + '" alt="' + post.alt + '" loading="lazy">' +
+        '<img src="' + post.img + '" alt="' + post.alt + '" loading="lazy" decoding="async" width="800" height="500">' +
         '<div class="carousel-cell-body">' +
           '<h3>' + post.title + '</h3>' +
           '<p>' + post.desc + '</p>' +
@@ -2405,9 +2398,14 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- END OF MAIN CONTENT -->
         </main>
     </div>
-            <!-- Custom cursor ring script -->
+            <!-- Custom cursor ring (pointer-only, event-delegated, reduced-motion aware) -->
             <script>
             (function(){
+                // Skip on touch / coarse pointer devices and when user prefers reduced motion.
+                // Avoids per-frame work, layout thrash and a permanent MutationObserver on mobile.
+                if (window.matchMedia('(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)').matches) {
+                    return;
+                }
                 try {
                     const ring = document.createElement('div');
                     ring.id = 'cursor-ring';
@@ -2425,43 +2423,37 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }, { passive: true });
 
+                    // Single delegated listener for hover state — no MutationObserver needed.
                     const interactiveSelector = 'a, button, input, textarea, select, summary, [role="button"], [role="link"], .nav-item, .nav-toggle, .quick-action, .quick-action-btn';
-                    function activate() { ring.classList.add('cursor-active'); }
-                    function deactivate() { ring.classList.remove('cursor-active'); }
+                    document.addEventListener('pointerover', (e) => {
+                        if (e.target.closest && e.target.closest(interactiveSelector)) {
+                            ring.classList.add('cursor-active');
+                        }
+                    }, { passive: true });
+                    document.addEventListener('pointerout', (e) => {
+                        if (e.target.closest && e.target.closest(interactiveSelector)) {
+                            ring.classList.remove('cursor-active');
+                        }
+                    }, { passive: true });
+                    document.addEventListener('focusin', (e) => {
+                        if (e.target.closest && e.target.closest(interactiveSelector)) {
+                            ring.classList.add('cursor-active');
+                        }
+                    });
+                    document.addEventListener('focusout', () => {
+                        ring.classList.remove('cursor-active');
+                    });
 
-                    function bindInteractive(el){
-                        el.addEventListener('mouseenter', activate);
-                        el.addEventListener('mouseleave', deactivate);
-                        el.addEventListener('focus', activate);
-                        el.addEventListener('blur', deactivate);
-                    }
-
-                    document.querySelectorAll(interactiveSelector).forEach(bindInteractive);
-
-                    // Keep ring visible when mouse re-enters window
+                    // Hide ring when mouse leaves window, restore on re-entry.
                     document.addEventListener('mouseleave', () => { ring.style.opacity = '0'; });
                     document.addEventListener('mouseenter', () => { ring.style.opacity = '0.95'; });
-
-                    // Observe DOM for dynamically added interactive elements
-                    const observer = new MutationObserver((mutations) => {
-                        mutations.forEach(m => {
-                            m.addedNodes.forEach(node => {
-                                if (node.nodeType === 1) {
-                                    if (node.matches && node.matches(interactiveSelector)) bindInteractive(node);
-                                    node.querySelectorAll && node.querySelectorAll(interactiveSelector).forEach(bindInteractive);
-                                }
-                            });
-                        });
-                    });
-                    observer.observe(document.body, { childList: true, subtree: true });
                 } catch (e) {
-                    console.error('Cursor ring init error', e);
+                    /* fail silent — non-critical visual */
                 }
             })();
             </script>
-    <!-- Parallax, animations & visual enhancements -->
-    <script src="scripts/page-transitions.js"></script>
-    <script src="scripts/parallax.js"></script>
+    <!-- Animations & visual enhancements -->
+    <script src="scripts/parallax.js" defer></script>
 
     <!-- Modern homepage interaction enhancements -->
     <script>
@@ -2556,5 +2548,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     })();
     </script>
+    <script defer src="./scripts/nav-redesign.js"></script>
 </body>
 </html>
