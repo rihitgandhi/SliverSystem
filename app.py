@@ -246,6 +246,10 @@ def score_page():
 def help_page():
     return send_from_directory('.', 'help.html')
 
+@app.route('/memory-layer.html')
+def memory_layer_page():
+    return send_from_directory('.', 'memory-layer.html')
+
 @app.route('/api/score', methods=['POST', 'OPTIONS'])
 def score():
     """Differentiated accessibility report.

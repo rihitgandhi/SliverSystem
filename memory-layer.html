@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Accessibility Memory Layer — a Chrome extension that remembers your text size, contrast, and line spacing preferences and applies them automatically on every website you visit.">
+    <title>Accessibility Memory Layer · AccessAI</title>
+    <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/dark-theme.css">
+    <link rel="stylesheet" href="./css/tool-pages.css">
+    <link rel="stylesheet" href="./css/tool-progress.css">
+    <link rel="stylesheet" href="./css/nav-redesign.css">
+    <link rel="stylesheet" href="./css/ux-consistency.css">
+    <style>
+        /* Page-specific helpers — all tokens come from dark-theme.css */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+        .feature-grid .feature {
+            padding: 16px;
+            background: rgba(6,12,26,0.7);
+            border: 1px solid rgba(96,165,250,0.18);
+            border-radius: 10px;
+        }
+        .feature h4 {
+            color: var(--accent-sky, #38bdf8);
+            margin: 0 0 6px;
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .feature p { margin: 0; color: var(--text-primary, #ccd6f6); font-size: 0.9rem; line-height: 1.55; }
+
+        .step-list {
+            list-style: none; padding: 0; margin: 14px 0 0;
+            counter-reset: step;
+        }
+        .step-list li {
+            position: relative;
+            padding: 14px 16px 14px 56px;
+            background: rgba(6,12,26,0.7);
+            border: 1px solid rgba(96,165,250,0.18);
+            border-radius: 10px;
+            margin: 10px 0;
+            color: var(--text-primary, #ccd6f6);
+            line-height: 1.55;
+        }
+        .step-list li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 12px; top: 12px;
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, var(--accent-blue, #2563eb), var(--accent-sky, #38bdf8));
+            color: #fff;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-family: 'JetBrains Mono', monospace;
+        }
+
+        .help-callout {
+            display: flex; gap: 14px; align-items: flex-start;
+            padding: 14px 16px;
+            border-radius: 10px;
+            background: rgba(13,26,54,0.85);
+            border: 1px solid rgba(96,165,250,0.22);
+            border-left: 4px solid var(--accent-sky, #38bdf8);
+            margin: 16px 0;
+            color: var(--text-primary, #ccd6f6);
+        }
+        .help-callout .ico {
+            font-size: 1.1rem; color: var(--accent-sky, #38bdf8);
+            margin-top: 2px; flex-shrink: 0;
+        }
+        .help-callout p { margin: 0; line-height: 1.55; }
+        .help-callout--warn { border-left-color: #fbbf24; }
+        .help-callout--warn .ico { color: #fbbf24; }
+
+        /* Popup UI mockup — stands in for real screenshots until the extension ships */
+        .popup-mockup-wrap { display: flex; justify-content: center; margin-top: 20px; }
+        .popup-mockup {
+            width: 100%; max-width: 340px;
+            background: var(--bg-elevated, #112040);
+            border: 1px solid rgba(96,165,250,0.30);
+            border-radius: 14px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+            overflow: hidden;
+        }
+        .popup-mockup__bar {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 14px;
+            background: rgba(6,12,26,0.9);
+            border-bottom: 1px solid rgba(96,165,250,0.20);
+            color: var(--text-white, #f0f6ff);
+            font-weight: 700; font-size: 0.85rem;
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+        }
+        .popup-mockup__body { padding: 16px; }
+        .popup-mockup__row { margin-bottom: 16px; }
+        .popup-mockup__row:last-child { margin-bottom: 0; }
+        .popup-mockup__row label {
+            display: flex; justify-content: space-between;
+            font-size: 0.8rem; color: var(--text-secondary, #8892b0);
+            margin-bottom: 6px;
+        }
+        .popup-mockup__row label span:last-child {
+            color: var(--accent-sky, #38bdf8); font-family: 'JetBrains Mono', monospace;
+        }
+        .popup-mockup input[type="range"] {
+            width: 100%; accent-color: var(--accent-sky, #38bdf8);
+        }
+        .popup-mockup select {
+            width: 100%; padding: 8px 10px;
+            background: rgba(6,12,26,0.95);
+            color: var(--text-white, #f0f6ff);
+            border: 1px solid rgba(96,165,250,0.35);
+            border-radius: 8px; font-size: 0.85rem;
+        }
+        .popup-mockup__footnote {
+            padding: 10px 14px;
+            font-size: 0.72rem; color: var(--text-secondary, #8892b0);
+            border-top: 1px solid rgba(96,165,250,0.15);
+            text-align: center;
+        }
+        .mockup-caption {
+            text-align: center; margin-top: 12px;
+            color: var(--text-secondary, #8892b0);
+            font-size: 0.85rem; font-style: italic;
+        }
+
+        .install-cta { display: flex; justify-content: center; margin-top: 18px; }
+        .install-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--accent-blue, #2563eb), var(--accent-sky, #38bdf8));
+            color: #fff; font-weight: 700; font-size: 1rem;
+            border-radius: 10px; text-decoration: none;
+            box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+        .install-btn:hover { opacity: 1; }
+        .cta-note {
+            text-align: center; margin-top: 12px;
+            color: var(--text-secondary, #8892b0);
+            font-size: 0.88rem;
+        }
+    </style>
+</head>
+<body class="homepage">
+    <div id="content-wrapper">
+        <a href="#main-content" class="skip-link">Skip to main content</a>
+
+        <!-- ============================================================
+             Site navigation (kept consistent across all tool pages)
+             ============================================================ -->
+        <header role="banner" class="modern-header sticky-header fundamental-nav" style="position: sticky; top: 0; z-index: 1001;">
+            <nav role="navigation" aria-label="Main navigation">
+                <div class="nav-container nav-elevated fundamental-nav-container">
+                    <div class="nav-brand fundamental-nav-brand">
+                        <a href="index.html" aria-label="Go to Home" style="all: unset; cursor: pointer; display: inline-block;">
+                            <h1 class="nav-title fundamental-nav-title title-with-symbol" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h1>
+                        </a>
+                    </div>
+                    <div class="nav-menu fundamental-nav-menu" role="menubar">
+                        <a href="index.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-home"></i></span><span class="nav-text">Home</span></a>
+                        <a href="index.html#ai" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-lightbulb"></i></span><span class="nav-text">AI in Accessibility</span></a>
+                        <a href="index.html#blogs" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-pen-nib"></i></span><span class="nav-text">Blogs</span></a>
+                        <a href="index.html#mission" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-bullseye"></i></span><span class="nav-text">Our Mission</span></a>
+                        <a href="chat.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-comments"></i></span><span class="nav-text">Chat with AI</span></a>
+                        <a href="score.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-chart-bar"></i></span><span class="nav-text">Accessibility Score</span></a>
+                        <a href="memory-layer.html" class="nav-item nav-link active" role="menuitem" aria-current="page"><span class="nav-icon"><i class="fa fa-brain"></i></span><span class="nav-text">Memory Layer</span></a>
+                        <a href="help.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-question-circle"></i></span><span class="nav-text">Help</span></a>
+                    </div>
+                    <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                        <span class="hamburger"></span>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- ============================================================
+             Page content
+             ============================================================ -->
+        <main id="main-content" role="main" class="tool-shell">
+            <header class="tool-hero">
+                <h1><i class="fa fa-brain" aria-hidden="true"></i> Accessibility Memory Layer</h1>
+                <p class="tool-subtitle">A Chrome extension that remembers your accessibility preferences once and applies them automatically on every site you visit — no more reconfiguring text size, contrast, and spacing page after page.</p>
+            </header>
+
+            <!-- ===== The problem ===== -->
+            <section class="tool-card">
+                <h2><i class="fa fa-triangle-exclamation" aria-hidden="true"></i> Reconfiguring every site gets old fast</h2>
+                <p>Most accessibility settings live inside a single website. Bump the text size on one page, switch on high contrast on another, widen the line spacing somewhere else — and none of it follows you. Open a new tab, visit a different site, and you're back to the defaults, doing the same adjustments all over again.</p>
+                <p>The Accessibility Memory Layer flips that around. Set your preferences <strong>once</strong>, and the extension carries them with you — automatically, on every site, from the moment the page loads.</p>
+            </section>
+
+            <!-- ===== What it does ===== -->
+            <section class="tool-card">
+                <h2><i class="fa fa-sliders" aria-hidden="true"></i> What it actually does</h2>
+                <p>Three adjustable settings, saved to your browser and re-applied on every page load:</p>
+                <div class="feature-grid">
+                    <div class="feature">
+                        <h4><i class="fa fa-text-height" aria-hidden="true"></i> Text size</h4>
+                        <p>Scale body text up or down to a comfortable reading size. Set it once — it holds across every site.</p>
+                    </div>
+                    <div class="feature">
+                        <h4><i class="fa fa-circle-half-stroke" aria-hidden="true"></i> Contrast mode</h4>
+                        <p>Choose <strong>Default</strong>, <strong>High-contrast</strong>, or <strong>Dark-inverted</strong> — whichever makes text easiest to read for you.</p>
+                    </div>
+                    <div class="feature">
+                        <h4><i class="fa fa-align-left" aria-hidden="true"></i> Line spacing</h4>
+                        <p>Loosen up dense paragraphs so lines don't run together, without changing font size.</p>
+                    </div>
+                    <div class="feature">
+                        <h4><i class="fa fa-bolt" aria-hidden="true"></i> Live updates</h4>
+                        <p>Change a setting while a page is already open and it re-applies immediately — no refresh needed.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== How it works ===== -->
+            <section class="tool-card">
+                <h2><i class="fa fa-gears" aria-hidden="true"></i> How it works</h2>
+                <p>No account, no per-site setup. Just a browser extension quietly doing the same small job everywhere you go:</p>
+                <ol class="step-list">
+                    <li><strong>Install the extension</strong> — it adds a small icon to your Chrome toolbar.</li>
+                    <li><strong>Set your preferences once</strong> — pick your text size, contrast mode, and line spacing from the popup.</li>
+                    <li><strong>Browse normally</strong> — the extension stores your profile locally and injects the right styling into every page you open, automatically, in the background.</li>
+                </ol>
+                <div class="help-callout">
+                    <i class="fa fa-shield-alt ico" aria-hidden="true"></i>
+                    <p><strong>Privacy note.</strong> Your preferences are stored locally in your browser. Nothing is uploaded or shared — the extension only reads its own saved settings and applies styling to the page you're viewing.</p>
+                </div>
+            </section>
+
+            <!-- ===== Popup preview ===== -->
+            <section class="tool-card">
+                <h2><i class="fa fa-image" aria-hidden="true"></i> See it in action</h2>
+                <p>This is what the popup looks like when you click the toolbar icon:</p>
+                <div class="popup-mockup-wrap">
+                    <div class="popup-mockup" aria-hidden="true">
+                        <div class="popup-mockup__bar"><i class="fa fa-brain" aria-hidden="true"></i>&nbsp; Accessibility Memory Layer</div>
+                        <div class="popup-mockup__body">
+                            <div class="popup-mockup__row">
+                                <label><span>Text size</span><span>18px</span></label>
+                                <input type="range" min="12" max="28" value="18" disabled>
+                            </div>
+                            <div class="popup-mockup__row">
+                                <label><span>Line spacing</span><span>1.6</span></label>
+                                <input type="range" min="1" max="2.2" step="0.1" value="1.6" disabled>
+                            </div>
+                            <div class="popup-mockup__row">
+                                <label><span>Contrast mode</span></label>
+                                <select disabled>
+                                    <option>Default</option>
+                                    <option>High-contrast</option>
+                                    <option>Dark-inverted</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="popup-mockup__footnote">Changes apply instantly — no save button needed</div>
+                    </div>
+                </div>
+                <!-- This is a hand-built mockup standing in for real product screenshots.
+                     Once the extension has a finished popup UI, replace the .popup-mockup
+                     block above with actual screenshots (e.g. images/memory-layer-popup.png). -->
+                <p class="mockup-caption">Mockup of the popup UI — real screenshots will replace this once the extension ships.</p>
+            </section>
+
+            <!-- ===== Install CTA ===== -->
+            <section class="tool-card" style="text-align:center;">
+                <h2 style="justify-content:center;"><i class="fa fa-download" aria-hidden="true"></i> Get the extension</h2>
+                <p>The Accessibility Memory Layer isn't published to the Chrome Web Store yet.</p>
+                <div class="install-cta">
+                    <!--
+                        TODO: Once the extension is live on the Chrome Web Store, replace href="#"
+                        below with the real listing URL, e.g.:
+                        https://chromewebstore.google.com/detail/<your-extension-id>
+                        and remove the aria-disabled attribute and onclick guard.
+                    -->
+                    <a href="#" class="install-btn" aria-disabled="true" onclick="return false;">
+                        <i class="fab fa-chrome" aria-hidden="true"></i> Add to Chrome — Coming soon
+                    </a>
+                </div>
+                <p class="cta-note">Not live yet — check back soon, or ask the <a href="chat.html" style="color: var(--accent-sky, #38bdf8);">chat assistant</a> for updates.</p>
+            </section>
+
+            <section class="tool-card">
+                <h2><i class="fa fa-compass" aria-hidden="true"></i> Explore more accessibility tools</h2>
+                <div class="tool-chips" style="margin-top:0;">
+                    <a class="tool-chip" href="score.html"><i class="fa fa-chart-bar" aria-hidden="true"></i> Accessibility score</a>
+                    <a class="tool-chip" href="chat.html"><i class="fa fa-comments" aria-hidden="true"></i> Chat with AI</a>
+                </div>
+            </section>
+        </main>
+
+        <footer role="contentinfo">
+            <div class="footer-content">
+                <p>&copy; 2024 AccessAI · Designed to follow WCAG 2.1 Level AA.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script defer src="./scripts/tool-shared.js"></script>
+    <script defer src="./scripts/nav-redesign.js"></script>
+</body>
+</html>
