@@ -53,7 +53,7 @@
                 <div class="nav-container nav-elevated fundamental-nav-container">
                     <div class="nav-brand fundamental-nav-brand">
                         <button onclick="switchTab('home');" aria-label="Go to Home" style="background: none; border: none; padding: 0; cursor: pointer; display: inline-block; color: inherit; font: inherit;">
-                            <h1 class="nav-title fundamental-nav-title title-with-symbol" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h1>
+                            <h2 class="nav-title fundamental-nav-title title-with-symbol" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h2>
                         </button>
                     </div>
                     <div class="nav-menu fundamental-nav-menu" role="menubar">
@@ -84,10 +84,6 @@
                         <a href="memory-layer.html" class="nav-item nav-link" role="menuitem">
                             <span class="nav-icon"><i class="fa fa-brain"></i></span>
                             <span class="nav-text">Memory Layer</span>
-                        </a>
-                        <a href="help.html" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-question-circle"></i></span>
-                            <span class="nav-text">Help</span>
                         </a>
                     </div>
                     <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -218,7 +214,7 @@
                                 <div class="tool-content">
                                     <form id="home-accessibility-checker-form" class="modern-checker-form" autocomplete="off">
                                         <div class="input-group">
-                                            <input type="url" id="home-website-url" name="website-url" placeholder="https://example.com" required class="modern-checker-input" autocomplete="off">
+                                            <input type="url" id="home-website-url" name="website-url" placeholder="https://example.com" required class="modern-checker-input" autocomplete="off" aria-label="Enter website URL">
                                             <button type="submit" id="home-checker-btn" class="btn btn-primary">
                                                 <span class="btn-icon"><i class="fa fa-search"></i></span>
                                                 <span class="btn-text">Check Accessibility</span>
@@ -318,7 +314,7 @@
 
             <!-- Blogs Tab Content -->
             <div id="blogs" class="tab-content" role="tabpanel" aria-labelledby="blogs-tab">
-                <h1 class="big">Accessibility Blog</h1>
+                <h2 class="big">Accessibility Blog</h2>
                 <p class="blog-intro">Explore our comprehensive guides on web accessibility, assistive technologies, and inclusive design practices.</p>
                 
                 <div class="blog-container">
@@ -471,7 +467,7 @@
             <!-- AI in Accessibility Tab Content -->
             <div id="ai" class="tab-content" role="tabpanel" aria-labelledby="ai-tab">
                 <div class="my-ai-card">
-                    <h1 class="bigblue">✨ AI in Computer Accessibility</h1>
+                    <h2 class="bigblue">✨ AI in Computer Accessibility</h2>
                     <hr class="my-ai-separator">
                     
                     <div class="my-ai-quote">
@@ -668,7 +664,7 @@
                 <section class="mission-hero">
                     <div class="grain-overlay"></div>
                     <div class="mission-hero-content">
-                        <h1 class="mission-hero-title">Our Mission</h1>
+                        <h2 class="mission-hero-title">Our Mission</h2>
                     </div>
                 </section>
                 
@@ -715,7 +711,7 @@
                 <!-- Hero Section -->
                 <section class="help-hero">
                     <div class="help-hero-content">
-                        <h1 class="help-title">How We Help</h1>
+                        <h2 class="help-title">How We Help</h2>
                         <p class="help-subtitle">Empowering everyone to access and navigate the digital world with confidence</p>
                         <div class="help-stats">
                             <div class="stat-card">
@@ -831,7 +827,7 @@
             <div id="chat" class="tab-content" role="tabpanel" aria-labelledby="chat-tab" style="display: none;">
                 <section class="chat-hero">
                     <div class="chat-hero-content">
-                        <h1 class="chat-title">💬 Accessibility AI Assistant</h1>
+                        <h2 class="chat-title">💬 Accessibility AI Assistant</h2>
                         <p class="chat-subtitle">Ask me anything about web accessibility, WCAG guidelines, assistive technologies, and inclusive design practices!</p>
                     </div>
                 </section>
@@ -851,10 +847,10 @@
                                 </div>
                             </div>
                             <div class="header-actions">
-                                <button class="btn btn-small" onclick="clearChatHistory()" title="Clear Chat">
+                                <button class="btn btn-small" onclick="clearChatHistory()" title="Clear Chat" aria-label="Clear chat history">
                                     <span class="btn-icon">🗑️</span>
                                 </button>
-                                <button class="btn btn-small" onclick="exportChatHistory()" title="Export Chat">
+                                <button class="btn btn-small" onclick="exportChatHistory()" title="Export Chat" aria-label="Export chat history">
                                     <span class="btn-icon">📥</span>
                                 </button>
                             </div>
@@ -889,9 +885,9 @@
                         <div class="chat-input-container modern-input">
                             <div class="input-wrapper modern-wrapper">
                                 <div class="input-field-container">
-                                    <textarea id="chat-input" placeholder="Type your question here..." maxlength="500" rows="1" class="modern-textarea" autocomplete="off"></textarea>
+                                    <textarea id="chat-input" placeholder="Type your question here..." maxlength="500" rows="1" class="modern-textarea" autocomplete="off" aria-label="Type your question here"></textarea>
                                     <div class="input-actions">
-                                        <button class="send-button modern-send" id="send-button">
+                                        <button class="send-button modern-send" id="send-button" aria-label="Send message">
                                             <span class="send-icon">📤</span>
                                         </button>
                                     </div>
@@ -910,7 +906,7 @@
                             <div class="chat-history-header">
                                 <h4>📜 Chat History</h4>
                                 <button class="toggle-history-btn modern-toggle" onclick="toggleChatHistory()">
-                                    <span class="toggle-icon">?</span>
+                                    <span class="toggle-icon">👁️</span>
                                     Show/Hide
                                 </button>
                             </div>
@@ -945,7 +941,7 @@
             <!-- Score Tab Content -->
             <div id="score" class="tab-content" role="tabpanel" aria-labelledby="score-tab" style="display: none;">
                 <section class="score-section">
-                    <h1>Website Accessibility Score</h1>
+                    <h2>Website Accessibility Score</h2>
                     <form id="score-form" class="score-form" autocomplete="off">
                         <div class="form-group">
                             <label for="url" class="form-label">Enter website URL:</label>
@@ -1056,11 +1052,11 @@
                             <h3>WCAG 2.1 Level AA Compliance</h3>
                             <div class="standards-grid">
                                 <div class="compliant-standards">
-                                    <h4>? Compliant Standards</h4>
+                                    <h4>✅ Compliant Standards</h4>
                                     <div id="compliant-list" class="standards-list"></div>
                                 </div>
                                 <div class="non-compliant-standards">
-                                    <h4>? Non-Compliant Standards</h4>
+                                    <h4>❌ Non-Compliant Standards</h4>
                                     <div id="non-compliant-list" class="standards-list"></div>
                                 </div>
                             </div>
@@ -1113,28 +1109,28 @@
     <!-- Accessibility Widget -->
     <div id="accessibility-widget" class="accessibility-widget">
         <button id="acc-btn" aria-label="Open accessibility menu" aria-expanded="false">
-            <span class="widget-icon">?</span>
+            <span class="widget-icon">♿</span>
             <span class="widget-text">Accessibility</span>
         </button>
         <div id="acc-menu" class="acc-menu" role="menu">
             <div class="acc-section">
                 <h4>Visual Adjustments</h4>
-                <button role="menuitem" onclick="toggleFeature('high-contrast')" id="high-contrast-btn">
+                <button role="menuitem" onclick="toggleFeature('high-contrast')" id="high-contrast-btn" aria-pressed="false">
                     <span class="acc-icon">🎨</span>
                     <span class="acc-text">High Contrast</span>
                     <span class="acc-status" id="high-contrast-status">Off</span>
                 </button>
-                <button role="menuitem" onclick="toggleFeature('grayscale')" id="grayscale-btn">
+                <button role="menuitem" onclick="toggleFeature('grayscale')" id="grayscale-btn" aria-pressed="false">
                     <span class="acc-icon">?</span>
                     <span class="acc-text">Grayscale</span>
                     <span class="acc-status" id="grayscale-status">Off</span>
                 </button>
-                <button role="menuitem" onclick="toggleFeature('invert-colors')" id="invert-colors-btn">
+                <button role="menuitem" onclick="toggleFeature('invert-colors')" id="invert-colors-btn" aria-pressed="false">
                     <span class="acc-icon">🔄</span>
                     <span class="acc-text">Invert Colors</span>
                     <span class="acc-status" id="invert-colors-status">Off</span>
                 </button>
-                <button role="menuitem" onclick="toggleFeature('brightness')" id="brightness-btn">
+                <button role="menuitem" onclick="toggleFeature('brightness')" id="brightness-btn" aria-pressed="false">
                     <span class="acc-icon">☀️</span>
                     <span class="acc-text">Brightness</span>
                     <span class="acc-status" id="brightness-status">Off</span>
@@ -1157,17 +1153,17 @@
                         <span class="acc-text">Larger</span>
                     </button>
                 </div>
-                <button role="menuitem" onclick="toggleFeature('reading-line')" id="reading-line-btn">
+                <button role="menuitem" onclick="toggleFeature('reading-line')" id="reading-line-btn" aria-pressed="false">
                     <span class="acc-icon">📏</span>
                     <span class="acc-text">Reading Line</span>
                     <span class="acc-status" id="reading-line-status">Off</span>
                 </button>
-                <button role="menuitem" onclick="toggleFeature('readable-fonts')" id="readable-fonts-btn">
+                <button role="menuitem" onclick="toggleFeature('readable-fonts')" id="readable-fonts-btn" aria-pressed="false">
                     <span class="acc-icon">📝</span>
                     <span class="acc-text">Readable Fonts</span>
                     <span class="acc-status" id="readable-fonts-status">Off</span>
                 </button>
-                <button role="menuitem" onclick="toggleFeature('highlight-links')" id="highlight-links-btn">
+                <button role="menuitem" onclick="toggleFeature('highlight-links')" id="highlight-links-btn" aria-pressed="false">
                     <span class="acc-icon">🔗</span>
                     <span class="acc-text">Highlight Links</span>
                     <span class="acc-status" id="highlight-links-status">Off</span>
@@ -1176,17 +1172,17 @@
             
             <div class="acc-section">
                 <h4>Navigation & Cursor</h4>
-                <button role="menuitem" onclick="toggleFeature('big-cursor')" id="big-cursor-btn">
+                <button role="menuitem" onclick="toggleFeature('big-cursor')" id="big-cursor-btn" aria-pressed="false">
                     <span class="acc-icon">🖱️</span>
                     <span class="acc-text">Big Cursor</span>
                     <span class="acc-status" id="big-cursor-status">Off</span>
                 </button>
-                <button role="menuitem" onclick="toggleFeature('focus-indicator')" id="focus-indicator-btn">
+                <button role="menuitem" onclick="toggleFeature('focus-indicator')" id="focus-indicator-btn" aria-pressed="false">
                     <span class="acc-icon">🎯</span>
                     <span class="acc-text">Focus Indicator</span>
                     <span class="acc-status" id="focus-indicator-status">Off</span>
                 </button>
-                <button role="menuitem" onclick="toggleFeature('tooltips')" id="tooltips-btn">
+                <button role="menuitem" onclick="toggleFeature('tooltips')" id="tooltips-btn" aria-pressed="false">
                     <span class="acc-icon">💭</span>
                     <span class="acc-text">Tooltips</span>
                     <span class="acc-status" id="tooltips-status">Off</span>
@@ -1195,17 +1191,17 @@
             
             <div class="acc-section">
                 <h4>Content & Media</h4>
-                <button role="menuitem" onclick="toggleFeature('hide-images')" id="hide-images-btn">
+                <button role="menuitem" onclick="toggleFeature('hide-images')" id="hide-images-btn" aria-pressed="false">
                     <span class="acc-icon">🖼️</span>
                     <span class="acc-text">Hide Images</span>
                     <span class="acc-status" id="hide-images-status">Off</span>
                 </button>
-                <button role="menuitem" onclick="toggleFeature('text-to-speech')" id="text-to-speech-btn">
+                <button role="menuitem" onclick="toggleFeature('text-to-speech')" id="text-to-speech-btn" aria-pressed="false">
                     <span class="acc-icon">🔊</span>
                     <span class="acc-text">Text to Speech</span>
                     <span class="acc-status" id="text-to-speech-status">Off</span>
                 </button>
-                <button role="menuitem" onclick="toggleFeature('pause-animations')" id="pause-animations-btn">
+                <button role="menuitem" onclick="toggleFeature('pause-animations')" id="pause-animations-btn" aria-pressed="false">
                     <span class="acc-icon">⏸️</span>
                     <span class="acc-text">Pause Animations</span>
                     <span class="acc-status" id="pause-animations-status">Off</span>
@@ -1454,6 +1450,10 @@
             if (statusElement) {
                 statusElement.textContent = isActive ? 'On' : 'Off';
                 statusElement.className = `acc-status ${isActive ? 'active' : ''}`;
+            }
+            const toggleButton = document.getElementById(`${feature}-btn`);
+            if (toggleButton) {
+                toggleButton.setAttribute('aria-pressed', isActive ? 'true' : 'false');
             }
         }
 
@@ -2245,7 +2245,6 @@ document.addEventListener('DOMContentLoaded', function() {
         cell.style.transform = 'translateX(calc(-50% + ' + x + 'px)) translateZ(' + z + 'px) scale(' + scale + ')';
         cell.style.opacity = opacity;
         cell.style.zIndex = Math.round(scale * 10);
-        cell.setAttribute('aria-hidden', i === idx ? 'false' : 'true');
       });
 
       // Update dots

@@ -196,7 +196,7 @@ header[role="banner"] {
 }
 
 .nav-item {
-  color: var(--text-secondary) !important;
+  color: var(--text-primary) !important;
   font-family: var(--font-body) !important;
   font-size: 0.88rem !important;
   font-weight: 500 !important;
@@ -673,7 +673,6 @@ textarea,
   font-family: var(--font-body) !important;
   font-size: 0.95rem !important;
   transition: all var(--transition-fast) !important;
-  outline: none !important;
 }
 
 input::placeholder,
@@ -689,6 +688,8 @@ textarea:focus,
   border-color: var(--accent-blue) !important;
   box-shadow: 0 0 0 3px rgba(37,99,235,0.20) !important;
   background: rgba(10,18,40,0.9) !important;
+  outline: 2px solid var(--accent-sky) !important;
+  outline-offset: 2px !important;
 }
 
 /* =====================================================
