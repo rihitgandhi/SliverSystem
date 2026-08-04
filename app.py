@@ -250,6 +250,10 @@ def help_page():
 def memory_layer_page():
     return send_from_directory('.', 'memory-layer.html')
 
+@app.route('/voice-navigation.html')
+def voice_navigation_page():
+    return send_from_directory('.', 'voice-navigation.html')
+
 @app.route('/api/score', methods=['POST', 'OPTIONS'])
 def score():
     """Differentiated accessibility report.

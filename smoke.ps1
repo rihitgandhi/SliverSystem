@@ -26,7 +26,7 @@ function Test-Post($path,$body) {
   }
 }
 
-$gets = '/','/index.html','/chat.html','/score.html','/memory-layer.html','/help.html','/Blog_1.html','/api/health','/css/main.css','/scripts/tool-shared.js','/scripts/chatbot.js'
+$gets = '/','/index.html','/chat.html','/score.html','/memory-layer.html','/voice-navigation.html','/help.html','/Blog_1.html','/api/health','/css/main.css','/scripts/tool-shared.js','/scripts/chatbot.js'
 foreach ($g in $gets) {
   try {
     $r = Invoke-WebRequest -Uri ("http://127.0.0.1:5000" + $g) -Method GET -TimeoutSec 30 -UseBasicParsing
