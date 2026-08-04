@@ -17,6 +17,7 @@
   function initParticles() {
     const hero = qs('.custom-hero-section');
     if (!hero) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const canvas = document.createElement('canvas');
     canvas.id = 'particles-canvas';
@@ -31,7 +32,7 @@
 
     const ctx = canvas.getContext('2d');
     let W, H, particles;
-    const PARTICLE_COUNT = 90;
+    const PARTICLE_COUNT = 50;
     const COLORS = ['#2563eb', '#38bdf8', '#818cf8', '#60a5fa', '#0ea5e9'];
 
     function resize() {
@@ -78,7 +79,11 @@
     }
 
     let frame = 0;
+    let rafId = null;
+    let running = false;
+
     function animate() {
+      if (!running) return;
       ctx.clearRect(0, 0, W, H);
       frame++;
 
@@ -103,15 +108,43 @@
         if (p.y > H + 10) p.y = -10;
       });
 
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
+    }
+
+    // Only spend CPU on the particle loop while the hero is actually
+    // visible — it used to run forever, even scrolled off-screen or
+    // with the tab backgrounded.
+    let heroIntersecting = true;
+    function start() {
+      if (running) return;
+      running = true;
+      rafId = requestAnimationFrame(animate);
+    }
+    function stop() {
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+    }
+    function sync() {
+      if (heroIntersecting && !document.hidden) start();
+      else stop();
     }
 
     window.addEventListener('resize', () => {
       resize();
     }, { passive: true });
 
+    document.addEventListener('visibilitychange', sync);
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        heroIntersecting = entries[0].isIntersecting;
+        sync();
+      }, { threshold: 0 });
+      io.observe(hero);
+    }
+
     init();
-    animate();
+    sync();
   }
 
   /* ──────────────────────────────────────────────
@@ -353,9 +386,14 @@
     const indicator = hero.querySelector('.hero-scroll-indicator');
     if (!indicator) return;
 
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const opacity = 1 - clamp(window.scrollY / 200, 0, 1);
-      indicator.style.opacity = opacity;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        indicator.style.opacity = 1 - clamp(window.scrollY / 200, 0, 1);
+        ticking = false;
+      });
     }, { passive: true });
   }
 
@@ -448,20 +486,31 @@
      10. TILT EFFECT — Cards
   ────────────────────────────────────────────── */
   function initCardTilt() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const cards = qsa('.tool-card, .feature-card, .tech-item, .app-card');
 
     cards.forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect   = card.getBoundingClientRect();
-        const cx     = rect.left + rect.width  / 2;
-        const cy     = rect.top  + rect.height / 2;
-        const dx     = (e.clientX - cx) / (rect.width  / 2);
-        const dy     = (e.clientY - cy) / (rect.height / 2);
-        const rx     = clamp(dy * 5, -8, 8);
-        const ry     = clamp(-dx * 5, -8, 8);
+      let ticking = false;
+      let lastX = 0, lastY = 0;
 
-        card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
-        card.style.transition = 'transform 0.1s ease';
+      card.addEventListener('mousemove', (e) => {
+        lastX = e.clientX;
+        lastY = e.clientY;
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const cx   = rect.left + rect.width  / 2;
+          const cy   = rect.top  + rect.height / 2;
+          const dx   = (lastX - cx) / (rect.width  / 2);
+          const dy   = (lastY - cy) / (rect.height / 2);
+          const rx   = clamp(dy * 5, -8, 8);
+          const ry   = clamp(-dx * 5, -8, 8);
+
+          card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
+          card.style.transition = 'transform 0.1s ease';
+          ticking = false;
+        });
       });
 
       card.addEventListener('mouseleave', () => {

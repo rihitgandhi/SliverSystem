@@ -10,7 +10,7 @@
 body::after {
   content: '';
   position: fixed;
-  inset: 0;
+  inset: -60px;
   background-image:
     linear-gradient(rgba(56,189,248,0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(56,189,248,0.04) 1px, transparent 1px);
@@ -18,11 +18,12 @@ body::after {
   pointer-events: none;
   z-index: 0;
   animation: meshDrift 30s linear infinite;
+  will-change: transform;
 }
 
 @keyframes meshDrift {
-  0%   { background-position: 0 0; }
-  100% { background-position: 60px 60px; }
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
 }
 
 /* -------------------------------------------------------

@@ -153,8 +153,8 @@ a:hover {
 header.modern-header,
 header[role="banner"] {
   background: rgba(6,12,26,0.92) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
   border-bottom: 1px solid var(--border-subtle) !important;
   box-shadow: 0 4px 30px rgba(0,0,0,0.4) !important;
   position: sticky !important;
