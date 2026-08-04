@@ -1838,7 +1838,7 @@ section button[onclick*="switchTab('blogs')"] {
   width: 18px !important;
   height: 18px !important;
   animation: spin 0.7s linear infinite !important;
-  display: inline-block !important;
+  display: inline-block;
 }
 
 @keyframes spin {

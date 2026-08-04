@@ -14,10 +14,12 @@
 
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/dark-theme.css">
-    <link rel="stylesheet" href="./css/tool-pages.css">
-    <link rel="stylesheet" href="./css/tool-progress.css">
-    <link rel="stylesheet" href="./css/nav-redesign.css">
-    <link rel="stylesheet" href="./css/ux-consistency.css">
+    <style>
+        /* main.css hides .tool-card by default (opacity:0), waiting for a JS
+           "animate-in" class that used to come from scripts/nav-redesign.js —
+           that file isn't part of this site anymore, so show cards plainly. */
+        .tool-card { opacity: 1; transform: none; }
+    </style>
 </head>
 <body class="homepage">
     <div id="content-wrapper">
@@ -120,8 +122,6 @@
         </footer>
     </div>
 
-    <script defer src="scripts/tool-shared.js"></script>
-    <script defer src="scripts/tool-progress.js"></script>
     <script defer src="scripts/chatbot.js"></script>
     <script defer>
         document.addEventListener('DOMContentLoaded', function () {
@@ -145,6 +145,19 @@
             });
         });
     </script>
-    <script defer src="./scripts/nav-redesign.js"></script>
+    <script>
+    (function () {
+        'use strict';
+        var navToggle = document.querySelector('.nav-toggle');
+        var navMenu = document.querySelector('.nav-menu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function () {
+                var expanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', String(!expanded));
+                navMenu.classList.toggle('active');
+            });
+        }
+    })();
+    </script>
 </body>
 </html>
