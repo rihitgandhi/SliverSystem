@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Accessibility Second Brain — a Chrome extension that remembers your text size, contrast, and line spacing preferences and applies them automatically on every website you visit.">
+    <meta name="description" content="Second Brain — a Chrome extension that remembers your text size, contrast, and line spacing preferences and applies them automatically on every website you visit.">
     <meta name="theme-color" content="#060c1a">
     <meta name="color-scheme" content="dark light">
-    <title>Accessibility Second Brain · AccessAI</title>
+    <title>Second Brain · AccessAI</title>
     <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,10 +19,12 @@
     <link rel="stylesheet" href="./css/dark-theme.css">
     <style>
         /* =====================================================
-           Accessibility Memory Layer — page-specific styling.
-           Tokens (colors, fonts, radii, glassmorphism) come from
-           dark-theme.css. Everything here is unique to this page,
-           namespaced with .ml- so it can't leak into other tabs.
+           Second Brain — page-specific styling.
+           Built from scratch: one idea per screen, scroll-revealed,
+           a single accent color, no emoji, no stat-card grid.
+           Tokens (colors, fonts, radii) come from dark-theme.css.
+           Everything here is namespaced .sb- so it can't leak
+           into other pages.
            ===================================================== */
 
         .visually-hidden {
@@ -31,497 +33,397 @@
             clip: rect(0,0,0,0); white-space: nowrap; border: 0;
         }
 
-        /* main.css starts every .tool-card at opacity:0, waiting for a JS
-           "animate-in" class that scripts/nav-redesign.js would add — that
-           file isn't present on this site, so cards would stay invisible
-           forever. Reset it; .ml-reveal below (later in source, so it wins
-           on ties) handles this page's own scroll-in animation instead. */
-        .tool-card { opacity: 1; transform: none; }
+        main { display: block; }
+
+        /* ---------- Shared rhythm ---------- */
+        .sb-screen {
+            min-height: 100svh;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(3.5rem, 9vw, 6rem) 1.5rem;
+        }
+        .sb-shell { max-width: 760px; margin: 0 auto; width: 100%; }
+        .sb-shell--wide { max-width: 980px; }
+
+        .sb-kicker {
+            display: block;
+            font-size: 0.78rem; font-weight: 700; letter-spacing: 0.16em;
+            text-transform: uppercase; color: var(--accent-sky);
+            margin-bottom: 1rem;
+        }
+
+        .sb-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.35s ease-out, transform 0.35s ease-out; }
+        .sb-reveal.is-visible { opacity: 1; transform: none; }
+        .sb-reveal-1.is-visible { transition-delay: 0.08s; }
+        .sb-reveal-2.is-visible { transition-delay: 0.16s; }
+        .sb-reveal-3.is-visible { transition-delay: 0.24s; }
+        @media (prefers-reduced-motion: reduce) {
+            .sb-reveal { opacity: 1; transform: none; transition: none; }
+        }
 
         /* ---------- Hero ---------- */
-        .ml-hero {
+        .sb-hero {
             position: relative;
             overflow: hidden;
-            padding: clamp(4rem, 10vw, 7rem) 1.5rem clamp(3.5rem, 8vw, 5.5rem);
             text-align: center;
-            background: linear-gradient(135deg, #060c1a 0%, #0a1228 55%, #0d1a36 100%);
+            background: linear-gradient(160deg, #060c1a 0%, #0a1228 60%, #0d1a36 100%);
         }
-        .ml-hero::before {
+        .sb-hero::before {
             content: '';
             position: absolute; inset: 0;
-            background: radial-gradient(ellipse 65% 55% at 50% 20%, rgba(37,99,235,0.20) 0%, transparent 70%);
+            background: radial-gradient(ellipse 60% 50% at 50% 18%, rgba(56,189,248,0.16) 0%, transparent 70%);
             pointer-events: none;
         }
-        .ml-hero-inner { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
-
-        .ml-eyebrow {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            background: rgba(37,99,235,0.15);
-            border: 1px solid rgba(56,189,248,0.25);
-            color: var(--accent-sky);
-            border-radius: 999px;
-            padding: 0.4rem 1rem;
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            margin-bottom: 1.75rem;
+        .sb-hero-inner { position: relative; z-index: 1; }
+        .sb-eyebrow {
+            font-size: 0.8rem; font-weight: 700; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--text-muted);
+            margin-bottom: 1.5rem;
         }
-
-        .ml-hero h1 {
+        .sb-hero h1 {
             font-family: var(--font-display);
             font-weight: 800;
             letter-spacing: -0.03em;
-            line-height: 1.08;
-            margin: 0;
-        }
-        .ml-hero-line1 {
-            display: block;
-            font-size: clamp(2.4rem, 6.4vw, 4.6rem);
+            line-height: 1.05;
+            font-size: clamp(2.25rem, 8vw, 4.5rem);
+            margin: 0 0 1.1rem;
             background: linear-gradient(135deg, #ffffff 0%, var(--accent-sky) 100%);
             -webkit-background-clip: text; background-clip: text;
             -webkit-text-fill-color: transparent; color: transparent;
         }
-        .ml-hero-line2 {
-            display: block;
-            font-size: 40px;
-            color: var(--text-white);
-            margin-top: 0.3em;
-            transition: font-size 0.06s linear;
-            will-change: font-size;
-        }
-
-        .ml-hero-slider-wrap {
-            max-width: 420px;
-            margin: 2.25rem auto 0;
-        }
-        .ml-hero-slider-labels {
-            display: flex; justify-content: space-between;
-            font-size: 0.78rem; color: var(--text-secondary);
-            text-transform: uppercase; letter-spacing: 0.08em;
-            margin-bottom: 0.5rem;
-        }
-        .ml-hero-slider-labels output {
-            color: var(--accent-sky); font-weight: 700;
+        .sb-hero-claim {
             font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            line-height: 1.5;
+            color: var(--text-white);
+            max-width: 30ch;
+            margin: 0 auto 1rem;
         }
-        input[type="range"].ml-range {
-            width: 100%;
-            appearance: none; -webkit-appearance: none;
-            height: 5px;
-            border-radius: 999px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-sky));
-            outline: none;
-            cursor: pointer;
-        }
-        input[type="range"].ml-range::-webkit-slider-thumb {
-            appearance: none; -webkit-appearance: none;
-            width: 20px; height: 20px; border-radius: 50%;
-            background: #fff;
-            border: 3px solid var(--accent-blue);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-            cursor: pointer;
-        }
-        input[type="range"].ml-range::-moz-range-thumb {
-            width: 20px; height: 20px; border-radius: 50%;
-            background: #fff;
-            border: 3px solid var(--accent-blue);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-            cursor: pointer;
-        }
-        .ml-hero-hint {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 0.6rem;
-        }
-
-        .ml-hero-sub {
-            font-size: clamp(1.02rem, 1.6vw, 1.2rem);
+        .sb-hero-sub {
+            font-size: 1.02rem;
             line-height: 1.7;
             color: var(--text-secondary);
-            max-width: 620px;
-            margin: 2.25rem auto 0;
-        }
-        .ml-hero-sub strong { color: var(--text-primary); }
-
-        .ml-hero-cta {
-            display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap;
-            margin-top: 2.25rem;
-        }
-
-        /* ---------- Shared shell ---------- */
-        .ml-shell {
-            max-width: 1080px;
+            max-width: 40ch;
             margin: 0 auto;
-            padding: 0 1.5rem;
         }
-        .ml-section { padding: clamp(3rem, 6vw, 4.5rem) 0; }
-        .ml-section-head { max-width: 720px; margin: 0 auto 3rem; text-align: center; }
-        .ml-kicker {
-            display: block;
-            font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em;
-            text-transform: uppercase; color: var(--accent-sky);
-            margin-bottom: 0.8rem;
+        .sb-hero-diagram { margin: clamp(2.5rem, 6vw, 4rem) auto 0; max-width: 640px; }
+        .sb-hero-diagram figcaption {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
-        .ml-section-head h2 {
-            font-family: var(--font-display); font-weight: 800;
-            font-size: clamp(1.7rem, 4vw, 2.4rem);
-            color: var(--text-white); letter-spacing: -0.02em; margin: 0 0 0.9rem;
+        .sb-diagram-svg { width: 100%; height: auto; display: block; }
+        .sb-diagram-line {
+            stroke: var(--border-mid);
+            stroke-width: 1.5;
+            fill: none;
         }
-        .ml-section-head p {
-            color: var(--text-secondary); line-height: 1.65; margin: 0;
+        .sb-diagram-pulse {
+            fill: var(--accent-sky);
+            opacity: 0;
+            animation: sb-pulse 3.6s ease-in-out infinite;
         }
-
-        /* Reveal-on-scroll */
-        .ml-reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-        .ml-reveal.is-visible { opacity: 1; transform: none; }
+        .sb-diagram-pulse.p2 { animation-delay: 0.9s; }
+        .sb-diagram-pulse.p3 { animation-delay: 1.8s; }
+        .sb-diagram-pulse.p4 { animation-delay: 2.7s; }
+        @keyframes sb-pulse {
+            0% { opacity: 0; }
+            15% { opacity: 1; }
+            55% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        .sb-diagram-core-ring { fill: none; stroke: var(--accent-sky); stroke-width: 1.5; opacity: 0.5; }
+        .sb-diagram-core { fill: rgba(56,189,248,0.14); stroke: var(--accent-sky); stroke-width: 1.5; }
+        .sb-diagram-core-glyph { fill: none; stroke: var(--accent-sky); stroke-width: 1.6; stroke-linecap: round; }
+        .sb-diagram-node-box { fill: var(--bg-surface); stroke: var(--border-mid); stroke-width: 1.25; }
+        .sb-diagram-node-text {
+            font-family: var(--font-body);
+            font-size: 10.5px;
+            fill: var(--text-secondary);
+        }
+        .sb-diagram-core-text {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 11px;
+            fill: var(--text-white);
+        }
         @media (prefers-reduced-motion: reduce) {
-            .ml-reveal { opacity: 1; transform: none; transition: none; }
-            .ml-hero-line2 { transition: none; }
+            .sb-diagram-pulse { animation: none; opacity: 0.6; }
         }
 
-        /* ---------- Stat blocks ---------- */
-        .ml-stat {
+        .sb-scroll-cue {
+            display: inline-flex; margin: clamp(2.5rem, 6vw, 3.5rem) auto 0;
+            color: var(--text-muted);
+            animation: sb-bob 2.2s ease-in-out infinite;
+        }
+        .sb-scroll-cue:focus-visible { outline: 2px solid var(--accent-sky); outline-offset: 4px; border-radius: 4px; }
+        @keyframes sb-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .sb-scroll-cue { animation: none; }
+        }
+
+        /* ---------- Section heads ---------- */
+        .sb-h2 {
+            font-family: var(--font-display); font-weight: 800;
+            font-size: clamp(1.8rem, 5vw, 2.75rem);
+            color: var(--text-white); letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin: 0 0 1.1rem;
+            max-width: 16ch;
+        }
+        .sb-body {
+            font-size: 1.05rem; line-height: 1.75;
+            color: var(--text-secondary);
+            max-width: 46ch;
+        }
+        .sb-body strong { color: var(--text-primary); }
+
+        /* ---------- Problem section ---------- */
+        .sb-problem { background: var(--bg-base); }
+
+        /* ---------- How it works ---------- */
+        .sb-how { background: var(--bg-base); padding-top: clamp(4rem, 9vw, 6rem); padding-bottom: clamp(2rem, 6vw, 4rem); }
+        .sb-how-head { margin-bottom: clamp(3rem, 7vw, 5rem); }
+        .sb-how-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1.75rem;
-            align-items: center;
-            margin-bottom: 2.25rem;
-            padding: clamp(1.75rem, 3vw, 2.5rem);
+            gap: 0;
+        }
+        @media (min-width: 900px) {
+            .sb-how-grid { grid-template-columns: 64px 1fr; column-gap: 2.5rem; }
+        }
+        .sb-how-rail {
+            display: none;
+        }
+        @media (min-width: 900px) {
+            .sb-how-rail {
+                display: flex; flex-direction: column; align-items: center; gap: 0;
+                position: sticky; top: 40vh; height: fit-content;
+            }
+            .sb-rail-dot {
+                width: 8px; height: 8px; border-radius: 50%;
+                background: var(--border-mid);
+                margin: 10px 0;
+                transition: background var(--transition-med), transform var(--transition-med);
+            }
+            .sb-rail-dot.is-active { background: var(--accent-sky); transform: scale(1.35); }
+            .sb-rail-line { width: 1px; flex: 1; background: var(--border-subtle); }
+        }
+        .sb-step {
+            min-height: 62vh;
+            display: flex; flex-direction: column; justify-content: center;
+            padding: clamp(2rem, 6vw, 3rem) 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .sb-step:first-child { border-top: none; }
+        .sb-step-index {
+            font-family: var(--font-display); font-weight: 900;
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            line-height: 1; letter-spacing: -0.02em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .sb-step.is-active .sb-step-index { color: var(--accent-sky); }
+        .sb-step h3 {
+            font-family: var(--font-display); font-weight: 700;
+            font-size: clamp(1.35rem, 3.2vw, 1.9rem);
+            color: var(--text-white);
+            margin: 0 0 0.7rem;
+            max-width: 20ch;
+        }
+        .sb-step p {
+            color: var(--text-secondary); line-height: 1.7;
+            max-width: 42ch; margin: 0;
+            font-size: 1.02rem;
+        }
+
+        /* ---------- Demo ---------- */
+        .sb-demo { background: var(--bg-surface); }
+        .sb-demo-head { margin-bottom: clamp(2.5rem, 6vw, 3.5rem); }
+        .sb-demo-grid {
+            display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+            align-items: stretch;
         }
         @media (min-width: 860px) {
-            .ml-stat { grid-template-columns: 1fr 1fr; gap: 3rem; }
-            .ml-stat.ml-stat-flip .ml-stat-text { order: 2; }
-            .ml-stat.ml-stat-flip .ml-stat-demo { order: 1; }
+            .sb-demo-grid { grid-template-columns: 1fr auto 1fr; }
         }
-        .ml-stat-index {
-            font-family: var(--font-display);
-            font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
-            color: var(--text-muted); text-transform: uppercase;
-            margin-bottom: 0.6rem;
-        }
-        .ml-stat-figure {
-            font-family: var(--font-display);
-            font-weight: 900;
-            font-size: clamp(3rem, 8vw, 5.2rem);
-            line-height: 1;
-            letter-spacing: -0.03em;
-            background: linear-gradient(135deg, var(--accent-sky), var(--accent-glow));
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent; color: transparent;
-            margin-bottom: 0.6rem;
-        }
-        .ml-stat-desc {
-            color: var(--text-primary);
-            font-size: 1.02rem;
-            line-height: 1.65;
-            margin-bottom: 0.75rem;
-        }
-        .ml-stat-desc strong { color: var(--text-white); }
-        .ml-stat-source {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        /* Amber "twist" variant for the ARIA stat */
-        .ml-stat-warn { border-color: rgba(251,191,36,0.35) !important; }
-        .ml-stat-warn .ml-stat-figure {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: clamp(1.9rem, 4.4vw, 2.8rem);
-        }
-        .ml-twist-tag {
-            display: inline-flex; align-items: center; gap: 0.4rem;
-            background: rgba(251,191,36,0.14);
-            border: 1px solid rgba(251,191,36,0.35);
-            color: #fbbf24;
-            border-radius: 999px;
-            padding: 0.3rem 0.85rem;
-            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 0.9rem;
-        }
-
-        /* ---------- Demo shells: "simulated browser window" ---------- */
-        .ml-browser {
-            background: rgba(6,12,26,0.85);
+        .sb-panel {
+            background: var(--bg-overlay);
             border: 1px solid var(--border-mid);
             border-radius: var(--radius-md);
             overflow: hidden;
+            display: flex; flex-direction: column;
         }
-        .ml-browser-bar {
+        .sb-panel-bar {
             display: flex; align-items: center; gap: 0.5rem;
-            padding: 0.65rem 0.9rem;
-            background: rgba(3,6,15,0.9);
+            padding: 0.7rem 1rem;
+            background: rgba(3,6,15,0.85);
             border-bottom: 1px solid var(--border-subtle);
         }
-        .ml-browser-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--text-muted); opacity: 0.5; }
-        .ml-browser-url {
-            flex: 1;
-            font-size: 0.72rem;
-            color: var(--text-secondary);
-            background: rgba(255,255,255,0.04);
-            border-radius: 999px;
-            padding: 0.25rem 0.7rem;
-            text-align: center;
-            font-family: var(--font-body);
-        }
-        .ml-browser-body { padding: 1.25rem 1.35rem; }
-
-        /* Contrast demo */
-        .ml-contrast-sample {
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 1.4rem 1.25rem;
-            transition: background 0.15s ease;
-        }
-        .ml-contrast-sample p {
+        .sb-panel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-sky); opacity: 0.7; flex-shrink: 0; }
+        .sb-panel-url { font-size: 0.78rem; color: var(--text-secondary); font-family: var(--font-body); }
+        .sb-panel-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; gap: 1.25rem; }
+        .sb-panel h4 {
+            font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+            text-transform: uppercase; color: var(--text-muted);
             margin: 0;
-            font-size: 1rem;
-            line-height: 1.55;
-            font-family: var(--font-body);
-            transition: color 0.05s linear;
         }
-        .ml-contrast-controls { margin-top: 1.1rem; }
-        .ml-contrast-readout {
+
+        .sb-demo-controls { display: flex; flex-direction: column; gap: 1.1rem; }
+        .sb-control-row label {
             display: flex; justify-content: space-between; align-items: baseline;
-            margin-top: 0.7rem;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        .ml-contrast-readout .ratio { font-family: var(--font-display); color: var(--text-white); font-weight: 700; }
-        .ml-badge {
-            display: inline-flex; align-items: center; gap: 0.3rem;
-            padding: 0.18rem 0.6rem;
-            border-radius: 999px;
-            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
-        }
-        .ml-badge.pass { background: rgba(34,197,94,0.15); color: #86efac; }
-        .ml-badge.fail { background: rgba(239,68,68,0.15); color: #fca5a5; }
-
-        /* View-toggle (sighted / screen reader) used by alt-text + forms demos */
-        .ml-view-toggle {
-            display: inline-flex;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid var(--border-subtle);
-            border-radius: 999px;
-            padding: 3px;
-            margin-bottom: 1.1rem;
-        }
-        .ml-view-toggle button {
-            background: transparent; border: none; cursor: pointer;
-            font-family: var(--font-body); font-size: 0.78rem; font-weight: 600;
-            color: var(--text-secondary);
-            padding: 0.4rem 0.85rem;
-            border-radius: 999px;
-            transition: all var(--transition-fast);
-        }
-        .ml-view-toggle button[aria-pressed="true"] {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-sky));
-            color: #fff;
-        }
-
-        .ml-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
-        .ml-tile {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border-subtle);
-            border-radius: 10px;
-            padding: 0.8rem;
-        }
-        .ml-tile-swatch {
-            height: 54px; border-radius: 6px; margin-bottom: 0.6rem;
-            background: linear-gradient(135deg, rgba(56,189,248,0.35), rgba(129,140,248,0.35));
-        }
-        .ml-tile-title { font-size: 0.82rem; color: var(--text-primary); font-weight: 600; }
-        .ml-sr-caption {
-            display: none;
-            margin-top: 0.65rem;
-            font-size: 0.76rem;
-            line-height: 1.5;
-            color: var(--text-secondary);
-            background: rgba(255,255,255,0.04);
-            border-left: 3px solid var(--accent-sky);
-            border-radius: 0 6px 6px 0;
-            padding: 0.5rem 0.65rem;
-        }
-        .ml-sr-caption.is-broken { border-left-color: #f87171; color: #fca5a5; }
-        [data-view="sr"] .ml-sr-caption { display: block; }
-        .ml-sr-caption .fa { margin-right: 0.35rem; }
-
-        /* Form demo */
-        .ml-form-row { margin-bottom: 1rem; }
-        .ml-form-row:last-child { margin-bottom: 0; }
-        .ml-form-row label {
-            display: block; font-size: 0.8rem; color: var(--text-secondary);
-            margin-bottom: 0.35rem;
-        }
-        [data-view="sighted"] .ml-form-row.ml-form-nolabel label { display: none; }
-        .ml-form-row input {
-            width: 100%;
-            background: rgba(255,255,255,0.05) !important;
-            border: 1.5px solid var(--border-subtle) !important;
-            color: var(--text-white) !important;
-            border-radius: 8px !important;
-            padding: 0.6rem 0.8rem !important;
-            font-size: 0.88rem !important;
-        }
-
-        /* ARIA menu demo */
-        .ml-menu-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
-        .ml-menu-demo {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border-subtle);
-            border-radius: 10px;
-            padding: 0.9rem;
-            text-align: center;
-        }
-        .ml-menu-demo h4 {
-            font-size: 0.76rem; font-weight: 700; letter-spacing: 0.03em;
-            color: var(--text-secondary); margin: 0 0 0.7rem;
-        }
-        .ml-menu-btn {
-            background: rgba(37,99,235,0.18);
-            border: 1px solid var(--border-mid);
-            color: var(--text-white);
-            border-radius: 8px;
-            padding: 0.5rem 0.9rem;
-            font-size: 0.85rem; font-weight: 600;
-            cursor: pointer;
-            position: relative;
-        }
-        .ml-menu-drop {
-            margin-top: 0.5rem;
-            background: rgba(6,12,26,0.9);
-            border: 1px solid var(--border-subtle);
-            border-radius: 8px;
-            padding: 0.5rem;
-            display: none;
-            text-align: left;
-        }
-        .ml-menu-drop.is-open { display: block; }
-        .ml-menu-drop a {
-            display: block; padding: 0.4rem 0.5rem; border-radius: 6px;
-            font-size: 0.8rem; color: var(--text-secondary);
-        }
-        .ml-menu-drop a:hover { background: rgba(56,189,248,0.1); color: var(--text-white); }
-        .ml-menu-caption {
-            margin-top: 0.75rem;
-            font-size: 0.76rem;
-            line-height: 1.5;
-            color: var(--text-secondary);
-        }
-        .ml-menu-caption.is-broken { color: #fca5a5; }
-        .ml-menu-caption code {
-            background: rgba(255,255,255,0.08);
-            padding: 0.05rem 0.35rem;
-            border-radius: 4px;
-            font-size: 0.72em;
-        }
-
-        /* ---------- "See it in action" live preview ---------- */
-        .ml-preview-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-        @media (min-width: 860px) {
-            .ml-preview-grid { grid-template-columns: 300px 1fr; }
-        }
-        .ml-panel { padding: 1.4rem; }
-        .ml-panel-title {
-            font-family: var(--font-display);
-            font-weight: 700; font-size: 0.95rem;
-            color: var(--text-white);
-            display: flex; align-items: center; gap: 0.5rem;
-            margin-bottom: 1.2rem;
-        }
-        .ml-panel-row { margin-bottom: 1.3rem; }
-        .ml-panel-row:last-child { margin-bottom: 0; }
-        .ml-panel-row label {
-            display: flex; justify-content: space-between;
-            font-size: 0.8rem; color: var(--text-secondary);
+            font-size: 0.85rem; color: var(--text-secondary);
             margin-bottom: 0.5rem;
         }
-        .ml-panel-row label output { color: var(--accent-sky); font-weight: 700; }
-        .ml-panel-row select {
-            width: 100%; padding: 0.55rem 0.7rem;
-            background: rgba(6,12,26,0.95) !important;
-            color: var(--text-white) !important;
-            border: 1px solid var(--border-mid) !important;
-            border-radius: 8px !important;
-            font-size: 0.85rem !important;
+        .sb-control-row output { color: var(--accent-sky); font-weight: 700; font-family: var(--font-display); }
+        input[type="range"].sb-range {
+            width: 100%;
+            appearance: none; -webkit-appearance: none;
+            height: 4px; border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-sky));
+            outline: none; cursor: pointer;
+        }
+        input[type="range"].sb-range::-webkit-slider-thumb {
+            appearance: none; -webkit-appearance: none;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: #fff; border: 3px solid var(--accent-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4); cursor: pointer;
+        }
+        input[type="range"].sb-range::-moz-range-thumb {
+            width: 18px; height: 18px; border-radius: 50%;
+            background: #fff; border: 3px solid var(--accent-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4); cursor: pointer;
+        }
+        .sb-switch-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .sb-switch-row label { font-size: 0.85rem; color: var(--text-secondary); }
+        input[type="checkbox"].sb-switch {
+            appearance: none; -webkit-appearance: none;
+            width: 40px; height: 22px; border-radius: 999px;
+            background: var(--border-mid);
+            position: relative; cursor: pointer; flex-shrink: 0;
+            transition: background var(--transition-fast);
+        }
+        input[type="checkbox"].sb-switch::before {
+            content: ''; position: absolute; top: 2px; left: 2px;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: #fff; transition: transform var(--transition-fast);
+        }
+        input[type="checkbox"].sb-switch:checked { background: var(--accent-sky); }
+        input[type="checkbox"].sb-switch:checked::before { transform: translateX(18px); }
+
+        .sb-sample {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 1.25rem;
+            flex: 1;
+            transition: background 0.2s ease;
+        }
+        .sb-sample p { margin: 0; font-family: Georgia, 'Times New Roman', serif; color: #1c2436; line-height: 1.6; transition: font-size 0.05s linear; }
+        .sb-sample.is-contrast { background: #000000; }
+        .sb-sample.is-contrast p { color: #ffffff; font-weight: 600; }
+
+        .sb-demo-arrow {
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted);
+        }
+        .sb-demo-arrow svg { width: 28px; height: 28px; }
+        @media (max-width: 859px) {
+            .sb-demo-arrow { transform: rotate(90deg); margin: -0.5rem auto; }
         }
 
-        .ml-preview-page {
-            background: #ffffff;
+        .sb-remember-badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 0.8rem; font-weight: 700;
+            color: var(--accent-sky);
+            opacity: 0; transform: translateY(4px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .sb-remember-badge.is-shown { opacity: 1; transform: none; }
+        .sb-remember-badge svg { width: 15px; height: 15px; }
+        .sb-panel-placeholder { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+
+        .sb-visit-btn {
+            align-self: flex-start;
+        }
+
+        .sb-demo-live { margin-top: 1.5rem; text-align: center; }
+        .sb-demo-live p {
+            font-size: 0.88rem; color: var(--text-secondary);
+            min-height: 1.3em;
+        }
+
+        /* ---------- Trust ---------- */
+        .sb-trust { background: var(--bg-base); }
+        .sb-trust-grid {
+            display: grid; grid-template-columns: 1fr; gap: 1.75rem;
+            margin-top: clamp(2rem, 5vw, 3rem);
+        }
+        @media (min-width: 760px) {
+            .sb-trust-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .sb-trust-card {
+            background: var(--bg-overlay);
+            border: 1px solid var(--border-subtle);
             border-radius: var(--radius-md);
-            padding: clamp(1.4rem, 3vw, 2.2rem);
-            transition: background 0.2s ease, filter 0.2s ease;
+            padding: clamp(1.5rem, 3vw, 2rem);
         }
-        .ml-preview-page.ml-mode-default { background: #ffffff; }
-        .ml-preview-page.ml-mode-high { background: #ffffff; }
-        .ml-preview-page.ml-mode-high h3 { color: #000000 !important; }
-        .ml-preview-page.ml-mode-high p { color: #000000 !important; }
-        .ml-preview-page.ml-mode-high a { color: #0000ee; text-decoration: underline; font-weight: 700; }
-        .ml-preview-page.ml-mode-high button { background: #000000; color: #fff; border: 2px solid #000; }
-        .ml-preview-page.ml-mode-dark { background: #0b0f19; }
-        .ml-preview-page.ml-mode-dark h3 { color: #f0f6ff !important; }
-        .ml-preview-page.ml-mode-dark p { color: #b7c2e0 !important; }
-        .ml-preview-page.ml-mode-dark a { color: #7dd3fc; }
-        .ml-preview-page.ml-mode-dark button { background: #38bdf8; color: #0b0f19; }
-        .ml-preview-page h3 {
-            margin: 0 0 0.6rem;
-            font-family: Georgia, 'Times New Roman', serif !important;
-            color: #16233f !important;
+        .sb-trust-card h3 {
+            font-family: var(--font-display); font-size: 1.05rem; font-weight: 700;
+            color: var(--text-white); margin: 0 0 1rem;
         }
-        .ml-preview-page p {
-            margin: 0 0 0.9rem;
-            font-family: Georgia, 'Times New Roman', serif;
-            color: #33415c;
+        .sb-trust-card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+        .sb-trust-card li {
+            font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;
+            padding-left: 1.3rem; position: relative;
         }
-        .ml-preview-page a {
-            color: #2563eb;
+        .sb-trust-card--stored li::before {
+            content: ''; position: absolute; left: 0; top: 0.45em;
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--accent-sky);
         }
-        .ml-preview-page button {
-            background: #2563eb; color: #fff; border: none;
-            border-radius: 6px; padding: 0.5rem 1rem;
-            font-family: Georgia, 'Times New Roman', serif;
-            cursor: default;
+        .sb-trust-card--never li::before {
+            content: ''; position: absolute; left: 0; top: 0.45em;
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--text-muted);
         }
-        .ml-preview-caption {
-            text-align: center; margin-top: 1.1rem;
-            color: var(--text-secondary); font-size: 0.88rem;
+        .sb-trust-note {
+            margin-top: clamp(2rem, 5vw, 2.5rem);
+            font-size: 0.92rem; color: var(--text-muted);
+            max-width: 52ch;
         }
+        .sb-trust-controls {
+            margin-top: 1.5rem;
+            display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+        }
+        .sb-clear-status { font-size: 0.85rem; color: var(--accent-sky); min-height: 1.2em; }
 
         /* ---------- CTA ---------- */
-        .ml-cta { text-align: center; padding: clamp(2.5rem, 5vw, 3.5rem); }
-        .ml-cta h2 { display: block !important; }
-        .install-cta { display: flex; justify-content: center; margin-top: 1.4rem; }
-        .install-btn {
-            display: inline-flex; align-items: center; gap: 10px;
-            padding: 14px 28px;
+        .sb-cta { background: linear-gradient(160deg, #0a1228 0%, #060c1a 100%); text-align: center; }
+        .sb-cta .sb-h2 { max-width: none; }
+        .sb-cta-btn {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            padding: 0.95rem 2rem;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-sky));
             color: #fff; font-weight: 700; font-size: 1rem;
-            border-radius: 10px; text-decoration: none;
-            box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
-            cursor: not-allowed;
-            opacity: 0.9;
+            font-family: var(--font-body);
+            border: none; border-radius: 10px; text-decoration: none;
+            box-shadow: 0 8px 22px rgba(37,99,235,0.32);
+            cursor: not-allowed; opacity: 0.92;
+            margin-top: 2rem;
         }
-        .install-btn:hover { opacity: 1; }
-        .cta-note {
-            text-align: center; margin-top: 12px;
-            color: var(--text-secondary);
-            font-size: 0.88rem;
-        }
-        .ml-chip-row {
-            display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
-            margin-top: 1.4rem;
-        }
+        .sb-cta-btn:hover { opacity: 1; }
+        .sb-cta-btn:focus-visible { outline: 2px solid var(--accent-sky); outline-offset: 3px; }
+        .sb-cta-note { margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); }
+        .sb-cta-note a { color: var(--accent-sky); }
 
         @media (max-width: 640px) {
-            .ml-tiles, .ml-menu-pair { grid-template-columns: 1fr; }
+            .sb-demo-arrow { display: none; }
         }
     </style>
 </head>
@@ -559,257 +461,222 @@
         <main id="main-content" role="main">
 
             <!-- ============================================================
-                 HERO — the headline itself is the live demo
+                 HERO — the name, the claim, one diagram
                  ============================================================ -->
-            <section class="ml-hero">
-                <div class="ml-hero-inner">
-                    <span class="ml-eyebrow"><i class="fa fa-brain" aria-hidden="true"></i> Chrome extension</span>
-                    <h1>
-                        <span class="ml-hero-line1">Set your text size once.</span>
-                        <span class="ml-hero-line2" id="heroLiveText">It stays exactly this size, everywhere you go.</span>
-                    </h1>
+            <section class="sb-screen sb-hero" aria-labelledby="sb-hero-title">
+                <div class="sb-shell sb-hero-inner">
+                    <p class="sb-eyebrow">Introducing</p>
+                    <h1 id="sb-hero-title">Second Brain</h1>
+                    <p class="sb-hero-claim">It remembers how you like to read the web, so you never set it up twice.</p>
+                    <p class="sb-hero-sub">Text size, contrast, and line spacing — set once, applied automatically on every site after that.</p>
 
-                    <div class="ml-hero-slider-wrap">
-                        <div class="ml-hero-slider-labels">
-                            <label for="heroSizeRange">Drag this line</label>
-                            <output for="heroSizeRange" id="heroSizeOutput">40px</output>
+                    <figure class="sb-hero-diagram">
+                        <svg class="sb-diagram-svg" viewBox="0 0 640 300" role="img" aria-label="Diagram: a preference set once on one site is saved by Second Brain, then automatically applied on three other sites." focusable="false">
+                            <path class="sb-diagram-line" d="M320 150 L120 70"></path>
+                            <path class="sb-diagram-line" d="M320 150 L120 230"></path>
+                            <path class="sb-diagram-line" d="M320 150 L520 70"></path>
+                            <path class="sb-diagram-line" d="M320 150 L520 230"></path>
+
+                            <circle class="sb-diagram-pulse p1" cx="220" cy="110" r="3.5"></circle>
+                            <circle class="sb-diagram-pulse p2" cx="220" cy="190" r="3.5"></circle>
+                            <circle class="sb-diagram-pulse p3" cx="420" cy="110" r="3.5"></circle>
+                            <circle class="sb-diagram-pulse p4" cx="420" cy="190" r="3.5"></circle>
+
+                            <rect class="sb-diagram-node-box" x="55" y="50" width="130" height="40" rx="8"></rect>
+                            <text class="sb-diagram-node-text" x="120" y="74" text-anchor="middle">news-daily.com</text>
+
+                            <rect class="sb-diagram-node-box" x="55" y="210" width="130" height="40" rx="8"></rect>
+                            <text class="sb-diagram-node-text" x="120" y="234" text-anchor="middle">city-transit.gov</text>
+
+                            <rect class="sb-diagram-node-box" x="455" y="50" width="130" height="40" rx="8"></rect>
+                            <text class="sb-diagram-node-text" x="520" y="74" text-anchor="middle">shop-market.io</text>
+
+                            <rect class="sb-diagram-node-box" x="455" y="210" width="130" height="40" rx="8"></rect>
+                            <text class="sb-diagram-node-text" x="520" y="234" text-anchor="middle">docs-reader.org</text>
+
+                            <circle class="sb-diagram-core-ring" cx="320" cy="150" r="46"></circle>
+                            <circle class="sb-diagram-core" cx="320" cy="150" r="34"></circle>
+                            <path class="sb-diagram-core-glyph" d="M308 144 q0 -10 8 -10 q6 0 6 6 q0 6 6 6 q8 0 8 10 q0 10 -8 10 h-12 q-8 0 -8 -8 q0 -5 4 -7"></path>
+                            <text class="sb-diagram-core-text" x="320" y="184" text-anchor="middle">Saved once</text>
+                        </svg>
+                        <figcaption>One setting, saved locally, reapplied automatically everywhere you go next.</figcaption>
+                    </figure>
+                </div>
+
+                <a href="#problem" class="sb-scroll-cue" aria-label="Scroll to the next section">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                </a>
+            </section>
+
+            <!-- ============================================================
+                 THE PROBLEM
+                 ============================================================ -->
+            <section class="sb-screen sb-problem" id="problem" aria-labelledby="sb-problem-title">
+                <div class="sb-shell">
+                    <p class="sb-kicker sb-reveal">The problem</p>
+                    <h2 class="sb-h2 sb-reveal sb-reveal-1" id="sb-problem-title">Accessibility settings that don't survive a closed tab aren't accessible.</h2>
+                    <p class="sb-body sb-reveal sb-reveal-2">Larger text. Higher contrast. Wider line spacing. Get it right on one site, and the next site you open forgets everything — <strong>you're back to square one</strong>, every single time.</p>
+                    <p class="sb-body sb-reveal sb-reveal-3" style="margin-top: 1rem;">For most people that's a minor annoyance. For someone who depends on these settings to read at all, it's friction repeated dozens of times a day.</p>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 HOW IT WORKS — one step at a time
+                 ============================================================ -->
+            <section class="sb-how" aria-labelledby="sb-how-title">
+                <div class="sb-shell sb-shell--wide sb-how-head">
+                    <p class="sb-kicker sb-reveal">How it works</p>
+                    <h2 class="sb-h2 sb-reveal sb-reveal-1" id="sb-how-title" style="max-width: none;">Four small steps, and you never think about it again.</h2>
+                </div>
+
+                <div class="sb-shell sb-shell--wide">
+                    <div class="sb-how-grid">
+                        <div class="sb-how-rail" aria-hidden="true">
+                            <div class="sb-rail-dot" data-rail="1"></div>
+                            <div class="sb-rail-line"></div>
+                            <div class="sb-rail-dot" data-rail="2"></div>
+                            <div class="sb-rail-line"></div>
+                            <div class="sb-rail-dot" data-rail="3"></div>
+                            <div class="sb-rail-line"></div>
+                            <div class="sb-rail-dot" data-rail="4"></div>
                         </div>
-                        <input type="range" class="ml-range" id="heroSizeRange" min="22" max="72" value="40" step="1" aria-label="Preview text size in pixels">
-                        <p class="ml-hero-hint">That's the actual control. On every site you visit, it's already set to whatever you leave it at.</p>
-                    </div>
 
-                    <p class="ml-hero-sub">Most accessibility settings live inside a single page — bump the text size here, and it's gone the moment you open a new tab. <strong>The Second Brain saves this control, plus contrast and line spacing, once</strong> — and applies all three automatically, on every site, from the moment the page loads.</p>
-
-                    <div class="ml-hero-cta">
-                        <a href="#get-it" class="btn btn-primary"><i class="fab fa-chrome" aria-hidden="true"></i> Add to Chrome — Coming soon</a>
-                        <a href="#the-numbers" class="btn btn-secondary"><i class="fa fa-arrow-down" aria-hidden="true"></i> See the data</a>
+                        <div>
+                            <article class="sb-step" data-step="1">
+                                <div class="sb-step-index">01</div>
+                                <h3>You adjust a setting</h3>
+                                <p>Bump the text size, switch on high contrast, widen the line spacing — on any site, using the controls already there.</p>
+                            </article>
+                            <article class="sb-step" data-step="2">
+                                <div class="sb-step-index">02</div>
+                                <h3>Second Brain saves it, locally</h3>
+                                <p>The choice is written to your browser's own storage on your device. Nothing is sent anywhere.</p>
+                            </article>
+                            <article class="sb-step" data-step="3">
+                                <div class="sb-step-index">03</div>
+                                <h3>You open a different site</h3>
+                                <p>A new domain, a new page, no relationship to the last one — the kind of jump that normally resets everything.</p>
+                            </article>
+                            <article class="sb-step" data-step="4">
+                                <div class="sb-step-index">04</div>
+                                <h3>It's already set</h3>
+                                <p>Your text size, contrast, and spacing are applied before the page finishes loading. No popup, no setup, no reminder needed.</p>
+                            </article>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- ============================================================
-                 THE PROBLEM, IN NUMBERS
+                 SEE IT, NOT JUST READ IT — interactive demo
                  ============================================================ -->
-            <section class="ml-section" id="the-numbers">
-                <div class="ml-shell">
-                    <div class="ml-section-head ml-reveal">
-                        <span class="ml-kicker">The problem, in numbers</span>
-                        <h2>The web wasn't built to remember what you need</h2>
-                        <p>Every figure below comes from WebAIM's annual accessibility analysis of the web's top one million home pages — not a guess, a measurement. Try each demo yourself; these aren't abstract problems.</p>
+            <section class="sb-screen sb-demo" id="demo" aria-labelledby="sb-demo-title">
+                <div class="sb-shell sb-shell--wide sb-demo-head">
+                    <p class="sb-kicker sb-reveal">See it, not just read it</p>
+                    <h2 class="sb-h2 sb-reveal sb-reveal-1" id="sb-demo-title" style="max-width: none;">Set it on one site. Watch it show up on another.</h2>
+                    <p class="sb-body sb-reveal sb-reveal-2">Adjust the controls on the left, then simulate opening a completely different site on the right.</p>
+                </div>
+
+                <div class="sb-shell sb-shell--wide">
+                    <div class="sb-demo-grid">
+                        <div class="sb-panel">
+                            <div class="sb-panel-bar">
+                                <span class="sb-panel-dot" aria-hidden="true"></span>
+                                <span class="sb-panel-url">news-daily.com — first visit</span>
+                            </div>
+                            <div class="sb-panel-body">
+                                <h4>Set your preferences</h4>
+                                <div class="sb-demo-controls">
+                                    <div class="sb-control-row">
+                                        <label for="sbSizeRange"><span>Text size</span><output for="sbSizeRange" id="sbSizeOutput">18px</output></label>
+                                        <input type="range" class="sb-range" id="sbSizeRange" min="14" max="30" step="1" value="18">
+                                    </div>
+                                    <div class="sb-switch-row">
+                                        <label for="sbContrastToggle">High contrast</label>
+                                        <input type="checkbox" class="sb-switch" id="sbContrastToggle" role="switch">
+                                    </div>
+                                </div>
+                                <div class="sb-sample" id="sbSampleFirst">
+                                    <p id="sbSampleFirstText">This paragraph updates as you move the controls above.</p>
+                                </div>
+                                <button type="button" class="btn btn-primary sb-visit-btn" id="sbVisitBtn">Simulate opening a new site</button>
+                            </div>
+                        </div>
+
+                        <div class="sb-demo-arrow" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 6l6 6-6 6"/></svg>
+                        </div>
+
+                        <div class="sb-panel">
+                            <div class="sb-panel-bar">
+                                <span class="sb-panel-dot" aria-hidden="true"></span>
+                                <span class="sb-panel-url">docs-reader.org — next visit</span>
+                            </div>
+                            <div class="sb-panel-body">
+                                <h4>What Second Brain applies</h4>
+                                <p class="sb-panel-placeholder" id="sbSecondPlaceholder">Waiting — click the button on the left.</p>
+                                <span class="sb-remember-badge" id="sbRememberBadge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+                                    Remembered automatically
+                                </span>
+                                <div class="sb-sample" id="sbSampleSecond">
+                                    <p id="sbSampleSecondText">A different site, same settings, no setup.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Stat 1: Contrast -->
-                    <article class="ml-stat tool-card ml-reveal">
-                        <div class="ml-stat-text">
-                            <div class="ml-stat-index">01 — Contrast</div>
-                            <div class="ml-stat-figure">79%</div>
-                            <p class="ml-stat-desc">of home pages have text that's too hard to read against its background — <strong>almost 30 separate low-contrast instances, on average, per page.</strong></p>
-                            <p class="ml-stat-source">Source: WebAIM, annual accessibility analysis of the web's top 1,000,000 home pages.</p>
-                        </div>
-                        <div class="ml-stat-demo">
-                            <div class="ml-browser">
-                                <div class="ml-browser-bar">
-                                    <span class="ml-browser-dot"></span><span class="ml-browser-dot"></span><span class="ml-browser-dot"></span>
-                                    <span class="ml-browser-url">example-shop.com</span>
-                                </div>
-                                <div class="ml-browser-body">
-                                    <div class="ml-contrast-sample" id="contrastSample">
-                                        <p id="contrastText">Free shipping on orders over $50. Returns accepted within 30 days, no questions asked.</p>
-                                    </div>
-                                    <div class="ml-contrast-controls">
-                                        <label for="contrastRange" class="visually-hidden">Text contrast level</label>
-                                        <input type="range" class="ml-range" id="contrastRange" min="0" max="100" value="82">
-                                        <div class="ml-contrast-readout">
-                                            <span>Contrast ratio: <span class="ratio" id="contrastRatio">13.1 : 1</span></span>
-                                            <span class="ml-badge pass" id="contrastBadge">AA Pass</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Stat 2: Alt text -->
-                    <article class="ml-stat ml-stat-flip tool-card ml-reveal">
-                        <div class="ml-stat-text">
-                            <div class="ml-stat-index">02 — Images &amp; links</div>
-                            <div class="ml-stat-figure">55%</div>
-                            <p class="ml-stat-desc">of home pages are missing alt text on at least one image. On <strong>about 44% of those pages, the missing text sits on an image that's also a link</strong> — so a screen reader user hears nothing telling them what clicking it will do.</p>
-                            <p class="ml-stat-source">Source: WebAIM, annual accessibility analysis of the web's top 1,000,000 home pages.</p>
-                        </div>
-                        <div class="ml-stat-demo">
-                            <div class="ml-browser">
-                                <div class="ml-browser-bar">
-                                    <span class="ml-browser-dot"></span><span class="ml-browser-dot"></span><span class="ml-browser-dot"></span>
-                                    <span class="ml-browser-url">example-shop.com/catalog</span>
-                                </div>
-                                <div class="ml-browser-body" data-view="sighted" id="altTextDemo">
-                                    <div class="ml-view-toggle" role="group" aria-label="Change how the demo is shown">
-                                        <button type="button" data-set-view="sighted" aria-pressed="true">Sighted view</button>
-                                        <button type="button" data-set-view="sr" aria-pressed="false">Screen reader view</button>
-                                    </div>
-                                    <div class="ml-tiles">
-                                        <div class="ml-tile">
-                                            <div class="ml-tile-swatch"></div>
-                                            <div class="ml-tile-title">Wireless headphones — $79</div>
-                                            <div class="ml-sr-caption"><i class="fa fa-volume-high" aria-hidden="true"></i>"Link, Wireless headphones, black, $79"</div>
-                                        </div>
-                                        <div class="ml-tile">
-                                            <div class="ml-tile-swatch"></div>
-                                            <div class="ml-tile-title">Desk lamp — $34</div>
-                                            <div class="ml-sr-caption is-broken"><i class="fa fa-triangle-exclamation" aria-hidden="true"></i>"Link, image" — nothing else</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Stat 3: Forms -->
-                    <article class="ml-stat tool-card ml-reveal">
-                        <div class="ml-stat-text">
-                            <div class="ml-stat-index">03 — Forms</div>
-                            <div class="ml-stat-figure">1 in 3</div>
-                            <p class="ml-stat-desc">form inputs across the web are missing a proper label. Without one, a screen reader <strong>can't tell someone what to type</strong> — it just announces "edit text."</p>
-                            <p class="ml-stat-source">Source: WebAIM, annual accessibility analysis of the web's top 1,000,000 home pages.</p>
-                        </div>
-                        <div class="ml-stat-demo">
-                            <div class="ml-browser">
-                                <div class="ml-browser-bar">
-                                    <span class="ml-browser-dot"></span><span class="ml-browser-dot"></span><span class="ml-browser-dot"></span>
-                                    <span class="ml-browser-url">example-shop.com/checkout</span>
-                                </div>
-                                <div class="ml-browser-body" data-view="sighted" id="formDemo">
-                                    <div class="ml-view-toggle" role="group" aria-label="Change how the demo is shown">
-                                        <button type="button" data-set-view="sighted" aria-pressed="true">Sighted view</button>
-                                        <button type="button" data-set-view="sr" aria-pressed="false">Screen reader view</button>
-                                    </div>
-                                    <div class="ml-form-row">
-                                        <label for="demoEmail">Email address</label>
-                                        <input type="text" id="demoEmail" placeholder="you@example.com" disabled>
-                                        <div class="ml-sr-caption"><i class="fa fa-volume-high" aria-hidden="true"></i>"Email address, edit text"</div>
-                                    </div>
-                                    <div class="ml-form-row ml-form-nolabel">
-                                        <label for="demoPromo">Promo code (no &lt;label&gt; in the markup)</label>
-                                        <input type="text" id="demoPromo" placeholder="Promo code" disabled>
-                                        <div class="ml-sr-caption is-broken"><i class="fa fa-triangle-exclamation" aria-hidden="true"></i>"Edit text" — no idea what belongs here</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Stat 4: ARIA — the twist -->
-                    <article class="ml-stat ml-stat-flip tool-card ml-stat-warn ml-reveal">
-                        <div class="ml-stat-text">
-                            <span class="ml-twist-tag"><i class="fa fa-bolt" aria-hidden="true"></i> The counterintuitive one</span>
-                            <div class="ml-stat-index">04 — ARIA</div>
-                            <div class="ml-stat-figure">Adding ARIA usually makes it worse</div>
-                            <p class="ml-stat-desc">Pages that use ARIA — the markup meant to <em>improve</em> accessibility — average <strong>more</strong> accessibility errors than pages that don't use it at all. About <strong>35% of ARIA menus introduce new barriers</strong> because of how they were implemented.</p>
-                            <p class="ml-stat-source">Source: WebAIM, annual accessibility analysis of the web's top 1,000,000 home pages.</p>
-                        </div>
-                        <div class="ml-stat-demo">
-                            <div class="ml-browser">
-                                <div class="ml-browser-bar">
-                                    <span class="ml-browser-dot"></span><span class="ml-browser-dot"></span><span class="ml-browser-dot"></span>
-                                    <span class="ml-browser-url">example-shop.com</span>
-                                </div>
-                                <div class="ml-browser-body">
-                                    <div class="ml-menu-pair">
-                                        <div class="ml-menu-demo">
-                                            <h4>Plain menu, no ARIA</h4>
-                                            <button type="button" class="ml-menu-btn" id="goodMenuBtn" aria-haspopup="true" aria-expanded="false">Menu ▾</button>
-                                            <div class="ml-menu-drop" id="goodMenuDrop" role="menu">
-                                                <a href="#" role="menuitem" tabindex="-1">Returns</a>
-                                                <a href="#" role="menuitem" tabindex="-1">Shipping</a>
-                                                <a href="#" role="menuitem" tabindex="-1">Contact</a>
-                                            </div>
-                                            <p class="ml-menu-caption">Try it: opens, closes on Escape or an outside click. Nothing fancy — just works.</p>
-                                        </div>
-                                        <div class="ml-menu-demo" aria-hidden="true">
-                                            <h4>"Accessible" menu, misconfigured</h4>
-                                            <button type="button" class="ml-menu-btn" id="badMenuBtn" tabindex="-1" aria-haspopup="true" aria-expanded="false">Menu ▾</button>
-                                            <div class="ml-menu-drop" id="badMenuDrop">
-                                                <a href="#" tabindex="-1">Returns</a>
-                                                <a href="#" tabindex="-1">Shipping</a>
-                                                <a href="#" tabindex="-1">Contact</a>
-                                            </div>
-                                            <p class="ml-menu-caption is-broken">Click it: it opens visually, but <code>aria-expanded</code> never flips to <code>true</code>, and Escape does nothing. Assistive tech is told this menu never opens at all.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+                    <div class="sb-demo-live">
+                        <p id="sbDemoLive" aria-live="polite"></p>
+                    </div>
                 </div>
             </section>
 
             <!-- ============================================================
-                 SEE IT IN ACTION — live, working preview
+                 TRUST & CONTROL — as prominent as the pitch
                  ============================================================ -->
-            <section class="ml-section">
-                <div class="ml-shell">
-                    <div class="ml-section-head ml-reveal">
-                        <span class="ml-kicker">See it in action</span>
-                        <h2>This is the actual popup, controlling the page below it</h2>
-                        <p>Move the controls on the left. The panel on the right is a stand-in webpage — this is exactly what the extension does to every real site you visit, applied live instead of frozen in a screenshot.</p>
-                    </div>
+            <section class="sb-screen sb-trust" id="trust" aria-labelledby="sb-trust-title">
+                <div class="sb-shell sb-shell--wide">
+                    <p class="sb-kicker sb-reveal">Trust and control</p>
+                    <h2 class="sb-h2 sb-reveal sb-reveal-1" id="sb-trust-title" style="max-width: none;">What Second Brain sees — and what it never does.</h2>
+                    <p class="sb-body sb-reveal sb-reveal-2">People who rely on accessibility tools are often more wary of tracking, not less. So here's the full list, not a footnote.</p>
 
-                    <div class="ml-preview-grid ml-reveal">
-                        <div class="ml-panel tool-card">
-                            <div class="ml-panel-title"><i class="fa fa-brain" aria-hidden="true"></i> Accessibility Second Brain</div>
-
-                            <div class="ml-panel-row">
-                                <label for="panelSize"><span>Text size</span><output for="panelSize" id="panelSizeOutput">18px</output></label>
-                                <input type="range" class="ml-range" id="panelSize" min="14" max="30" value="18" step="1">
-                            </div>
-                            <div class="ml-panel-row">
-                                <label for="panelSpacing"><span>Line spacing</span><output for="panelSpacing" id="panelSpacingOutput">1.6</output></label>
-                                <input type="range" class="ml-range" id="panelSpacing" min="1.1" max="2.2" value="1.6" step="0.1">
-                            </div>
-                            <div class="ml-panel-row">
-                                <label for="panelContrast"><span>Contrast mode</span></label>
-                                <select id="panelContrast">
-                                    <option value="default">Default</option>
-                                    <option value="high">High-contrast</option>
-                                    <option value="dark">Dark-inverted</option>
-                                </select>
-                            </div>
+                    <div class="sb-trust-grid sb-reveal sb-reveal-3">
+                        <div class="sb-trust-card sb-trust-card--stored">
+                            <h3>What it stores</h3>
+                            <ul>
+                                <li>Your preferred text size</li>
+                                <li>Whether high contrast is on</li>
+                                <li>Your preferred line spacing</li>
+                            </ul>
                         </div>
-
-                        <div class="ml-panel tool-card" style="padding: clamp(0.5rem, 1.5vw, 1rem);">
-                            <div class="ml-preview-page ml-mode-default" id="previewPage">
-                                <h3 id="previewHeading">Return &amp; refund policy</h3>
-                                <p id="previewPara1">Items can be returned within 30 days of delivery for a full refund. Products must be unused and in their original packaging, with tags still attached.</p>
-                                <p id="previewPara2">Refunds are issued to your original payment method within 5–7 business days of us receiving the item. Shipping costs are non-refundable unless the return is due to our error.</p>
-                                <button type="button" tabindex="-1">Start a return</button>
-                            </div>
+                        <div class="sb-trust-card sb-trust-card--never">
+                            <h3>What it never touches</h3>
+                            <ul>
+                                <li>Browsing history or page content</li>
+                                <li>Names, emails, or any personal identifiers</li>
+                                <li>Anything sent to a server — there isn't one</li>
+                            </ul>
                         </div>
                     </div>
-                    <p class="ml-preview-caption ml-reveal">Once installed, these same three controls apply automatically — no popup needed after the first time you set them.</p>
+
+                    <p class="sb-trust-note">Everything above lives only in your browser's local storage, on your device. No account, no sync, no server round-trip.</p>
+
+                    <div class="sb-trust-controls">
+                        <button type="button" class="btn btn-secondary" id="sbClearBtn">Clear saved preferences</button>
+                        <span class="sb-clear-status" id="sbClearStatus" aria-live="polite"></span>
+                    </div>
                 </div>
             </section>
 
             <!-- ============================================================
-                 CTA
+                 CTA — one clear next action
                  ============================================================ -->
-            <section class="ml-section" id="get-it">
-                <div class="ml-shell">
-                    <div class="ml-cta tool-card ml-reveal">
-                        <h2><i class="fa fa-download" aria-hidden="true"></i> Get the extension</h2>
-                        <p>The Accessibility Second Brain isn't published to the Chrome Web Store yet.</p>
-                        <div class="install-cta">
-                            <a href="#" class="install-btn" aria-disabled="true" onclick="return false;">
-                                <i class="fab fa-chrome" aria-hidden="true"></i> Add to Chrome — Coming soon
-                            </a>
-                        </div>
-                        <p class="cta-note">Not live yet — check back soon, or ask the <a href="chat.html" style="color: var(--accent-sky);">chat assistant</a> for updates.</p>
-
-                        <div class="ml-chip-row">
-                            <a class="feature-tag" href="score.html"><i class="fa fa-chart-bar" aria-hidden="true"></i> Accessibility score</a>
-                            <a class="feature-tag" href="chat.html"><i class="fa fa-comments" aria-hidden="true"></i> Chat with AI</a>
-                        </div>
-                    </div>
+            <section class="sb-screen sb-cta" id="get-it" aria-labelledby="sb-cta-title">
+                <div class="sb-shell">
+                    <h2 class="sb-h2 sb-reveal" id="sb-cta-title">Ready when you are.</h2>
+                    <p class="sb-body sb-reveal sb-reveal-1" style="margin: 0 auto;">Second Brain isn't published to the Chrome Web Store yet.</p>
+                    <a href="#" class="sb-cta-btn sb-reveal sb-reveal-2" aria-disabled="true" onclick="return false;">Add to Chrome — Coming soon</a>
+                    <p class="sb-cta-note sb-reveal sb-reveal-2">Questions? Ask the <a href="chat.html">chat assistant</a>.</p>
                 </div>
             </section>
         </main>
@@ -836,8 +703,8 @@
             });
         }
 
-        /* ---------- Scroll reveal ---------- */
-        var revealEls = document.querySelectorAll('.ml-reveal');
+        /* ---------- Scroll reveal (disabled visually under reduced motion via CSS) ---------- */
+        var revealEls = document.querySelectorAll('.sb-reveal');
         if ('IntersectionObserver' in window) {
             var io = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
@@ -852,136 +719,91 @@
             revealEls.forEach(function (el) { el.classList.add('is-visible'); });
         }
 
-        /* ---------- Hero live text-size slider ---------- */
-        var heroRange = document.getElementById('heroSizeRange');
-        var heroText = document.getElementById('heroLiveText');
-        var heroOutput = document.getElementById('heroSizeOutput');
-        if (heroRange && heroText && heroOutput) {
-            var updateHero = function () {
-                heroText.style.fontSize = heroRange.value + 'px';
-                heroOutput.textContent = heroRange.value + 'px';
-            };
-            heroRange.addEventListener('input', updateHero);
-            updateHero();
-        }
-
-        /* ---------- Contrast demo ---------- */
-        var contrastRange = document.getElementById('contrastRange');
-        var contrastText = document.getElementById('contrastText');
-        var contrastRatioEl = document.getElementById('contrastRatio');
-        var contrastBadge = document.getElementById('contrastBadge');
-
-        function luminance(r, g, b) {
-            var a = [r, g, b].map(function (v) {
-                v /= 255;
-                return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-            });
-            return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
-        }
-        function contrastRatio(gray) {
-            var L1 = luminance(gray, gray, gray) + 0.05;
-            var L2 = luminance(255, 255, 255) + 0.05;
-            return L1 > L2 ? L1 / L2 : L2 / L1;
-        }
-
-        function updateContrast() {
-            if (!contrastRange) return;
-            var v = Number(contrastRange.value); // 0 (low) - 100 (high)
-            // Map to a gray value: 100 -> near-black (26), 0 -> very light gray (235)
-            var gray = Math.round(235 - (v / 100) * (235 - 26));
-            var hex = gray.toString(16).padStart(2, '0');
-            contrastText.style.color = '#' + hex + hex + hex;
-            var ratio = contrastRatio(gray);
-            contrastRatioEl.textContent = ratio.toFixed(1) + ' : 1';
-            if (ratio >= 4.5) {
-                contrastBadge.textContent = 'AA Pass';
-                contrastBadge.className = 'ml-badge pass';
-            } else {
-                contrastBadge.textContent = 'AA Fail';
-                contrastBadge.className = 'ml-badge fail';
-            }
-        }
-        if (contrastRange) {
-            contrastRange.addEventListener('input', updateContrast);
-            updateContrast();
-        }
-
-        /* ---------- Sighted / screen-reader view toggles ---------- */
-        document.querySelectorAll('.ml-view-toggle').forEach(function (group) {
-            var container = group.parentElement;
-            group.querySelectorAll('button[data-set-view]').forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    var view = btn.getAttribute('data-set-view');
-                    container.setAttribute('data-view', view);
-                    group.querySelectorAll('button').forEach(function (b) {
-                        b.setAttribute('aria-pressed', String(b === btn));
-                    });
+        /* ---------- "How it works" step rail (decorative only) ---------- */
+        var steps = document.querySelectorAll('.sb-step');
+        var railDots = document.querySelectorAll('.sb-rail-dot');
+        if ('IntersectionObserver' in window && steps.length && railDots.length) {
+            var stepIo = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    var n = entry.target.getAttribute('data-step');
+                    var dot = document.querySelector('.sb-rail-dot[data-rail="' + n + '"]');
+                    if (!dot) return;
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-active');
+                        dot.classList.add('is-active');
+                    } else {
+                        entry.target.classList.remove('is-active');
+                        dot.classList.remove('is-active');
+                    }
                 });
-            });
-        });
+            }, { threshold: 0.5 });
+            steps.forEach(function (el) { stepIo.observe(el); });
+        }
 
-        /* ---------- ARIA menu demo: working menu ---------- */
-        var goodBtn = document.getElementById('goodMenuBtn');
-        var goodDrop = document.getElementById('goodMenuDrop');
-        if (goodBtn && goodDrop) {
-            var closeGood = function () {
-                goodDrop.classList.remove('is-open');
-                goodBtn.setAttribute('aria-expanded', 'false');
-            };
-            goodBtn.addEventListener('click', function () {
-                var open = goodDrop.classList.toggle('is-open');
-                goodBtn.setAttribute('aria-expanded', String(open));
-            });
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape') closeGood();
-            });
-            document.addEventListener('click', function (e) {
-                if (!goodBtn.contains(e.target) && !goodDrop.contains(e.target)) closeGood();
+        /* ---------- Interactive demo ---------- */
+        var sizeRange = document.getElementById('sbSizeRange');
+        var sizeOutput = document.getElementById('sbSizeOutput');
+        var contrastToggle = document.getElementById('sbContrastToggle');
+        var sampleFirst = document.getElementById('sbSampleFirst');
+        var sampleFirstText = document.getElementById('sbSampleFirstText');
+        var sampleSecond = document.getElementById('sbSampleSecond');
+        var sampleSecondText = document.getElementById('sbSampleSecondText');
+        var visitBtn = document.getElementById('sbVisitBtn');
+        var rememberBadge = document.getElementById('sbRememberBadge');
+        var secondPlaceholder = document.getElementById('sbSecondPlaceholder');
+        var demoLive = document.getElementById('sbDemoLive');
+        var clearBtn = document.getElementById('sbClearBtn');
+        var clearStatus = document.getElementById('sbClearStatus');
+
+        function updateFirstPanel() {
+            if (sizeRange && sampleFirstText) {
+                sampleFirstText.style.fontSize = sizeRange.value + 'px';
+                if (sizeOutput) sizeOutput.textContent = sizeRange.value + 'px';
+            }
+            if (contrastToggle && sampleFirst) {
+                sampleFirst.classList.toggle('is-contrast', contrastToggle.checked);
+            }
+        }
+        if (sizeRange) sizeRange.addEventListener('input', updateFirstPanel);
+        if (contrastToggle) contrastToggle.addEventListener('change', updateFirstPanel);
+        updateFirstPanel();
+
+        function resetSecondPanel() {
+            if (sampleSecondText) {
+                sampleSecondText.style.fontSize = '';
+                sampleSecondText.textContent = 'A different site, same settings, no setup.';
+            }
+            if (sampleSecond) sampleSecond.classList.remove('is-contrast');
+            if (rememberBadge) rememberBadge.classList.remove('is-shown');
+            if (secondPlaceholder) secondPlaceholder.style.display = '';
+        }
+
+        if (visitBtn) {
+            visitBtn.addEventListener('click', function () {
+                if (sizeRange && sampleSecondText) {
+                    sampleSecondText.style.fontSize = sizeRange.value + 'px';
+                    sampleSecondText.textContent = 'Welcome back — this is already set the way you like it.';
+                }
+                if (contrastToggle && sampleSecond) {
+                    sampleSecond.classList.toggle('is-contrast', contrastToggle.checked);
+                }
+                if (secondPlaceholder) secondPlaceholder.style.display = 'none';
+                if (rememberBadge) rememberBadge.classList.add('is-shown');
+                if (demoLive) demoLive.textContent = 'Second Brain applied your saved text size' + (contrastToggle && contrastToggle.checked ? ' and high contrast ' : ' ') + 'automatically on docs-reader.org.';
+                if (clearStatus) clearStatus.textContent = '';
             });
         }
 
-        /* ---------- ARIA menu demo: intentionally-broken menu (visual only) ---------- */
-        var badBtn = document.getElementById('badMenuBtn');
-        var badDrop = document.getElementById('badMenuDrop');
-        if (badBtn && badDrop) {
-            badBtn.removeAttribute('tabindex');
-            badBtn.addEventListener('click', function () {
-                // Toggles visually, but aria-expanded is deliberately never updated —
-                // that omission is the entire point of this demo.
-                badDrop.classList.toggle('is-open');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function () {
+                if (sizeRange) { sizeRange.value = 18; }
+                if (contrastToggle) { contrastToggle.checked = false; }
+                updateFirstPanel();
+                resetSecondPanel();
+                if (clearStatus) clearStatus.textContent = 'Cleared — nothing left to remember.';
+                if (demoLive) demoLive.textContent = '';
             });
         }
-
-        /* ---------- Live customization panel ---------- */
-        var panelSize = document.getElementById('panelSize');
-        var panelSizeOutput = document.getElementById('panelSizeOutput');
-        var panelSpacing = document.getElementById('panelSpacing');
-        var panelSpacingOutput = document.getElementById('panelSpacingOutput');
-        var panelContrast = document.getElementById('panelContrast');
-        var previewPage = document.getElementById('previewPage');
-        var previewEls = [
-            document.getElementById('previewHeading'),
-            document.getElementById('previewPara1'),
-            document.getElementById('previewPara2')
-        ];
-
-        function applyPanel() {
-            if (panelSize) {
-                previewEls.forEach(function (el) { if (el) el.style.fontSize = panelSize.value + 'px'; });
-                if (panelSizeOutput) panelSizeOutput.textContent = panelSize.value + 'px';
-            }
-            if (panelSpacing) {
-                previewEls.forEach(function (el) { if (el) el.style.lineHeight = panelSpacing.value; });
-                if (panelSpacingOutput) panelSpacingOutput.textContent = panelSpacing.value;
-            }
-            if (panelContrast && previewPage) {
-                previewPage.className = 'ml-preview-page ml-mode-' + panelContrast.value;
-            }
-        }
-        [panelSize, panelSpacing, panelContrast].forEach(function (el) {
-            if (el) el.addEventListener('input', applyPanel);
-        });
-        applyPanel();
     })();
     </script>
 </body>
