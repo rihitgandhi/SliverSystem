@@ -209,8 +209,6 @@
                         <a href="index.html#ai" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-lightbulb"></i></span><span class="nav-text">AI in Accessibility</span></a>
                         <a href="index.html#blogs" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-pen-nib"></i></span><span class="nav-text">Blogs</span></a>
                         <a href="index.html#mission" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-bullseye"></i></span><span class="nav-text">Our Mission</span></a>
-                        <a href="chat.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-comments"></i></span><span class="nav-text">Chat with AI</span></a>
-                        <a href="score.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-chart-bar"></i></span><span class="nav-text">Accessibility Score</span></a>
                         <a href="memory-layer.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-brain"></i></span><span class="nav-text">Second Brain</span></a>
                         <a href="voice-navigation.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-microphone"></i></span><span class="nav-text">Voice Navigation</span></a>
                     </div>
@@ -232,9 +230,8 @@
                 <h2><i class="fa fa-compass" aria-hidden="true"></i> Jump to a section</h2>
                 <div class="help-toc">
                     <a href="#getting-started"><span class="icon-chip"><i class="fa fa-rocket"></i></span> Getting started</a>
-                    <a href="#tool-chat"><span class="icon-chip"><i class="fa fa-comments"></i></span> Chat assistant</a>
-                    <a href="#tool-score"><span class="icon-chip"><i class="fa fa-chart-bar"></i></span> Accessibility score</a>
-                    <a href="#progress"><span class="icon-chip"><i class="fa fa-bolt"></i></span> Progress &amp; background work</a>
+                    <a href="#tool-memory"><span class="icon-chip"><i class="fa fa-brain"></i></span> Second Brain</a>
+                    <a href="#tool-voice"><span class="icon-chip"><i class="fa fa-microphone"></i></span> Voice Navigation</a>
                     <a href="#wcag"><span class="icon-chip"><i class="fa fa-book-open"></i></span> WCAG cheat sheet</a>
                     <a href="#troubleshooting"><span class="icon-chip"><i class="fa fa-life-ring"></i></span> Troubleshooting &amp; FAQ</a>
                 </div>
@@ -243,96 +240,47 @@
             <!-- ===== Getting started ===== -->
             <section class="tool-card help-section" id="getting-started">
                 <h2><i class="fa fa-rocket" aria-hidden="true"></i> Getting started</h2>
-                <p>AccessAI bundles complementary tools. Each one is grounded in deterministic checks first (HTTP status, DOM stats, readability formulas) and then enriched with AI commentary that cites WCAG criteria. You can use them in any order, but a typical workflow looks like:</p>
+                <p>AccessAI's browser extensions are grounded in the WCAG principles below and built to fit into how you already browse — no separate workflow to learn. A typical path looks like:</p>
                 <ol class="step-list">
-                    <li><strong>Score a page first</strong> — paste a URL into the <a href="score.html">Accessibility Score</a> tool to see the big picture and which WCAG areas need the most attention.</li>
-                    <li><strong>Ask follow-up questions</strong> in the <a href="chat.html">Chat assistant</a> — every reply is grounded in WCAG and inclusive design best practices, with suggested follow-ups after each answer.</li>
+                    <li><strong>Try Second Brain</strong> — it remembers your reading and display preferences across sites so you never re-configure them. See the <a href="#tool-memory">Second Brain</a> section below.</li>
+                    <li><strong>Try Voice Navigation</strong> — control any site by voice instead of a mouse or keyboard. See the <a href="#tool-voice">Voice Navigation</a> section below.</li>
                 </ol>
                 <div class="help-callout help-callout--good">
                     <i class="fa fa-shield-alt ico" aria-hidden="true"></i>
-                    <p><strong>Privacy note.</strong> Inputs are sent to the AccessAI backend (and from there to Azure OpenAI). Nothing is persisted between requests except the bounded chat history kept in memory for context. Clear it any time with the "Clear chat" button.</p>
+                    <p><strong>Privacy note.</strong> Both extensions are designed to keep your data on-device by default — see each tool's own Trust &amp; control section for specifics.</p>
                 </div>
             </section>
 
-            <!-- ===== Chat ===== -->
-            <section class="tool-card help-section" id="tool-chat">
-                <h2><i class="fa fa-comments" aria-hidden="true"></i> Chat assistant</h2>
-                <p><a href="chat.html">Open the chat</a>. Ask anything about WCAG, ARIA, assistive technology, color contrast, focus management, screen-reader testing — the assistant is tuned specifically for accessibility topics.</p>
+            <!-- ===== Second Brain ===== -->
+            <section class="tool-card help-section" id="tool-memory">
+                <h2><i class="fa fa-brain" aria-hidden="true"></i> Second Brain</h2>
+                <p><a href="memory-layer.html">Open Second Brain</a>. It remembers how you like to read the web — text size, contrast, and other display preferences — so you never have to set them up twice on a new site.</p>
 
                 <h3>What you'll see</h3>
                 <div class="feature-grid">
-                    <div class="feature"><h4>Live thinking bar</h4><p>A compact progress bubble appears while the AI works, rotating through stages so you know it's still running.</p></div>
-                    <div class="feature"><h4>Markdown formatting</h4><p>Replies render bold, lists, inline code, and fenced code blocks for easy reading.</p></div>
-                    <div class="feature"><h4>Smart follow-ups</h4><p>After every answer you'll see 2–3 relevant follow-up suggestions you can click to continue the conversation.</p></div>
-                    <div class="feature"><h4>Persistent history</h4><p>Conversations are saved in your browser's local storage so you can pick up where you left off.</p></div>
+                    <div class="feature"><h4>Interactive demo</h4><p>Adjust text size and contrast on a sample page, then watch those preferences carry over automatically to a second sample page.</p></div>
+                    <div class="feature"><h4>Trust &amp; control</h4><p>A clear breakdown of exactly what's remembered and what's never collected, plus a one-click way to clear everything.</p></div>
                 </div>
-
-                <h3>Tips for great answers</h3>
-                <ul>
-                    <li>Mention the <strong>WCAG version</strong> you care about (2.1 vs 2.2) when asking about specific criteria.</li>
-                    <li>Include the <strong>component or context</strong> ("for a custom date picker", "in a single-page app"). The assistant uses that to tailor advice.</li>
-                </ul>
             </section>
 
-            <!-- ===== Score ===== -->
-            <section class="tool-card help-section" id="tool-score">
-                <h2><i class="fa fa-chart-bar" aria-hidden="true"></i> Accessibility score</h2>
-                <p><a href="score.html">Open the scorer</a>. Enter any public URL and AccessAI will fetch the live page, run a deterministic DOM audit, and ask the AI to prioritize fixes against WCAG 2.1 Level AA.</p>
+            <!-- ===== Voice Navigation ===== -->
+            <section class="tool-card help-section" id="tool-voice">
+                <h2><i class="fa fa-microphone" aria-hidden="true"></i> Voice Navigation</h2>
+                <p><a href="voice-navigation.html">Open Voice Navigation</a>. Speak natural commands — "scroll down," "click sign up," "go back" — and the AI maps them to the right action on any site, no memorized command list required.</p>
 
-                <h3>How the score is calculated</h3>
-                <ol class="step-list">
-                    <li><strong>HTTP fetch</strong> — captures status, redirects, response time, page weight, security headers.</li>
-                    <li><strong>Deterministic DOM audit</strong> — counts headings, landmarks, images, links, ARIA usage, contrast samples, and form labels.</li>
-                    <li><strong>WCAG mapping</strong> — every measurable signal is paired with a Success Criterion (e.g. images without alt → 1.1.1).</li>
-                    <li><strong>AI prioritization</strong> — the model is given the deterministic evidence and asked to rank fixes by user impact and effort.</li>
-                </ol>
-
-                <h3>Score bands</h3>
-                <div class="score-bands">
-                    <div class="score-band band-excellent"><span class="range">90–100</span><span class="label">Excellent</span></div>
-                    <div class="score-band band-good"><span class="range">75–89</span><span class="label">Good — minor work</span></div>
-                    <div class="score-band band-fair"><span class="range">50–74</span><span class="label">Fair — focused effort</span></div>
-                    <div class="score-band band-poor"><span class="range">25–49</span><span class="label">Poor — significant gaps</span></div>
-                    <div class="score-band band-critical"><span class="range">0–24</span><span class="label">Critical — major rework</span></div>
-                </div>
-
-                <div class="help-callout">
-                    <i class="fa fa-info-circle ico" aria-hidden="true"></i>
-                    <p>The score reflects an <em>automated audit</em>. Roughly 30–40% of WCAG criteria require human judgement (semantic correctness, focus order intent, content meaningfulness). Treat the score as a triage signal, not a compliance certificate.</p>
-                </div>
-
-                <h3>Reading the report</h3>
-                <ul>
-                    <li><strong>Differentiator callout</strong> — one-sentence headline of what makes this page's situation unusual.</li>
-                    <li><strong>Page snapshot</strong> — the raw HTTP and timing facts that ground the rest of the report.</li>
-                    <li><strong>Evidence captured</strong> — objective DOM signals (heading outline, image inventory, contrast samples, ARIA roles).</li>
-                    <li><strong>WCAG compliance grid</strong> — which Level AA criteria pass / fail with citations.</li>
-                    <li><strong>Priority issues</strong> — top 3–5 fixes ranked by impact.</li>
-                    <li><strong>Sources</strong> — direct links to W3C "Understanding…" documents for every cited criterion.</li>
-                </ul>
-            </section>
-
-            <!-- ===== Progress / background ===== -->
-            <section class="tool-card help-section" id="progress">
-                <h2><i class="fa fa-bolt" aria-hidden="true"></i> Progress &amp; background work</h2>
-                <p>The accessibility score tool runs AI calls that can take 10–30 seconds. While it works, AccessAI shows a rich progress panel:</p>
-                <ul>
-                    <li><strong>Stage breadcrumbs</strong> — see which step the tool is on (e.g. "Parsing HTML", "Asking the AI", "Building findings").</li>
-                    <li><strong>Animated progress bar</strong> with a moving shimmer so you always know it's alive.</li>
-                    <li><strong>Elapsed time pill</strong> updating every second.</li>
-                    <li><strong>Cancel button</strong> — abort the request at any time without leaving the page.</li>
-                    <li><strong>Background-friendly</strong> — switch tabs, scroll, or open another tool; the panel stays in place and updates when results return.</li>
-                </ul>
-                <div class="help-callout">
-                    <i class="fa fa-clock ico" aria-hidden="true"></i>
-                    <p>If a request takes longer than expected (slow network, large input), the progress bar slows but never gets stuck. The bar only jumps to 100% when real results are back, and turns red on errors.</p>
+                <h3>What it does</h3>
+                <div class="feature-grid">
+                    <div class="feature"><h4>Smart command recognition</h4><p>Understands natural phrasing, not just fixed keywords.</p></div>
+                    <div class="feature"><h4>Real-time response</h4><p>Commands are mapped to actions as you speak.</p></div>
+                    <div class="feature"><h4>Works on any site</h4><p>No per-site setup or configuration.</p></div>
+                    <div class="feature"><h4>Privacy by design</h4><p>Built with the same on-device-first approach as Second Brain.</p></div>
                 </div>
             </section>
 
             <!-- ===== WCAG cheat sheet ===== -->
             <section class="tool-card help-section" id="wcag">
                 <h2><i class="fa fa-book-open" aria-hidden="true"></i> WCAG cheat sheet</h2>
-                <p>The four POUR principles underpin every WCAG criterion. AccessAI maps every issue it finds back to one or more of these.</p>
+                <p>The four POUR principles underpin every WCAG criterion, and every AccessAI tool is designed against them.</p>
                 <div class="feature-grid">
                     <div class="feature"><h4><i class="fa fa-eye" aria-hidden="true"></i> Perceivable</h4><p>Alt text, captions, color contrast (4.5:1 for body text AA), responsive layout.</p></div>
                     <div class="feature"><h4><i class="fa fa-keyboard" aria-hidden="true"></i> Operable</h4><p>Keyboard access, no keyboard traps, visible focus, target sizes, no seizure-inducing motion.</p></div>
@@ -355,50 +303,41 @@
                 <h2><i class="fa fa-life-ring" aria-hidden="true"></i> Troubleshooting &amp; FAQ</h2>
 
                 <details>
-                    <summary>The AI tools say "AI not configured" — what does that mean?</summary>
+                    <summary>Second Brain says preferences aren't carrying over — what's wrong?</summary>
                     <div class="faq-body">
-                        <p>The AccessAI backend connects to Azure OpenAI. If the deployment isn't configured (missing API key or endpoint), the tools degrade gracefully and tell you so. Deterministic checks (lint, readability, image audit) still work and you'll see the evidence panels populated.</p>
+                        <p>Check that you haven't cleared your data via the Trust &amp; control panel's "Clear" button, and that you're testing on the same browser profile — stored preferences are scoped per-browser, not synced to an account.</p>
                     </div>
                 </details>
 
                 <details>
-                    <summary>A request is taking ages — should I refresh?</summary>
+                    <summary>Does Voice Navigation need an internet connection?</summary>
                     <div class="faq-body">
-                        <p>No. Long calls (15–60s) are normal for complex code or large pages. Watch the progress bar — if the elapsed time keeps ticking and the bar still moves, it's working. If it errors out, you'll see a red panel with the specific failure. Use <strong>Cancel</strong> if you want to abort and try a smaller input.</p>
+                        <p>Voice command recognition and mapping rely on the AccessAI backend, so yes — an active connection is required for commands to be understood and executed.</p>
                     </div>
                 </details>
 
                 <details>
-                    <summary>Why doesn't the score reach 100 even on a "perfect" page?</summary>
+                    <summary>Can I use these tools on private or authenticated pages?</summary>
                     <div class="faq-body">
-                        <p>Roughly 30–40% of WCAG criteria can't be measured automatically (e.g. whether your alt text is meaningful, whether headings reflect the document's actual structure). The score weights what it <em>can</em> measure conservatively. A 90+ score plus a manual review pass is realistic for compliant pages.</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary>Can I use AccessAI on private or authenticated pages?</summary>
-                    <div class="faq-body">
-                        <p>The Score tool requires a publicly fetchable URL — the backend HTTP-fetches it like a browser would.</p>
+                        <p>Both tools run entirely client-side against whatever page is currently open in your browser — including pages behind a login — since neither needs to fetch the page from a server.</p>
                     </div>
                 </details>
 
                 <details>
                     <summary>How do I report a bug or request a feature?</summary>
                     <div class="faq-body">
-                        <p>Use the chat assistant to describe what you'd like — feedback is captured in the conversation log. For technical issues, include the URL or input that triggered the problem and any error message you saw in the progress panel.</p>
+                        <p>Include the page you were on, the steps that led to the problem, and what you expected to happen instead — that's the fastest path to a fix.</p>
                     </div>
                 </details>
             </section>
 
             <!-- ===== Footer CTA ===== -->
             <section class="tool-card" style="text-align:center;">
-                <h2 style="justify-content:center;"><i class="fa fa-rocket" aria-hidden="true"></i> Ready to test a page?</h2>
-                <p>Pick a tool to start. The chat is always available if you need a hand interpreting any of the results.</p>
+                <h2 style="justify-content:center;"><i class="fa fa-rocket" aria-hidden="true"></i> Ready to try a tool?</h2>
+                <p>Pick one below to get started.</p>
                 <div class="tool-chips" style="justify-content:center; margin-top:14px;">
-                    <a class="tool-chip" href="score.html"><i class="fa fa-chart-bar"></i> Score a URL</a>
                     <a class="tool-chip" href="memory-layer.html"><i class="fa fa-brain"></i> Second Brain</a>
                     <a class="tool-chip" href="voice-navigation.html"><i class="fa fa-microphone"></i> Voice Navigation</a>
-                    <a class="tool-chip" href="chat.html"><i class="fa fa-comments"></i> Ask the AI</a>
                 </div>
             </section>
         </main>

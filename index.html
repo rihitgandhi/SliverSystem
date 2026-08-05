@@ -70,14 +70,6 @@
                             <span class="nav-icon"><i class="fa fa-bullseye"></i></span>
                             <span class="nav-text">Our Mission</span>
                         </button>
-                        <a href="chat.html" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-comments"></i></span>
-                            <span class="nav-text">Chat with AI</span>
-                        </a>
-                        <a href="score.html" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-chart-bar"></i></span>
-                            <span class="nav-text">Accessibility Score</span>
-                        </a>
                         <a href="memory-layer.html" class="nav-item nav-link" role="menuitem">
                             <span class="nav-icon"><i class="fa fa-brain"></i></span>
                             <span class="nav-text">Second Brain</span>
@@ -155,8 +147,8 @@
                             <h2 style="font-size: 2rem; font-weight: 900;">Ready to Make Your Website Accessible?</h2>
                             <p class="cta-content">Join the movement for a more inclusive digital world.</p>
                             <div class="cta-buttons fundamental-cta-buttons">
-                                <a href="chat.html" class="cta-btn primary fundamental-btn"><i class="fa fa-comments"></i> Start Chatting with AI</a>
-                                <a href="score.html" class="cta-btn secondary fundamental-btn"><i class="fa fa-chart-bar"></i> Test Your Website</a>
+                                <a href="memory-layer.html" class="cta-btn primary fundamental-btn"><i class="fa fa-brain"></i> Explore Second Brain</a>
+                                <a href="voice-navigation.html" class="cta-btn secondary fundamental-btn"><i class="fa fa-microphone"></i> Try Voice Navigation</a>
                             </div>
                         </div>
                     </div>
@@ -203,70 +195,6 @@
                             <p class="section-subtitle fundamental-section-subtitle">Powerful tools to make your website accessible to everyone</p>
                         </div>
                         <div class="tools-grid fundamental-grid reveal-stagger">
-                            <!-- Website Checker Tool -->
-                            <div class="tool-card checker-tool card-bg-1 reveal">
-                                <div class="tool-header">
-                                    <div class="tool-icon"><i class="fa fa-search"></i></div>
-                                    <div class="tool-info">
-                                        <h3>Website Accessibility Checker</h3>
-                                        <p>Analyze any website for accessibility issues and get detailed improvement recommendations</p>
-                                    </div>
-                                </div>
-                                <div class="tool-content">
-                                    <form id="home-accessibility-checker-form" class="modern-checker-form" autocomplete="off">
-                                        <div class="input-group">
-                                            <input type="url" id="home-website-url" name="website-url" placeholder="https://example.com" required class="modern-checker-input" autocomplete="off" aria-label="Enter website URL">
-                                            <button type="submit" id="home-checker-btn" class="btn btn-primary">
-                                                <span class="btn-icon"><i class="fa fa-search"></i></span>
-                                                <span class="btn-text">Check Accessibility</span>
-                                                <span class="loading-spinner" style="display: none;"><div class="spinner"></div></span>
-                                            </button>
-                                        </div>
-                                    </form>
-                                    <div id="home-error-message" class="modern-error-message" style="display: none;"></div>
-                                    <div id="home-success-message" class="modern-success-message" style="display: none;"></div>
-                                    <div id="home-results" class="modern-results-section" style="display: none;"></div>
-                                </div>
-                                <div class="tool-features">
-                                    <div class="feature-tag">WCAG 2.1 Compliant</div>
-                                    <div class="feature-tag">Real-time Analysis</div>
-                                    <div class="feature-tag">Detailed Reports</div>
-                                </div>
-                            </div>
-                            <!-- AI Assistant Tool -->
-                            <div class="tool-card ai-tool card-bg-2 reveal">
-                                <div class="tool-header">
-                                    <div class="tool-icon"><i class="fa fa-comment-dots"></i></div>
-                                    <div class="tool-info">
-                                        <h3>AI Accessibility Assistant</h3>
-                                        <p>Get instant answers about accessibility guidelines, best practices, and implementation tips</p>
-                                    </div>
-                                </div>
-                                <div class="tool-content">
-                                    <div class="ai-preview">
-                                        <div class="ai-message">
-                                            <div class="ai-avatar"><i class="fa fa-comment-dots"></i></div>
-                                            <div class="message-content">
-                                                <p>Hello! I'm your accessibility assistant. Ask me anything about WCAG guidelines, assistive technologies, or inclusive design!</p>
-                                            </div>
-                                        </div>
-                                        <div class="quick-actions">
-                                            <a href="chat.html" class="quick-action"><i class="fa fa-list"></i> WCAG Principles</a>
-                                            <a href="chat.html" class="quick-action"><i class="fa fa-keyboard"></i> Keyboard Access</a>
-                                            <a href="chat.html" class="quick-action"><i class="fa fa-image"></i> Alt Text Guide</a>
-                                        </div>
-                                    </div>
-                                    <div class="tool-actions">
-                                        <a href="chat.html" class="btn btn-primary"><i class="fa fa-comments"></i> Open Full Chat</a>
-                                        <button class="btn btn-secondary" onclick="showExampleQuestions()"><i class="fa fa-lightbulb"></i> Example Questions</button>
-                                    </div>
-                                </div>
-                                <div class="tool-features">
-                                    <div class="feature-tag">24/7 Available</div>
-                                    <div class="feature-tag">Instant Answers</div>
-                                    <div class="feature-tag">Expert Knowledge</div>
-                                </div>
-                            </div>
                             <!-- Voice Navigation Tool -->
                             <div class="tool-card voice-tool card-bg-3 reveal">
                                 <div class="tool-header">
@@ -853,276 +781,6 @@
                 </section>
             </div>
 
-            <div id="chat" class="tab-content" role="tabpanel" aria-labelledby="chat-tab" style="display: none;">
-                <section class="chat-hero">
-                    <div class="chat-hero-content">
-                        <h2 class="chat-title">💬 Accessibility AI Assistant</h2>
-                        <p class="chat-subtitle">Ask me anything about web accessibility, WCAG guidelines, assistive technologies, and inclusive design practices!</p>
-                    </div>
-                </section>
-                <section class="modern-chatbot-section">
-                    <div class="chatbot-container modern-chatbot">
-                        <div class="chatbot-header modern-header">
-                            <div class="header-content">
-                                <div class="ai-avatar">
-                                    <div class="avatar-circle">
-                                        <span class="avatar-icon">💬</span>
-                                    </div>
-                                    <div class="status-indicator online"></div>
-                                </div>
-                                <div class="header-text">
-                                    <h3 class="modern-title">💬 Accessibility Assistant</h3>
-                                    <p class="modern-subtitle">Ask me anything about web accessibility, WCAG guidelines, or assistive technologies!</p>
-                                </div>
-                            </div>
-                            <div class="header-actions">
-                                <button class="btn btn-small" onclick="clearChatHistory()" title="Clear Chat" aria-label="Clear chat history">
-                                    <span class="btn-icon">🗑️</span>
-                                </button>
-                                <button class="btn btn-small" onclick="exportChatHistory()" title="Export Chat" aria-label="Export chat history">
-                                    <span class="btn-icon">📥</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="chat-messages modern-messages" id="chat-messages">
-                            <div class="welcome-message">
-                                <div class="welcome-content">
-                                    <div class="welcome-icon">👋</div>
-                                    <h4>Welcome to the Accessibility Assistant!</h4>
-                                    <p>I'm here to help you with all things accessibility. Try asking me about:</p>
-                                    <div class="quick-actions">
-                                        <button class="quick-action-btn" onclick="askQuickQuestion('What are the main WCAG principles?')">
-                                            <span class="quick-icon">📋</span>
-                                            WCAG Principles
-                                        </button>
-                                        <button class="quick-action-btn" onclick="askQuickQuestion('How do I make a website keyboard accessible?')">
-                                            <span class="quick-icon">⌨️</span>
-                                            Keyboard Access
-                                        </button>
-                                        <button class="quick-action-btn" onclick="askQuickQuestion('What is alt text and why is it important?')">
-                                            <span class="quick-icon">🖼️</span>
-                                            Alt Text Guide
-                                        </button>
-                                        <button class="quick-action-btn" onclick="askQuickQuestion('How do I test my website for accessibility?')">
-                                            <span class="quick-icon">🧪</span>
-                                            Testing Tips
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat-input-container modern-input">
-                            <div class="input-wrapper modern-wrapper">
-                                <div class="input-field-container">
-                                    <textarea id="chat-input" placeholder="Type your question here..." maxlength="500" rows="1" class="modern-textarea" autocomplete="off" aria-label="Type your question here"></textarea>
-                                    <div class="input-actions">
-                                        <button class="send-button modern-send" id="send-button" aria-label="Send message">
-                                            <span class="send-icon">📤</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="input-footer">
-                                <div class="char-counter">
-                                    <span id="char-count">0</span>/500
-                                </div>
-                                <div class="input-tips">
-                                    <span class="tip">💡 Press Enter to send, Shift+Enter for new line</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat-history-section modern-history">
-                            <div class="chat-history-header">
-                                <h4>📜 Chat History</h4>
-                                <button class="toggle-history-btn modern-toggle" onclick="toggleChatHistory()">
-                                    <span class="toggle-icon">👁️</span>
-                                    Show/Hide
-                                </button>
-                            </div>
-                            <div class="chat-history-content" id="chat-history-content" style="display: none;">
-                                <div class="history-list" id="history-list"></div>
-                                <div class="history-actions">
-                                    <button class="btn btn-secondary" onclick="exportChatHistory()">
-                                        <span class="btn-icon">📥</span>
-                                        Export History
-                                    </button>
-                                    <button class="btn btn-secondary" onclick="clearChatHistory()">
-                                        <span class="btn-icon">🗑️</span>
-                                        Clear History
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section class="back-to-site">
-                    <div class="back-content">
-                        <h2>Explore More Accessibility Resources</h2>
-                        <p>Visit our main website for comprehensive guides, lessons, and resources about computer accessibility.</p>
-                        <a href="#" class="btn btn-primary" onclick="switchTab('home'); return false;">
-                            <span class="btn-icon">🏠</span>
-                            <span class="back-text">Back to Main Website</span>
-                        </a>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Score Tab Content -->
-            <div id="score" class="tab-content" role="tabpanel" aria-labelledby="score-tab" style="display: none;">
-                <section class="score-section">
-                    <h2>Website Accessibility Score</h2>
-                    <form id="score-form" class="score-form" autocomplete="off">
-                        <div class="form-group">
-                            <label for="url" class="form-label">Enter website URL:</label>
-                            <input type="url" id="url" name="url" placeholder="https://example.com" required class="form-input" autocomplete="off">
-                        </div>
-                        <button type="submit" id="submit-btn" class="btn btn-primary">
-                            <span class="btn-icon">🔍</span>
-                            <span class="btn-text">Check Accessibility</span>
-                            <span class="loading-spinner" style="display: none;">?</span>
-                        </button>
-                    </form>
-                    <div id="error-message" class="error-message" style="display: none;"></div>
-                    <div id="success-message" class="success-message" style="display: none;"></div>
-                    <div id="results" class="results-section" style="display: none;">
-                        <div class="results-header">
-                            <h2>Accessibility Analysis Results</h2>
-                            <div class="export-actions">
-                                <button id="export-pdf-btn" class="btn btn-secondary" onclick="exportToPDF()">
-                                    <span class="btn-icon">📄</span>
-                                    Export PDF Report
-                                </button>
-                                <button id="export-json-btn" class="btn btn-secondary" onclick="exportToJSON()">
-                                    <span class="btn-icon">📊</span>
-                                    Export JSON Data
-                                </button>
-                            </div>
-                        </div>
-                        <div class="score-display">
-                            <div class="score-circle">
-                                <span id="score-value">0</span>
-                                <span class="score-label">/100</span>
-                            </div>
-                            <div id="score-explanation" class="score-explanation" style="display: none;"></div>
-                            <div id="compliance-level" class="compliance-level" style="display: none;"></div>
-                            <div id="next-steps" class="next-steps" style="display: none;"></div>
-                        </div>
-                        <div id="detailed-score-breakdown" class="detailed-score-breakdown" style="display: none;">
-                            <h3>📊 Detailed Score Breakdown</h3>
-                            <div class="score-categories">
-                                <div class="score-category">
-                                    <h4>🔴 Critical Issues (40 points)</h4>
-                                    <div class="category-score">
-                                        <span id="critical-score">0</span>/40
-                                    </div>
-                                    <div id="critical-details" class="category-details"></div>
-                                </div>
-                                <div class="score-category">
-                                    <h4>🟡 Structural Issues (30 points)</h4>
-                                    <div class="category-score">
-                                        <span id="structural-score">0</span>/30
-                                    </div>
-                                    <div id="structural-details" class="category-details"></div>
-                                </div>
-                                <div class="score-category">
-                                    <h4>🔵 Content Issues (20 points)</h4>
-                                    <div class="category-score">
-                                        <span id="content-score">0</span>/20
-                                    </div>
-                                    <div id="content-details" class="category-details"></div>
-                                </div>
-                                <div class="score-category">
-                                    <h4>🟢 Technical Issues (10 points)</h4>
-                                    <div class="category-score">
-                                        <span id="technical-score">0</span>/10
-                                    </div>
-                                    <div id="technical-details" class="category-details"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="accessibility-metrics" class="accessibility-metrics" style="display: none;">
-                            <h3>📈 Accessibility Metrics</h3>
-                            <div class="metrics-grid">
-                                <div class="metric-card">
-                                    <div class="metric-icon">👁️</div>
-                                    <div class="metric-content">
-                                        <h4>Visual Accessibility</h4>
-                                        <div class="metric-score" id="visual-score">0%</div>
-                                        <div class="metric-details" id="visual-details"></div>
-                                    </div>
-                                </div>
-                                <div class="metric-card">
-                                    <div class="metric-icon">👂</div>
-                                    <div class="metric-content">
-                                        <h4>Auditory Accessibility</h4>
-                                        <div class="metric-score" id="auditory-score">0%</div>
-                                        <div class="metric-details" id="auditory-details"></div>
-                                    </div>
-                                </div>
-                                <div class="metric-card">
-                                    <div class="metric-icon">⌨️</div>
-                                    <div class="metric-content">
-                                        <h4>Keyboard Navigation</h4>
-                                        <div class="metric-score" id="keyboard-score">0%</div>
-                                        <div class="metric-details" id="keyboard-details"></div>
-                                    </div>
-                                </div>
-                                <div class="metric-card">
-                                    <div class="metric-icon">🧠</div>
-                                    <div class="metric-content">
-                                        <h4>Cognitive Accessibility</h4>
-                                        <div class="metric-score" id="cognitive-score">0%</div>
-                                        <div class="metric-details" id="cognitive-details"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wcag-standards-section">
-                            <h3>WCAG 2.1 Level AA Compliance</h3>
-                            <div class="standards-grid">
-                                <div class="compliant-standards">
-                                    <h4>✅ Compliant Standards</h4>
-                                    <div id="compliant-list" class="standards-list"></div>
-                                </div>
-                                <div class="non-compliant-standards">
-                                    <h4>❌ Non-Compliant Standards</h4>
-                                    <div id="non-compliant-list" class="standards-list"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="priority-issues-section">
-                            <h3>Priority Issues</h3>
-                            <div id="priority-issues-list" class="priority-issues-grid"></div>
-                        </div>
-                        <div class="recommendations">
-                            <div class="recommendation-card">
-                                <h3>Short-term (1-2 weeks)</h3>
-                                <p id="short-term-rec"></p>
-                                <details>
-                                    <summary>Learn more</summary>
-                                    <p id="short-term-details"></p>
-                                </details>
-                            </div>
-                            <div class="recommendation-card">
-                                <h3>Medium-term (1-3 months)</h3>
-                                <p id="medium-term-rec"></p>
-                                <details>
-                                    <summary>Learn more</summary>
-                                    <p id="medium-term-details"></p>
-                                </details>
-                            </div>
-                            <div class="recommendation-card">
-                                <h3>Long-term (3-12 months)</h3>
-                                <p id="long-term-rec"></p>
-                                <details>
-                                    <summary>Learn more</summary>
-                                    <p id="long-term-details"></p>
-                                </details>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
         </main>
 
         <!-- Footer -->
@@ -1381,8 +1039,6 @@
                 activeNavItem.setAttribute('aria-selected', 'true');
             }
             
-            // Initialize chatbot if needed
-            setTimeout(initChatbotIfNeeded, 100);
         }
         
         function toggleMobileMenu() {
@@ -1688,7 +1344,7 @@
             }
             
             // Initialize from URL hash (e.g., index.html#blogs), fallback to home
-            const validTabs = new Set(['home', 'ai', 'blogs', 'mission', 'chat', 'score']);
+            const validTabs = new Set(['home', 'ai', 'blogs', 'mission']);
             const hashTab = window.location.hash ? window.location.hash.substring(1).toLowerCase() : '';
             const initialTab = validTabs.has(hashTab) ? hashTab : 'home';
             switchTab(initialTab);
@@ -1708,19 +1364,8 @@
             document.head.appendChild(style);
         });
 
-        // Initialize chatbot when AI tab or Home tab is loaded
-        function initChatbotIfNeeded() {
-            // Only initialize if not already present
-            if (typeof window.chatbot === 'undefined' && (document.getElementById('ai-chatbox') || document.getElementById('ai'))) {
-                window.chatbot = new AccessibilityChatbot();
-            }
-        }
-
-        // Initialize chatbot when the page loads
+        // Initialize modern home page functionality
         document.addEventListener('DOMContentLoaded', () => {
-            initChatbotIfNeeded();
-            
-            // Initialize modern home page functionality
             initModernHome();
         });
         
@@ -1764,272 +1409,11 @@
         }
         
         function initToolInteractions() {
-            // Quick action buttons for AI assistant
-            document.querySelectorAll('.quick-action').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const question = this.getAttribute('data-question') || this.textContent.trim();
-                    askQuickQuestion(question);
-                });
-            });
-            
-            // Modern checker form enhancements
-            const modernCheckerInput = document.querySelector('.modern-checker-input');
-            if (modernCheckerInput) {
-                modernCheckerInput.addEventListener('input', function() {
-                    const submitBtn = document.querySelector('.modern-checker-btn');
-                    if (submitBtn) {
-                        submitBtn.disabled = !this.value.trim();
-                    }
-                });
-            }
+            // Reserved for future tool-card interactions.
         }
-        
-        function askQuickQuestion(question) {
-            // Redirect to chat page with the question
-            const encodedQuestion = encodeURIComponent(question);
-            window.location.href = `chat.html?question=${encodedQuestion}`;
-        }
-        
-        function showExampleQuestions() {
-            // Show example questions modal or redirect to chat
-            window.location.href = 'chat.html';
-        }
-
-        // Accessibility Checker for Home Tab - Redirect to score.html
-        (function() {
-            const form = document.getElementById('home-accessibility-checker-form');
-            if (!form) return;
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                let url = document.getElementById('home-website-url').value.trim();
-                if (!url) {
-                    alert('Please enter a URL');
-                    return;
-                }
-                // Automatically add https:// if no protocol is specified
-                if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                    url = 'https://' + url;
-                }
-                // Validate URL format
-                try { new URL(url); } catch (e) {
-                    alert('Please enter a valid URL (e.g., example.com or https://example.com)');
-                    return;
-                }
-                // Redirect to score.html with URL parameter
-                window.location.href = `score.html?url=${encodeURIComponent(url)}`;
-            });
-        })();
     </script>
 
-    <!-- Chatbot Script (inlined for Home tab functionality) -->
-    
-    <!-- Chatbot Script (inlined for Home tab functionality) -->
     <script>
-class AccessibilityChatbot {
-    constructor() {
-        this.conversationId = 'accessibility-chat-' + Date.now();
-        this.isLoading = false;
-        this.backendUrl = this.getBackendUrl();
-        this.init();
-    }
-    getBackendUrl() {
-        // Respect meta tag override first
-        try {
-            const meta = document.querySelector('meta[name="backend-url"]');
-            if (meta && meta.content) return meta.content;
-        } catch (e) {}
-
-        const host = window.location.hostname || '';
-        // Treat GitHub Pages hosts (including the user site path) as production
-        if (host.includes('github.io') || host === 'rihitgandhi.github.io') {
-            return 'https://sliver-system-backend-production-9067.up.railway.app';
-        }
-
-        // Local development fallback
-        return 'http://localhost:5000';
-    }
-    init() {
-        const messagesContainer = document.getElementById('chat-messages');
-        if (messagesContainer && messagesContainer.children.length === 0) {
-            // Insert initial bot message if empty
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message bot-message';
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            contentDiv.innerHTML = "<p>Hello! I'm your accessibility assistant. Ask me anything about web accessibility, WCAG, or inclusive design.</p>";
-            messageDiv.appendChild(contentDiv);
-            messagesContainer.appendChild(messageDiv);
-        }
-        this.bindEvents();
-    }
-    bindEvents() {
-        const input = document.getElementById('chat-input');
-        const sendButton = document.getElementById('send-button');
-        if (input && sendButton) {
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    this.sendMessage();
-                }
-            });
-            sendButton.addEventListener('click', () => {
-                this.sendMessage();
-            });
-            input.addEventListener('input', () => {
-                this.adjustInputHeight();
-            });
-        }
-        // Clear and example buttons
-        const clearBtn = document.querySelector('.clear-chat-btn');
-        if (clearBtn) clearBtn.onclick = () => this.clearChat();
-        const exampleBtn = document.querySelector('.example-questions-btn');
-        if (exampleBtn) exampleBtn.onclick = () => this.showExampleQuestions();
-        document.querySelectorAll('.question-chip').forEach(btn => {
-            btn.onclick = () => this.askQuestion(btn.textContent);
-        });
-    }
-    async sendMessage() {
-        const input = document.getElementById('chat-input');
-        const message = input.value.trim();
-        if (!message || this.isLoading) return;
-        this.addMessage(message, 'user');
-        input.value = '';
-        this.adjustInputHeight();
-        this.showLoading();
-        try {
-            const response = await fetch(`${this.backendUrl}/api/chat`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    message: message,
-                    conversation_id: this.conversationId
-                })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                this.addMessage(data.response, 'bot');
-            } else {
-                this.addMessage('Sorry, I encountered an error. Please try again.', 'bot error');
-            }
-        } catch (error) {
-            this.addMessage('Sorry, I\'m having trouble connecting to the server. Please check if the Python backend is running.', 'bot error');
-        }
-        this.hideLoading();
-    }
-    addMessage(content, type) {
-        const messagesContainer = document.getElementById('chat-messages');
-        if (!messagesContainer) return;
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${type}-message`;
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'message-content';
-        contentDiv.innerHTML = content.replace(/\n/g, '<br>');
-        messageDiv.appendChild(contentDiv);
-        messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
-    showLoading() {
-        this.isLoading = true;
-        const sendButton = document.getElementById('send-button');
-        if (sendButton) {
-            sendButton.innerHTML = '<span class="loading-spinner">?</span>';
-            sendButton.disabled = true;
-        }
-    }
-    hideLoading() {
-        this.isLoading = false;
-        const sendButton = document.getElementById('send-button');
-        if (sendButton) {
-            sendButton.innerHTML = '<span class="send-icon">📤</span>';
-            sendButton.disabled = false;
-        }
-    }
-    adjustInputHeight() {
-        const input = document.getElementById('chat-input');
-        if (input) {
-            input.style.height = 'auto';
-            input.style.height = Math.min(input.scrollHeight, 120) + 'px';
-        }
-    }
-    clearChat() {
-        const messagesContainer = document.getElementById('chat-messages');
-        if (messagesContainer) {
-            const initialMessage = messagesContainer.querySelector('.bot-message');
-            messagesContainer.innerHTML = '';
-            if (initialMessage) {
-                messagesContainer.appendChild(initialMessage);
-            }
-        }
-        this.conversationId = 'accessibility-chat-' + Date.now();
-    }
-    showExampleQuestions() {
-        const exampleBox = document.getElementById('example-questions');
-        if (exampleBox) {
-            exampleBox.style.display = exampleBox.style.display === 'none' ? 'block' : 'none';
-        }
-    }
-    askQuestion(question) {
-        const input = document.getElementById('chat-input');
-        if (input) {
-            input.value = question;
-            this.sendMessage();
-        }
-    }
-}
-document.addEventListener('DOMContentLoaded', () => {
-    window.chatbot = new AccessibilityChatbot();
-});
-
-// Chat History Functions
-function toggleChatHistory() {
-    const historyContent = document.getElementById('chat-history-content');
-    if (historyContent) {
-        const isVisible = historyContent.style.display !== 'none';
-        historyContent.style.display = isVisible ? 'none' : 'block';
-    }
-}
-
-function exportChatHistory() {
-    const history = localStorage.getItem('accessibility-chat-history');
-    if (!history) {
-        alert('No chat history to export');
-        return;
-    }
-
-    try {
-        const parsedHistory = JSON.parse(history);
-        const exportData = {
-            exportDate: new Date().toISOString(),
-            totalQuestions: parsedHistory.length,
-            questions: parsedHistory
-        };
-
-        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `accessibility-chat-history-${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    } catch (error) {
-        console.error('Error exporting chat history:', error);
-        alert('Error exporting chat history');
-    }
-}
-
-function clearChatHistory() {
-    if (confirm('Are you sure you want to clear all chat history? This action cannot be undone.')) {
-        localStorage.removeItem('accessibility-chat-history');
-        const historyList = document.getElementById('history-list');
-        if (historyList) {
-            historyList.innerHTML = '<div class="history-item"><div class="history-question">No chat history yet</div></div>';
-        }
-        alert('Chat history cleared successfully');
-    }
-}
-
 // Hero scroll fade effect
 document.addEventListener('DOMContentLoaded', function() {
     const hero = document.querySelector('.hero-fade');
@@ -2047,7 +1431,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-<!-- <script src="scripts/chatbot.js"></script> -->
 
 <!-- ========================================================
      Visual Effects: Preloader · 3D Carousel · Scroll Reveals · Particles
@@ -2444,7 +1827,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }, { passive: true });
 
                     // Single delegated listener for hover state — no MutationObserver needed.
-                    const interactiveSelector = 'a, button, input, textarea, select, summary, [role="button"], [role="link"], .nav-item, .nav-toggle, .quick-action, .quick-action-btn';
+                    const interactiveSelector = 'a, button, input, textarea, select, summary, [role="button"], [role="link"], .nav-item, .nav-toggle';
                     document.addEventListener('pointerover', (e) => {
                         if (e.target.closest && e.target.closest(interactiveSelector)) {
                             ring.classList.add('cursor-active');

@@ -26,7 +26,7 @@ function Test-Post($path,$body) {
   }
 }
 
-$gets = '/','/index.html','/chat.html','/score.html','/memory-layer.html','/voice-navigation.html','/help.html','/Blog_1.html','/api/health','/css/main.css','/scripts/tool-shared.js','/scripts/chatbot.js'
+$gets = '/','/index.html','/memory-layer.html','/voice-navigation.html','/help.html','/Blog_1.html','/api/health','/css/main.css','/scripts/tool-shared.js'
 foreach ($g in $gets) {
   try {
     $r = Invoke-WebRequest -Uri ("http://127.0.0.1:5000" + $g) -Method GET -TimeoutSec 30 -UseBasicParsing
@@ -39,8 +39,6 @@ foreach ($g in $gets) {
   }
 }
 
-$results += Test-Post '/api/chat' @{message="What is WCAG?"; conversation_id="test"}
-$results += Test-Post '/api/score' @{url="https://example.com"}
 # 1x1 transparent PNG base64
 $png = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
 $results += Test-Post '/api/alt-text' @{image=$png; detail_level="medium"; context=""; tone="neutral"}
