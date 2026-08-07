@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, redirect
 from flask_cors import CORS
 import gzip
 import io
@@ -156,9 +156,12 @@ def help_page():
 def memory_layer_page():
     return send_from_directory('.', 'memory-layer.html')
 
+# Voice Navigation used to be its own page; it's now an accessibility
+# feature inside Second Brain. Redirect old links/bookmarks straight there
+# (the Location header's fragment is honored by the browser after the 3xx).
 @app.route('/voice-navigation.html')
 def voice_navigation_page():
-    return send_from_directory('.', 'voice-navigation.html')
+    return redirect('/memory-layer.html#voice-navigation')
 
 @app.route('/api/cors-test', methods=['GET', 'OPTIONS'])
 def cors_test():
