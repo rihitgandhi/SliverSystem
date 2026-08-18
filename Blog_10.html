@@ -4,50 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✦ Accessible Forms: Labels, Validation, and Error Recovery - SliverSystem</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/dark-theme.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #060c1a 0%, #0d1a36 50%, #112040 100%); color: #ccd6f6;
-            min-height: 100vh;
-            color: #ccd6f6;
-            line-height: 1.7;
-        }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-        .exit-btn {
-            position: fixed; top: 20px; left: 20px; background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-            color: white; border: none; padding: 12px 20px; border-radius: 50px; font-size: 1rem;
-            font-weight: 600; cursor: pointer; box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
-            transition: all 0.3s ease; z-index: 1000;
-        }
-        .hero-section { text-align: center; padding: 90px 0 45px; color: white; }
-        .hero-title { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; margin-bottom: 20px; }
-        .hero-subtitle { font-size: 1.15rem; max-width: 860px; margin: 0 auto; opacity: 0.96; }
-        .hero-image-wrap { margin: 30px auto 0; max-width: 900px; }
-        .hero-image { width: 100%; border-radius: 18px; box-shadow: 0 18px 45px rgba(0,0,0,0.22); }
-        .content-section {
-            background: white; margin: 26px 0; padding: 44px 34px; border-radius: 20px;
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
-        }
-        .section-title { font-size: 2rem; font-weight: 700; color: #2c3e50; margin-bottom: 16px; }
-        .section-text { font-size: 1.08rem; color: #4b5563; }
-        .cta {
-            margin: 36px 0 48px; background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white; border-radius: 18px; padding: 40px 30px; text-align: center;
-        }
-        .cta h2 { font-size: 2rem; margin-bottom: 12px; }
-        .cta p { font-size: 1.08rem; opacity: 0.95; }
-        @media (max-width: 768px) {
-            .content-section { padding: 32px 20px; }
-            .section-title { font-size: 1.65rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="./css/apple-design-system.css">
+    <link rel="stylesheet" href="./css/apple-blog.css">
+
 </head>
 <body>
+    <header role="banner" class="modern-header sticky-header fundamental-nav" style="position: sticky; top: 0; z-index: 1001;">
+        <nav role="navigation" aria-label="Main navigation">
+            <div class="nav-container nav-elevated fundamental-nav-container">
+                <div class="nav-brand fundamental-nav-brand">
+                    <a href="index.html" aria-label="Go to Home" style="all: unset; cursor: pointer; display: inline-block;">
+                        <h1 class="nav-title fundamental-nav-title title-with-symbol" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h1>
+                    </a>
+                </div>
+                <div class="nav-menu fundamental-nav-menu" role="menubar">
+                    <a href="index.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-home"></i></span><span class="nav-text">Home</span></a>
+                    <a href="index.html#ai" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-lightbulb"></i></span><span class="nav-text">AI in Accessibility</span></a>
+                    <a href="index.html#blogs" class="nav-item nav-link active" role="menuitem" aria-current="page"><span class="nav-icon"><i class="fa fa-pen-nib"></i></span><span class="nav-text">Blogs</span></a>
+                    <a href="index.html#mission" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-bullseye"></i></span><span class="nav-text">Our Mission</span></a>
+                    <a href="memory-layer.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-brain"></i></span><span class="nav-text">Second Brain</span></a>
+                </div>
+                <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+
     <button class="exit-btn" onclick="exitBlog()"><i class="fas fa-times"></i> Exit</button>
     <script>
         function exitBlog() {
@@ -95,5 +84,25 @@
             <p>Accessible products are built when design, engineering, content, and research teams treat inclusion as a shared responsibility from day one.</p>
         </div>
     </div>
+
+    <footer role="contentinfo" style="border-top: 1px solid var(--border-subtle); background: var(--bg-deep); padding: 2rem 1.5rem; text-align: center;">
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0 0 0.6rem;">&copy; 2025 AccessAI &middot; Designed to follow WCAG 2.1 Level AA.</p>
+        <a href="index.html#blogs" style="color: var(--accent-sky); font-size: 0.9rem; text-decoration: none; font-weight: 600;">&larr; Back to all articles</a>
+    </footer>
+
+    <script>
+    (function () {
+        'use strict';
+        var navToggle = document.querySelector('.nav-toggle');
+        var navMenu = document.querySelector('.nav-menu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function () {
+                var expanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', String(!expanded));
+                navMenu.classList.toggle('active');
+            });
+        }
+    })();
+    </script>
 </body>
 </html>

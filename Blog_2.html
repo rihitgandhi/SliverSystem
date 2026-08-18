@@ -3,149 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
   <title>Designing for Inclusivity - AccessAI</title>
   <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/dark-theme.css">
+  <link rel="stylesheet" href="./css/apple-design-system.css">
+  <link rel="stylesheet" href="./css/apple-blog.css">
 </head>
 <body>
-<section style="font-family: 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(135deg, #667eea 0%, #74b9ff 100%); padding: 50px; color: #333;">
+    <header role="banner" class="modern-header sticky-header fundamental-nav" style="position: sticky; top: 0; z-index: 1001;">
+        <nav role="navigation" aria-label="Main navigation">
+            <div class="nav-container nav-elevated fundamental-nav-container">
+                <div class="nav-brand fundamental-nav-brand">
+                    <a href="index.html" aria-label="Go to Home" style="all: unset; cursor: pointer; display: inline-block;">
+                        <h1 class="nav-title fundamental-nav-title title-with-symbol" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h1>
+                    </a>
+                </div>
+                <div class="nav-menu fundamental-nav-menu" role="menubar">
+                    <a href="index.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-home"></i></span><span class="nav-text">Home</span></a>
+                    <a href="index.html#ai" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-lightbulb"></i></span><span class="nav-text">AI in Accessibility</span></a>
+                    <a href="index.html#blogs" class="nav-item nav-link active" role="menuitem" aria-current="page"><span class="nav-icon"><i class="fa fa-pen-nib"></i></span><span class="nav-text">Blogs</span></a>
+                    <a href="index.html#mission" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-bullseye"></i></span><span class="nav-text">Our Mission</span></a>
+                    <a href="memory-layer.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-brain"></i></span><span class="nav-text">Second Brain</span></a>
+                </div>
+                <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-   <button onclick="exitBlog()" 
-    style="position: fixed; top: 20px; left: 20px; 
-           background: #ff4d4d; color: white; 
-           border: none; padding: 10px 18px; 
-           border-radius: 8px; font-size: 1rem; 
-           cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
-           transition: background 0.3s;">
-    ✖ Exit
-  </button>
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="hero-title">Designing for Inclusivity: Making Technology Work for Everyone</h1>
+            <p class="hero-subtitle">Inclusive design is more than a trend — it's a commitment to building products that everyone can use. From accessibility for people with disabilities to considering diverse cultural and cognitive needs, designing inclusively creates <strong>better experiences for all users</strong>. It ensures equal access, encourages innovation, and helps organizations meet legal and ethical standards. Inclusive design is a win-win: it benefits users and drives business success.</p>
+        </div>
 
-  <script>
-  function exitBlog() {
-    window.location.href = "index.html";
-  }
-</script>
+        <section class="content-section">
+            <h2 class="section-title">Why Inclusivity Matters</h2>
+            <p class="section-text">Accessibility and inclusivity aren't just moral imperatives — they are strategic. Studies show that inclusive products reach a larger audience, reduce customer frustration, and improve overall engagement. By addressing diverse needs — including physical, cognitive, and socio-economic differences — designers create solutions that are resilient, flexible, and future-ready.</p>
+            <p class="section-text">Inclusive design also ensures compliance with standards like the Web Content Accessibility Guidelines (WCAG) and promotes brand loyalty by showing that your organization values everyone.</p>
+        </section>
 
-  <!-- Hero Section -->
-  <div style="max-width: 1000px; margin: auto; text-align: center; padding: 40px 20px;">
-    <h1 style="font-size: 3rem; color: #1a73e8; margin-bottom: 20px;">
-      🎨 Designing for Inclusivity: Making Technology Work for Everyone
-    </h1>
-    <p style="font-size: 1.2rem; line-height: 1.8; max-width: 750px; margin: auto;">
-      Inclusive design is more than a trend—it’s a commitment to building products that everyone can use.  
-      From accessibility for people with disabilities to considering diverse cultural and cognitive needs, designing inclusively creates **better experiences for all users**.  
-      <br><br>
-      It ensures equal access, encourages innovation, and helps organizations meet legal and ethical standards. Inclusive design is a win-win: it benefits users and drives business success.  
-    </p>
-  </div>
+        <section class="content-section">
+            <h2 class="section-title">Common Design Barriers</h2>
+            <p class="section-text">Even well-intentioned designs can unintentionally exclude people. Common barriers include:</p>
+            <ul>
+                <li><strong>Auditory barriers</strong> — audio-only instructions, alerts, or notifications without captions or transcripts.</li>
+                <li><strong>Visual barriers</strong> — low contrast, small text, or missing alt text that prevent visually impaired users from engaging fully.</li>
+                <li><strong>Interaction barriers</strong> — interfaces that demand precise mouse clicks or gestures without alternatives for keyboard or touch users.</li>
+                <li><strong>Cognitive barriers</strong> — overly complex navigation, inconsistent UI, or unclear instructions that hinder comprehension.</li>
+                <li><strong>Cultural &amp; linguistic barriers</strong> — content that assumes a single language, culture, or context can alienate diverse audiences.</li>
+                <li><strong>Device barriers</strong> — designs that work only on specific devices or screen sizes limit access for users with older or mobile-only technology.</li>
+            </ul>
+        </section>
 
-  <!-- Why Inclusivity Matters -->
-  <div style="max-width: 1000px; margin: 60px auto; text-align: center;">
-    <h2 style="color: #1a73e8; font-size: 2rem;">Why Inclusivity Matters</h2>
-    <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 15px; max-width: 850px; margin: auto;">
-      Accessibility and inclusivity aren’t just moral imperatives—they are strategic. Studies show that inclusive products reach **a larger audience**, reduce customer frustration, and improve overall engagement.  
-      By addressing diverse needs—including physical, cognitive, and socio-economic differences—designers create solutions that are resilient, flexible, and future-ready.  
-      <br><br>
-      Inclusive design also ensures compliance with standards like the **Web Content Accessibility Guidelines (WCAG)** and promotes brand loyalty by showing that your organization values **everyone**.  
-    </p>
-  </div>
+        <section class="content-section">
+            <h2 class="section-title">By the Numbers</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1.2B+</div>
+                    <div class="stat-label">People benefit from inclusive design worldwide</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Users experience frustration due to poor design</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">Increase in satisfaction when accessibility is prioritized</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Goal: accessibility and inclusion for all users</div>
+                </div>
+            </div>
+        </section>
 
-  <!-- Common Design Barriers -->
-  <div style="max-width: 1000px; margin: 60px auto;">
-    <h2 style="color: #1a73e8; font-size: 2rem; text-align:center;">🚧 Common Design Barriers</h2>
-    <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 20px;">
-      Even well-intentioned designs can unintentionally exclude people. Common barriers include:
-    </p>
-    <ul style="line-height: 1.8; font-size: 1.1rem; margin-left: 20px;">
-      <li>🔉 <strong>Auditory Barriers</strong> – Audio-only instructions, alerts, or notifications without captions or transcripts.</li>
-      <li>👁️ <strong>Visual Barriers</strong> – Low contrast, small text, or missing alt-text that prevent visually impaired users from engaging fully.</li>
-      <li>🖱️ <strong>Interaction Barriers</strong> – Interfaces that demand precise mouse clicks or gestures without alternatives for keyboard or touch users.</li>
-      <li>🧠 <strong>Cognitive Barriers</strong> – Overly complex navigation, inconsistent UI, or unclear instructions that hinder comprehension.</li>
-      <li>🌍 <strong>Cultural & Linguistic Barriers</strong> – Content that assumes a single language, culture, or context can alienate diverse audiences.</li>
-      <li>📱 <strong>Device Barriers</strong> – Designs that work only on specific devices or screen sizes limit access for users with older or mobile-only technology.</li>
-    </ul>
-  </div>
+        <section class="ai-section">
+            <h2 class="section-title">How AI Supports Inclusive Design</h2>
+            <p class="section-text">Artificial intelligence is a powerful ally in inclusive design:</p>
+            <ul>
+                <li><strong>Voice recognition</strong> — enables hands-free navigation and input for users with mobility challenges.</li>
+                <li><strong>Text-to-speech &amp; speech-to-text</strong> — improves access for people with vision or hearing impairments.</li>
+                <li><strong>Image &amp; video analysis</strong> — auto-generates captions, alt text, and descriptions for visual content.</li>
+                <li><strong>Real-time translation &amp; localization</strong> — breaks language and cultural barriers for global users.</li>
+                <li><strong>Predictive design recommendations</strong> — highlights accessibility issues such as color contrast, navigation flow, and readability.</li>
+            </ul>
+        </section>
 
-  <!-- Stats Section -->
-  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1000px; margin: auto;">
-    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; flex: 1; min-width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-      <h3 style="color: #ff9800; font-size: 2.5rem;">1.2B+</h3>
-      <p>People benefit from inclusive design worldwide</p>
+        <section class="content-section">
+            <h2 class="section-title">Key Principles of Inclusive Design</h2>
+            <p class="section-text">Effective inclusive design follows several core principles:</p>
+            <ul>
+                <li><strong>Recognize diversity</strong> — understand users' abilities, languages, cultures, and contexts.</li>
+                <li><strong>Provide multiple ways to interact</strong> — offer alternatives for input and output to accommodate different abilities.</li>
+                <li><strong>Flexible and adaptable interfaces</strong> — ensure the product can adjust to user needs and preferences.</li>
+                <li><strong>Test with real users</strong> — inclusive testing identifies barriers that might be invisible to designers.</li>
+                <li><strong>Continuous improvement</strong> — design is never finished; always refine for broader inclusion.</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Implementing Inclusive Design in Practice</h2>
+            <p class="section-text">Steps to make your products inclusive:</p>
+            <ul>
+                <li><strong>Audit</strong> current products for accessibility gaps using WCAG guidelines and assistive technologies.</li>
+                <li><strong>Implement</strong> inclusive features: captions, ARIA labels, keyboard navigation, and screen reader support.</li>
+                <li><strong>Educate</strong> teams and stakeholders about accessibility, bias, and inclusive design principles.</li>
+                <li><strong>Collaborate</strong> with diverse users to co-design features that meet real-world needs.</li>
+                <li><strong>Measure &amp; improve</strong> using analytics and user feedback to continually enhance accessibility.</li>
+            </ul>
+        </section>
+
+        <div class="cta">
+            <h2>The Vision Ahead</h2>
+            <p>Inclusive design is essential for a fair and innovative digital world. By considering everyone from the start, we create experiences that benefit all users, reduce frustration, and promote equity.</p>
+            <p class="cta-highlight">Take action: embed inclusivity into your design process and help build a technology ecosystem that welcomes everyone.</p>
+        </div>
     </div>
-    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; flex: 1; min-width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-      <h3 style="color: #ff9800; font-size: 2.5rem;">85%</h3>
-      <p>Users experience frustration due to poor design</p>
-    </div>
-    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; flex: 1; min-width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-      <h3 style="color: #ff9800; font-size: 2.5rem;">40%</h3>
-      <p>Increase in satisfaction when accessibility is prioritized</p>
-    </div>
-    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; flex: 1; min-width: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-      <h3 style="color: #ff9800; font-size: 2.5rem;">100%</h3>
-      <p>Goal: accessibility and inclusion for all users</p>
-    </div>
-  </div>
 
-  <!-- AI & Inclusive Design Section -->
-  <div style="max-width: 1000px; margin: 70px auto; padding: 40px; background: #f0f9ff; border-radius: 12px;">
-    <h2 style="color: #1a73e8; text-align:center;">🤖 How AI Supports Inclusive Design</h2>
-    <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 20px;">
-      Artificial Intelligence is a powerful ally in inclusive design:
-    </p>
-    <ul style="line-height: 1.8; font-size: 1.1rem; margin-left: 20px;">
-      <li>🎙️ **Voice Recognition** – Enables hands-free navigation and input for users with mobility challenges.</li>
-      <li>📝 **Text-to-Speech & Speech-to-Text** – Improves access for people with vision or hearing impairments.</li>
-      <li>🖼️ **Image & Video Analysis** – Auto-generates captions, alt-text, and descriptions for visual content.</li>
-      <li>🌐 **Real-time Translation & Localization** – Breaks language and cultural barriers for global users.</li>
-      <li>💡 **Predictive Design Recommendations** – Highlights accessibility issues such as color contrast, navigation flow, and readability.</li>
-    </ul>
-  </div>
+    <footer role="contentinfo" style="border-top: 1px solid var(--border-subtle); background: var(--bg-deep); padding: 2rem 1.5rem; text-align: center;">
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0 0 0.6rem;">&copy; 2025 AccessAI &middot; Designed to follow WCAG 2.1 Level AA.</p>
+        <a href="index.html#blogs" style="color: var(--accent-sky); font-size: 0.9rem; text-decoration: none; font-weight: 600;">&larr; Back to all articles</a>
+    </footer>
 
-  <!-- Principles of Inclusive Design -->
-  <div style="max-width: 950px; margin: 60px auto; background: #eaf3ff; padding: 30px; border-radius: 12px;">
-    <h2 style="color: #1a73e8; text-align:center;">🧩 Key Principles of Inclusive Design</h2>
-    <p style="line-height: 1.8; margin-top: 15px; font-size: 1.1rem;">
-      Effective inclusive design follows several core principles:
-    </p>
-    <ul style="line-height: 1.8; font-size: 1.1rem; margin-left: 20px;">
-      <li>👥 **Recognize Diversity** – Understand users’ abilities, languages, cultures, and contexts.</li>
-      <li>🛠️ **Provide Multiple Ways to Interact** – Offer alternatives for input and output to accommodate different abilities.</li>
-      <li>🔄 **Flexible and Adaptable Interfaces** – Ensure the product can adjust to user needs and preferences.</li>
-      <li>🧪 **Test with Real Users** – Inclusive testing identifies barriers that might be invisible to designers.</li>
-      <li>📈 **Continuous Improvement** – Design is never finished; always refine for broader inclusion.</li>
-    </ul>
-  </div>
-
-  <!-- How to Implement Inclusive Design -->
-  <div style="max-width: 950px; margin: 60px auto; text-align: center;">
-    <h2 style="color: #1a73e8; font-size: 2rem;">🚀 Implementing Inclusive Design in Practice</h2>
-    <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 15px;">
-      Steps to make your products inclusive:
-    </p>
-    <ul style="line-height: 1.8; font-size: 1.1rem; list-style: none; padding: 0; margin-top: 20px;">
-      <li>🔎 <strong>Audit</strong> current products for accessibility gaps using WCAG guidelines and assistive technologies.</li>
-      <li>⚡ <strong>Implement</strong> inclusive features: captions, ARIA labels, keyboard navigation, and screen reader support.</li>
-      <li>📚 <strong>Educate</strong> teams and stakeholders about accessibility, bias, and inclusive design principles.</li>
-      <li>🤝 <strong>Collaborate</strong> with diverse users to co-design features that meet real-world needs.</li>
-      <li>📊 <strong>Measure & Improve</strong> using analytics and user feedback to continually enhance accessibility.</li>
-    </ul>
-  </div>
-
-  <!-- Call to Action -->
-  <div style="max-width: 950px; margin: 70px auto; text-align: center;">
-    <h2 style="color: #1a73e8; font-size: 2rem;">✨ The Vision Ahead</h2>
-    <p style="line-height: 1.8; font-size: 1.15rem; margin-top: 15px; max-width: 750px; margin: auto;">
-      Inclusive design is essential for a fair and innovative digital world. By considering everyone from the start, we create experiences that **benefit all users, reduce frustration, and promote equity**.  
-    </p>
-    <p style="font-size: 1.2rem; font-weight: bold; margin-top: 25px;">
-      💡 Take action: embed inclusivity into your design process and help build a technology ecosystem that welcomes everyone.  
-    </p>
-  </div>
-
-</section>
-
+    <script>
+    (function () {
+        'use strict';
+        var navToggle = document.querySelector('.nav-toggle');
+        var navMenu = document.querySelector('.nav-menu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function () {
+                var expanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', String(!expanded));
+                navMenu.classList.toggle('active');
+            });
+        }
+    })();
+    </script>
 </body>
 </html>

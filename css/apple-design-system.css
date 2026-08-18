@@ -1,0 +1,180 @@
+/* =====================================================================
+   Apple Design System — shared refinement layer
+   ---------------------------------------------------------------------
+   Loaded LAST on every page, after main.css / dark-theme.css /
+   ux-improvements.css. It does not redefine the palette (dark-theme.css
+   already owns --bg-*, --text-*, --accent-*, --font-*, --radius-*,
+   --transition-*) — it raises the craft bar on top of those tokens:
+   translucent materials, spring-consistent motion, card/button
+   craft, type discipline, and reduced-motion/transparency/contrast
+   handling. Apply utility classes (.ap-*) where useful; most of this
+   file works by refining existing shared classes (.btn, .tool-card,
+   .feature-card, .box, .service-card, .principle-card, .stat-card,
+   nav, footer) so the lift applies site-wide with no markup changes.
+   ===================================================================== */
+
+/* ---------- Motion foundation ---------- */
+:root {
+    --ap-spring: cubic-bezier(0.16, 1, 0.3, 1);      /* critically damped settle */
+    --ap-spring-snap: cubic-bezier(0.34, 1.24, 0.4, 1); /* slight bounce — momentum-driven only */
+    --ap-press: 100ms ease-out;
+}
+
+/* ---------- Spacing scale ---------- */
+/* The 8px-rooted rhythm already implicit across dark-theme.css/apple-blog.css,
+   written down so new sections pull from it instead of inventing ad hoc
+   padding — that inconsistency is the actual root cause of the site reading
+   as "uniform spacing everywhere" despite every section differing slightly.
+   4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96px. Section padding stays fluid via
+   clamp(), e.g. clamp(3rem, 8vw, 5rem) for a full section, clamp(1.5rem, 4vw,
+   2.5rem) for a card. Not enforced via custom properties (clamp() ranges
+   are inherently per-context) — a reference scale, not a hard constraint. */
+
+/* ---------- Eyebrow label ---------- */
+.ap-eyebrow {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-sky, #0c7bc4);
+}
+.ap-eyebrow--muted { color: var(--text-secondary); }
+/* Deliberately different from the default treatment above — not every
+   eyebrow on the page should be identical uppercase/tracked/sky-blue.
+   --quiet: lowercase, italic, muted — for speculative/future content.
+   --mono: monospace, no uppercase, dash-prefixed — for cited data. */
+.ap-eyebrow--quiet {
+    text-transform: none; letter-spacing: 0; font-style: italic;
+    font-weight: 500; color: var(--text-muted);
+}
+.ap-eyebrow--mono {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    text-transform: none; letter-spacing: 0; color: var(--text-secondary);
+}
+.ap-eyebrow--mono::before { content: '— '; }
+
+/* ---------- Monospace accent ---------- */
+/* Reserved for technical/measured content — cited stat numbers, category
+   tags, read-time labels. Never body copy or headings, and never numbers
+   that aren't backed by a source (see .ai-stat-card / .ai-stat-number). */
+.ap-mono {
+    font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+    letter-spacing: 0.02em;
+}
+
+/* ---------- Type discipline ---------- */
+/* Large display text: tight leading, negative tracking. Body stays put. */
+h1, .hero-main-title, .sb-hero h1 {
+    letter-spacing: -0.02em;
+}
+h2 { letter-spacing: -0.015em; }
+h3, h4 { letter-spacing: -0.01em; }
+p, li { text-wrap: pretty; }
+/* main.css has a couple dozen text-shadows scattered across headings/hero
+   text, all sized for legibility over a busy dark photo background that no
+   longer exists — on flat paper they just read as a smudge behind the
+   letters. Reset broadly rather than hunting each one down individually. */
+h1, h2, h3, h4, h5, h6, p, .nav-title, .hero-main-title, .hero-subtitle-line {
+    text-shadow: none !important;
+}
+
+/* ---------- Response: instant press feedback everywhere clickable ---------- */
+button, .btn, .cta-btn, .cta-button, a.nav-item, .carousel-dot,
+.tool-actions a, .service-card, .principle-card {
+    -webkit-tap-highlight-color: transparent;
+}
+button:active, .btn:active, .cta-btn:active, .cta-button:active,
+a.btn:active, .floating-blog-btn:active {
+    transform: scale(0.97);
+    transition: transform var(--ap-press);
+}
+
+/* ---------- Focus ---------- */
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--accent-sky, #0c7bc4);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* ---------- Nav: flat opaque paper, not a glassy blurred material ---------- */
+/* Was a translucent, blurred/saturated "glass" panel — a very common
+   AI-dashboard nav treatment. Opaque paper + a hairline border reads as
+   editorial instead. */
+header.modern-header {
+    background: var(--bg-void) !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background 0.3s var(--ap-spring), box-shadow 0.3s var(--ap-spring);
+}
+header.modern-header:not(.nav-at-top) {
+    box-shadow: 0 1px 0 var(--border-mid);
+}
+.nav-item {
+    transition: color var(--transition-fast, 0.18s ease), background var(--transition-fast, 0.18s ease), transform var(--ap-press);
+}
+
+/* ---------- Card craft: consistent border/shadow/hover-lift language ---------- */
+/* .ai-item/.tech-item/.app-card/.future-item removed from this shared list —
+   the AI in Accessibility tab now uses four deliberately distinct layouts
+   (quiet list / horizontal rail / sticky steps / editorial list) instead of
+   four identical card grids, so a single generic card treatment no longer
+   fits all of them. .tech-rail-card is the one AI-tab element that still
+   wants this treatment; the others define their own look in index.html's
+   AI-tab style block. */
+.tool-card, .feature-card, .box, .service-card, .principle-card,
+.tech-rail-card, .stat-card,
+.carousel-cell, .about-me-card {
+    border: 1px solid var(--border-subtle) !important;
+    box-shadow: 0 1px 3px rgba(28, 25, 20, 0.04);
+    transition: transform 0.4s var(--ap-spring), border-color 0.3s ease, box-shadow 0.4s var(--ap-spring) !important;
+}
+.tool-card:hover, .feature-card:hover, .service-card:hover, .principle-card:hover,
+.tech-rail-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-mid) !important;
+    box-shadow: 0 8px 20px rgba(28, 25, 20, 0.08);
+}
+
+/* ---------- Buttons: one consistent primary/secondary language ---------- */
+.btn, .cta-btn, .cta-button, .carousel-link {
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    border-radius: var(--radius-sm, 8px);
+    transition: transform var(--ap-press), box-shadow 0.3s var(--ap-spring), background 0.3s ease, opacity 0.3s ease;
+}
+
+/* ---------- Reveal-on-scroll (shared with .reveal already in use) ---------- */
+.reveal { transition: opacity 0.5s var(--ap-spring), transform 0.5s var(--ap-spring); }
+
+/* main.css defines .fade as opacity:0/translateY(30px), meant to be flipped
+   by a scroll observer that no longer ships with this site (same class of
+   bug the Second Brain page fixed for .tool-card/.feature-card). Left as-is,
+   .quote.fade and .box.fade render as permanently invisible — dead content
+   taking up a whole viewport of blank space. Reset it. */
+.fade { opacity: 1 !important; transform: none !important; }
+
+/* ---------- Reduced motion / transparency / contrast ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+@media (prefers-reduced-transparency: reduce) {
+    header.modern-header {
+        background: var(--bg-void, #ffffff) !important;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+}
+@media (prefers-contrast: more) {
+    .tool-card, .feature-card, .box, .service-card, .principle-card {
+        border-color: var(--text-secondary) !important;
+        background: var(--bg-surface) !important;
+    }
+}

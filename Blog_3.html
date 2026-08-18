@@ -3,117 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
   <title>Assistive Technology Overview - AccessAI</title>
   <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/dark-theme.css">
+  <link rel="stylesheet" href="./css/apple-design-system.css">
+  <link rel="stylesheet" href="./css/apple-blog.css">
 </head>
 <body>
-<section style="font-family: 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(135deg, #667eea 0%, #74b9ff 100%); padding: 50px; color: #333;">
+    <header role="banner" class="modern-header sticky-header fundamental-nav" style="position: sticky; top: 0; z-index: 1001;">
+        <nav role="navigation" aria-label="Main navigation">
+            <div class="nav-container nav-elevated fundamental-nav-container">
+                <div class="nav-brand fundamental-nav-brand">
+                    <a href="index.html" aria-label="Go to Home" style="all: unset; cursor: pointer; display: inline-block;">
+                        <h1 class="nav-title fundamental-nav-title title-with-symbol" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h1>
+                    </a>
+                </div>
+                <div class="nav-menu fundamental-nav-menu" role="menubar">
+                    <a href="index.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-home"></i></span><span class="nav-text">Home</span></a>
+                    <a href="index.html#ai" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-lightbulb"></i></span><span class="nav-text">AI in Accessibility</span></a>
+                    <a href="index.html#blogs" class="nav-item nav-link active" role="menuitem" aria-current="page"><span class="nav-icon"><i class="fa fa-pen-nib"></i></span><span class="nav-text">Blogs</span></a>
+                    <a href="index.html#mission" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-bullseye"></i></span><span class="nav-text">Our Mission</span></a>
+                    <a href="memory-layer.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-brain"></i></span><span class="nav-text">Second Brain</span></a>
+                </div>
+                <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-  <!-- Exit Button -->
-  <button onclick="exitBlog()" 
-          style="position: fixed; top: 20px; left: 20px; 
-                 background: #ff4d4d; color: white; 
-                 border: none; padding: 10px 18px; 
-                 border-radius: 8px; font-size: 1rem; 
-                 cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
-                 transition: background 0.3s;">
-    ✖ Exit
-  </button>
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="hero-title">Assistive Technology Overview</h1>
+            <p class="hero-subtitle">Assistive technology (AT) refers to any tool, device, or system that helps individuals with disabilities perform functions that might otherwise be difficult or impossible. From simple tools like magnifiers to advanced AI-powered devices, AT empowers millions of people to live more independently, communicate effectively, learn successfully, and participate fully in society.</p>
+        </div>
 
-  <!-- Exit Script -->
-  <script>
-    function exitBlog() {
-      window.location.href = "index.html";
-    }
-  </script>
+        <section class="content-section">
+            <h2 class="section-title">Categories of Assistive Technology</h2>
+            <p class="section-text">Assistive technologies span a wide spectrum — from low-tech adaptations to high-tech innovations. Each category addresses different needs, often overlapping to provide comprehensive support:</p>
+            <ul>
+                <li><strong>Communication aids</strong> — help individuals with speech or language impairments express themselves. This includes AAC (Augmentative and Alternative Communication) devices, speech-generating devices, text-to-speech and speech-to-text software, symbol boards, and adaptive keyboards. AAC tablets, for example, allow nonverbal users to construct sentences using visual icons.</li>
+                <li><strong>Mobility aids</strong> — devices like wheelchairs, walkers, scooters, prosthetic limbs, and exoskeletons help individuals move independently. Advanced wheelchairs now feature smart navigation systems, obstacle detection, and even voice control.</li>
+                <li><strong>Educational &amp; learning aids</strong> — tools like screen readers, magnification software, audiobooks, customizable digital interfaces, and real-time captioning support students with visual, auditory, or cognitive impairments.</li>
+                <li><strong>Sensory aids</strong> — hearing aids, cochlear implants, FM systems for classrooms, braille displays, tactile graphics, and visual alerting systems for alarms support users who are deaf, hard of hearing, blind, or low vision.</li>
+                <li><strong>Daily living aids</strong> — adaptive utensils, voice-activated home assistants, smart home technology, and accessible kitchen tools support independence in everyday activities like cooking, dressing, and personal care.</li>
+            </ul>
+        </section>
 
-  <!-- Hero Section -->
-  <div style="max-width: 1000px; margin: auto; text-align: center; padding: 40px 20px;">
-    <h1 style="font-size: 3rem; color: #1a73e8; margin-bottom: 20px;">
-      🧠 Assistive Technology Overview
-    </h1>
-    <p style="font-size: 1.2rem; line-height: 1.8; max-width: 750px; margin: auto;">
-      Assistive technology (AT) refers to any tool, device, or system that helps individuals with disabilities perform functions that might otherwise be difficult or impossible. From simple tools like magnifiers to advanced AI-powered devices, AT empowers millions of people to live more independently, communicate effectively, learn successfully, and participate fully in society. 🌍✨
-    </p>
-  </div>
+        <section class="content-section">
+            <h2 class="section-title">Low-Tech vs. High-Tech Solutions</h2>
+            <p class="section-text">Not all assistive technology requires cutting-edge innovation. Low-tech solutions — like pencil grips, raised-line paper, or simple color overlays — can make a huge difference. High-tech options, like AI-powered text-to-speech engines or eye-tracking communication systems, offer advanced capabilities but may require more training and investment.</p>
+            <p class="section-text">The best approach often combines both. A student might use a tactile ruler (low-tech) alongside a screen reader (high-tech) for the same math lesson.</p>
+        </section>
 
-  <!-- Main Content Section -->
-  <div style="max-width: 1000px; margin: 60px auto; line-height: 1.8; font-size: 1.05rem;">
+        <section class="content-section">
+            <h2 class="section-title">Emerging Trends in Assistive Technology</h2>
+            <ul>
+                <li><strong>AI &amp; machine learning</strong> — enhances speech recognition, real-time translation, and personalized accessibility settings. Smart assistants act as accessibility hubs for many users.</li>
+                <li><strong>Brain–computer interfaces (BCIs)</strong> — experimental BCIs allow individuals with severe motor impairments to control devices using brain signals, opening new pathways for communication and mobility.</li>
+                <li><strong>Augmented &amp; virtual reality (AR/VR)</strong> — can overlay captions in real time, assist with navigation for blind users, or create immersive learning environments adapted to various disabilities.</li>
+                <li><strong>Wearable devices</strong> — smart glasses, haptic feedback gloves, and posture-monitoring wearables are expanding how users interact with their environments.</li>
+            </ul>
+        </section>
 
-    <h2 style="color: #1a73e8; font-size: 2rem; margin-top: 40px;">📚 Categories of Assistive Technology</h2>
+        <section class="content-section">
+            <h2 class="section-title">Impact on Education, Work, and Daily Life</h2>
+            <p class="section-text">Assistive technology is transformative across multiple domains:</p>
+            <ul>
+                <li><strong>Education</strong> — AT enables inclusive classrooms, allowing students with disabilities to access materials, communicate with peers, and demonstrate their knowledge in alternative formats.</li>
+                <li><strong>Employment</strong> — tools like screen readers, ergonomic workstations, dictation software, and accessible workplace platforms ensure employees with disabilities can contribute fully.</li>
+                <li><strong>Daily life</strong> — smart home integrations, adaptive transportation, and accessible communication tools improve independence and quality of life at home and in the community.</li>
+            </ul>
+        </section>
 
-    <p>
-      Assistive technologies span a wide spectrum—from low-tech adaptations to high-tech innovations. Each category addresses different needs, often overlapping to provide comprehensive support:
-    </p>
+        <section class="content-section">
+            <h2 class="section-title">The Importance of Training &amp; Support</h2>
+            <p class="section-text">Technology alone isn't enough. Proper training for users, caregivers, and educators is crucial for success. Without understanding how to use AT effectively, even the most advanced tools can remain underutilized. Schools, workplaces, and rehabilitation centers play a critical role in providing ongoing support and maintenance.</p>
+            <p class="section-text">Collaboration between users, assistive technology specialists, and developers ensures that solutions remain practical, personalized, and empowering.</p>
+        </section>
 
-    <ul style="margin-left: 20px;">
-      <li><strong>🗣️ Communication Aids:</strong> Help individuals with speech or language impairments express themselves. This includes AAC (Augmentative and Alternative Communication) devices, speech-generating devices, text-to-speech and speech-to-text software, symbol boards, and adaptive keyboards. For example, AAC tablets allow nonverbal users to construct sentences using visual icons.</li>
+        <div class="cta">
+            <h2>A Future of Inclusive Innovation</h2>
+            <p>As technology evolves, the potential of assistive technology grows exponentially. What once required specialized equipment can now often be achieved through mainstream devices with built-in accessibility features. The line between "assistive" and "everyday" technology is blurring — benefiting everyone. Inclusive design ensures accessibility is not an afterthought, but a core principle of innovation.</p>
+        </div>
+    </div>
 
-      <li><strong>🦽 Mobility Aids:</strong> Devices like wheelchairs, walkers, scooters, prosthetic limbs, and exoskeletons help individuals move independently. Advanced wheelchairs now feature smart navigation systems, obstacle detection, and even voice control, dramatically improving accessibility and autonomy.</li>
+    <footer role="contentinfo" style="border-top: 1px solid var(--border-subtle); background: var(--bg-deep); padding: 2rem 1.5rem; text-align: center;">
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0 0 0.6rem;">&copy; 2025 AccessAI &middot; Designed to follow WCAG 2.1 Level AA.</p>
+        <a href="index.html#blogs" style="color: var(--accent-sky); font-size: 0.9rem; text-decoration: none; font-weight: 600;">&larr; Back to all articles</a>
+    </footer>
 
-      <li><strong>📖 Educational & Learning Aids:</strong> Tools like screen readers, magnification software, audiobooks, customizable digital interfaces, and real-time captioning support students with visual, auditory, or cognitive impairments. Speech recognition software enables students to dictate assignments, while adaptive testing platforms level the academic playing field.</li>
-
-      <li><strong>👁️ Sensory Aids:</strong> These include hearing aids, cochlear implants, FM systems for classrooms, braille displays, tactile graphics, and visual alerting systems for alarms. For example, vibrating alarm clocks or flashing doorbells support users who are deaf or hard of hearing.</li>
-
-      <li><strong>🧍 Daily Living Aids:</strong> Adaptive utensils, voice-activated home assistants, smart home technology, and accessible kitchen tools support independence in everyday activities like cooking, dressing, and personal care.</li>
-    </ul>
-
-    <h2 style="color: #1a73e8; font-size: 2rem; margin-top: 40px;">💡 Low-Tech vs High-Tech Solutions</h2>
-
-    <p>
-      Not all assistive technology requires cutting-edge innovation. Low-tech solutions—like pencil grips, raised line paper, or simple color overlays—can make a huge difference. High-tech options, like AI-powered text-to-speech engines or eye-tracking communication systems, offer advanced capabilities but may require more training and investment.
-    </p>
-
-    <p>
-      The best approach often combines both. For example, a student might use a tactile ruler (low-tech) alongside a screen reader (high-tech) for a math lesson.
-    </p>
-
-    <h2 style="color: #1a73e8; font-size: 2rem; margin-top: 40px;">🤖 Emerging Trends in Assistive Technology</h2>
-
-    <ul style="margin-left: 20px;">
-      <li><strong>🌐 AI & Machine Learning:</strong> AI enhances speech recognition, real-time translation, and personalized accessibility settings. Smart assistants like Alexa and Google Assistant act as accessibility hubs for many users.</li>
-
-      <li><strong>🧠 Brain–Computer Interfaces (BCIs):</strong> Experimental BCIs allow individuals with severe motor impairments to control devices using brain signals, opening new pathways for communication and mobility.</li>
-
-      <li><strong>🕶️ Augmented & Virtual Reality (AR/VR):</strong> AR can overlay captions in real time, assist with navigation for blind users, or create immersive learning environments adapted to various disabilities.</li>
-
-      <li><strong>📲 Wearable Devices:</strong> Smart glasses, haptic feedback gloves, and posture-monitoring wearables are expanding the ways users interact with their environments.</li>
-    </ul>
-
-    <h2 style="color: #1a73e8; font-size: 2rem; margin-top: 40px;">🌍 Impact on Education, Work, and Daily Life</h2>
-
-    <p>
-      Assistive technology is transformative across multiple domains:
-    </p>
-
-    <ul style="margin-left: 20px;">
-      <li><strong>🏫 Education:</strong> AT enables inclusive classrooms, allowing students with disabilities to access materials, communicate with peers, and demonstrate their knowledge in alternative formats.</li>
-      <li><strong>💼 Employment:</strong> Tools like screen readers, ergonomic workstations, dictation software, and accessible workplace platforms ensure employees with disabilities can contribute fully in modern workplaces.</li>
-      <li><strong>🏠 Daily Life:</strong> Smart home integrations, adaptive transportation, and accessible communication tools improve independence and quality of life at home and in the community.</li>
-    </ul>
-
-    <h2 style="color: #1a73e8; font-size: 2rem; margin-top: 40px;">🔑 The Importance of Training & Support</h2>
-
-    <p>
-      Technology alone isn’t enough. Proper training for users, caregivers, and educators is crucial for success. Without understanding how to use AT effectively, even the most advanced tools can remain underutilized. Schools, workplaces, and rehabilitation centers play a critical role in providing ongoing support and maintenance.
-    </p>
-
-    <p>
-      Collaboration between users, assistive technology specialists, and developers ensures that solutions remain practical, personalized, and empowering.
-    </p>
-
-    <h2 style="color: #1a73e8; font-size: 2rem; margin-top: 40px;">✨ A Future of Inclusive Innovation</h2>
-
-    <p>
-      As technology evolves, the potential of assistive technology grows exponentially. What once required specialized equipment can now often be achieved through mainstream devices with built-in accessibility features. The line between "assistive" and "everyday" technology is blurring—benefiting everyone. Inclusive design ensures that accessibility is not an afterthought but a core principle of innovation. 🚀
-    </p>
-
-  </div>
-</section>
-
+    <script>
+    (function () {
+        'use strict';
+        var navToggle = document.querySelector('.nav-toggle');
+        var navMenu = document.querySelector('.nav-menu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function () {
+                var expanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', String(!expanded));
+                navMenu.classList.toggle('active');
+            });
+        }
+    })();
+    </script>
 </body>
 </html>

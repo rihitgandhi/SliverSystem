@@ -7,306 +7,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #060c1a 0%, #0d1a36 50%, #112040 100%); color: #ccd6f6;
-            min-height: 100vh;
-            color: #ccd6f6;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .exit-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .exit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
-        }
-
-        .hero-section {
-            text-align: center;
-            padding: 80px 0;
-            color: white;
-        }
-
-        .hero-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #fff, #e3f2fd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin: 0 auto;
-            opacity: 0.95;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-
-        .content-section {
-            background: white;
-            margin: 40px 0;
-            padding: 60px 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(135deg, #667eea, #74b9ff);
-            border-radius: 2px;
-        }
-
-        .section-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 20px;
-        }
-
-        .barriers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin: 40px 0;
-        }
-
-        .barrier-card {
-            background: linear-gradient(135deg, #f0f8ff, #ffffff);
-            padding: 30px;
-            border-radius: 15px;
-            border-left: 5px solid #74b9ff;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .barrier-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        .barrier-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .barrier-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            margin: 50px 0;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #667eea, #74b9ff);
-            color: white;
-            padding: 40px 20px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-8px);
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .ai-section {
-            background: linear-gradient(135deg, #e3f2fd, #e8f4fd);
-            border-radius: 20px;
-            padding: 50px;
-            margin: 50px 0;
-        }
-
-        .ai-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
-        }
-
-        .ai-item {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease;
-        }
-
-        .ai-item:hover {
-            transform: translateY(-3px);
-        }
-
-        .ai-icon {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: #74b9ff;
-        }
-
-        .ai-title {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .impact-section {
-            background: linear-gradient(135deg, #e8f5e8, #f0f8ff);
-            border-radius: 20px;
-            padding: 50px;
-            text-align: center;
-        }
-
-        .cta-section {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            border-radius: 20px;
-            padding: 60px;
-            text-align: center;
-            margin: 50px 0;
-        }
-
-        .cta-title {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .cta-text {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-
-        .cta-highlight {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #f39c12;
-        }
-
-        .approach-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
-        }
-
-        .approach-item {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .approach-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .approach-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #74b9ff;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 15px;
-            }
-            
-            .content-section {
-                padding: 40px 20px;
-            }
-            
-            .hero-section {
-                padding: 60px 0;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/dark-theme.css">
+    <link rel="stylesheet" href="./css/apple-design-system.css">
+    <link rel="stylesheet" href="./css/apple-blog.css">
 </head>
 <body>
+    <header role="banner" class="modern-header sticky-header fundamental-nav" style="position: sticky; top: 0; z-index: 1001;">
+        <nav role="navigation" aria-label="Main navigation">
+            <div class="nav-container nav-elevated fundamental-nav-container">
+                <div class="nav-brand fundamental-nav-brand">
+                    <a href="index.html" aria-label="Go to Home" style="all: unset; cursor: pointer; display: inline-block;">
+                        <h1 class="nav-title fundamental-nav-title title-with-symbol" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h1>
+                    </a>
+                </div>
+                <div class="nav-menu fundamental-nav-menu" role="menubar">
+                    <a href="index.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-home"></i></span><span class="nav-text">Home</span></a>
+                    <a href="index.html#ai" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-lightbulb"></i></span><span class="nav-text">AI in Accessibility</span></a>
+                    <a href="index.html#blogs" class="nav-item nav-link active" role="menuitem" aria-current="page"><span class="nav-icon"><i class="fa fa-pen-nib"></i></span><span class="nav-text">Blogs</span></a>
+                    <a href="index.html#mission" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-bullseye"></i></span><span class="nav-text">Our Mission</span></a>
+                    <a href="memory-layer.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-brain"></i></span><span class="nav-text">Second Brain</span></a>
+                </div>
+                <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+
     <button class="exit-btn" onclick="exitBlog()">
         <i class="fas fa-times"></i> Exit
     </button>
@@ -482,5 +213,25 @@
             </p>
         </div>
     </div>
+
+    <footer role="contentinfo" style="border-top: 1px solid var(--border-subtle); background: var(--bg-deep); padding: 2rem 1.5rem; text-align: center;">
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0 0 0.6rem;">&copy; 2025 AccessAI &middot; Designed to follow WCAG 2.1 Level AA.</p>
+        <a href="index.html#blogs" style="color: var(--accent-sky); font-size: 0.9rem; text-decoration: none; font-weight: 600;">&larr; Back to all articles</a>
+    </footer>
+
+    <script>
+    (function () {
+        'use strict';
+        var navToggle = document.querySelector('.nav-toggle');
+        var navMenu = document.querySelector('.nav-menu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function () {
+                var expanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', String(!expanded));
+                navMenu.classList.toggle('active');
+            });
+        }
+    })();
+    </script>
 </body>
 </html>
