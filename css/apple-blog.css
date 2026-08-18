@@ -1,0 +1,237 @@
+/* =====================================================================
+   Apple-style blog article template
+   ---------------------------------------------------------------------
+   Shared by every Blog_*.html post. Restyles the class vocabulary the
+   posts already use (hero-section, content-section, stats-grid, etc.)
+   into the same dark-navy / Space Grotesk+Inter / translucent-material
+   language as the rest of the site (see dark-theme.css for tokens and
+   memory-layer.html for the reference implementation). Posts no longer
+   carry their own bespoke <style> block — this file is the single
+   source of truth, so every article reads as one product instead of
+   sixteen different experiments.
+   Load order: dark-theme.css, then this file.
+   ===================================================================== */
+
+body {
+    font-family: var(--font-body);
+    background: linear-gradient(160deg, var(--bg-deep) 0%, var(--bg-base) 55%, var(--bg-deep) 100%);
+    color: var(--text-primary);
+    line-height: 1.7;
+}
+
+/* Matches the 1100px working width used across the rest of the site
+   (home page's .fundamental-container / .mission-container / .tools-container
+   are all 1200px) so blog posts don't read as a narrow column stranded in a
+   sea of unused page width. Kept slightly under that for line-length comfort
+   in the long-form paragraphs below. */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+/* ---------- Hero ---------- */
+.hero-section { text-align: center; padding: clamp(3rem, 8vw, 5rem) 0 clamp(2rem, 5vw, 3rem); }
+.hero-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1rem;
+    color: var(--text-white);
+    background: none; -webkit-text-fill-color: unset;
+}
+.hero-subtitle {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 60ch;
+    margin: 0 auto;
+    opacity: 1;
+}
+.hero-subtitle strong { color: var(--text-primary); }
+.hero-image-wrap { margin: clamp(2rem, 5vw, 2.5rem) auto 0; max-width: 100%; }
+.hero-image {
+    width: 100%; border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 20px 50px -20px rgba(3, 6, 15, 0.7);
+}
+
+/* ---------- Content cards ---------- */
+.content-section, .ai-section, .impact-section {
+    background: var(--bg-overlay) !important;
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    margin: 1.6rem 0;
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    box-shadow: none;
+    color: var(--text-primary);
+}
+.section-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    color: var(--text-white);
+    margin-bottom: 0.9rem;
+    text-align: left;
+}
+.section-title::after { display: none; } /* drop the old centered accent bar — left-aligned now */
+.section-text {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+.section-text:last-child { margin-bottom: 0; }
+.section-text strong, .section-text em { color: var(--text-primary); }
+.impact-section { text-align: left; }
+
+.content-section ul {
+    margin: 0.75rem 0 1.25rem;
+    padding-left: 0;
+    list-style: none;
+    display: flex; flex-direction: column; gap: 0.7rem;
+}
+.content-section ul:last-child { margin-bottom: 0; }
+.content-section li {
+    font-size: 1.02rem; line-height: 1.7; color: var(--text-secondary);
+    padding-left: 1.3rem; position: relative;
+}
+.content-section li::before {
+    content: ''; position: absolute; left: 0; top: 0.65em;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--accent-sky);
+}
+.content-section li strong { color: var(--text-primary); }
+
+/* ---------- Grids of small cards (barriers / ai / tips / tools / approach) ---------- */
+.barriers-grid, .ai-list, .tips-grid, .tool-card, .tools-grid, .approach-list, .stats-grid {
+    display: grid;
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.tools-grid { margin: 0; } /* .tool-card is also an item class below; keep the grid tight */
+
+.barrier-card, .ai-item, .tip-card, .approach-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    text-align: left;
+    transition: transform 0.4s var(--ap-spring, ease), border-color 0.3s ease;
+}
+.approach-item { text-align: center; }
+.barrier-card:hover, .ai-item:hover, .tip-card:hover, .approach-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-mid);
+}
+.barrier-icon, .ai-icon, .approach-icon {
+    font-size: 1.6rem; margin-bottom: 0.75rem; display: inline-block;
+    color: var(--accent-sky);
+}
+.tip-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(12,123,196,0.14); color: var(--accent-sky);
+    font-weight: 700; font-size: 0.95rem; margin-bottom: 0.9rem;
+}
+.barrier-title, .ai-title, .tip-title, .approach-item .barrier-title {
+    font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+    color: var(--text-white); margin-bottom: 0.4rem;
+}
+.barrier-card p, .ai-item p, .tip-card p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin: 0; }
+
+/* ---------- Stat cards ---------- */
+.stat-card {
+    background: linear-gradient(135deg, rgba(10,95,158,0.18), rgba(12,123,196,0.14));
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.75rem 1rem;
+    text-align: center;
+    color: var(--text-white);
+    box-shadow: none;
+    transition: transform 0.4s var(--ap-spring, ease);
+}
+.stat-card:hover { transform: translateY(-3px); }
+.stat-number { font-family: var(--font-display); font-weight: 800; font-size: 2.1rem; margin-bottom: 0.4rem; color: var(--text-white); }
+.stat-label { font-size: 0.85rem; color: var(--text-secondary); opacity: 1; }
+
+/* ---------- Tools / platform section (Blog_6) ---------- */
+.platform-section { margin: 1.6rem 0; }
+.kbd {
+    display: inline-block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.82em;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-mid);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    padding: 0.1em 0.45em;
+    color: var(--text-primary);
+}
+.tip-box {
+    background: rgba(12,123,196,0.08);
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--accent-sky);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    color: var(--text-secondary);
+}
+.shortcuts-table { margin: 1.25rem 0; overflow-x: auto; }
+.shortcuts-table table { width: 100%; border-collapse: collapse; }
+.shortcuts-table th, .shortcuts-table td {
+    text-align: left; padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.92rem; color: var(--text-secondary);
+}
+.shortcuts-table th { color: var(--text-white); font-family: var(--font-display); font-weight: 700; }
+
+/* ---------- Checklist (Blog_5) ---------- */
+.checklist { display: flex; flex-direction: column; gap: 0.9rem; margin: 1.25rem 0; }
+.checklist-item { display: flex; gap: 0.9rem; align-items: flex-start; }
+.check-icon {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(74,222,128,0.16); color: #4ade80;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; margin-top: 0.1rem;
+}
+.checklist-item > div:last-child { color: var(--text-secondary); line-height: 1.6; }
+.checklist-item strong { color: var(--text-primary); }
+
+/* ---------- Code blocks ---------- */
+.code-block {
+    background: var(--bg-deep);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1rem;
+    margin-top: 0.75rem;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.82rem;
+    color: var(--accent-blue);
+    overflow-x: auto;
+}
+.code-block code { line-height: 1.6; }
+
+/* ---------- CTA ---------- */
+.cta, .cta-section {
+    margin: 2.5rem 0 1rem;
+    background: linear-gradient(160deg, rgba(12,123,196,0.10) 0%, rgba(10,95,158,0.05) 100%);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-white);
+    border-radius: var(--radius-lg);
+    padding: clamp(2rem, 5vw, 2.75rem);
+    text-align: center;
+}
+.cta h2, .cta-title {
+    font-family: var(--font-display); font-weight: 800; letter-spacing: -0.015em;
+    font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 0.6rem;
+}
+.cta p, .cta-text { font-size: 1rem; color: var(--text-secondary); opacity: 1; }
+.cta-highlight { display: block; margin-top: 0.9rem; font-size: 1.02rem; font-weight: 700; color: var(--accent-sky); }
+
+/* ---------- Old floating exit button, now replaced by the site header ---------- */
+.exit-btn { display: none; }
+
+@media (max-width: 640px) {
+    .content-section, .ai-section, .impact-section { padding: 1.5rem; }
+}

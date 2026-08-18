@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Second Brain — a Chrome extension that remembers your text size, contrast, and line spacing preferences and applies them automatically on every website you visit.">
+    <meta name="description" content="Second Brain — a Chrome extension that remembers your text size, contrast, and line spacing preferences and applies them automatically on every website you visit. Includes Voice Navigation, so the whole site is reachable by voice too.">
     <meta name="theme-color" content="#060c1a">
     <meta name="color-scheme" content="dark light">
     <title>Second Brain · AccessAI</title>
@@ -20,8 +20,12 @@
     <style>
         /* =====================================================
            Second Brain — page-specific styling.
-           Built from scratch: one idea per screen, scroll-revealed,
-           a single accent color, no emoji, no stat-card grid.
+           One idea per screen, scroll-revealed, a single accent
+           color, no emoji, no stat-card grid.
+           Voice Navigation lives inside this page as an
+           accessibility feature (see .sb-features below), not
+           as a separate product — so it shares this page's
+           tokens and styling instead of a namespace of its own.
            Tokens (colors, fonts, radii) come from dark-theme.css.
            Everything here is namespaced .sb- so it can't leak
            into other pages.
@@ -33,7 +37,17 @@
             clip: rect(0,0,0,0); white-space: nowrap; border: 0;
         }
 
+        html { scroll-behavior: smooth; }
         main { display: block; }
+        /* main.css starts every .tool-card/.feature-card at opacity:0,
+           waiting for a JS "animate-in" class that scripts/nav-redesign.js
+           would add — that file isn't part of this site, so reset it. */
+        .tool-card, .feature-card { opacity: 1; transform: none; }
+
+        /* Sticky header covers the top of an anchor-jumped section
+           without this — give the voice-navigation feature card room
+           to clear it when reached via a direct #voice-navigation link. */
+        #voice-navigation { scroll-margin-top: 84px; }
 
         /* ---------- Shared rhythm ---------- */
         .sb-screen {
@@ -132,9 +146,6 @@
         .sb-diagram-pulse.p3 { animation-name: sb-travel-p3; animation-delay: 1.8s; }
         .sb-diagram-pulse.p4 { animation-name: sb-travel-p4; animation-delay: 2.7s; }
         .sb-diagram-pulse.p1 { animation-delay: 0s; }
-        /* Each pulse dot travels outward from the core to its node along the
-           connecting line (± half the core→node vector), fading in as it
-           leaves and fading out as it arrives — rather than blinking in place. */
         @keyframes sb-travel-p1 {
             0%   { opacity: 0; transform: translate(70px, 28px); }
             15%  { opacity: 1; }
@@ -202,7 +213,6 @@
             .sb-scroll-cue { animation: none; }
         }
 
-        /* ---------- Section heads ---------- */
         .sb-h2 {
             font-family: var(--font-display); font-weight: 800;
             font-size: clamp(1.8rem, 5vw, 2.75rem);
@@ -218,10 +228,8 @@
         }
         .sb-body strong { color: var(--text-primary); }
 
-        /* ---------- Problem section ---------- */
         .sb-problem { background: var(--bg-base); }
 
-        /* ---------- How it works ---------- */
         .sb-how { background: var(--bg-base); padding-top: clamp(4rem, 9vw, 6rem); padding-bottom: clamp(2rem, 6vw, 4rem); }
         .sb-how-head { margin-bottom: clamp(3rem, 7vw, 5rem); }
         .sb-how-grid {
@@ -232,9 +240,7 @@
         @media (min-width: 900px) {
             .sb-how-grid { grid-template-columns: 64px 1fr; column-gap: 2.5rem; }
         }
-        .sb-how-rail {
-            display: none;
-        }
+        .sb-how-rail { display: none; }
         @media (min-width: 900px) {
             .sb-how-rail {
                 display: flex; flex-direction: column; align-items: center; gap: 0;
@@ -277,7 +283,6 @@
             font-size: 1.02rem;
         }
 
-        /* ---------- Demo ---------- */
         .sb-demo { background: var(--bg-surface); }
         .sb-demo-head { margin-bottom: clamp(2.5rem, 6vw, 3.5rem); }
         .sb-demo-grid {
@@ -382,9 +387,7 @@
         .sb-remember-badge svg { width: 15px; height: 15px; }
         .sb-panel-placeholder { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
 
-        .sb-visit-btn {
-            align-self: flex-start;
-        }
+        .sb-visit-btn { align-self: flex-start; }
 
         .sb-demo-live { margin-top: 1.5rem; text-align: center; }
         .sb-demo-live p {
@@ -392,8 +395,50 @@
             min-height: 1.3em;
         }
 
-        /* ---------- Trust ---------- */
-        .sb-trust { background: var(--bg-base); }
+        /* ---------- Accessibility features (incl. Voice Navigation) ---------- */
+        .sb-features { background: var(--bg-base); }
+        .sb-features-grid {
+            display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+            margin-top: clamp(2rem, 5vw, 3rem);
+        }
+        @media (min-width: 760px) {
+            .sb-features-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .sb-feature-card {
+            background: var(--bg-overlay);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: clamp(1.5rem, 3vw, 2rem);
+        }
+        .sb-feature-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(56,189,248,0.14); color: var(--accent-sky);
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+        }
+        .sb-feature-card h3 {
+            font-family: var(--font-display); font-size: 1.05rem; font-weight: 700;
+            color: var(--text-white); margin: 0 0 0.6rem;
+        }
+        .sb-feature-card > p {
+            font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin: 0;
+        }
+        .sb-feature-list {
+            list-style: none; margin: 0.9rem 0 0; padding: 0;
+            display: flex; flex-direction: column; gap: 0.6rem;
+        }
+        .sb-feature-list li {
+            font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55;
+            padding-left: 1.3rem; position: relative;
+        }
+        .sb-feature-list li::before {
+            content: ''; position: absolute; left: 0; top: 0.45em;
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--accent-sky);
+        }
+
+        .sb-trust { background: var(--bg-surface); }
         .sb-trust-grid {
             display: grid; grid-template-columns: 1fr; gap: 1.75rem;
             margin-top: clamp(2rem, 5vw, 3rem);
@@ -437,6 +482,10 @@
         }
         .sb-clear-status { font-size: 0.85rem; color: var(--accent-sky); min-height: 1.2em; }
 
+        @media (max-width: 640px) {
+            .sb-demo-arrow { display: none; }
+        }
+
         /* ---------- CTA ---------- */
         .sb-cta { background: linear-gradient(160deg, #0a1228 0%, #060c1a 100%); text-align: center; }
         .sb-cta .sb-h2 { max-width: none; }
@@ -455,10 +504,6 @@
         .sb-cta-btn:focus-visible { outline: 2px solid var(--accent-sky); outline-offset: 3px; }
         .sb-cta-note { margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); }
         .sb-cta-note a { color: var(--accent-sky); }
-
-        @media (max-width: 640px) {
-            .sb-demo-arrow { display: none; }
-        }
     </style>
 </head>
 <body class="homepage">
@@ -482,7 +527,6 @@
                         <a href="index.html#blogs" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-pen-nib"></i></span><span class="nav-text">Blogs</span></a>
                         <a href="index.html#mission" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-bullseye"></i></span><span class="nav-text">Our Mission</span></a>
                         <a href="memory-layer.html" class="nav-item nav-link active" role="menuitem" aria-current="page"><span class="nav-icon"><i class="fa fa-brain"></i></span><span class="nav-text">Second Brain</span></a>
-                        <a href="voice-navigation.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-microphone"></i></span><span class="nav-text">Voice Navigation</span></a>
                     </div>
                     <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
                         <span class="hamburger"></span>
@@ -501,7 +545,7 @@
                     <p class="sb-eyebrow">Introducing</p>
                     <h1 id="sb-hero-title">Second Brain</h1>
                     <p class="sb-hero-claim">It remembers how you like to read the web, so you never set it up twice.</p>
-                    <p class="sb-hero-sub">Text size, contrast, and line spacing — set once, applied automatically on every site after that.</p>
+                    <p class="sb-hero-sub">Text size, contrast, and line spacing — set once, applied automatically on every site after that. Voice Navigation is built in too, so the whole site is reachable by more than a mouse.</p>
 
                     <figure class="sb-hero-diagram">
                         <svg class="sb-diagram-svg" viewBox="0 0 640 300" role="img" aria-label="Diagram: a preference set once on one site is saved by Second Brain, then automatically applied on three other sites." focusable="false">
@@ -669,6 +713,37 @@
             </section>
 
             <!-- ============================================================
+                 ACCESSIBILITY FEATURES — reading memory, plus Voice
+                 Navigation as a feature of Second Brain (not a separate
+                 product)
+                 ============================================================ -->
+            <section class="sb-screen sb-features" id="features" aria-labelledby="sb-features-title">
+                <div class="sb-shell sb-shell--wide">
+                    <p class="sb-kicker sb-reveal">Accessibility features</p>
+                    <h2 class="sb-h2 sb-reveal sb-reveal-1" id="sb-features-title" style="max-width: none;">Reading comfort, and a way in when a mouse isn't one.</h2>
+                    <p class="sb-body sb-reveal sb-reveal-2">Second Brain covers more than display settings. Voice Navigation is built into it, so the whole site stays reachable even without a pointer.</p>
+
+                    <div class="sb-features-grid sb-reveal sb-reveal-3">
+                        <div class="sb-feature-card">
+                            <div class="sb-feature-icon" aria-hidden="true"><i class="fa fa-text-height"></i></div>
+                            <h3>Reading &amp; display memory</h3>
+                            <p>Text size, contrast, and line spacing — set once, applied automatically on every site after that. Walked through step by step above.</p>
+                        </div>
+                        <div class="sb-feature-card" id="voice-navigation">
+                            <div class="sb-feature-icon" aria-hidden="true"><i class="fa fa-microphone"></i></div>
+                            <h3>Voice Navigation</h3>
+                            <p>Say "scroll down," "click sign up," "go back" — natural language, not a memorized command list. No mouse, no trackpad, no barrier.</p>
+                            <ul class="sb-feature-list">
+                                <li>Understands natural phrasing and maps it to the right action in real time</li>
+                                <li>Works on any site — no per-site setup or whitelist</li>
+                                <li>Built for anyone a mouse-only web leaves out: motor impairments, RSI, temporary injuries, or just hands full</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
                  TRUST & CONTROL — as prominent as the pitch
                  ============================================================ -->
             <section class="sb-screen sb-trust" id="trust" aria-labelledby="sb-trust-title">
@@ -691,12 +766,12 @@
                             <ul>
                                 <li>Browsing history or page content</li>
                                 <li>Names, emails, or any personal identifiers</li>
-                                <li>Anything sent to a server — there isn't one</li>
+                                <li>Anything sent to a server, for your display preferences — there isn't one</li>
                             </ul>
                         </div>
                     </div>
 
-                    <p class="sb-trust-note">Everything above lives only in your browser's local storage, on your device. No account, no sync, no server round-trip.</p>
+                    <p class="sb-trust-note">Your display preferences live only in your browser's local storage, on your device — no account, no sync, no server round-trip. Voice Navigation works differently: it needs a live connection to map spoken commands to on-page actions, so audio is processed to do that and isn't stored afterward.</p>
 
                     <div class="sb-trust-controls">
                         <button type="button" class="btn btn-secondary" id="sbClearBtn">Clear saved preferences</button>
@@ -711,7 +786,7 @@
             <section class="sb-screen sb-cta" id="get-it" aria-labelledby="sb-cta-title">
                 <div class="sb-shell">
                     <h2 class="sb-h2 sb-reveal" id="sb-cta-title">Ready when you are.</h2>
-                    <p class="sb-body sb-reveal sb-reveal-1" style="margin: 0 auto;">Second Brain isn't published to the Chrome Web Store yet.</p>
+                    <p class="sb-body sb-reveal sb-reveal-1" style="margin: 0 auto;">Second Brain isn't published to the Chrome Web Store yet — display-preference memory and Voice Navigation both arrive together, in one extension.</p>
                     <a href="#" class="sb-cta-btn sb-reveal sb-reveal-2" aria-disabled="true" onclick="return false;">Add to Chrome — Coming soon</a>
                     <p class="sb-cta-note sb-reveal sb-reveal-2">Questions? See the <a href="help.html">help docs</a>.</p>
                 </div>

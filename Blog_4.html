@@ -3,101 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
   <title>Legal Aspects of Accessibility - AccessAI</title>
   <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/dark-theme.css">
+  <link rel="stylesheet" href="./css/apple-design-system.css">
+  <link rel="stylesheet" href="./css/apple-blog.css">
 </head>
 <body>
-<section style="font-family: 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(135deg, #667eea 0%, #74b9ff 100%); padding: 50px; color: #333;">
+    <header role="banner" class="modern-header sticky-header fundamental-nav" style="position: sticky; top: 0; z-index: 1001;">
+        <nav role="navigation" aria-label="Main navigation">
+            <div class="nav-container nav-elevated fundamental-nav-container">
+                <div class="nav-brand fundamental-nav-brand">
+                    <a href="index.html" aria-label="Go to Home" style="all: unset; cursor: pointer; display: inline-block;">
+                        <h1 class="nav-title fundamental-nav-title title-with-symbol" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h1>
+                    </a>
+                </div>
+                <div class="nav-menu fundamental-nav-menu" role="menubar">
+                    <a href="index.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-home"></i></span><span class="nav-text">Home</span></a>
+                    <a href="index.html#ai" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-lightbulb"></i></span><span class="nav-text">AI in Accessibility</span></a>
+                    <a href="index.html#blogs" class="nav-item nav-link active" role="menuitem" aria-current="page"><span class="nav-icon"><i class="fa fa-pen-nib"></i></span><span class="nav-text">Blogs</span></a>
+                    <a href="index.html#mission" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-bullseye"></i></span><span class="nav-text">Our Mission</span></a>
+                    <a href="memory-layer.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-brain"></i></span><span class="nav-text">Second Brain</span></a>
+                </div>
+                <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-  <!-- Exit Button -->
-  <button onclick="exitBlog()" 
-          style="position: fixed; top: 20px; left: 20px; 
-                 background: #ff4d4d; color: white; 
-                 border: none; padding: 10px 18px; 
-                 border-radius: 8px; font-size: 1rem; 
-                 cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
-                 transition: background 0.3s;">
-    ✖ Exit
-  </button>
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="hero-title">Legal Aspects of Accessibility</h1>
+            <p class="hero-subtitle">Accessibility is not just a moral or design consideration — it's a legal obligation. Laws and regulations at national and international levels protect the rights of people with disabilities, ensuring equal access to physical spaces, digital environments, education, and employment.</p>
+        </div>
 
-  <!-- Exit Script -->
-  <script>
-    function exitBlog() {
-      window.location.href = "index.html";
-    }
-  </script>
+        <section class="content-section">
+            <h2 class="section-title">Why the Law Matters Here</h2>
+            <p class="section-text">Accessibility laws establish clear standards for organizations, governments, and educational institutions. They require entities to remove barriers, provide accommodations, and ensure that people with disabilities can participate fully in society. Non-compliance can lead to legal action, fines, or reputational harm, making awareness of these laws essential for everyone involved in design, education, and service delivery.</p>
+        </section>
 
-  <!-- Hero Section -->
-  <div style="max-width: 1000px; margin: auto; text-align: center; padding: 40px 20px;">
-    <h1 style="font-size: 3rem; color: #1a73e8; margin-bottom: 20px;">
-      ⚖️ Legal Aspects of Accessibility
-    </h1>
-    <p style="font-size: 1.2rem; line-height: 1.8; max-width: 750px; margin: auto;">
-      Accessibility is not just a moral or design consideration—it's a legal obligation. 📜 Laws and regulations at national and international levels protect the rights of people with disabilities, ensuring equal access to physical spaces, digital environments, education, and employment.
-    </p>
-  </div>
+        <section class="content-section">
+            <h2 class="section-title">The Americans with Disabilities Act (ADA)</h2>
+            <p class="section-text">Passed in 1990, the ADA is the cornerstone of accessibility law in the U.S. It has five titles, but Titles I–III are most relevant for accessibility:</p>
+            <ul>
+                <li><strong>Title I</strong> — prohibits discrimination in employment and mandates reasonable accommodations for employees with disabilities.</li>
+                <li><strong>Title II</strong> — ensures state and local governments make their programs and services accessible.</li>
+                <li><strong>Title III</strong> — requires businesses and public accommodations, including websites and apps, to be accessible to the public.</li>
+            </ul>
+            <p class="section-text">Courts have increasingly interpreted Title III to apply to digital spaces, using the Web Content Accessibility Guidelines (WCAG) as a reference for compliance.</p>
+        </section>
 
-  <!-- Main Content Section -->
-  <div style="max-width: 1000px; margin: 60px auto; line-height: 1.8; font-size: 1.05rem;">
+        <section class="content-section">
+            <h2 class="section-title">Sections 504 and 508 of the Rehabilitation Act</h2>
+            <p class="section-text">Section 504 (1973) prohibits discrimination based on disability in federally funded programs. Section 508 (updated in 1998 and refreshed in 2018) requires federal agencies to make electronic and information technology accessible, aligning with WCAG 2.0 Level AA standards. These laws apply broadly to educational institutions and government websites.</p>
+        </section>
 
-    <p>
-      🌍 Accessibility laws establish clear standards for organizations, governments, and educational institutions. They require entities to remove barriers, provide accommodations, and ensure that people with disabilities can participate fully in society. Non-compliance can lead to legal action, fines, or reputational harm, making awareness of these laws essential for everyone involved in design, education, and service delivery.
-    </p>
+        <section class="content-section">
+            <h2 class="section-title">Education: IDEA and Higher Ed</h2>
+            <p class="section-text">The Individuals with Disabilities Education Act (IDEA) ensures that students with disabilities receive a Free Appropriate Public Education (FAPE), including accessible digital content, assistive technologies, and individualized education programs (IEPs). Schools must make learning environments inclusive — online platforms, testing materials, and classroom technologies included.</p>
+            <p class="section-text">In higher education, colleges and universities must comply with the ADA and Section 504 — making course content, websites, learning management systems, and physical campuses accessible. The U.S. Department of Education's Office for Civil Rights (OCR) investigates complaints and enforces these laws, often leading to institutional changes.</p>
+        </section>
 
-    <p>
-      🇺🇸 <strong>The Americans with Disabilities Act (ADA)</strong>, passed in 1990, is the cornerstone of accessibility law in the U.S. It has five titles, but Titles I–III are most relevant for accessibility:
-      <ul>
-        <li><strong>Title I</strong>: Prohibits discrimination in employment and mandates reasonable accommodations for employees with disabilities.</li>
-        <li><strong>Title II</strong>: Ensures state and local governments make their programs and services accessible.</li>
-        <li><strong>Title III</strong>: Requires businesses and public accommodations—including websites and apps—to be accessible to the public.</li>
-      </ul>
-      Courts have increasingly interpreted Title III to apply to digital spaces, using the Web Content Accessibility Guidelines (WCAG) as a reference for compliance.
-    </p>
+        <section class="content-section">
+            <h2 class="section-title">Accessibility Law Beyond the U.S.</h2>
+            <p class="section-text">Many countries have strong accessibility laws of their own:</p>
+            <ul>
+                <li><strong>European Accessibility Act (EAA)</strong> — requires accessible products and services across the EU.</li>
+                <li><strong>UK Equality Act 2010</strong> — mandates "reasonable adjustments" for people with disabilities.</li>
+                <li><strong>Accessible Canada Act</strong> — sets accessibility standards for federally regulated entities.</li>
+            </ul>
+            <p class="section-text">Many of these laws reference WCAG to standardize digital accessibility expectations globally.</p>
+        </section>
 
-    <p>
-      💻 Another key law is <strong>Section 504 and Section 508 of the Rehabilitation Act</strong>. Section 504 (1973) prohibits discrimination based on disability in federally funded programs. Section 508 (updated in 1998 and refreshed in 2018) requires federal agencies to make electronic and information technology accessible, aligning with WCAG 2.0 Level AA standards. These laws apply broadly to educational institutions and government websites.
-    </p>
+        <section class="content-section">
+            <h2 class="section-title">Consequences of Non-Compliance</h2>
+            <p class="section-text">In the U.S., thousands of digital accessibility lawsuits are filed each year, especially under ADA Title III. Businesses, schools, and public institutions may face financial penalties, settlements, or be forced to make rapid accessibility improvements.</p>
+        </section>
 
-    <p>
-      🏫 <strong>The Individuals with Disabilities Education Act (IDEA)</strong> ensures that students with disabilities receive a Free Appropriate Public Education (FAPE). This includes accessible digital content, assistive technologies, and individualized education programs (IEPs). Schools must make learning environments inclusive, including online platforms, testing materials, and classroom technologies.
-    </p>
+        <section class="content-section">
+            <h2 class="section-title">Best Practices for Legal Compliance</h2>
+            <ul>
+                <li>Following WCAG 2.1 Level AA or higher for digital content.</li>
+                <li>Conducting regular accessibility audits and user testing.</li>
+                <li>Training staff on accessibility principles.</li>
+                <li>Maintaining a public accessibility statement and clear feedback channels.</li>
+                <li>Documenting all compliance efforts to show good faith.</li>
+            </ul>
+            <p class="section-text">Proactive compliance not only reduces legal risk — it creates more inclusive and welcoming experiences for all users.</p>
+        </section>
+    </div>
 
-    <p>
-      🎓 In higher education, colleges and universities must comply with ADA and Section 504. This means making course content, websites, learning management systems, and physical campuses accessible. The U.S. Department of Education’s Office for Civil Rights (OCR) investigates complaints and enforces these laws, often leading to institutional changes.
-    </p>
+    <footer role="contentinfo" style="border-top: 1px solid var(--border-subtle); background: var(--bg-deep); padding: 2rem 1.5rem; text-align: center;">
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0 0 0.6rem;">&copy; 2025 AccessAI &middot; Designed to follow WCAG 2.1 Level AA.</p>
+        <a href="index.html#blogs" style="color: var(--accent-sky); font-size: 0.9rem; text-decoration: none; font-weight: 600;">&larr; Back to all articles</a>
+    </footer>
 
-    <p>
-      🌐 Beyond the U.S., many countries have strong accessibility laws:
-      <ul>
-        <li>🇪🇺 <strong>European Accessibility Act (EAA)</strong> — requires accessible products and services across the EU.</li>
-        <li>🇬🇧 <strong>UK Equality Act 2010</strong> — mandates “reasonable adjustments” for people with disabilities.</li>
-        <li>🇨🇦 <strong>Accessible Canada Act</strong> — sets accessibility standards for federally regulated entities.</li>
-      </ul>
-      Many of these laws reference WCAG to standardize digital accessibility expectations globally.
-    </p>
-
-    <p>
-      ⚠️ <strong>Consequences of Non-Compliance</strong> can be severe. In the U.S., thousands of digital accessibility lawsuits are filed each year, especially under ADA Title III. Businesses, schools, and public institutions may face financial penalties, settlements, or be forced to make rapid accessibility improvements.
-    </p>
-
-    <p>
-      ✅ <strong>Best Practices for Legal Compliance</strong> include:
-      <ul>
-        <li>Following WCAG 2.1 Level AA or higher for digital content.</li>
-        <li>Conducting regular accessibility audits and user testing.</li>
-        <li>Training staff on accessibility principles.</li>
-        <li>Maintaining a public accessibility statement and clear feedback channels.</li>
-        <li>Documenting all compliance efforts to show good faith.</li>
-      </ul>
-      Proactive compliance not only reduces legal risks but also creates more inclusive and welcoming experiences for all users.
-    </p>
-
-  </div>
-</section>
-
+    <script>
+    (function () {
+        'use strict';
+        var navToggle = document.querySelector('.nav-toggle');
+        var navMenu = document.querySelector('.nav-menu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function () {
+                var expanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', String(!expanded));
+                navMenu.classList.toggle('active');
+            });
+        }
+    })();
+    </script>
 </body>
 </html>

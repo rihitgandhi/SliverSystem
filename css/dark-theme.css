@@ -1,40 +1,71 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/v4-shims.min.css');
 
 /* =====================================================
-   AccessAI — Award-Winning Dark Theme
-   Dark Blue & Black Color System
+   AccessAI — Editorial Light Theme, light-blue accent
+   Paper, ink, one light-blue hue — no glow/mesh/blur
    ===================================================== */
+/* Base layer (paper/ink/white surfaces, no glow/mesh/blur) stayed from the
+   earlier re-theme off the dark-navy/neon-blue "AI SaaS" look. The accent
+   was briefly de-blued to a muted slate-gray on the same request, then
+   reinstated as light blue on direct follow-up request — this time as the
+   deliberate theme color, tuned to WCAG AA rather than the earlier
+   ChatGPT-adjacent saturated neon blue. Token NAMES are kept as-is
+   (--bg-void, --accent-sky, --glow-*, etc.) even where their values don't
+   literally match anymore — renaming every call site across this file plus
+   apple-design-system.css, apple-blog.css, and index.html's inline blocks
+   would be a much larger and riskier change than repainting the values.
+   The comment here is the map: void/deep/base/surface/elevated describe a
+   light-to-slightly-more-elevated surface hierarchy (now with a faint cool
+   tint rather than warm off-white); accent-blue/sky/glow are the three
+   accent weights (primary/lighter/lightest), genuinely blue again; glow-*
+   are elevation shadows with a matching faint blue cast. */
 
 /* ---- Design Tokens ---- */
 :root {
-  --bg-void:        #03060f;    /* deepest black-blue */
-  --bg-deep:        #060c1a;    /* near-black navy */
-  --bg-base:        #0a1228;    /* page bg */
-  --bg-surface:     #0d1a36;    /* card surface */
-  --bg-elevated:    #112040;    /* elevated card */
-  --bg-overlay:     rgba(6,12,26,0.85);
+  --bg-void:        #ffffff;    /* purest surface — modals, popovers */
+  --bg-deep:        #f5f9fc;    /* page background — cool pale-blue white */
+  --bg-base:        #ffffff;    /* content base */
+  --bg-surface:     #ffffff;    /* card surface (differentiated by border) */
+  --bg-elevated:    #eaf2f9;    /* hover / elevated surface */
+  --bg-overlay:     rgba(255,255,255,0.94);
 
-  --border-subtle:  rgba(56,116,230,0.15);
-  --border-mid:     rgba(56,116,230,0.30);
-  --border-bright:  rgba(56,116,230,0.60);
+  --border-subtle:  rgba(10,80,130,0.10);
+  --border-mid:     rgba(10,80,130,0.16);
+  --border-bright:  rgba(10,80,130,0.28);
 
-  --accent-blue:    #2563eb;    /* primary cta */
-  --accent-sky:     #38bdf8;    /* sky highlight */
-  --accent-glow:    #60a5fa;    /* glow color */
-  --accent-purple:  #818cf8;    /* purple accent */
-  --accent-cyan:    #22d3ee;    /* cyan */
+  /* Light-blue theme accent — reinstated on direct request, overriding the
+     muted-slate "editorial" repaint above. All five tones are tuned to
+     WCAG AA (>=4.5:1 on white) since several are used as live link/label
+     text, not just fills — a pale/pastel light blue reads nicer but fails
+     contrast at text sizes, so "light" here means the lightest blue that
+     still holds up as text, not the palest one that exists. */
+  --accent-blue:    #0a5f9e;    /* primary cta / accent — 6.7:1 on white */
+  --accent-sky:     #0c7bc4;    /* lighter accent weight — 4.5:1 on white */
+  --accent-glow:    #0c7bb0;    /* lightest accent weight — 4.7:1 on white */
+  --accent-purple:  #3b6fd4;    /* reserved secondary (indigo-blue) */
+  --accent-cyan:    #0e7490;    /* reserved secondary (teal-blue) */
 
-  --text-white:     #f0f6ff;
-  --text-primary:   #ccd6f6;
-  --text-secondary: #8892b0;
-  --text-muted:     #4a5878;
+  --text-white:     #1a1a18;    /* ink — headings, highest emphasis */
+  --text-primary:   #2f2e2b;    /* body text */
+  --text-secondary: #66645f;    /* secondary / supporting text */
+  --text-muted:     #96938c;    /* captions, timestamps, least emphasis */
 
-  --glow-blue:      0 0 20px rgba(37,99,235,0.45), 0 0 60px rgba(37,99,235,0.20);
-  --glow-sky:       0 0 20px rgba(56,189,248,0.40), 0 0 60px rgba(56,189,248,0.15);
-  --glow-subtle:    0 0 30px rgba(37,99,235,0.12);
+  /* Elevation shadows carry a faint blue cast now instead of neutral ink,
+     so the light-blue hue shows even where it isn't literal text/fill. */
+  --glow-blue:      0 8px 24px rgba(10,95,158,0.12);
+  --glow-sky:       0 8px 24px rgba(12,123,196,0.12);
+  --glow-subtle:    0 4px 14px rgba(10,80,130,0.07);
 
-  --font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
+  /* Display and body both run on Inter (heavier weight + tight tracking for
+     display). Space Grotesk was tried as a secondary display face and
+     reverted — its rounded bowls and quirky terminals read as "friendly
+     app" at large display sizes, not the sleek/minimal target, and its
+     letterform on the "AccessAI" wordmark specifically looked bubbly rather
+     than confident. One typeface, disciplined by weight/tracking/size, is
+     also just more Linear/Vercel than a second display face would be. */
+  --font-display: 'Inter', -apple-system, sans-serif;
   --font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
 
   --radius-sm:  8px;
   --radius-md:  14px;
@@ -68,18 +99,8 @@ body {
   position: relative;
 }
 
-/* Animated background gradient mesh */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(37,99,235,0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 90%, rgba(56,189,248,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 80% at 50% 50%, rgba(10,18,40,0.60) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
-}
+/* The animated gradient-mesh background that used to live here is gone —
+   flat paper color only, no glow, no mesh, per the editorial direction. */
 
 /* Ensure icon fonts are not overridden by accessibility font toggles */
 .far, .fa-regular {
@@ -104,6 +125,13 @@ body::before {
   box-shadow: none !important;
   position: relative;
   z-index: 1;
+  /* main.css's overflow:hidden was there to clip the old white card's
+     rounded corners — that card is gone, but any ancestor with a
+     non-visible overflow (even hidden, even with nothing currently
+     overflowing it) breaks position:sticky for every descendant that
+     relies on it, including the header nav and the pinned hero
+     sequence. Restore it. */
+  overflow: visible !important;
 }
 
 /* =====================================================
@@ -152,9 +180,9 @@ a:hover {
    ===================================================== */
 header.modern-header,
 header[role="banner"] {
-  background: rgba(6,12,26,0.92) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
+  background: rgba(255,255,255,0.92) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-bottom: 1px solid var(--border-subtle) !important;
   box-shadow: 0 4px 30px rgba(0,0,0,0.4) !important;
   position: sticky !important;
@@ -170,16 +198,16 @@ header[role="banner"] {
 
 /* Nav fades adapt to dark */
 .nav-container::before {
-  background: linear-gradient(90deg, rgba(6,12,26,0.98) 0%, rgba(6,12,26,0.70) 30%, transparent 100%) !important;
+  background: linear-gradient(90deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.70) 30%, transparent 100%) !important;
 }
 .nav-container::after {
-  background: linear-gradient(270deg, rgba(6,12,26,0.98) 0%, rgba(6,12,26,0.70) 30%, transparent 100%) !important;
+  background: linear-gradient(270deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.70) 30%, transparent 100%) !important;
 }
 .nav-menu::before {
-  background: linear-gradient(180deg, rgba(6,12,26,0.98) 0%, transparent 100%) !important;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, transparent 100%) !important;
 }
 .nav-menu::after {
-  background: linear-gradient(0deg, rgba(6,12,26,0.98) 0%, transparent 100%) !important;
+  background: linear-gradient(0deg, rgba(255,255,255,0.98) 0%, transparent 100%) !important;
 }
 
 .nav-title {
@@ -201,7 +229,7 @@ header[role="banner"] {
   font-size: 0.88rem !important;
   font-weight: 500 !important;
   border-radius: var(--radius-sm) !important;
-  transition: all var(--transition-fast) !important;
+  transition: transform var(--transition-fast), background var(--transition-fast), border-bottom var(--transition-fast), color var(--transition-fast), opacity var(--transition-fast) !important;
   position: relative !important;
   padding: 0.5rem 0.85rem !important;
 }
@@ -210,7 +238,7 @@ header[role="banner"] {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(56,189,248,0.08));
+  background: linear-gradient(135deg, rgba(74,85,104,0.15), rgba(100,116,139,0.08));
   border-radius: var(--radius-sm);
   opacity: 0;
   transition: opacity var(--transition-fast);
@@ -218,7 +246,7 @@ header[role="banner"] {
 
 .nav-item:hover {
   color: var(--text-white) !important;
-  background: rgba(37,99,235,0.12) !important;
+  background: rgba(74,85,104,0.12) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -226,10 +254,16 @@ header[role="banner"] {
   opacity: 1;
 }
 
+/* Restrained on purpose: a color change + underline, not the layered
+   glow/tint/inset-shadow "AI dashboard" nav treatment (main.css still has
+   a leftover inset box-shadow on this same selector — cancelled below
+   rather than edited at the source). */
 .nav-item.active {
   color: var(--accent-sky) !important;
-  background: rgba(37,99,235,0.18) !important;
+  background: transparent !important;
   border-bottom: 2px solid var(--accent-sky) !important;
+  box-shadow: none !important;
+  font-weight: 600;
 }
 
 /* Hamburger */
@@ -270,8 +304,8 @@ header[role="banner"] {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(3,6,15,0.2) 0%, rgba(3,6,15,0.0) 40%, rgba(3,6,15,0.6) 100%),
-    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(37,99,235,0.12) 0%, transparent 70%);
+    linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.0) 40%, rgba(255,255,255,0.6) 100%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(74,85,104,0.12) 0%, transparent 70%);
   z-index: 1;
   pointer-events: none;
 }
@@ -290,7 +324,7 @@ header[role="banner"] {
   -webkit-text-fill-color: var(--text-white) !important;
   text-shadow: none !important;
   animation: heroTitleReveal 1.2s cubic-bezier(0.22,1,0.36,1) both;
-  filter: drop-shadow(0 0 60px rgba(37,99,235,0.5));
+  filter: drop-shadow(0 0 60px rgba(74,85,104,0.5));
 }
 
 /* Hero subtitle/tagline */
@@ -365,8 +399,8 @@ header[role="banner"] {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 80% at 30% 50%, rgba(37,99,235,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 60% at 70% 40%, rgba(56,189,248,0.08) 0%, transparent 70%);
+    radial-gradient(ellipse 60% 80% at 30% 50%, rgba(74,85,104,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 70% 40%, rgba(100,116,139,0.08) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -429,7 +463,7 @@ header[role="banner"] {
   height: 3px;
   background: linear-gradient(90deg, var(--accent-blue), var(--accent-sky));
   border-radius: 2px;
-  box-shadow: 0 0 12px rgba(56,189,248,0.6);
+  box-shadow: none;
 }
 
 .section-subtitle,
@@ -472,13 +506,13 @@ header[role="banner"] {
 .stat-card,
 .metric-card,
 .recommendation-card {
-  background: rgba(10,18,40,0.70) !important;
-  backdrop-filter: blur(16px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  background: rgba(255,255,255,0.70) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-lg) !important;
   color: var(--text-primary) !important;
-  transition: all var(--transition-med) !important;
+  transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med), opacity var(--transition-med) !important;
   position: relative;
   overflow: hidden;
 }
@@ -492,7 +526,7 @@ header[role="banner"] {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(37,99,235,0.06) 0%, transparent 60%);
+  background: linear-gradient(135deg, rgba(74,85,104,0.06) 0%, transparent 60%);
   border-radius: inherit;
   opacity: 0;
   transition: opacity var(--transition-med);
@@ -521,32 +555,31 @@ header[role="banner"] {
 
 /* Card backgrounds – strip old gradients */
 .card-bg-1, .card-bg-2, .card-bg-3, .card-bg-4, .card-bg-5 {
-  background: rgba(10,18,40,0.70) !important;
+  background: rgba(255,255,255,0.70) !important;
 }
 
 /* Tool icons */
-.tool-icon,
-.feature-icon,
+/* .tool-icon/.feature-icon/.principle-icon/.service-icon used to be forced
+   into this one identical filled-badge treatment (same size, same blue
+   gradient, same white icon) regardless of context — the exact "one reused
+   icon component everywhere" pattern that reads as generic. Each of those
+   four now gets its own distinct treatment defined where it's used
+   (index.html's page-specific style blocks), so they're removed here.
+   .app-icon/.tech-icon/.future-icon are unused by current markup but left
+   in case anything else still targets them. */
 .app-icon,
 .tech-icon,
-.principle-icon,
-.service-icon,
 .future-icon {
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-sky)) !important;
   color: #fff !important;
   border-radius: 14px !important;
-  box-shadow: 0 4px 20px rgba(37,99,235,0.4) !important;
+  box-shadow: 0 4px 20px rgba(74,85,104,0.4) !important;
   width: 52px !important;
   height: 52px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   font-size: 1.4rem !important;
-}
-
-.tool-icon i,
-.feature-icon i {
-  color: #fff !important;
 }
 
 /* Tool card headings */
@@ -573,9 +606,9 @@ header[role="banner"] {
 /* Feature tags */
 .feature-tag,
 .tech-tag {
-  background: rgba(37,99,235,0.15) !important;
+  background: rgba(74,85,104,0.15) !important;
   color: var(--accent-sky) !important;
-  border: 1px solid rgba(56,189,248,0.25) !important;
+  border: 1px solid rgba(100,116,139,0.25) !important;
   border-radius: 20px !important;
   padding: 3px 12px !important;
   font-size: 0.78rem !important;
@@ -593,7 +626,7 @@ a.btn-primary,
 .cta-btn.primary,
 .cta-button,
 button.btn-primary {
-  background: linear-gradient(135deg, var(--accent-blue), #1d4ed8) !important;
+  background: linear-gradient(135deg, var(--accent-blue), #0c7bc4) !important;
   color: #fff !important;
   border: none !important;
   border-radius: var(--radius-sm) !important;
@@ -602,8 +635,8 @@ button.btn-primary {
   font-weight: 600 !important;
   font-size: 0.95rem !important;
   cursor: pointer !important;
-  transition: all var(--transition-fast) !important;
-  box-shadow: 0 4px 16px rgba(37,99,235,0.4) !important;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast) !important;
+  box-shadow: 0 4px 16px rgba(74,85,104,0.4) !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 0.5rem !important;
@@ -618,9 +651,9 @@ a.btn-primary:hover,
 .cta-btn.primary:hover,
 .cta-button:hover,
 button.btn-primary:hover {
-  background: linear-gradient(135deg, #3b82f6, var(--accent-blue)) !important;
+  background: linear-gradient(135deg, #0c7bc4, var(--accent-blue)) !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 30px rgba(37,99,235,0.55) !important;
+  box-shadow: 0 8px 30px rgba(74,85,104,0.55) !important;
 }
 
 .btn-secondary,
@@ -637,7 +670,7 @@ button.btn-secondary {
   font-weight: 600 !important;
   font-size: 0.95rem !important;
   cursor: pointer !important;
-  transition: all var(--transition-fast) !important;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast) !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 0.5rem !important;
@@ -650,8 +683,8 @@ a.btn-secondary:hover,
 .cta-btn.secondary:hover,
 button.btn-secondary:hover {
   border-color: var(--accent-sky) !important;
-  background: rgba(56,189,248,0.08) !important;
-  box-shadow: 0 0 20px rgba(56,189,248,0.20) !important;
+  background: rgba(100,116,139,0.08) !important;
+  box-shadow: none !important;
   transform: translateY(-2px) !important;
 }
 
@@ -665,14 +698,14 @@ textarea,
 .modern-checker-input,
 .form-input,
 .modern-textarea {
-  background: rgba(6,12,26,0.8) !important;
+  background: rgba(255,255,255,0.8) !important;
   border: 1.5px solid var(--border-subtle) !important;
   color: var(--text-white) !important;
   border-radius: var(--radius-sm) !important;
   padding: 0.75rem 1rem !important;
   font-family: var(--font-body) !important;
   font-size: 0.95rem !important;
-  transition: all var(--transition-fast) !important;
+  transition: box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), outline var(--transition-fast), outline-offset var(--transition-fast) !important;
 }
 
 input::placeholder,
@@ -686,8 +719,8 @@ textarea:focus,
 .form-input:focus,
 .modern-textarea:focus {
   border-color: var(--accent-blue) !important;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.20) !important;
-  background: rgba(10,18,40,0.9) !important;
+  box-shadow: 0 0 0 3px rgba(74,85,104,0.20) !important;
+  background: rgba(255,255,255,0.9) !important;
   outline: 2px solid var(--accent-sky) !important;
   outline-offset: 2px !important;
 }
@@ -700,10 +733,10 @@ textarea:focus,
   border: 1px solid var(--border-mid) !important;
   border-radius: var(--radius-lg) !important;
   overflow: hidden !important;
-  transition: all var(--transition-med) !important;
+  transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med) !important;
   display: flex !important;
   flex-direction: column !important;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(37,99,235,0.10) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(74,85,104,0.10) !important;
 }
 
 .blog-post:hover {
@@ -736,7 +769,7 @@ textarea:focus,
   margin-bottom: 0 !important;
   flex-shrink: 0 !important;
   filter: brightness(0.92) !important;
-  transition: all var(--transition-med) !important;
+  transition: transform var(--transition-med), filter var(--transition-med) !important;
 }
 
 .blog-post:hover .blog-image {
@@ -825,11 +858,34 @@ textarea:focus,
 /* =====================================================
    AI IN ACCESSIBILITY SECTION
    ===================================================== */
+/* Full width now, not a boxed card floating in a sea of margin. main.css's
+   .my-ai-card sets border-radius/box-shadow/overflow:hidden and a ::before
+   gradient top-bar for an actual card look — none of that was reset here
+   before, so a transparent "card" with a stray shadow and hardcoded-blue
+   top bar was still bleeding through. Reset explicitly; each grouping
+   section below now owns its own full-bleed background, and content within
+   each is capped to a readable width instead of the whole tab being capped. */
 .my-ai-card {
   background: transparent !important;
-  max-width: 1200px !important;
-  margin: 0 auto !important;
-  padding: 3rem 2rem !important;
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 2rem 0 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+.my-ai-card::before {
+  content: none !important;
+}
+.my-ai-card .bigblue,
+.my-ai-card > .my-ai-separator,
+.my-ai-card > .my-ai-quote {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.5rem, 5vw, 3rem);
+  padding-right: clamp(1.5rem, 5vw, 3rem);
 }
 
 .my-ai-card h1.bigblue {
@@ -849,7 +905,7 @@ textarea:focus,
 }
 
 .my-ai-quote {
-  background: rgba(37,99,235,0.08) !important;
+  background: rgba(74,85,104,0.08) !important;
   border-left: 4px solid var(--accent-blue) !important;
   border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;
   padding: 1.5rem 2rem !important;
@@ -857,9 +913,22 @@ textarea:focus,
 }
 
 .my-ai-quote p {
-  color: var(--text-secondary) !important;
+  color: var(--text-primary) !important;
   font-size: 1.05rem !important;
+  line-height: 1.7 !important;
   font-style: italic !important;
+}
+
+/* main.css only gives .ai-benefits its own margin (50px 0) — the other
+   four sections had none at all, so they butted straight into each
+   other with just the space above/below their h2. Same rhythm for all
+   five so the page reads as distinct sections, not one long run-on. */
+.ai-benefits,
+.ai-technologies,
+.ai-applications,
+.ai-future,
+.ai-stats {
+  margin: 3.5rem 0 !important;
 }
 
 .ai-benefits h2,
@@ -881,30 +950,29 @@ textarea:focus,
 .future-content,
 .stats-grid {
   display: grid !important;
-  gap: 1.5rem !important;
+  gap: 1.75rem !important;
 }
 
-.ai-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important; }
-.tech-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important; }
-.applications-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important; }
-.future-content { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important; }
-.stats-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important; }
-
-@media (min-width: 1100px) {
-  .tech-grid,
-  .applications-grid,
-  .future-content {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  }
-}
+/* auto-fit (not auto-fill) so a lone leftover card stretches to fill the
+   row instead of being squeezed into a narrow orphan column. These cards
+   carry real paragraphs — sometimes a paragraph plus a tag row or a
+   4-item list — so the minmax floor has to be wide enough that text
+   doesn't wrap into a claustrophobic 3-4 words per line. In practice
+   this settles at 2 columns on most desktop widths, 3 only on very
+   wide screens, 1 on mobile. */
+.ai-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important; }
+.tech-grid { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)) !important; }
+.applications-grid { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)) !important; }
+.future-content { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important; }
+.stats-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)) !important; }
 
 .ai-item,
 .future-item {
-  background: rgba(10,18,40,0.60) !important;
+  background: rgba(255,255,255,0.60) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-md) !important;
   padding: 1.8rem !important;
-  transition: all var(--transition-med) !important;
+  transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med) !important;
 }
 
 .ai-item:hover,
@@ -931,22 +999,23 @@ textarea:focus,
 .ai-item p,
 .future-item p {
   color: var(--text-secondary) !important;
-  font-size: 0.92rem !important;
+  font-size: 0.98rem !important;
+  line-height: 1.65 !important;
 }
 
 /* Stats */
 .stat-item {
-  background: rgba(10,18,40,0.60) !important;
+  background: rgba(255,255,255,0.60) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-md) !important;
   padding: 2rem 1.5rem !important;
   text-align: center !important;
-  transition: all var(--transition-med) !important;
+  transition: box-shadow var(--transition-med), border-color var(--transition-med) !important;
 }
 
 .stat-item:hover {
   border-color: var(--accent-blue) !important;
-  box-shadow: 0 0 30px rgba(37,99,235,0.20) !important;
+  box-shadow: var(--glow-subtle) !important;
 }
 
 .stat-number {
@@ -971,7 +1040,7 @@ textarea:focus,
    MISSION / HELP TAB
    ===================================================== */
 .mission-hero {
-  background: linear-gradient(135deg, #060c1a 0%, #0a1228 50%, #0d1a36 100%) !important;
+  background: linear-gradient(135deg, rgba(12,123,196,0.12) 0%, rgba(10,95,158,0.07) 50%, var(--bg-deep) 100%) !important;
   min-height: 60vh !important;
   position: relative;
   overflow: hidden;
@@ -987,7 +1056,7 @@ textarea:focus,
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(37,99,235,0.15) 0%, transparent 70%);
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(74,85,104,0.15) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -1086,12 +1155,12 @@ textarea:focus,
 }
 
 .box {
-  background: rgba(10,18,40,0.70) !important;
+  background: rgba(255,255,255,0.70) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-lg) !important;
   padding: 2rem !important;
   text-align: center !important;
-  transition: all var(--transition-med) !important;
+  transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med) !important;
 }
 
 .box:hover {
@@ -1142,7 +1211,7 @@ textarea:focus,
 
 /* Help hero */
 .help-hero {
-  background: linear-gradient(135deg, #060c1a 0%, #0a1228 100%) !important;
+  background: linear-gradient(135deg, rgba(12,123,196,0.12) 0%, var(--bg-deep) 100%) !important;
   padding: 4rem 2rem !important;
   text-align: center !important;
   position: relative !important;
@@ -1153,7 +1222,7 @@ textarea:focus,
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(37,99,235,0.12) 0%, transparent 70%);
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(74,85,104,0.12) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -1189,18 +1258,18 @@ textarea:focus,
 }
 
 .stat-card {
-  background: rgba(13,26,54,0.80) !important;
+  background: rgba(246,245,242,0.80) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-md) !important;
   padding: 1.5rem 2rem !important;
   text-align: center !important;
   min-width: 160px !important;
-  transition: all var(--transition-med) !important;
+  transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med) !important;
 }
 
 .stat-card:hover {
   border-color: var(--accent-blue) !important;
-  box-shadow: 0 0 30px rgba(37,99,235,0.20) !important;
+  box-shadow: var(--glow-subtle) !important;
   transform: translateY(-4px) !important;
 }
 
@@ -1220,7 +1289,7 @@ textarea:focus,
 }
 
 .mission-container {
-  background: linear-gradient(145deg, rgba(10,18,40,0.78), rgba(13,26,54,0.86)) !important;
+  background: linear-gradient(145deg, rgba(255,255,255,0.78), rgba(246,245,242,0.86)) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-lg) !important;
   box-shadow: 0 18px 46px rgba(0,0,0,0.34) !important;
@@ -1254,7 +1323,7 @@ textarea:focus,
   line-height: 1.9 !important;
   max-width: 800px !important;
   margin: 0 auto 2rem !important;
-  background: rgba(255,255,255,0.04) !important;
+  background: rgba(20,18,15,0.04) !important;
   padding: 1.25rem 1.5rem !important;
   border-left: 3px solid var(--accent-sky) !important;
   border-radius: 12px !important;
@@ -1333,7 +1402,7 @@ textarea:focus,
    AI CHAT SECTION (in-page tab)
    ===================================================== */
 .chat-hero {
-  background: linear-gradient(135deg, #060c1a 0%, #0a1228 100%) !important;
+  background: linear-gradient(135deg, rgba(12,123,196,0.12) 0%, var(--bg-deep) 100%) !important;
   padding: 3rem 2rem !important;
   text-align: center !important;
   position: relative;
@@ -1366,15 +1435,15 @@ textarea:focus,
 
 .chatbot-container,
 .modern-chatbot {
-  background: rgba(10,18,40,0.80) !important;
+  background: rgba(255,255,255,0.80) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-xl) !important;
-  backdrop-filter: blur(16px) !important;
+  backdrop-filter: none;
 }
 
 .chatbot-header,
 .modern-header {
-  background: rgba(6,12,26,0.60) !important;
+  background: rgba(255,255,255,0.60) !important;
   border-bottom: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important;
   padding: 1.2rem 1.5rem !important;
@@ -1400,7 +1469,7 @@ textarea:focus,
 }
 
 .message.bot-message .message-content {
-  background: rgba(37,99,235,0.10) !important;
+  background: rgba(74,85,104,0.10) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md) !important;
   color: var(--text-primary) !important;
@@ -1408,7 +1477,7 @@ textarea:focus,
 }
 
 .message.user-message .message-content {
-  background: linear-gradient(135deg, var(--accent-blue), #1d4ed8) !important;
+  background: linear-gradient(135deg, var(--accent-blue), #0c7bc4) !important;
   border-radius: var(--radius-md) 0 var(--radius-md) var(--radius-md) !important;
   color: #fff !important;
   padding: 0.8rem 1.2rem !important;
@@ -1417,41 +1486,41 @@ textarea:focus,
 
 .chat-input-container,
 .modern-input {
-  background: rgba(6,12,26,0.60) !important;
+  background: rgba(255,255,255,0.60) !important;
   border-top: 1px solid var(--border-subtle) !important;
   padding: 1rem 1.5rem !important;
 }
 
 .send-button,
 .modern-send {
-  background: linear-gradient(135deg, var(--accent-blue), #1d4ed8) !important;
+  background: linear-gradient(135deg, var(--accent-blue), #0c7bc4) !important;
   border: none !important;
   border-radius: var(--radius-sm) !important;
   color: #fff !important;
   padding: 0.6rem 1rem !important;
   cursor: pointer !important;
-  transition: all var(--transition-fast) !important;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast) !important;
 }
 
 .send-button:hover {
-  box-shadow: 0 4px 16px rgba(37,99,235,0.4) !important;
+  box-shadow: 0 4px 16px rgba(74,85,104,0.4) !important;
   transform: scale(1.05) !important;
 }
 
 .quick-action-btn {
-  background: rgba(37,99,235,0.12) !important;
+  background: rgba(74,85,104,0.12) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-sm) !important;
   color: var(--accent-sky) !important;
   padding: 0.5rem 1rem !important;
   font-size: 0.88rem !important;
   cursor: pointer !important;
-  transition: all var(--transition-fast) !important;
+  transition: background var(--transition-fast), border-color var(--transition-fast) !important;
 }
 
 .quick-action-btn:hover {
   border-color: var(--accent-sky) !important;
-  background: rgba(56,189,248,0.12) !important;
+  background: rgba(100,116,139,0.12) !important;
 }
 
 /* =====================================================
@@ -1477,7 +1546,7 @@ textarea:focus,
 }
 
 .score-form {
-  background: rgba(10,18,40,0.70) !important;
+  background: rgba(255,255,255,0.70) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-lg) !important;
   padding: 2rem !important;
@@ -1493,7 +1562,7 @@ textarea:focus,
 
 .results-section,
 #results {
-  background: rgba(10,18,40,0.70) !important;
+  background: rgba(255,255,255,0.70) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-lg) !important;
   padding: 2rem !important;
@@ -1504,7 +1573,7 @@ textarea:focus,
 }
 
 .score-circle {
-  background: rgba(37,99,235,0.10) !important;
+  background: rgba(74,85,104,0.10) !important;
   border: 2px solid var(--border-mid) !important;
   border-radius: 50% !important;
   width: 130px !important;
@@ -1513,7 +1582,7 @@ textarea:focus,
   align-items: center !important;
   justify-content: center !important;
   margin: 0 auto 2rem !important;
-  box-shadow: 0 0 30px rgba(37,99,235,0.20) !important;
+  box-shadow: var(--glow-subtle) !important;
 }
 
 #score-value {
@@ -1528,7 +1597,7 @@ textarea:focus,
 }
 
 .score-category {
-  background: rgba(6,12,26,0.60) !important;
+  background: rgba(255,255,255,0.60) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-md) !important;
   padding: 1.2rem !important;
@@ -1614,7 +1683,7 @@ footer .footer-content p {
 }
 
 #acc-btn {
-  background: linear-gradient(135deg, var(--accent-blue), #1d4ed8) !important;
+  background: linear-gradient(135deg, var(--accent-blue), #0c7bc4) !important;
   color: #fff !important;
   border: none !important;
   border-radius: var(--radius-md) !important;
@@ -1622,21 +1691,21 @@ footer .footer-content p {
   font-weight: 600 !important;
   font-size: 0.9rem !important;
   cursor: pointer !important;
-  box-shadow: 0 4px 20px rgba(37,99,235,0.50) !important;
-  transition: all var(--transition-fast) !important;
+  box-shadow: 0 4px 20px rgba(74,85,104,0.50) !important;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast) !important;
   display: flex !important;
   align-items: center !important;
   gap: 0.5rem !important;
 }
 
 #acc-btn:hover {
-  box-shadow: 0 8px 30px rgba(37,99,235,0.65) !important;
+  box-shadow: 0 8px 30px rgba(74,85,104,0.65) !important;
   transform: translateY(-2px) !important;
 }
 
 .acc-menu {
-  background: rgba(6,12,26,0.95) !important;
-  backdrop-filter: blur(20px) !important;
+  background: rgba(255,255,255,0.95) !important;
+  backdrop-filter: none;
   border: 1px solid var(--border-mid) !important;
   border-radius: var(--radius-lg) !important;
   box-shadow: 0 20px 60px rgba(0,0,0,0.6), var(--glow-subtle) !important;
@@ -1656,11 +1725,11 @@ footer .footer-content p {
   color: var(--text-primary) !important;
   border: none !important;
   border-radius: var(--radius-sm) !important;
-  transition: all var(--transition-fast) !important;
+  transition: background var(--transition-fast), color var(--transition-fast) !important;
 }
 
 .acc-menu button:hover {
-  background: rgba(37,99,235,0.10) !important;
+  background: rgba(74,85,104,0.10) !important;
   color: var(--text-white) !important;
 }
 
@@ -1680,7 +1749,7 @@ footer .footer-content p {
   position: fixed !important;
   width: 28px !important;
   height: 28px !important;
-  border: 2px solid rgba(56,189,248,0.6) !important;
+  border: 2px solid rgba(100,116,139,0.6) !important;
   border-radius: 50% !important;
   pointer-events: none !important;
   z-index: 99999 !important;
@@ -1693,14 +1762,14 @@ footer .footer-content p {
   width: 44px !important;
   height: 44px !important;
   border-color: var(--accent-sky) !important;
-  background: rgba(56,189,248,0.06) !important;
+  background: rgba(100,116,139,0.06) !important;
 }
 
 /* =====================================================
    AI PREVIEW CARD (home tab)
    ===================================================== */
 .ai-preview {
-  background: rgba(6,12,26,0.60) !important;
+  background: rgba(255,255,255,0.60) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-md) !important;
   padding: 1.2rem !important;
@@ -1727,7 +1796,7 @@ footer .footer-content p {
 }
 
 .message-content {
-  background: rgba(37,99,235,0.08) !important;
+  background: rgba(74,85,104,0.08) !important;
   border-radius: 0 var(--radius-sm) var(--radius-sm) var(--radius-sm) !important;
   padding: 0.8rem 1rem !important;
   color: var(--text-primary) !important;
@@ -1742,7 +1811,7 @@ footer .footer-content p {
 }
 
 .quick-action {
-  background: rgba(37,99,235,0.12) !important;
+  background: rgba(74,85,104,0.12) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: 20px !important;
   color: var(--accent-sky) !important;
@@ -1750,12 +1819,12 @@ footer .footer-content p {
   font-size: 0.82rem !important;
   font-weight: 600 !important;
   text-decoration: none !important;
-  transition: all var(--transition-fast) !important;
+  transition: background var(--transition-fast), border-color var(--transition-fast) !important;
 }
 
 .quick-action:hover {
   border-color: var(--accent-sky) !important;
-  background: rgba(56,189,248,0.15) !important;
+  background: rgba(100,116,139,0.15) !important;
 }
 
 /* =====================================================
@@ -1763,9 +1832,9 @@ footer .footer-content p {
    ===================================================== */
 #home button[onclick*="switchTab('blogs')"],
 section button[onclick*="switchTab('blogs')"] {
-  background: linear-gradient(135deg, var(--accent-blue), #1d4ed8) !important;
+  background: linear-gradient(135deg, var(--accent-blue), #0c7bc4) !important;
   border: none !important;
-  box-shadow: 0 4px 20px rgba(37,99,235,0.50) !important;
+  box-shadow: 0 4px 20px rgba(74,85,104,0.50) !important;
 }
 
 /* =====================================================
@@ -1832,7 +1901,7 @@ section button[onclick*="switchTab('blogs')"] {
    ===================================================== */
 .spinner,
 .loading-spinner {
-  border: 2px solid rgba(255,255,255,0.2) !important;
+  border: 2px solid rgba(20,18,15,0.2) !important;
   border-top-color: #fff !important;
   border-radius: 50% !important;
   width: 18px !important;
@@ -1932,8 +2001,8 @@ section button[onclick*="switchTab('blogs')"] {
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(37,99,235,0.3); }
-  50%       { box-shadow: 0 0 40px rgba(37,99,235,0.6), 0 0 80px rgba(37,99,235,0.2); }
+  0%, 100% { box-shadow: none; }
+  50%       { box-shadow: none; }
 }
 
 @keyframes shimmer {
@@ -1954,7 +2023,7 @@ section button[onclick*="switchTab('blogs')"] {
 .orb-1 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, #2563eb, transparent);
+  background: radial-gradient(circle, #0a5f9e, transparent);
   top: -100px;
   left: -100px;
   animation-delay: 0s;
@@ -1963,7 +2032,7 @@ section button[onclick*="switchTab('blogs')"] {
 .orb-2 {
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, #38bdf8, transparent);
+  background: radial-gradient(circle, #0c7bc4, transparent);
   bottom: -80px;
   right: -80px;
   animation-delay: -4s;
@@ -1972,7 +2041,7 @@ section button[onclick*="switchTab('blogs')"] {
 .orb-3 {
   width: 250px;
   height: 250px;
-  background: radial-gradient(circle, #818cf8, transparent);
+  background: radial-gradient(circle, #3b6fd4, transparent);
   top: 40%;
   right: 15%;
   animation-delay: -8s;
@@ -1996,7 +2065,7 @@ section button[onclick*="switchTab('blogs')"] {
 
 .compliant-standards,
 .non-compliant-standards {
-  background: rgba(6,12,26,0.60) !important;
+  background: rgba(255,255,255,0.60) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-md) !important;
   padding: 1.2rem !important;
@@ -2086,7 +2155,7 @@ section button[onclick*="switchTab('blogs')"] {
    MOBILE NAV OPEN STATE
    ===================================================== */
 .nav-menu.active {
-  background: rgba(6,12,26,0.98) !important;
+  background: rgba(255,255,255,0.98) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-md) !important;
   box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;
@@ -2096,7 +2165,7 @@ section button[onclick*="switchTab('blogs')"] {
    DETAILS / SUMMARY
    ===================================================== */
 details {
-  background: rgba(6,12,26,0.50) !important;
+  background: rgba(255,255,255,0.50) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-sm) !important;
   padding: 0.8rem 1rem !important;
@@ -2175,7 +2244,7 @@ details p {
 
 .toggle-history-btn,
 .modern-toggle {
-  background: rgba(37,99,235,0.12) !important;
+  background: rgba(74,85,104,0.12) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-sm) !important;
   color: var(--accent-sky) !important;
@@ -2258,7 +2327,7 @@ body.brightness {
    SCROLLED NAV STATE
    ===================================================== */
 header.scrolled {
-  background: rgba(3,6,15,0.97) !important;
+  background: rgba(255,255,255,0.97) !important;
   border-bottom-color: var(--border-mid) !important;
 }
 
@@ -2376,7 +2445,7 @@ body.homepage #home > section {
 .score-form-section,
 .results-container,
 .score-results-section {
-  background: rgba(10,18,40,0.80) !important;
+  background: rgba(255,255,255,0.80) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-lg) !important;
   box-shadow: 0 8px 30px rgba(0,0,0,0.5) !important;
@@ -2392,23 +2461,23 @@ body.homepage #home > section {
 }
 
 .check-btn {
-  background: linear-gradient(135deg, var(--accent-blue), #1d4ed8) !important;
+  background: linear-gradient(135deg, var(--accent-blue), #0c7bc4) !important;
   border: none !important;
   border-radius: var(--radius-sm) !important;
   color: #fff !important;
   font-weight: 600 !important;
-  box-shadow: 0 4px 16px rgba(37,99,235,0.4) !important;
-  transition: all var(--transition-fast) !important;
+  box-shadow: 0 4px 16px rgba(74,85,104,0.4) !important;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast) !important;
 }
 
 .check-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #3b82f6, var(--accent-blue)) !important;
-  box-shadow: 0 8px 30px rgba(37,99,235,0.55) !important;
+  background: linear-gradient(135deg, #0c7bc4, var(--accent-blue)) !important;
+  box-shadow: 0 8px 30px rgba(74,85,104,0.55) !important;
   transform: translateY(-2px) !important;
 }
 
 .check-btn:disabled {
-  background: rgba(37,99,235,0.20) !important;
+  background: rgba(74,85,104,0.20) !important;
   color: var(--text-muted) !important;
 }
 
@@ -2425,15 +2494,15 @@ body.homepage #home > section {
 }
 
 .message.info {
-  background: rgba(37,99,235,0.10) !important;
-  border-color: rgba(37,99,235,0.30) !important;
+  background: rgba(74,85,104,0.10) !important;
+  border-color: rgba(74,85,104,0.30) !important;
   color: var(--accent-sky) !important;
 }
 
 /* Score display */
 .score-display-section,
 .score-summary {
-  background: rgba(6,12,26,0.60) !important;
+  background: rgba(255,255,255,0.60) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-md) !important;
 }
@@ -2466,7 +2535,7 @@ body.homepage #home > section {
 [style*="background: #f5f5f5"],
 [style*="background: #f0f0f0"],
 [style*="background: #eff"] {
-  background: rgba(10,18,40,0.70) !important;
+  background: rgba(255,255,255,0.70) !important;
 }
 
 [style*="color: #333"],
@@ -2490,7 +2559,7 @@ body.blog-page,
 .blog-content,
 .article-container,
 .content-wrapper {
-  background: rgba(10,18,40,0.80) !important;
+  background: rgba(255,255,255,0.80) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-lg) !important;
   color: var(--text-primary) !important;
@@ -2511,7 +2580,7 @@ article p, article li {
 .card-white,
 .card,
 .panel {
-  background: rgba(10,18,40,0.70) !important;
+  background: rgba(255,255,255,0.70) !important;
   border: 1px solid var(--border-subtle) !important;
   color: var(--text-primary) !important;
 }
@@ -2522,17 +2591,17 @@ table {
   width: 100%;
 }
 th {
-  background: rgba(37,99,235,0.20) !important;
+  background: rgba(74,85,104,0.20) !important;
   color: var(--text-white) !important;
   border: 1px solid var(--border-mid) !important;
 }
 td {
-  background: rgba(6,12,26,0.50) !important;
+  background: rgba(255,255,255,0.50) !important;
   color: var(--text-primary) !important;
   border: 1px solid var(--border-subtle) !important;
 }
 tr:hover td {
-  background: rgba(37,99,235,0.08) !important;
+  background: rgba(74,85,104,0.08) !important;
 }
 
 /* Scrollbar on all pages */
@@ -2557,13 +2626,17 @@ body {
 header nav,
 .navbar,
 .top-nav {
-  background: rgba(6,12,26,0.92) !important;
-  backdrop-filter: blur(20px) !important;
+  background: rgba(255,255,255,0.92) !important;
+  backdrop-filter: none;
   border-bottom: 1px solid var(--border-subtle) !important;
   box-shadow: 0 4px 24px rgba(0,0,0,0.4) !important;
 }
 
-/* Blog hero sections with purple/blue gradient */
+/* Blog hero sections with purple/blue gradient — was still hardcoded to the
+   pre-light-theme dark-navy background (#060c1a) here, which the headings-
+   with-dark-inline-colors rule below then rendered in dark ink on top of:
+   invisible text on a near-black block on an otherwise light+blue page.
+   Repainted to a light, blue-tinted hero so it pops without going dark. */
 .hero,
 .page-hero,
 .blog-hero,
@@ -2574,7 +2647,7 @@ section[style*="667eea"],
 [style*="background: linear-gradient(135deg, #667eea"],
 [style*="background: linear-gradient(135deg, #ff6b6b"],
 [style*="background: linear-gradient(135deg, #4a90e2"] {
-  background: linear-gradient(135deg, #060c1a 0%, #0a1228 60%, #0d1a36 100%) !important;
+  background: linear-gradient(135deg, rgba(12,123,196,0.12) 0%, rgba(10,95,158,0.07) 60%, var(--bg-deep) 100%) !important;
 }
 
 /* White boxes in blog */
@@ -2590,7 +2663,7 @@ section[style*="667eea"],
 [style*="background: #e3f2fd"],
 [style*="background: #f9f9f9"],
 [style*="background: #f5f5f5"] {
-  background: rgba(10,18,40,0.80) !important;
+  background: rgba(255,255,255,0.80) !important;
   border: 1px solid var(--border-subtle) !important;
 }
 
@@ -2621,7 +2694,7 @@ section[style*="667eea"],
 .highlight-box,
 .note-box,
 .tip-box {
-  background: rgba(10,18,40,0.70) !important;
+  background: rgba(255,255,255,0.70) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-md) !important;
   color: var(--text-primary) !important;
@@ -2632,17 +2705,17 @@ section[style*="667eea"],
 .back-btn,
 .btn-exit,
 .close-btn {
-  background: linear-gradient(135deg, var(--accent-blue), #1d4ed8) !important;
+  background: linear-gradient(135deg, var(--accent-blue), #0c7bc4) !important;
   color: #fff !important;
   border: none !important;
   border-radius: var(--radius-sm) !important;
-  box-shadow: 0 4px 16px rgba(37,99,235,0.4) !important;
+  box-shadow: 0 4px 16px rgba(74,85,104,0.4) !important;
 }
 
 .exit-btn:hover,
 .back-btn:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 30px rgba(37,99,235,0.55) !important;
+  box-shadow: 0 8px 30px rgba(74,85,104,0.55) !important;
 }
 
 /* Override any linear-gradient backgrounds set via inline style on sections */
@@ -2667,7 +2740,7 @@ section[style*="667eea"],
 .upload-area,
 .drop-zone,
 .file-upload {
-  background: rgba(6,12,26,0.60) !important;
+  background: rgba(255,255,255,0.60) !important;
   border: 2px dashed var(--border-mid) !important;
   border-radius: var(--radius-md) !important;
   color: var(--text-secondary) !important;
@@ -2676,11 +2749,11 @@ section[style*="667eea"],
 .upload-area:hover,
 .drop-zone:hover {
   border-color: var(--accent-blue) !important;
-  background: rgba(37,99,235,0.06) !important;
+  background: rgba(74,85,104,0.06) !important;
 }
 
 pre, code {
-  background: rgba(3,6,15,0.80) !important;
+  background: rgba(255,255,255,0.80) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-sm) !important;
   color: var(--accent-sky) !important;
@@ -2699,7 +2772,7 @@ pre, code {
 .faq-item,
 .accordion-item,
 .help-card {
-  background: rgba(10,18,40,0.70) !important;
+  background: rgba(255,255,255,0.70) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-md) !important;
 }
@@ -2733,7 +2806,7 @@ pre, code {
 
 .issue-item,
 .violation-item {
-  background: rgba(10,18,40,0.70) !important;
+  background: rgba(255,255,255,0.70) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--radius-sm) !important;
   padding: 1rem !important;
@@ -2765,7 +2838,7 @@ a.nav-link {
 a.nav-item:hover,
 a.nav-link:hover {
   color: var(--text-white) !important;
-  background: rgba(37,99,235,0.12) !important;
+  background: rgba(74,85,104,0.12) !important;
 }
 
 /* =====================================================
@@ -2781,7 +2854,7 @@ a.nav-link:hover {
   gap: 2rem !important;
   align-items: stretch !important;
   background:
-    linear-gradient(145deg, rgba(10,18,40,0.90), rgba(6,12,26,0.88)) !important;
+    linear-gradient(145deg, rgba(255,255,255,0.90), rgba(255,255,255,0.88)) !important;
   border: 1px solid var(--border-mid) !important;
   border-radius: var(--radius-lg) !important;
   box-shadow: 0 24px 60px rgba(0,0,0,0.55), var(--glow-subtle) !important;
@@ -2794,7 +2867,7 @@ a.nav-link:hover {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 90% at 80% 20%, rgba(56,189,248,0.08) 0%, transparent 70%);
+  background: radial-gradient(ellipse 80% 90% at 80% 20%, rgba(100,116,139,0.08) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -2802,7 +2875,7 @@ a.nav-link:hover {
   border-radius: calc(var(--radius-lg) - 8px) !important;
   overflow: hidden !important;
   border: 1px solid var(--border-subtle) !important;
-  background: rgba(6,12,26,0.75) !important;
+  background: rgba(255,255,255,0.75) !important;
   min-height: 320px;
 }
 
@@ -2844,7 +2917,7 @@ a.nav-link:hover {
   border-radius: 999px;
   padding: 0.3rem 0.75rem;
   color: var(--accent-sky) !important;
-  background: rgba(37,99,235,0.12);
+  background: rgba(74,85,104,0.12);
   font-size: 0.74rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -2859,7 +2932,7 @@ a.nav-link:hover {
 }
 
 .about-meta-item {
-  background: rgba(6,12,26,0.7);
+  background: rgba(255,255,255,0.7);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   padding: 0.55rem 0.65rem;
@@ -2897,8 +2970,8 @@ a.nav-link:hover {
 }
 
 .about-tag {
-  border: 1px solid rgba(56,189,248,0.28) !important;
-  background: rgba(37,99,235,0.13) !important;
+  border: 1px solid rgba(100,116,139,0.28) !important;
+  background: rgba(74,85,104,0.13) !important;
   color: var(--accent-sky) !important;
   border-radius: 999px !important;
   padding: 0.3rem 0.72rem !important;

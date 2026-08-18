@@ -9,15 +9,14 @@
          When served from GitHub Pages, JS auto-routes API calls to the Railway backend.
          When served from any other host (local Flask, Railway, Render), JS uses the
          page's own origin — so we deliberately do NOT set a meta tag here. -->
-    <meta name="theme-color" content="#060c1a" media="(prefers-color-scheme: dark)">
-    <meta name="theme-color" content="#060c1a">
-    <meta name="color-scheme" content="dark light">
-    <title>✦ AccessAI - Making the Web Accessible for Everyone</title>
+    <meta name="theme-color" content="#faf9f7">
+    <meta name="color-scheme" content="light">
+    <title>AccessAI - Making the Web Accessible for Everyone</title>
     <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
     <link rel="stylesheet" href="./css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <!-- Dark Theme & Visual Enhancements -->
@@ -25,15 +24,758 @@
     <!-- UX Improvements: animations, glassmorphism, micro-interactions -->
     <link rel="stylesheet" href="./css/ux-improvements.css">
     <link rel="stylesheet" href="./styles/effects.css">
+    <!-- Apple Design System: shared craft/motion/materials layer, loaded last -->
+    <link rel="stylesheet" href="./css/apple-design-system.css">
     <style>
         /* Lightweight preloader — fades out quickly without blocking interaction */
         #preloader {
             position: fixed; inset: 0; z-index: 9999;
-            background: linear-gradient(135deg, #03060f 0%, #060c1a 50%, #0a1228 100%);
+            background: var(--bg-deep, #faf9f7);
             opacity: 1; transition: opacity 0.25s ease;
             pointer-events: none;
         }
         #preloader.preloader-hidden { opacity: 0; }
+    </style>
+    <style>
+        /* =====================================================
+           Homepage — page-specific styling (namespaced .hp-)
+           One accent color, restrained motion, translucent
+           materials, Apple-style type discipline. Reuses tokens
+           from dark-theme.css. Does not touch JS-bound classes
+           (.tab-content, .nav-item, #carousel-*, .reveal, etc.)
+           ===================================================== */
+        .hp-shell { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* ---------- Opening sequence ----------
+           Base state (below) is what everyone gets with no JS: three
+           readable paragraphs, stacked in normal flow, no scroll gate.
+           JS adds .hp-seq--enhanced (only when motion is not reduced
+           and the browser supports what it needs) to switch on the
+           pinned, scroll-scrubbed crossfade. Nothing about the content
+           or its DOM order ever changes — only how it's laid out. */
+        .hp-seq {
+            position: relative;
+            background: #03060a;
+        }
+        .hp-seq-pin {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 60vh;
+            padding: clamp(3rem, 8vw, 5rem) 1.5rem;
+        }
+        .hp-seq-stage { position: relative; width: 100%; max-width: 780px; }
+        .hp-seq-line {
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            line-height: 1.3;
+            font-size: clamp(1.5rem, 4.2vw, 2.5rem);
+            color: var(--text-white);
+            margin: 0 0 1.75rem;
+        }
+        .hp-seq-line:last-child { margin-bottom: 0; }
+        .hp-seq-line--stat .hp-seq-stat-num {
+            color: var(--accent-sky);
+            font-variant-numeric: tabular-nums;
+        }
+        .hp-seq-line--closing strong {
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-sky) 100%);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+        }
+        .hp-seq-cite {
+            display: block;
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 0.78rem;
+            letter-spacing: 0;
+            /* text-muted reads fine against dark-theme.css's usual --bg-deep,
+               but this section's near-black background is darker still —
+               text-muted there measures ~2.9:1, under the 4.5:1 AA minimum
+               for small text. text-secondary clears ~6.5:1. (Getting this
+               wrong here of all places, on the one line citing an
+               accessibility stat, would be a bad look.) */
+            color: var(--text-secondary);
+            margin-top: 0.9rem;
+        }
+        .hp-seq-cite a { color: var(--text-secondary); text-decoration: underline; text-underline-offset: 2px; }
+        .hp-seq-cite a:hover, .hp-seq-cite a:focus-visible { color: var(--accent-sky); }
+
+        .hp-seq-skip {
+            /* Above .hp-seq-pin's z-index: 1002 (set below) — as siblings,
+               a lower z-index here means the pin's transparent-but-still-
+               hit-testable box sits on top and silently swallows clicks,
+               even though the link stays visibly on top. */
+            position: absolute; top: 1.25rem; right: 1.25rem; z-index: 1010;
+            font-family: var(--font-body); font-size: 0.85rem; font-weight: 600;
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border-subtle);
+            border-radius: 999px;
+            padding: 0.55rem 1.1rem;
+            text-decoration: none;
+            opacity: 0;
+            transition: opacity 0.3s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+        /* Always reachable and visible on keyboard focus, even in the
+           static (non-enhanced) layout — harmless there, since it just
+           jumps to #main-content like a second skip-link. */
+        .hp-seq-skip:focus-visible { opacity: 1; }
+        .hp-seq-skip:hover { background: rgba(255,255,255,0.12); border-color: var(--border-mid); }
+
+        /* ---------- Enhanced (pinned, scroll-scrubbed) state — JS-gated ---------- */
+        .hp-seq--enhanced { height: 320vh; }
+        .hp-seq--enhanced .hp-seq-pin {
+            position: sticky; top: 0;
+            height: 100vh; min-height: 0;
+            z-index: 1002; /* sits above the sticky header (1001) until it scrolls away */
+            overflow: hidden;
+        }
+        .hp-seq--enhanced .hp-seq-stage {
+            /* Explicit height so the absolutely-positioned lines below have
+               something real to center against — with only abspos children,
+               height:auto would otherwise collapse to 0 and top:50% would
+               resolve to nothing. */
+            height: clamp(220px, 32vw, 340px);
+        }
+        .hp-seq--enhanced .hp-seq-line {
+            position: absolute; left: 0; right: 0; top: 50%;
+            transform: translateY(calc(-50% + 22px));
+            opacity: 0;
+            margin: 0;
+            transition: opacity 0.25s linear, transform 0.25s linear;
+            will-change: opacity, transform;
+        }
+        .hp-seq--enhanced .hp-seq-skip { opacity: 1; }
+        .hp-seq--enhanced ~ header.modern-header { opacity: 0; transition: opacity 0.5s ease; }
+        .hp-seq--enhanced.hp-seq--revealed ~ header.modern-header { opacity: 1; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hp-seq-skip { display: none; }
+        }
+
+        /* ---------- Hero ---------- */
+        /* No photo, no scrim, no colour bloom — flat paper background, type
+           carries the eyebrow/CTAs. The photo is back on request — a dark
+           photo band is a deliberate break from the light paper base
+           elsewhere on the page, not a return to the old dark-navy-glow
+           theme, so it keeps that same restraint: one flat contrast scrim
+           for legibility, no colour bloom, no blur. */
+        .hp-hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: clamp(4rem, 10vw, 7rem) 1.5rem 3rem;
+            background: var(--bg-deep);
+        }
+        .hp-hero-photo {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center;
+        }
+        .hp-hero-scrim {
+            /* Flat, neutral dark scrim — enough for AA text contrast, no
+               colour tint, no gradient bloom. Slightly darker toward the
+               bottom, where the CTAs/scroll-cue sit, lighter through the
+               middle where the photo itself can still read. */
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(20,18,15,0.42) 0%, rgba(20,18,15,0.5) 55%, rgba(20,18,15,0.68) 100%);
+            pointer-events: none;
+        }
+        .hp-hero-inner { position: relative; z-index: 1; max-width: 820px; }
+        /* The word-reveal JS wraps every word of the title/subtitle in a
+           <span> — dark-theme.css has a blanket `span { color:
+           var(--text-primary) }` rule (ink) that matches those spans
+           directly and wins over inheriting the parent's white, since a
+           direct match always beats inheritance regardless of the
+           parent's specificity. Make them inherit explicitly. */
+        .hp-hero .word-reveal-wrap, .hp-hero .word-reveal-inner { color: inherit; }
+        .hp-hero .hero-scroll-indicator { color: rgba(255,255,255,0.6); }
+        .hp-hero .hero-scroll-indicator::after { background: linear-gradient(180deg, rgba(255,255,255,0.6), transparent); }
+        .hp-eyebrow {
+            font-size: 0.8rem; font-weight: 700; letter-spacing: 0.18em;
+            text-transform: uppercase; color: rgba(255,255,255,0.72);
+            margin: 0 0 1.5rem;
+        }
+        /* !important needed: dark-theme.css's global h1-h6 rule sets
+           color: var(--text-white) !important (ink, correct everywhere
+           else on the light page) — the hero is the one deliberate
+           exception, sitting on a dark photo scrim instead of paper. */
+        .hp-hero .hero-main-title {
+            font-family: var(--font-display);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.02;
+            font-size: clamp(2.75rem, 9vw, 6rem);
+            margin: 0 0 1.1rem;
+            color: #fff !important;
+        }
+        .hp-hero .hero-subtitle-line {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+            line-height: 1.5;
+            color: rgba(255,255,255,0.88);
+            max-width: 34ch;
+            margin: 0 auto;
+        }
+        .hp-hero-actions {
+            display: flex; align-items: center; justify-content: center; gap: 0.9rem;
+            flex-wrap: wrap;
+            margin-top: clamp(2rem, 5vw, 2.75rem);
+        }
+        .hp-btn {
+            display: inline-flex; align-items: center; gap: 0.55rem;
+            padding: 0.85rem 1.65rem;
+            font-family: var(--font-body); font-weight: 600; font-size: 0.98rem;
+            border-radius: 999px;
+            text-decoration: none; cursor: pointer;
+            transition: transform var(--ap-press, 100ms ease-out), box-shadow 0.3s var(--ap-spring, ease), background 0.3s ease, border-color 0.3s ease;
+        }
+        .hp-btn-primary {
+            background: var(--accent-blue);
+            color: #fff; border: none;
+        }
+        .hp-btn-primary:hover { background: var(--accent-sky); transform: translateY(-2px); }
+        /* Hero-only button, tuned for the dark photo scrim behind it rather
+           than the light-page tokens used everywhere else. */
+        .hp-btn-ghost {
+            background: transparent;
+            color: rgba(255,255,255,0.92);
+            border: 1px solid rgba(255,255,255,0.35);
+        }
+        .hp-btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.55); }
+
+        /* ---------- CTA ---------- */
+        .hp-cta {
+            background: var(--bg-surface);
+            padding: clamp(3.5rem, 8vw, 5.5rem) 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .hp-cta-inner h2 {
+            font-family: var(--font-display); font-weight: 800;
+            letter-spacing: -0.02em; line-height: 1.15;
+            font-size: clamp(1.7rem, 4vw, 2.4rem);
+            color: var(--text-white);
+            margin: 0 0 0.75rem;
+        }
+        .hp-cta-inner p {
+            color: var(--text-secondary); font-size: 1.05rem;
+            max-width: 46ch; margin: 0 auto;
+        }
+        .hp-cta .hp-hero-actions { margin-top: 2rem; }
+
+        /* ---------- About card ---------- */
+        .about-me-section { padding: clamp(4rem, 9vw, 6rem) 1.5rem; }
+        .about-me-card {
+            border-radius: var(--radius-lg) !important;
+            background: var(--bg-overlay) !important;
+        }
+        .about-me-name { letter-spacing: -0.015em; }
+        .about-tag {
+            border: 1px solid var(--border-subtle) !important;
+            border-radius: 999px !important;
+        }
+
+        /* ---------- Tools spotlight (Second Brain) ---------- */
+        /* A dedicated full-width band, not a grid holding one item. Flat
+           surface + a hairline border — no corner glow (previously a radial
+           colour bloom in the corner, dropped along with the rest of the
+           site's glow effects). */
+        .modern-tools-section { padding: clamp(4rem, 9vw, 6rem) 1.5rem; background: var(--bg-surface); }
+        .hp-tool-spotlight {
+            position: relative;
+            max-width: 900px; margin: 0 auto;
+            border-radius: var(--radius-xl);
+            background: var(--bg-overlay);
+            border: 1px solid var(--border-subtle);
+            padding: clamp(2.5rem, 6vw, 4rem);
+        }
+        .hp-tool-spotlight .tool-header { margin-top: 0.75rem; }
+        .tool-icon {
+            width: 56px; height: 56px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--accent-blue); color: #fff;
+            font-size: 1.4rem;
+        }
+        .tool-spotlight-title {
+            font-family: var(--font-display); font-weight: 800;
+            letter-spacing: -0.02em; font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--text-white); margin: 0 0 0.5rem;
+        }
+        .tool-info p { max-width: 52ch; }
+        .tool-features { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .feature-tag {
+            border: 1px solid var(--border-subtle);
+            border-radius: 999px;
+            font-size: 0.8rem;
+        }
+
+        /* ---------- Features grid ---------- */
+        .modern-features-section { padding: clamp(4rem, 9vw, 6rem) 1.5rem; }
+        .modern-features-section .features-grid {
+            display: grid; gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+        .modern-features-section .feature-card {
+            border-radius: var(--radius-md) !important;
+            background: var(--bg-overlay) !important;
+            padding: clamp(1.75rem, 3vw, 2.25rem) !important;
+        }
+        /* Outline, not filled — deliberately distinct from .tool-icon's solid
+           badge above. Same icon-badge idea shouldn't look identical in two
+           sections a few hundred pixels apart. */
+        .feature-icon {
+            width: 44px; height: 44px; border-radius: 11px;
+            display: flex; align-items: center; justify-content: center;
+            background: transparent; border: 1.5px solid var(--border-bright);
+            color: var(--accent-sky);
+            font-size: 1.1rem; margin-bottom: 1.1rem;
+        }
+        .modern-features-section .feature-card h3 {
+            font-family: var(--font-display); font-size: 1.05rem;
+            letter-spacing: -0.01em; margin: 0 0 0.5rem;
+        }
+        .modern-features-section .feature-card p {
+            font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary);
+        }
+        /* Asymmetric lead + support pair, replacing the old 4-up grid —
+           one larger statement card plus one smaller supporting card,
+           not four identical cards padded out to fill a row. */
+        .hp-why-grid {
+            display: grid; gap: 1.5rem;
+            grid-template-columns: 1.5fr 1fr;
+            align-items: stretch;
+        }
+        .hp-why-lead {
+            padding: clamp(2.25rem, 5vw, 3rem) !important;
+        }
+        .hp-why-lead .feature-icon { width: 56px; height: 56px; font-size: 1.4rem; }
+        .hp-why-lead h3 { font-size: clamp(1.3rem, 2.6vw, 1.7rem) !important; }
+        .hp-why-lead p { font-size: 1.02rem !important; max-width: 44ch; }
+        .hp-why-support { display: flex; flex-direction: column; justify-content: center; }
+        @media (max-width: 760px) {
+            .hp-why-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Section headers (shared) ---------- */
+        .fundamental-section-header { text-align: center; max-width: 640px; margin: 0 auto clamp(2.5rem, 6vw, 3.5rem); }
+        .fundamental-section-title {
+            font-family: var(--font-display); font-weight: 800;
+            letter-spacing: -0.02em; font-size: clamp(1.6rem, 4vw, 2.2rem);
+            color: var(--text-white);
+        }
+        .fundamental-section-subtitle { color: var(--text-secondary); font-size: 1.02rem; }
+
+        /* ---------- Blog preview / carousel chrome ---------- */
+        .modern-blog-preview { padding: clamp(4rem, 9vw, 6rem) 1.5rem; background: var(--bg-surface); }
+        .carousel-cell {
+            border-radius: var(--radius-md) !important;
+            background: var(--bg-overlay) !important;
+            overflow: hidden;
+        }
+        .carousel-cell-body h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+        .carousel-link {
+            color: var(--accent-sky) !important;
+            font-weight: 600;
+        }
+        .carousel-dot { transition: background 0.3s var(--ap-spring, ease), transform var(--ap-press, 100ms ease-out); }
+        .floating-blog-btn {
+            background: var(--accent-blue) !important;
+            box-shadow: 0 6px 16px rgba(28,25,20,0.16) !important;
+            transition: transform 0.3s var(--ap-spring, ease), box-shadow 0.3s ease !important;
+        }
+        .floating-blog-btn:hover { transform: translateY(-3px) !important; }
+
+        /* ---------- Blogs tab: full grid ---------- */
+        #blogs { padding: clamp(3.5rem, 8vw, 5rem) 1.5rem; }
+        #blogs .big { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; text-align: center; }
+        .blog-intro { text-align: center; color: var(--text-secondary); max-width: 56ch; margin: 0.75rem auto clamp(2.5rem, 6vw, 3.5rem); }
+        .blog-container {
+            display: grid; gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            max-width: 1200px; margin: 0 auto;
+        }
+        .blog-post {
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: var(--bg-overlay);
+            transition: transform 0.4s var(--ap-spring, ease), border-color 0.3s ease, box-shadow 0.4s var(--ap-spring, ease);
+        }
+        .blog-post:hover { transform: translateY(-4px); border-color: var(--border-mid); }
+        .blog-post h2 { font-family: var(--font-display); font-size: 1.15rem; letter-spacing: -0.01em; margin: 0.9rem 1.1rem 0.4rem; }
+        .blog-post p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.55; margin: 0 1.1rem 1.1rem; }
+
+        /* ---------- AI tab ---------- */
+        #ai { padding: clamp(3.5rem, 8vw, 5rem) 1.5rem; max-width: 1120px; margin: 0 auto; }
+        .my-ai-card h2.bigblue {
+            font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff, var(--accent-sky));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .my-ai-separator { border-color: var(--border-subtle); }
+        .my-ai-quote {
+            border-left: 3px solid var(--accent-sky);
+            background: var(--bg-overlay);
+            border-radius: var(--radius-sm);
+            padding: 1.25rem 1.5rem;
+        }
+        .ai-grid, .tech-grid, .applications-grid, .future-content, .stats-grid {
+            display: grid; gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+        .ai-item, .tech-item, .app-card, .future-item {
+            background: var(--bg-overlay) !important;
+            border-radius: var(--radius-md) !important;
+            padding: clamp(1.5rem, 3vw, 2rem) !important;
+        }
+        .ai-icon, .tech-icon, .app-icon, .future-icon {
+            font-size: 1.6rem; margin-bottom: 0.75rem; display: inline-block;
+        }
+        .ai-item h3, .tech-item h3, .app-card h3, .future-item h3 {
+            font-family: var(--font-display); font-size: 1.05rem; letter-spacing: -0.01em;
+        }
+        .tech-tag {
+            border: 1px solid var(--border-subtle);
+            border-radius: 999px;
+            font-size: 0.78rem;
+        }
+        .stat-item {
+            text-align: center;
+            background: var(--bg-overlay);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 1.75rem 1rem;
+        }
+        .stat-item .stat-number {
+            font-family: var(--font-display); font-weight: 800; font-size: 2rem;
+            color: var(--accent-sky);
+        }
+        .stat-item .stat-label { color: var(--text-secondary); font-size: 0.85rem; }
+
+        /* ---------- Mission tab ---------- */
+        #mission { padding-bottom: clamp(3rem, 6vw, 4rem); }
+        .mission-hero, .help-hero {
+            position: relative; text-align: center; overflow: hidden;
+            padding: clamp(3.5rem, 8vw, 5.5rem) 1.5rem;
+            background: var(--bg-surface);
+        }
+        .mission-hero-title, .help-title {
+            font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em;
+            font-size: clamp(2rem, 5vw, 3rem); color: var(--text-white);
+        }
+        .help-subtitle { color: var(--text-secondary); max-width: 48ch; margin: 0.75rem auto 0; }
+        .quote-section { padding: clamp(3rem, 7vw, 4.5rem) 1.5rem; }
+        .quote {
+            max-width: 700px; margin: 0 auto; text-align: center;
+            font-family: var(--font-display); font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+            font-weight: 500; color: var(--text-primary); line-height: 1.5;
+        }
+        .quote cite { display: block; margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted); font-style: normal; }
+        .why-accessibility-section, .mission-section, .help-services, .cta-section { padding: clamp(3rem, 7vw, 4.5rem) 1.5rem; }
+        .box-container, .services-grid, .mission-principles {
+            display: grid; gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            max-width: 1120px; margin: clamp(2rem, 5vw, 2.5rem) auto 0;
+        }
+        .box, .service-card, .principle-card {
+            background: var(--bg-overlay) !important;
+            border-radius: var(--radius-md) !important;
+            padding: clamp(1.5rem, 3vw, 2rem) !important;
+        }
+        .box-number-icon {
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(100,116,139,0.12); color: var(--accent-sky);
+            font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem;
+        }
+        .box_font, .service-card h3, .principle-card h3, .services-title {
+            font-family: var(--font-display); letter-spacing: -0.01em; color: var(--text-white);
+        }
+        .services-title { text-align: center; font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 800; margin-bottom: 0.5rem; }
+        /* Two more distinct treatments: principles get no badge at all (plain,
+           muted icon), services get a circular outline — neither one repeats
+           the filled-square badge used elsewhere on the page. */
+        .principle-icon { font-size: 1.6rem; margin-bottom: 0.75rem; display: inline-block; color: var(--text-secondary); }
+        .service-icon {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 1.5px solid var(--border-mid); color: var(--accent-sky);
+            font-size: 1rem; margin-bottom: 0.75rem;
+        }
+        .service-features { list-style: none; padding: 0; margin: 0.9rem 0 0; display: flex; flex-direction: column; gap: 0.5rem; }
+        .service-features li {
+            font-size: 0.88rem; color: var(--text-secondary); padding-left: 1.2rem; position: relative;
+        }
+        .service-features li::before {
+            content: ''; position: absolute; left: 0; top: 0.5em;
+            width: 6px; height: 6px; border-radius: 50%; background: var(--accent-sky);
+        }
+        .mission-text { max-width: 68ch; margin: 0 auto clamp(2rem, 5vw, 2.5rem); text-align: center; color: var(--text-secondary); line-height: 1.7; font-size: 1.05rem; }
+        .mission-box-cite {
+            margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);
+        }
+        .mission-box-cite a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 2px; }
+        .mission-box-cite a:hover, .mission-box-cite a:focus-visible { color: var(--accent-sky); }
+        .help-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-top: clamp(2rem, 5vw, 2.5rem); }
+        .help-stats .stat-card {
+            display: block; text-decoration: none;
+            background: var(--bg-overlay); border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md); padding: 1.5rem 2rem; text-align: center; min-width: 200px;
+        }
+        .help-stats .stat-number { font-family: var(--font-display); font-weight: 800; font-size: 2rem; color: var(--accent-sky); }
+        .help-stats .stat-label { color: var(--text-secondary); font-size: 0.85rem; }
+        .help-stats .stat-cite {
+            display: flex; align-items: center; justify-content: center; gap: 0.35rem;
+            margin-top: 0.75rem; color: var(--text-muted); font-size: 0.75rem;
+        }
+        .help-stats .stat-cite i { font-size: 0.65em; }
+        /* Two of the four service cards get a top accent rule — the more
+           hands-on/technical audiences — so four legitimately-distinct
+           audiences don't still read as "one card repeated four times". */
+        .service-card:nth-child(1), .service-card:nth-child(2) {
+            border-top: 2px solid var(--border-bright) !important;
+        }
+        .cta-section { text-align: center; }
+        .cta-title { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--text-white); }
+        .cta-text { color: var(--text-secondary); max-width: 52ch; margin: 0.75rem auto 0; }
+        .cta-buttons { margin-top: 1.75rem; display: flex; justify-content: center; }
+        .cta-button {
+            display: inline-flex; align-items: center; gap: 0.55rem;
+            padding: 0.85rem 1.65rem; border-radius: 999px; border: 1px solid var(--border-mid);
+            background: rgba(255,255,255,0.04); color: var(--text-primary);
+        }
+        .cta-button:hover { background: rgba(255,255,255,0.08); border-color: var(--border-bright); }
+
+        /* ---------- Footer ---------- */
+        footer[role="contentinfo"] {
+            border-top: 1px solid var(--border-subtle);
+            background: var(--bg-deep);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+        }
+        .footer-content p { color: var(--text-muted); font-size: 0.85rem; margin: 0.3rem 0; }
+        .footer-nav {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .footer-nav button, .footer-nav a {
+            background: none; border: none; padding: 0; cursor: pointer;
+            font-family: var(--font-body); font-size: 0.9rem; font-weight: 600;
+            color: var(--text-secondary); text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .footer-nav button:hover, .footer-nav a:hover,
+        .footer-nav button:focus-visible, .footer-nav a:focus-visible { color: var(--accent-sky); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .tool-card, .feature-card, .blog-post,
+            .ai-quiet-item, .tech-rail-card, .app-step, .future-editorial-item, .ai-stat-card { transition: none !important; }
+        }
+    </style>
+    <style>
+        /* =====================================================
+           AI in Accessibility tab — four deliberately distinct
+           section treatments (namespaced per grouping: .ai-quiet-,
+           .tech-rail-, .app-steps-/.app-step-, .future-editorial-)
+           plus the honest 2-stat replacement (.ai-stat-). Reuses
+           tokens from dark-theme.css; no new colors. Card-hover
+           lift for .tech-rail-card comes from apple-design-system.css;
+           everything else here defines its own look on purpose —
+           the point of this tab is that its four groupings don't
+           look like the same component four times.
+           ===================================================== */
+        /* Each grouping is now a genuine full-bleed section — its own
+           background runs edge to edge — while the content inside stays at
+           a readable width instead of stretching across a wide viewport.
+           Alternating bg-deep/bg-surface gives the tab the same panel
+           rhythm the rest of the site uses, which a single wide unbroken
+           column wouldn't have had. */
+        #ai .ap-eyebrow { display: block; margin-bottom: 0.6rem; }
+        #ai section[class^="ai-"] h2, #ai section[class^="ai-"] > h2,
+        #ai .ai-benefits h2, #ai .ai-technologies h2, #ai .ai-applications h2,
+        #ai .ai-future h2, #ai .ai-stats h2 {
+            margin-top: 0; margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+        }
+        /* Top padding is generous (each section needs room to breathe from
+           the color change above it); bottom is deliberately smaller than
+           top — with adjacent sections alternating background colour, equal
+           top+bottom on both sides of a boundary stacks into a noticeably
+           dead gap right where the colour changes. Asymmetric here reads as
+           one comfortable transition instead of two paddings glued together. */
+        #ai .ai-benefits, #ai .ai-technologies, #ai .ai-applications,
+        #ai .ai-future, #ai .ai-stats {
+            width: 100%;
+            padding-top: clamp(3rem, 7vw, 4.5rem);
+            padding-bottom: clamp(2rem, 4vw, 2.5rem);
+            padding-left: clamp(1.5rem, 5vw, 3rem);
+            padding-right: clamp(1.5rem, 5vw, 3rem);
+        }
+        #ai .ai-benefits, #ai .ai-applications { background: var(--bg-surface); }
+        #ai .ai-technologies, #ai .ai-future, #ai .ai-stats { background: var(--bg-deep); }
+        /* Section backgrounds are full-bleed; the content column inside each
+           is capped and centered so text/cards don't stretch edge to edge on
+           a wide viewport. Wider than the 900px quote/header column above —
+           these sections hold grids and cards, not a single line of prose. */
+        #ai .ap-eyebrow, #ai section[class^="ai-"] > h2,
+        .ai-quiet-list, .tech-rail, .app-steps-grid, .future-editorial, .ai-stat-duo {
+            max-width: 1240px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ---------- Grouping 1: quiet list (no cards, hairline dividers) ---------- */
+        /* Whitespace does the separating, not a table-style grid of border
+           lines — a full-perimeter-plus-cross-line grid read as an untouched
+           default rather than an intentional divider. */
+        .ai-quiet-list {
+            display: grid; grid-template-columns: 1fr 1fr;
+            column-gap: clamp(3rem, 7vw, 5rem); row-gap: clamp(2.5rem, 6vw, 3.5rem);
+        }
+        .ai-quiet-item {
+            padding-top: clamp(1.5rem, 3vw, 2rem);
+        }
+        .ai-quiet-icon {
+            display: block; font-size: 1.5rem; color: var(--accent-sky);
+            margin-bottom: 1rem;
+        }
+        .ai-quiet-item h3 { margin: 0 0 0.6rem; font-size: 1.15rem; }
+        .ai-quiet-item p { margin: 0; color: var(--text-secondary); line-height: 1.7; }
+        @media (max-width: 760px) {
+            .ai-quiet-list { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Grouping 2: horizontal rail of wide technical cards ---------- */
+        .tech-rail {
+            display: flex; gap: 1.25rem; overflow-x: auto; padding: 0.5rem 0.25rem 1.5rem;
+            scroll-snap-type: x proximity;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin; scrollbar-color: var(--border-mid) transparent;
+        }
+        /* Replace the native scrollbar's default flat-thumb-on-track look
+           with something that matches the rest of the design system,
+           rather than leaving the browser's unstyled default visible. */
+        .tech-rail::-webkit-scrollbar { height: 4px; }
+        .tech-rail::-webkit-scrollbar-track { background: var(--border-subtle); border-radius: 999px; }
+        .tech-rail::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 999px; }
+        .tech-rail::-webkit-scrollbar-thumb:hover { background: var(--accent-sky); }
+        .tech-rail-card {
+            flex: 0 0 clamp(280px, 34vw, 360px);
+            scroll-snap-align: start;
+            background: var(--bg-surface);
+            border-radius: var(--radius-md);
+            padding: clamp(1.5rem, 3vw, 2rem);
+        }
+        .tech-rail-icon {
+            width: 44px; height: 44px; border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(56, 189, 248, 0.12); color: var(--accent-sky);
+            font-size: 1.15rem; margin-bottom: 1.1rem;
+        }
+        .tech-rail-card h3 { margin: 0 0 0.6rem; font-size: 1.15rem; }
+        .tech-rail-card p { margin: 0 0 1.1rem; color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem; }
+        .tech-rail-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        /* Neutral chip, not a blue-bordered pill — blue is reserved for
+           interactive/primary elements, not every small label on the page. */
+        .tech-rail-tag {
+            font-size: 0.72rem; padding: 0.3rem 0.6rem; border-radius: 4px;
+            background: var(--bg-elevated); color: var(--text-secondary);
+        }
+
+        /* ---------- Grouping 3: sticky-rail numbered sequence ---------- */
+        .app-steps-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
+        .app-steps-rail { display: none; }
+        .app-steps-list { display: flex; flex-direction: column; gap: clamp(2rem, 5vw, 3rem); }
+        .app-step {
+            padding-left: 1.25rem; border-left: 2px solid var(--border-subtle);
+            transition: border-color 0.4s var(--ap-spring, ease);
+        }
+        .app-step-head { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.75rem; }
+        .app-step-num { color: var(--accent-sky); font-size: 0.85rem; font-weight: 700; }
+        .app-step-icon {
+            width: 36px; height: 36px; border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(56, 189, 248, 0.10); color: var(--accent-sky); font-size: 1rem;
+        }
+        .app-step-head h3 { margin: 0; font-size: 1.15rem; }
+        .app-step > p { margin: 0 0 0.9rem; color: var(--text-secondary); line-height: 1.7; }
+        .app-step-features { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem; }
+        .app-step-features li {
+            position: relative; padding-left: 1.1rem; color: var(--text-secondary); font-size: 0.9rem;
+        }
+        .app-step-features li::before {
+            content: ''; position: absolute; left: 0; top: 0.55em;
+            width: 5px; height: 5px; border-radius: 50%; background: var(--accent-sky);
+        }
+        @media (min-width: 760px) {
+            .app-steps-grid { grid-template-columns: 64px 1fr; gap: 2rem; }
+            .app-steps-rail {
+                display: flex; flex-direction: column; align-items: center; gap: 0;
+                position: sticky; top: 120px; height: fit-content;
+            }
+            .app-steps-dot {
+                width: 10px; height: 10px; border-radius: 50%;
+                background: var(--bg-elevated); border: 1px solid var(--border-mid);
+                transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s var(--ap-spring, ease);
+            }
+            .app-steps-dot:not(:last-child) { margin-bottom: 2.75rem; }
+            .app-steps-dot.is-active { background: var(--accent-sky); border-color: var(--accent-sky); transform: scale(1.3); }
+        }
+
+        /* ---------- Grouping 4: large-type editorial list, no cards ---------- */
+        .future-editorial { display: flex; flex-direction: column; }
+        .future-editorial-item {
+            display: grid; grid-template-columns: 3rem 1fr; gap: 1.5rem;
+            padding: clamp(1.75rem, 4vw, 2.5rem) 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .future-editorial-item:first-child { border-top: 1px solid var(--border-subtle); }
+        .future-editorial-index { color: var(--text-muted); font-size: 1rem; padding-top: 0.3rem; }
+        .future-editorial-body h3 {
+            font-family: var(--font-display); font-weight: 700; letter-spacing: -0.01em;
+            font-size: clamp(1.4rem, 3vw, 1.9rem); margin: 0 0 0.6rem;
+            display: flex; align-items: center; gap: 0.65rem;
+        }
+        .future-editorial-body h3 i { color: var(--accent-sky); font-size: 0.85em; }
+        .future-editorial-body p { margin: 0; max-width: 62ch; color: var(--text-secondary); line-height: 1.7; }
+
+        /* ---------- Honest 2-stat replacement ---------- */
+        .ai-stat-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .ai-stat-card {
+            display: block; text-decoration: none;
+            background: var(--bg-overlay); border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg); padding: clamp(1.75rem, 4vw, 2.25rem);
+            transition: transform 0.4s var(--ap-spring, ease), border-color 0.3s ease, box-shadow 0.4s var(--ap-spring, ease);
+        }
+        .ai-stat-card:hover {
+            transform: translateY(-4px); border-color: var(--border-bright);
+            box-shadow: var(--glow-sky);
+        }
+        .ai-stat-number {
+            display: block; font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 700;
+            color: var(--accent-sky); line-height: 1;
+        }
+        .ai-stat-label { display: block; margin-top: 0.75rem; color: var(--text-primary); font-size: 1rem; line-height: 1.5; }
+        .ai-stat-cite {
+            display: flex; align-items: center; gap: 0.4rem; margin-top: 1.25rem;
+            color: var(--text-muted); font-size: 0.8rem;
+        }
+        .ai-stat-cite i { font-size: 0.7em; }
+        @media (max-width: 760px) {
+            .ai-stat-duo { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body class="homepage">
@@ -43,14 +785,35 @@
     <div id="content-wrapper">
         <!-- Skip to main content link for screen readers -->
         <a href="#main-content" class="skip-link">Skip to main content</a>
-        
+
+        <!-- ============================================================
+             Opening sequence — a short scroll-scrubbed narrative before
+             the site proper. Written in the DOM as three plain, ordered
+             paragraphs: that's what a screen reader hears regardless of
+             how the visuals animate, and it's also the entire experience
+             for no-JS/prefers-reduced-motion visitors (see scripts/hero-sequence.js).
+             ============================================================ -->
+        <section class="hp-seq" id="hp-seq" aria-label="Introduction">
+            <a href="#main-content" class="hp-seq-skip">Skip intro</a>
+            <div class="hp-seq-pin">
+                <div class="hp-seq-stage">
+                    <p class="hp-seq-line hp-seq-line--stat" data-beat="0">
+                        <span class="hp-seq-stat-num">95.9%</span> of websites fail basic accessibility standards.
+                        <span class="hp-seq-cite">Source: <a href="https://webaim.org/projects/million/" target="_blank" rel="noopener">WebAIM Million, 2026</a></span>
+                    </p>
+                    <p class="hp-seq-line" data-beat="1">That means most of the internet doesn't work for millions of people.</p>
+                    <p class="hp-seq-line hp-seq-line--closing" data-beat="2">That's why we built <strong>AccessAI</strong>.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Header with navigation -->
         <header role="banner" class="modern-header sticky-header fundamental-nav" style="position: sticky; top: 0; z-index: 1001;">
             <nav role="navigation" aria-label="Main navigation">
                 <div class="nav-container nav-elevated fundamental-nav-container">
                     <div class="nav-brand fundamental-nav-brand">
                         <button onclick="switchTab('home');" aria-label="Go to Home" style="background: none; border: none; padding: 0; cursor: pointer; display: inline-block; color: inherit; font: inherit;">
-                            <h2 class="nav-title fundamental-nav-title title-with-symbol" style="font-weight: 900; letter-spacing: 1px; font-size: 1.6rem; margin: 0;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h2>
+                            <h2 class="nav-title fundamental-nav-title" style="font-weight: 800; letter-spacing: -0.01em; font-size: 1.6rem; margin: 0;">AccessAI</h2>
                         </button>
                     </div>
                     <div class="nav-menu fundamental-nav-menu" role="menubar">
@@ -74,10 +837,6 @@
                             <span class="nav-icon"><i class="fa fa-brain"></i></span>
                             <span class="nav-text">Second Brain</span>
                         </a>
-                        <a href="voice-navigation.html" class="nav-item nav-link" role="menuitem">
-                            <span class="nav-icon"><i class="fa fa-microphone"></i></span>
-                            <span class="nav-text">Voice Navigation</span>
-                        </a>
                     </div>
                     <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
                         <span class="hamburger"></span>
@@ -88,19 +847,17 @@
 
         <main id="main-content" role="main">
             <div id="home" class="tab-content active fundamental-home" role="tabpanel" aria-labelledby="home-tab">
-                <!-- Custom Hero Section -->
-                <section class="custom-hero-section" style="position: relative; width: 100%; min-height: 100vh; overflow: hidden;">
-                    <img src="images/circuit-board-1188x792-1024x683.jpg" alt="Circuit board background" decoding="async" fetchpriority="high" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;">
-                    <!-- Floating glow orbs -->
-                    <div class="orb orb-1" aria-hidden="true"></div>
-                    <div class="orb orb-2" aria-hidden="true"></div>
-                    <div class="orb orb-3" aria-hidden="true"></div>
-                    <!-- Floating particles overlay -->
-                    <div class="hero-particles" aria-hidden="true" id="hero-particles"></div>
-                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center;">
-                        <div style="text-align: center; color: #fff; z-index: 2; width: 100%; text-shadow: 0 4px 24px rgba(0,0,0,0.45);">
-                            <h1 class="hero-main-title title-with-symbol" style="font-size: clamp(2.75rem, 11vw, 8rem); font-weight: 900; margin-bottom: 0; color: #fff; line-height: 1.05;">AccessAI<span class="title-symbol" aria-hidden="true">✦</span></h1>
-                            <p class="hero-subtitle-line" aria-label="Making the web accessible for everyone">Making the Web Accessible for Everyone</p>
+                <!-- Hero -->
+                <section class="hp-hero" aria-labelledby="hp-hero-title">
+                    <img src="images/circuit-board-1188x792-1024x683.jpg" alt="" class="hp-hero-photo" aria-hidden="true" decoding="async" fetchpriority="high">
+                    <div class="hp-hero-scrim" aria-hidden="true"></div>
+                    <div class="hp-hero-inner">
+                        <p class="hp-eyebrow">AccessAI</p>
+                        <h1 class="hero-main-title" id="hp-hero-title">AccessAI</h1>
+                        <p class="hero-subtitle-line" aria-label="Making the web accessible for everyone">Making the Web Accessible for Everyone</p>
+                        <div class="hp-hero-actions">
+                            <a href="memory-layer.html" class="hp-btn hp-btn-primary"><i class="fa fa-brain" aria-hidden="true"></i> Explore Second Brain</a>
+                            <button class="hp-btn hp-btn-ghost" onclick="switchTab('mission');">Our Mission</button>
                         </div>
                     </div>
                     <!-- Scroll indicator -->
@@ -109,47 +866,13 @@
                     </div>
                 </section>
 
-                <!-- Scrolling Marquee / Ticker Strip -->
-                <div class="hero-marquee" aria-hidden="true">
-                    <div class="hero-marquee-inner">
-                        <div class="hero-marquee-track">
-                            <span>WCAG Compliance</span>
-                            <span>AI-Powered Tools</span>
-                            <span>Screen Reader Ready</span>
-                            <span>Keyboard Navigation</span>
-                            <span>Color Contrast</span>
-                            <span>Inclusive Design</span>
-                            <span>Alt Text Generation</span>
-                            <span>Code Review</span>
-                            <span>Real-time Analysis</span>
-                            <span>Universal Access</span>
-                        </div>
-                        <div class="hero-marquee-track">
-                            <span>WCAG Compliance</span>
-                            <span>AI-Powered Tools</span>
-                            <span>Screen Reader Ready</span>
-                            <span>Keyboard Navigation</span>
-                            <span>Color Contrast</span>
-                            <span>Inclusive Design</span>
-                            <span>Alt Text Generation</span>
-                            <span>Code Review</span>
-                            <span>Real-time Analysis</span>
-                            <span>Universal Access</span>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- CTA Section (now immediately after hero) -->
-                <section class="modern-cta-section fundamental-section fundamental-cta" style="position: relative; overflow: hidden; min-height: 320px; margin-top: 0;">
-                    <img src="images/hero-agency.jpg" alt="Creative digital agency workspace" decoding="async" loading="lazy" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0.28; z-index: 1; pointer-events: none;">
-                    <div class="cta-container fundamental-container" style="position: relative; z-index: 2;">
-                        <div class="cta-content fundamental-cta-content" style="text-align: center;">
-                            <h2 style="font-size: 2rem; font-weight: 900;">Ready to Make Your Website Accessible?</h2>
-                            <p class="cta-content">Join the movement for a more inclusive digital world.</p>
-                            <div class="cta-buttons fundamental-cta-buttons">
-                                <a href="memory-layer.html" class="cta-btn primary fundamental-btn"><i class="fa fa-brain"></i> Explore Second Brain</a>
-                                <a href="voice-navigation.html" class="cta-btn secondary fundamental-btn"><i class="fa fa-microphone"></i> Try Voice Navigation</a>
-                            </div>
+                <section class="hp-cta">
+                    <div class="hp-shell hp-cta-inner">
+                        <h2>Ready to Make Your Website Accessible?</h2>
+                        <p>Join the movement for a more inclusive digital world.</p>
+                        <div class="hp-hero-actions">
+                            <a href="memory-layer.html" class="hp-btn hp-btn-primary"><i class="fa fa-brain" aria-hidden="true"></i> Explore Second Brain</a>
                         </div>
                     </div>
                 </section>
@@ -187,57 +910,69 @@
                         </article>
                     </div>
                 </section>
-                <!-- Modern Tools Section as card grid -->
+                <!-- Featured-product band: one real tool, styled as a spotlight
+                     rather than a single-item grid pretending to have peers.
+                     "Accessibility Tools" (plural) as a section header for one
+                     card was misleading at a glance — dropped in favor of the
+                     tool's own name carrying the heading. -->
                 <section class="modern-tools-section fundamental-section">
                     <div class="tools-container fundamental-container">
-                        <div class="section-header fundamental-section-header">
-                            <h2 class="section-title fundamental-section-title">Accessibility Tools</h2>
-                            <p class="section-subtitle fundamental-section-subtitle">Powerful tools to make your website accessible to everyone</p>
-                        </div>
-                        <div class="tools-grid fundamental-grid reveal-stagger">
-                            <!-- Voice Navigation Tool -->
-                            <div class="tool-card voice-tool card-bg-3 reveal">
-                                <div class="tool-header">
-                                    <div class="tool-icon"><i class="fa fa-microphone"></i></div>
-                                    <div class="tool-info">
-                                        <h3>Voice Navigation</h3>
-                                        <p>Talk to the web. Navigate any site by voice — no mouse, no memorized commands, just natural language</p>
-                                    </div>
+                        <div class="hp-tool-spotlight reveal">
+                            <div class="hp-tool-spotlight-glow" aria-hidden="true"></div>
+                            <span class="ap-eyebrow ap-eyebrow--muted">Featured tool — live today</span>
+                            <div class="tool-header">
+                                <div class="tool-icon"><i class="fa fa-brain"></i></div>
+                                <div class="tool-info">
+                                    <h2 class="tool-spotlight-title">Second Brain</h2>
+                                    <p>Remembers how you like to read the web — text size, contrast, line spacing — and lets you navigate any site by voice, no mouse required</p>
                                 </div>
-                                <div class="tool-content">
-                                    <div class="ai-preview">
-                                        <div class="ai-message">
-                                            <div class="ai-avatar"><i class="fa fa-microphone"></i></div>
-                                            <div class="message-content">
-                                                <p>"Scroll down." "Click sign up." "Go back." Say what you want — the AI maps it to the right action, on any site.</p>
-                                            </div>
+                            </div>
+                            <div class="tool-content">
+                                <div class="ai-preview">
+                                    <div class="ai-message">
+                                        <div class="ai-avatar"><i class="fa fa-brain"></i></div>
+                                        <div class="message-content">
+                                            <p>Set it once. It's already set on the next site — and "scroll down," "click sign up," "go back" work everywhere, hands-free.</p>
                                         </div>
                                     </div>
-                                    <div class="tool-actions">
-                                        <a href="voice-navigation.html" class="btn btn-primary"><i class="fa fa-microphone"></i> See Voice Navigation</a>
-                                    </div>
                                 </div>
-                                <div class="tool-features">
-                                    <div class="feature-tag">Voice-First</div>
-                                    <div class="feature-tag">Real-time Response</div>
-                                    <div class="feature-tag">Zero Setup</div>
+                                <div class="tool-actions">
+                                    <a href="memory-layer.html" class="btn btn-primary"><i class="fa fa-brain"></i> Explore Second Brain</a>
                                 </div>
+                            </div>
+                            <div class="tool-features">
+                                <div class="feature-tag">Remembers Preferences</div>
+                                <div class="feature-tag">Voice Navigation</div>
+                                <div class="feature-tag">Zero Setup</div>
                             </div>
                         </div>
                     </div>
                 </section>
-                <!-- Modern Features Section as card grid -->
+                <!-- Modern Features Section — two real capabilities, not a padded 4-up grid.
+                     "Comprehensive Testing" and "AI-Powered Insights" described the WCAG
+                     checker and chat assistant removed in commit 67c6271 — actively wrong,
+                     not just generic. "Real-time Analysis" never mapped to a live capability
+                     either. Rather than rewrite three cards to sound honest, only two of the
+                     original four map to something real today (the accessibility widget and
+                     the blog library) — so this ships as two, asymmetric: a larger lead item
+                     plus one supporting item, not four identical cards. -->
                 <section class="modern-features-section fundamental-section">
                     <div class="features-container fundamental-container">
                         <div class="section-header fundamental-section-header">
                             <h2 class="section-title fundamental-section-title">Why Choose Our Platform?</h2>
-                            <p class="section-subtitle fundamental-section-subtitle">Comprehensive accessibility solutions designed for modern web development</p>
+                            <p class="section-subtitle fundamental-section-subtitle">Not a checklist of features — two things you can try right now.</p>
                         </div>
-                        <div class="features-grid fundamental-grid reveal-stagger">
-                            <div class="feature-card card-bg-3 reveal"><div class="feature-icon"><i class="fa fa-check-circle"></i></div><h3>Comprehensive Testing</h3><p>Test your website against WCAG 2.1 guidelines with detailed reports and actionable recommendations</p></div>
-                            <div class="feature-card card-bg-4 reveal"><div class="feature-icon"><i class="fa fa-lightbulb"></i></div><h3>AI-Powered Insights</h3><p>Get intelligent suggestions and explanations from our advanced AI assistant</p></div>
-                            <div class="feature-card card-bg-5 reveal"><div class="feature-icon"><i class="fa fa-book-open"></i></div><h3>Educational Resources</h3><p>Learn accessibility best practices through our comprehensive guides and tutorials</p></div>
-                            <div class="feature-card card-bg-1 reveal"><div class="feature-icon"><i class="fa fa-bolt"></i></div><h3>Real-time Analysis</h3><p>Get instant feedback on your website's accessibility with our fast analysis engine</p></div>
+                        <div class="hp-why-grid reveal-stagger">
+                            <div class="feature-card hp-why-lead card-bg-3 reveal">
+                                <div class="feature-icon"><i class="fa fa-universal-access"></i></div>
+                                <h3>Built-In Accessibility Controls</h3>
+                                <p>Contrast, font size, reading line, text-to-speech — adjust how the site itself reads, live, from the accessibility widget open in the corner of every page.</p>
+                            </div>
+                            <div class="feature-card hp-why-support card-bg-5 reveal">
+                                <div class="feature-icon"><i class="fa fa-book-open"></i></div>
+                                <h3>Educational Resources</h3>
+                                <p>Learn accessibility best practices through our comprehensive guides and tutorials</p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -262,7 +997,7 @@
                         </div>
 
                         <!-- Floating Blog Tab Button -->
-                        <button onclick="switchTab('blogs');" aria-label="Open full blog" class="floating-blog-btn" style="position: absolute; bottom: 18px; right: 18px; z-index: 10; background: #2563eb; color: #fff; border: none; border-radius: 50%; width: 48px; height: 48px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='#2563eb'; this.style.transform='translateY(0)';">
+                        <button onclick="switchTab('blogs');" aria-label="Open full blog" class="floating-blog-btn" style="position: absolute; bottom: 18px; right: 18px; z-index: 10; color: #fff; border: none; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; cursor: pointer;">
                             <i class="fa fa-book" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -424,33 +1159,34 @@
             <!-- AI in Accessibility Tab Content -->
             <div id="ai" class="tab-content" role="tabpanel" aria-labelledby="ai-tab">
                 <div class="my-ai-card">
-                    <h2 class="bigblue">✨ AI in Computer Accessibility</h2>
+                    <h2 class="bigblue">AI in Computer Accessibility</h2>
                     <hr class="my-ai-separator">
-                    
+
                     <div class="my-ai-quote">
                         <p>Artificial Intelligence has the potential to revolutionize computer accessibility by breaking down barriers that prevent people with disabilities from accessing information and technology. From real-time captioning to intelligent navigation assistance, AI can create more inclusive digital experiences.</p>
                     </div>
 
                     <section class="ai-benefits">
-                        <h2>✨ How AI is Transforming Accessibility</h2>
-                        <div class="ai-grid">
-                            <div class="ai-item">
-                                <div class="ai-icon">🌐</div>
+                        <span class="ap-eyebrow">Four ways it helps</span>
+                        <h2>How AI is Transforming Accessibility</h2>
+                        <div class="ai-quiet-list">
+                            <div class="ai-quiet-item">
+                                <i class="fa fa-message ai-quiet-icon" aria-hidden="true"></i>
                                 <h3>Real-time Translation</h3>
                                 <p>AI-powered translation services can instantly convert text and speech between languages, making content accessible to users with different language needs. This technology supports over 100 languages and provides context-aware translations.</p>
                             </div>
-                            <div class="ai-item">
-                                <div class="ai-icon">💬</div>
+                            <div class="ai-quiet-item">
+                                <i class="fa fa-quote-left ai-quiet-icon" aria-hidden="true"></i>
                                 <h3>Intelligent Captioning</h3>
                                 <p>Advanced AI can generate accurate captions for videos in real-time, including speaker identification and sound descriptions. This technology can recognize different accents, background noise, and even emotional context.</p>
                             </div>
-                            <div class="ai-item">
-                                <div class="ai-icon">🧭</div>
+                            <div class="ai-quiet-item">
+                                <i class="fa fa-compass ai-quiet-icon" aria-hidden="true"></i>
                                 <h3>Smart Navigation</h3>
                                 <p>AI can analyze website content and provide intelligent navigation suggestions for users with cognitive disabilities. It learns user preferences and adapts the interface accordingly.</p>
                             </div>
-                            <div class="ai-item">
-                                <div class="ai-icon">⚙️</div>
+                            <div class="ai-quiet-item">
+                                <i class="fa fa-sliders ai-quiet-icon" aria-hidden="true"></i>
                                 <h3>Personalized Interfaces</h3>
                                 <p>Machine learning can adapt interfaces based on individual user needs and preferences, creating truly personalized experiences that improve over time.</p>
                             </div>
@@ -458,131 +1194,153 @@
                     </section>
 
                     <section class="ai-technologies">
-                        <h2>🔬 Cutting-Edge AI Technologies</h2>
-                        <div class="tech-grid">
-                            <div class="tech-item">
-                                <div class="tech-icon">👁️</div>
+                        <h2>Cutting-Edge AI Technologies</h2>
+                        <div class="tech-rail" role="list">
+                            <article class="tech-rail-card" role="listitem">
+                                <div class="tech-rail-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
                                 <h3>Computer Vision</h3>
                                 <p>AI-powered image recognition can describe visual content to blind users, identify objects, read text from images, and provide detailed scene descriptions. This technology can recognize faces, emotions, and complex visual patterns.</p>
-                                <div class="tech-features">
-                                    <span class="tech-tag">Image Description</span>
-                                    <span class="tech-tag">Text Recognition</span>
-                                    <span class="tech-tag">Object Detection</span>
+                                <div class="tech-rail-tags">
+                                    <span class="tech-rail-tag ap-mono">Image Description</span>
+                                    <span class="tech-rail-tag ap-mono">Text Recognition</span>
+                                    <span class="tech-rail-tag ap-mono">Object Detection</span>
                                 </div>
-                            </div>
-                            <div class="tech-item">
-                                <div class="tech-icon">🗣️</div>
+                            </article>
+                            <article class="tech-rail-card" role="listitem">
+                                <div class="tech-rail-icon"><i class="fa fa-comments" aria-hidden="true"></i></div>
                                 <h3>Natural Language Processing</h3>
                                 <p>NLP enables more natural interactions with technology through voice commands, text prediction, and intelligent content summarization. It can simplify complex language and provide alternative explanations.</p>
-                                <div class="tech-features">
-                                    <span class="tech-tag">Voice Commands</span>
-                                    <span class="tech-tag">Text Prediction</span>
-                                    <span class="tech-tag">Content Summarization</span>
+                                <div class="tech-rail-tags">
+                                    <span class="tech-rail-tag ap-mono">Voice Commands</span>
+                                    <span class="tech-rail-tag ap-mono">Text Prediction</span>
+                                    <span class="tech-rail-tag ap-mono">Content Summarization</span>
                                 </div>
-                            </div>
-                            <div class="tech-item">
-                                <div class="tech-icon">📊</div>
+                            </article>
+                            <article class="tech-rail-card" role="listitem">
+                                <div class="tech-rail-icon"><i class="fa fa-chart-line" aria-hidden="true"></i></div>
                                 <h3>Predictive Analytics</h3>
                                 <p>AI can predict user needs and automatically adjust accessibility settings based on usage patterns, time of day, and context. This proactive approach reduces the need for manual adjustments.</p>
-                                <div class="tech-features">
-                                    <span class="tech-tag">Smart Predictions</span>
-                                    <span class="tech-tag">Auto-Adjustment</span>
-                                    <span class="tech-tag">Context Awareness</span>
+                                <div class="tech-rail-tags">
+                                    <span class="tech-rail-tag ap-mono">Smart Predictions</span>
+                                    <span class="tech-rail-tag ap-mono">Auto-Adjustment</span>
+                                    <span class="tech-rail-tag ap-mono">Context Awareness</span>
                                 </div>
-                            </div>
-                            <div class="tech-item">
-                                <div class="tech-icon">🎧</div>
+                            </article>
+                            <article class="tech-rail-card" role="listitem">
+                                <div class="tech-rail-icon"><i class="fa fa-headphones" aria-hidden="true"></i></div>
                                 <h3>Audio Intelligence</h3>
                                 <p>AI audio models can isolate speech from background noise, enhance clarity, and provide adaptive listening modes for users with hearing differences in calls, videos, and live events.</p>
-                                <div class="tech-features">
-                                    <span class="tech-tag">Noise Reduction</span>
-                                    <span class="tech-tag">Voice Enhancement</span>
-                                    <span class="tech-tag">Adaptive Audio</span>
+                                <div class="tech-rail-tags">
+                                    <span class="tech-rail-tag ap-mono">Noise Reduction</span>
+                                    <span class="tech-rail-tag ap-mono">Voice Enhancement</span>
+                                    <span class="tech-rail-tag ap-mono">Adaptive Audio</span>
                                 </div>
-                            </div>
+                            </article>
                         </div>
                     </section>
 
                     <section class="ai-applications">
-                        <h2>💡 Real-World AI Applications</h2>
-                        <div class="applications-grid">
-                            <div class="app-card">
-                                <div class="app-header">
-                                    <div class="app-icon">📱</div>
-                                    <h3>Mobile Accessibility</h3>
-                                </div>
-                                <p>AI-powered mobile apps can provide real-time assistance for users with visual, hearing, and motor impairments. Features include gesture recognition, voice control, and intelligent screen readers.</p>
-                                <ul class="app-features">
-                                    <li>Gesture-based navigation</li>
-                                    <li>Voice-activated controls</li>
-                                    <li>Real-time object recognition</li>
-                                    <li>Smart text-to-speech</li>
-                                </ul>
+                        <span class="ap-eyebrow">Mobile, web, classrooms, clinics</span>
+                        <h2>Real-World AI Applications</h2>
+                        <div class="app-steps-grid">
+                            <div class="app-steps-rail" aria-hidden="true">
+                                <span class="app-steps-dot" data-step-dot="1"></span>
+                                <span class="app-steps-dot" data-step-dot="2"></span>
+                                <span class="app-steps-dot" data-step-dot="3"></span>
+                                <span class="app-steps-dot" data-step-dot="4"></span>
                             </div>
-                            <div class="app-card">
-                                <div class="app-header">
-                                    <div class="app-icon">🌐</div>
-                                    <h3>Web Accessibility</h3>
-                                </div>
-                                <p>AI can automatically detect and fix accessibility issues on websites, provide alternative content formats, and create personalized browsing experiences for users with disabilities.</p>
-                                <ul class="app-features">
-                                    <li>Automatic alt-text generation</li>
-                                    <li>Dynamic content adaptation</li>
-                                    <li>Intelligent form assistance</li>
-                                    <li>Smart navigation optimization</li>
-                                </ul>
-                            </div>
-                            <div class="app-card">
-                                <div class="app-header">
-                                    <div class="app-icon">🎓</div>
-                                    <h3>Educational Technology</h3>
-                                </div>
-                                <p>AI-powered educational tools can adapt learning materials to individual needs, provide real-time assistance, and create inclusive learning environments for students with disabilities.</p>
-                                <ul class="app-features">
-                                    <li>Adaptive learning paths</li>
-                                    <li>Real-time tutoring assistance</li>
-                                    <li>Multimodal content delivery</li>
-                                    <li>Progress tracking and analytics</li>
-                                </ul>
-                            </div>
-                            <div class="app-card">
-                                <div class="app-header">
-                                    <div class="app-icon">🏥</div>
-                                    <h3>Healthcare Accessibility</h3>
-                                </div>
-                                <p>AI helps make patient portals, appointment systems, and medical instructions easier to understand and navigate through simplified language, voice guidance, and personalized support.</p>
-                                <ul class="app-features">
-                                    <li>Plain-language summaries</li>
-                                    <li>Voice-assisted form completion</li>
-                                    <li>Accessible appointment workflows</li>
-                                    <li>Multilingual guidance</li>
-                                </ul>
+                            <div class="app-steps-list">
+                                <article class="app-step" data-app-step="1">
+                                    <div class="app-step-head">
+                                        <span class="app-step-num ap-mono">01</span>
+                                        <div class="app-step-icon"><i class="fa fa-mobile-screen" aria-hidden="true"></i></div>
+                                        <h3>Mobile Accessibility</h3>
+                                    </div>
+                                    <p>AI-powered mobile apps can provide real-time assistance for users with visual, hearing, and motor impairments. Features include gesture recognition, voice control, and intelligent screen readers.</p>
+                                    <ul class="app-step-features">
+                                        <li>Gesture-based navigation</li>
+                                        <li>Voice-activated controls</li>
+                                        <li>Real-time object recognition</li>
+                                        <li>Smart text-to-speech</li>
+                                    </ul>
+                                </article>
+                                <article class="app-step" data-app-step="2">
+                                    <div class="app-step-head">
+                                        <span class="app-step-num ap-mono">02</span>
+                                        <div class="app-step-icon"><i class="fa fa-globe" aria-hidden="true"></i></div>
+                                        <h3>Web Accessibility</h3>
+                                    </div>
+                                    <p>AI can automatically detect and fix accessibility issues on websites, provide alternative content formats, and create personalized browsing experiences for users with disabilities.</p>
+                                    <ul class="app-step-features">
+                                        <li>Automatic alt-text generation</li>
+                                        <li>Dynamic content adaptation</li>
+                                        <li>Intelligent form assistance</li>
+                                        <li>Smart navigation optimization</li>
+                                    </ul>
+                                </article>
+                                <article class="app-step" data-app-step="3">
+                                    <div class="app-step-head">
+                                        <span class="app-step-num ap-mono">03</span>
+                                        <div class="app-step-icon"><i class="fa fa-graduation-cap" aria-hidden="true"></i></div>
+                                        <h3>Educational Technology</h3>
+                                    </div>
+                                    <p>AI-powered educational tools can adapt learning materials to individual needs, provide real-time assistance, and create inclusive learning environments for students with disabilities.</p>
+                                    <ul class="app-step-features">
+                                        <li>Adaptive learning paths</li>
+                                        <li>Real-time tutoring assistance</li>
+                                        <li>Multimodal content delivery</li>
+                                        <li>Progress tracking and analytics</li>
+                                    </ul>
+                                </article>
+                                <article class="app-step" data-app-step="4">
+                                    <div class="app-step-head">
+                                        <span class="app-step-num ap-mono">04</span>
+                                        <div class="app-step-icon"><i class="fa fa-notes-medical" aria-hidden="true"></i></div>
+                                        <h3>Healthcare Accessibility</h3>
+                                    </div>
+                                    <p>AI helps make patient portals, appointment systems, and medical instructions easier to understand and navigate through simplified language, voice guidance, and personalized support.</p>
+                                    <ul class="app-step-features">
+                                        <li>Plain-language summaries</li>
+                                        <li>Voice-assisted form completion</li>
+                                        <li>Accessible appointment workflows</li>
+                                        <li>Multilingual guidance</li>
+                                    </ul>
+                                </article>
                             </div>
                         </div>
                     </section>
 
                     <section class="ai-future">
-                        <h2>🚀 The Future of AI in Accessibility</h2>
-                        <div class="future-content">
-                            <div class="future-item">
-                                <div class="future-icon">🧠</div>
-                                <h3>Brain-Computer Interfaces</h3>
-                                <p>Emerging AI technologies are enabling direct brain-to-computer communication, allowing users with severe motor impairments to control devices through thought alone. This revolutionary technology could transform accessibility for millions of people.</p>
+                        <span class="ap-eyebrow ap-eyebrow--quiet">Still emerging</span>
+                        <h2>The Future of AI in Accessibility</h2>
+                        <div class="future-editorial">
+                            <div class="future-editorial-item">
+                                <span class="future-editorial-index ap-mono">01</span>
+                                <div class="future-editorial-body">
+                                    <h3><i class="fa fa-brain" aria-hidden="true"></i> Brain-Computer Interfaces</h3>
+                                    <p>Emerging AI technologies are enabling direct brain-to-computer communication, allowing users with severe motor impairments to control devices through thought alone. This revolutionary technology could transform accessibility for millions of people.</p>
+                                </div>
                             </div>
-                            <div class="future-item">
-                                <div class="future-icon">🤝</div>
-                                <h3>AI Assistants</h3>
-                                <p>Advanced AI assistants will provide 24/7 accessibility support, learning individual preferences and needs to offer proactive assistance. These assistants will integrate seamlessly with all digital devices and services.</p>
+                            <div class="future-editorial-item">
+                                <span class="future-editorial-index ap-mono">02</span>
+                                <div class="future-editorial-body">
+                                    <h3><i class="fa fa-handshake" aria-hidden="true"></i> AI Assistants</h3>
+                                    <p>Advanced AI assistants will provide 24/7 accessibility support, learning individual preferences and needs to offer proactive assistance. These assistants will integrate seamlessly with all digital devices and services.</p>
+                                </div>
                             </div>
-                            <div class="future-item">
-                                <div class="future-icon">♿</div>
-                                <h3>Universal Design</h3>
-                                <p>AI will enable truly universal design by automatically adapting interfaces to individual needs, creating experiences that work for everyone regardless of their abilities or disabilities.</p>
+                            <div class="future-editorial-item">
+                                <span class="future-editorial-index ap-mono">03</span>
+                                <div class="future-editorial-body">
+                                    <h3><i class="fa fa-universal-access" aria-hidden="true"></i> Universal Design</h3>
+                                    <p>AI will enable truly universal design by automatically adapting interfaces to individual needs, creating experiences that work for everyone regardless of their abilities or disabilities.</p>
+                                </div>
                             </div>
-                            <div class="future-item">
-                                <div class="future-icon">🌍</div>
-                                <h3>Global Communication Support</h3>
-                                <p>Future systems will combine speech, text, and sign-language assistance in real time, helping people communicate across languages and communication styles without extra tools.</p>
+                            <div class="future-editorial-item">
+                                <span class="future-editorial-index ap-mono">04</span>
+                                <div class="future-editorial-body">
+                                    <h3><i class="fa fa-earth-americas" aria-hidden="true"></i> Global Communication Support</h3>
+                                    <p>Future systems will combine speech, text, and sign-language assistance in real time, helping people communicate across languages and communication styles without extra tools.</p>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -592,24 +1350,19 @@
                     </div>
 
                     <section class="ai-stats">
-                        <h2>📈 AI Accessibility Impact</h2>
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <div class="stat-number">85%</div>
-                                <div class="stat-label">Improvement in caption accuracy</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">60%</div>
-                                <div class="stat-label">Faster navigation for users with disabilities</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">90%</div>
-                                <div class="stat-label">Reduction in accessibility barriers</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">2.5x</div>
-                                <div class="stat-label">Increase in digital inclusion</div>
-                            </div>
+                        <span class="ap-eyebrow ap-eyebrow--mono">Two real numbers</span>
+                        <h2>Grounded in Real Numbers</h2>
+                        <div class="ai-stat-duo">
+                            <a class="ai-stat-card" href="https://webaim.org/projects/million/" target="_blank" rel="noopener">
+                                <span class="ai-stat-number ap-mono">95.9%</span>
+                                <span class="ai-stat-label">of websites fail basic accessibility standards</span>
+                                <span class="ai-stat-cite">WebAIM Million, 2026 <i class="fa fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+                            </a>
+                            <a class="ai-stat-card" href="https://www.who.int/news-room/fact-sheets/detail/disability-and-health" target="_blank" rel="noopener">
+                                <span class="ai-stat-number ap-mono">1.3B+</span>
+                                <span class="ai-stat-label">people worldwide live with a significant disability</span>
+                                <span class="ai-stat-cite">World Health Organization <i class="fa fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+                            </a>
                         </div>
                     </section>
                 </div>
@@ -648,7 +1401,13 @@
                         <article class="box fade">
                             <div class="box-number-icon" aria-hidden="true"><i class="fa-solid fa-2"></i></div>
                             <h3 class="box_font">The Digital Divide</h3>
-                            <p>According to the World Health Organization, nearly 1.3 billion people have a disability. Yet only 2% of top companies follow WCAG Level AA standards, creating a significant digital divide.</p>
+                            <!-- The original second sentence ("only 2% of top companies follow
+                                 WCAG Level AA") had no source anywhere on the site and isn't the
+                                 same claim as the WebAIM figure used elsewhere (different framing:
+                                 "top companies" vs. the top 1M home pages WebAIM actually scans) —
+                                 cut rather than dressed up with a citation it doesn't support. -->
+                            <p>According to the World Health Organization, nearly 1.3 billion people have a disability — yet most of the web still isn't built with them in mind.</p>
+                            <p class="mission-box-cite">Source: <a href="https://www.who.int/news-room/fact-sheets/detail/disability-and-health" target="_blank" rel="noopener">World Health Organization</a></p>
                         </article>
                         
                         <article class="box fade">
@@ -670,19 +1429,24 @@
                     <div class="help-hero-content">
                         <h2 class="help-title">How We Help</h2>
                         <p class="help-subtitle">Empowering everyone to access and navigate the digital world with confidence</p>
+                        <!-- Was 3 cards: 1.3B+ and 98% echoed real figures but were uncited
+                             here, and "100%" ("Our commitment to inclusion") wasn't a stat at
+                             all — self-referential marketing dressed as data, the same pattern
+                             fixed on the AI tab. Cut to 2, both now cited. The 98% figure is
+                             replaced with the precise 95.9% already used (and sourced) in the
+                             homepage intro, rather than site having two different unsourced
+                             roundings of what should be the same fact. -->
                         <div class="help-stats">
-                            <div class="stat-card">
+                            <a class="stat-card" href="https://www.who.int/news-room/fact-sheets/detail/disability-and-health" target="_blank" rel="noopener">
                                 <div class="stat-number">1.3B+</div>
                                 <div class="stat-label">People with disabilities worldwide</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-number">98%</div>
-                                <div class="stat-label">Websites with accessibility issues</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-number">100%</div>
-                                <div class="stat-label">Our commitment to inclusion</div>
-                            </div>
+                                <div class="stat-cite">World Health Organization <i class="fa fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+                            </a>
+                            <a class="stat-card" href="https://webaim.org/projects/million/" target="_blank" rel="noopener">
+                                <div class="stat-number">95.9%</div>
+                                <div class="stat-label">of websites fail basic accessibility standards</div>
+                                <div class="stat-cite">WebAIM Million, 2026 <i class="fa fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+                            </a>
                         </div>
                     </div>
                 </section>
@@ -696,17 +1460,17 @@
                             </p>
                             <div class="mission-principles">
                                 <div class="principle-card">
-                                    <div class="principle-icon">🌍</div>
+                                    <div class="principle-icon"><i class="fa fa-earth-americas" aria-hidden="true"></i></div>
                                     <h3>Universal Access</h3>
                                     <p>Making the digital world accessible to all, regardless of physical, cognitive, or sensory abilities.</p>
                                 </div>
                                 <div class="principle-card">
-                                    <div class="principle-icon">📚</div>
+                                    <div class="principle-icon"><i class="fa fa-book-open" aria-hidden="true"></i></div>
                                     <h3>Education First</h3>
                                     <p>Providing comprehensive, easy-to-understand resources that empower everyone to learn about accessibility.</p>
                                 </div>
                                 <div class="principle-card">
-                                    <div class="principle-icon">🤝</div>
+                                    <div class="principle-icon"><i class="fa fa-handshake" aria-hidden="true"></i></div>
                                     <h3>Community Support</h3>
                                     <p>Building a supportive community where knowledge is shared and everyone can contribute to making technology better.</p>
                                 </div>
@@ -720,7 +1484,7 @@
                     <h2 class="services-title">How We Help You</h2>
                     <div class="services-grid">
                         <div class="service-card">
-                            <div class="service-icon">💻</div>
+                            <div class="service-icon"><i class="fa fa-code" aria-hidden="true"></i></div>
                             <h3>For Developers</h3>
                             <p>Learn to build accessible websites and applications that work for everyone. Master WCAG guidelines, implement proper ARIA labels, and create inclusive user experiences.</p>
                             <ul class="service-features">
@@ -731,7 +1495,7 @@
                             </ul>
                         </div>
                         <div class="service-card">
-                            <div class="service-icon">🎨</div>
+                            <div class="service-icon"><i class="fa fa-palette" aria-hidden="true"></i></div>
                             <h3>For Designers</h3>
                             <p>Create beautiful, inclusive designs that consider color contrast, typography, and user experience for people with diverse abilities and needs.</p>
                             <ul class="service-features">
@@ -742,7 +1506,7 @@
                             </ul>
                         </div>
                         <div class="service-card">
-                            <div class="service-icon">🏢</div>
+                            <div class="service-icon"><i class="fa fa-building" aria-hidden="true"></i></div>
                             <h3>For Organizations</h3>
                             <p>Understand accessibility requirements, implement compliance strategies, and create inclusive digital policies that benefit your entire organization.</p>
                             <ul class="service-features">
@@ -753,7 +1517,7 @@
                             </ul>
                         </div>
                         <div class="service-card">
-                            <div class="service-icon">👤</div>
+                            <div class="service-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
                             <h3>For Individuals</h3>
                             <p>Discover tools and techniques to navigate the web more effectively, regardless of your abilities or the challenges you face.</p>
                             <ul class="service-features">
@@ -773,7 +1537,7 @@
                         <p class="cta-text">Join us in creating a more inclusive digital world. Start learning, start building, start making technology accessible for everyone.</p>
                         <div class="cta-buttons">
                             <button class="cta-button secondary" onclick="switchTab('blogs')">
-                                <span class="cta-icon">📖</span>
+                                <span class="cta-icon"><i class="fa fa-book-open" aria-hidden="true"></i></span>
                                 Read Our Blog
                             </button>
                         </div>
@@ -786,7 +1550,14 @@
         <!-- Footer -->
         <footer role="contentinfo">
             <div class="footer-content">
-                <p>&copy; 2025 Computer Accessibility. All rights reserved.</p>
+                <nav class="footer-nav" aria-label="Footer">
+                    <button onclick="switchTab('home');">Home</button>
+                    <button onclick="switchTab('ai');">AI in Accessibility</button>
+                    <button onclick="switchTab('blogs');">Blogs</button>
+                    <button onclick="switchTab('mission');">Our Mission</button>
+                    <a href="memory-layer.html">Second Brain</a>
+                </nav>
+                <p>&copy; 2025 AccessAI. All rights reserved.</p>
                 <p>This website is designed to be accessible to everyone, following WCAG 2.1 Level AA guidelines.</p>
                 <p>For accessibility feedback, please contact us.</p>
             </div>
@@ -796,29 +1567,29 @@
     <!-- Accessibility Widget -->
     <div id="accessibility-widget" class="accessibility-widget">
         <button id="acc-btn" aria-label="Open accessibility menu" aria-expanded="false">
-            <span class="widget-icon">♿</span>
+            <span class="widget-icon"><i class="fa fa-universal-access" aria-hidden="true"></i></span>
             <span class="widget-text">Accessibility</span>
         </button>
         <div id="acc-menu" class="acc-menu" role="menu">
             <div class="acc-section">
                 <h4>Visual Adjustments</h4>
                 <button role="menuitem" onclick="toggleFeature('high-contrast')" id="high-contrast-btn" aria-pressed="false">
-                    <span class="acc-icon">🎨</span>
+                    <span class="acc-icon"><i class="fa fa-circle-half-stroke" aria-hidden="true"></i></span>
                     <span class="acc-text">High Contrast</span>
                     <span class="acc-status" id="high-contrast-status">Off</span>
                 </button>
                 <button role="menuitem" onclick="toggleFeature('grayscale')" id="grayscale-btn" aria-pressed="false">
-                    <span class="acc-icon">?</span>
+                    <span class="acc-icon"><i class="fa fa-droplet-slash" aria-hidden="true"></i></span>
                     <span class="acc-text">Grayscale</span>
                     <span class="acc-status" id="grayscale-status">Off</span>
                 </button>
                 <button role="menuitem" onclick="toggleFeature('invert-colors')" id="invert-colors-btn" aria-pressed="false">
-                    <span class="acc-icon">🔄</span>
+                    <span class="acc-icon"><i class="fa fa-right-left" aria-hidden="true"></i></span>
                     <span class="acc-text">Invert Colors</span>
                     <span class="acc-status" id="invert-colors-status">Off</span>
                 </button>
                 <button role="menuitem" onclick="toggleFeature('brightness')" id="brightness-btn" aria-pressed="false">
-                    <span class="acc-icon">☀️</span>
+                    <span class="acc-icon"><i class="fa fa-sun" aria-hidden="true"></i></span>
                     <span class="acc-text">Brightness</span>
                     <span class="acc-status" id="brightness-status">Off</span>
                 </button>
@@ -841,17 +1612,17 @@
                     </button>
                 </div>
                 <button role="menuitem" onclick="toggleFeature('reading-line')" id="reading-line-btn" aria-pressed="false">
-                    <span class="acc-icon">📏</span>
+                    <span class="acc-icon"><i class="fa fa-ruler-horizontal" aria-hidden="true"></i></span>
                     <span class="acc-text">Reading Line</span>
                     <span class="acc-status" id="reading-line-status">Off</span>
                 </button>
                 <button role="menuitem" onclick="toggleFeature('readable-fonts')" id="readable-fonts-btn" aria-pressed="false">
-                    <span class="acc-icon">📝</span>
+                    <span class="acc-icon"><i class="fa fa-font" aria-hidden="true"></i></span>
                     <span class="acc-text">Readable Fonts</span>
                     <span class="acc-status" id="readable-fonts-status">Off</span>
                 </button>
                 <button role="menuitem" onclick="toggleFeature('highlight-links')" id="highlight-links-btn" aria-pressed="false">
-                    <span class="acc-icon">🔗</span>
+                    <span class="acc-icon"><i class="fa fa-link" aria-hidden="true"></i></span>
                     <span class="acc-text">Highlight Links</span>
                     <span class="acc-status" id="highlight-links-status">Off</span>
                 </button>
@@ -860,17 +1631,17 @@
             <div class="acc-section">
                 <h4>Navigation & Cursor</h4>
                 <button role="menuitem" onclick="toggleFeature('big-cursor')" id="big-cursor-btn" aria-pressed="false">
-                    <span class="acc-icon">🖱️</span>
+                    <span class="acc-icon"><i class="fa fa-arrow-pointer" aria-hidden="true"></i></span>
                     <span class="acc-text">Big Cursor</span>
                     <span class="acc-status" id="big-cursor-status">Off</span>
                 </button>
                 <button role="menuitem" onclick="toggleFeature('focus-indicator')" id="focus-indicator-btn" aria-pressed="false">
-                    <span class="acc-icon">🎯</span>
+                    <span class="acc-icon"><i class="fa fa-bullseye" aria-hidden="true"></i></span>
                     <span class="acc-text">Focus Indicator</span>
                     <span class="acc-status" id="focus-indicator-status">Off</span>
                 </button>
                 <button role="menuitem" onclick="toggleFeature('tooltips')" id="tooltips-btn" aria-pressed="false">
-                    <span class="acc-icon">💭</span>
+                    <span class="acc-icon"><i class="fa fa-comment-dots" aria-hidden="true"></i></span>
                     <span class="acc-text">Tooltips</span>
                     <span class="acc-status" id="tooltips-status">Off</span>
                 </button>
@@ -879,17 +1650,17 @@
             <div class="acc-section">
                 <h4>Content & Media</h4>
                 <button role="menuitem" onclick="toggleFeature('hide-images')" id="hide-images-btn" aria-pressed="false">
-                    <span class="acc-icon">🖼️</span>
+                    <span class="acc-icon"><i class="fa fa-image" aria-hidden="true"></i></span>
                     <span class="acc-text">Hide Images</span>
                     <span class="acc-status" id="hide-images-status">Off</span>
                 </button>
                 <button role="menuitem" onclick="toggleFeature('text-to-speech')" id="text-to-speech-btn" aria-pressed="false">
-                    <span class="acc-icon">🔊</span>
+                    <span class="acc-icon"><i class="fa fa-volume-high" aria-hidden="true"></i></span>
                     <span class="acc-text">Text to Speech</span>
                     <span class="acc-status" id="text-to-speech-status">Off</span>
                 </button>
                 <button role="menuitem" onclick="toggleFeature('pause-animations')" id="pause-animations-btn" aria-pressed="false">
-                    <span class="acc-icon">⏸️</span>
+                    <span class="acc-icon"><i class="fa fa-pause" aria-hidden="true"></i></span>
                     <span class="acc-text">Pause Animations</span>
                     <span class="acc-status" id="pause-animations-status">Off</span>
                 </button>
@@ -898,7 +1669,7 @@
             <div class="acc-section">
                 <h4>Quick Actions</h4>
                 <button role="menuitem" onclick="resetAllSettings()" class="reset-btn">
-                    <span class="acc-icon">🔄</span>
+                    <span class="acc-icon"><i class="fa fa-arrows-rotate" aria-hidden="true"></i></span>
                     <span class="acc-text">Reset All</span>
                 </button>
             </div>
@@ -1012,6 +1783,11 @@
         window.applyTabVisibilityState = applyTabVisibilityState;
 
         function switchTab(tabName) {
+            // Jump back to the top of the page so the new tab always opens
+            // from its beginning, instead of wherever the previous tab
+            // happened to be scrolled to.
+            window.scrollTo(0, 0);
+
             // Reset tab active states
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => {
@@ -1188,7 +1964,7 @@
                     left: 0;
                     right: 0;
                     height: 2px;
-                    background: #667eea;
+                    background: #4a5568;
                     z-index: 9999;
                     pointer-events: none;
                     opacity: 0.7;
@@ -1271,7 +2047,7 @@
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: #667eea;
+                background: #4a5568;
                 color: white;
                 padding: 12px 20px;
                 border-radius: 8px;
@@ -1504,7 +2280,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       href: 'Blog_2.html',
-      img: 'images/Inclusivity photo',
+      img: 'images/blog2_inclusivity.jpg',
       alt: 'Designing for Inclusivity',
       title: 'Designing for Inclusivity',
       desc: 'Color contrast, typography, and navigation best practices that make websites usable by everyone.',
@@ -1786,6 +2562,33 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   /* --------------------------------------------------------
+     AI TAB — decorative sticky-rail dot highlight
+     Purely visual (mirrors the same pattern already proven on
+     Second Brain's "How it works" rail): lights up the dot next
+     to whichever numbered step is currently most in view. Never
+     the only way to perceive step order — .app-step-num already
+     prints 01-04 in the DOM for everyone, JS or not.
+  -------------------------------------------------------- */
+  function initAppStepsRail() {
+    const dots = document.querySelectorAll('.app-steps-dot');
+    const steps = document.querySelectorAll('.app-step');
+    if (!dots.length || !steps.length || !('IntersectionObserver' in window)) return;
+
+    const setActive = (stepNum) => {
+      dots.forEach(dot => dot.classList.toggle('is-active', dot.dataset.stepDot === String(stepNum)));
+    };
+    setActive(1);
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setActive(entry.target.dataset.appStep);
+      });
+    }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+
+    steps.forEach(step => obs.observe(step));
+  }
+
+  /* --------------------------------------------------------
      BOOT
   -------------------------------------------------------- */
   document.addEventListener('DOMContentLoaded', function () {
@@ -1794,6 +2597,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCarousel();
     initScrollReveal();
     initCounters();
+    initAppStepsRail();
   });
 })();
 </script>
@@ -1857,6 +2661,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </script>
     <!-- Animations & visual enhancements -->
     <script src="scripts/parallax.js" defer></script>
+    <!-- Opening scroll sequence: progressive enhancement over the static #hp-seq markup -->
+    <script src="scripts/hero-sequence.js" defer></script>
 
     <!-- Modern homepage interaction enhancements -->
     <script>

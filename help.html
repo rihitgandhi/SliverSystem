@@ -15,6 +15,8 @@
 
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/dark-theme.css">
+    <!-- Apple Design System: shared craft/motion/materials layer, loaded last -->
+    <link rel="stylesheet" href="./css/apple-design-system.css">
     <style>
         /* main.css hides .tool-card by default (opacity:0), waiting for a JS
            "animate-in" class that used to come from scripts/nav-redesign.js —
@@ -210,7 +212,6 @@
                         <a href="index.html#blogs" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-pen-nib"></i></span><span class="nav-text">Blogs</span></a>
                         <a href="index.html#mission" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-bullseye"></i></span><span class="nav-text">Our Mission</span></a>
                         <a href="memory-layer.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-brain"></i></span><span class="nav-text">Second Brain</span></a>
-                        <a href="voice-navigation.html" class="nav-item nav-link" role="menuitem"><span class="nav-icon"><i class="fa fa-microphone"></i></span><span class="nav-text">Voice Navigation</span></a>
                     </div>
                     <button class="nav-toggle fundamental-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
                         <span class="hamburger"></span>
@@ -231,7 +232,6 @@
                 <div class="help-toc">
                     <a href="#getting-started"><span class="icon-chip"><i class="fa fa-rocket"></i></span> Getting started</a>
                     <a href="#tool-memory"><span class="icon-chip"><i class="fa fa-brain"></i></span> Second Brain</a>
-                    <a href="#tool-voice"><span class="icon-chip"><i class="fa fa-microphone"></i></span> Voice Navigation</a>
                     <a href="#wcag"><span class="icon-chip"><i class="fa fa-book-open"></i></span> WCAG cheat sheet</a>
                     <a href="#troubleshooting"><span class="icon-chip"><i class="fa fa-life-ring"></i></span> Troubleshooting &amp; FAQ</a>
                 </div>
@@ -242,16 +242,15 @@
                 <h2><i class="fa fa-rocket" aria-hidden="true"></i> Getting started</h2>
                 <p>AccessAI's browser extensions are grounded in the WCAG principles below and built to fit into how you already browse — no separate workflow to learn. A typical path looks like:</p>
                 <ol class="step-list">
-                    <li><strong>Try Second Brain</strong> — it remembers your reading and display preferences across sites so you never re-configure them. See the <a href="#tool-memory">Second Brain</a> section below.</li>
-                    <li><strong>Try Voice Navigation</strong> — control any site by voice instead of a mouse or keyboard. See the <a href="#tool-voice">Voice Navigation</a> section below.</li>
+                    <li><strong>Try Second Brain</strong> — it remembers your reading and display preferences across sites so you never re-configure them, and it includes Voice Navigation so you can control any site by voice instead of a mouse or keyboard. See the <a href="#tool-memory">Second Brain</a> section below.</li>
                 </ol>
                 <div class="help-callout help-callout--good">
                     <i class="fa fa-shield-alt ico" aria-hidden="true"></i>
-                    <p><strong>Privacy note.</strong> Both extensions are designed to keep your data on-device by default — see each tool's own Trust &amp; control section for specifics.</p>
+                    <p><strong>Privacy note.</strong> Display-preference memory is designed to stay on-device by default; Voice Navigation needs a live connection to map spoken commands to actions. See the Trust &amp; control section below for specifics.</p>
                 </div>
             </section>
 
-            <!-- ===== Second Brain ===== -->
+            <!-- ===== Second Brain (includes Voice Navigation) ===== -->
             <section class="tool-card help-section" id="tool-memory">
                 <h2><i class="fa fa-brain" aria-hidden="true"></i> Second Brain</h2>
                 <p><a href="memory-layer.html">Open Second Brain</a>. It remembers how you like to read the web — text size, contrast, and other display preferences — so you never have to set them up twice on a new site.</p>
@@ -261,19 +260,13 @@
                     <div class="feature"><h4>Interactive demo</h4><p>Adjust text size and contrast on a sample page, then watch those preferences carry over automatically to a second sample page.</p></div>
                     <div class="feature"><h4>Trust &amp; control</h4><p>A clear breakdown of exactly what's remembered and what's never collected, plus a one-click way to clear everything.</p></div>
                 </div>
-            </section>
 
-            <!-- ===== Voice Navigation ===== -->
-            <section class="tool-card help-section" id="tool-voice">
-                <h2><i class="fa fa-microphone" aria-hidden="true"></i> Voice Navigation</h2>
-                <p><a href="voice-navigation.html">Open Voice Navigation</a>. Speak natural commands — "scroll down," "click sign up," "go back" — and the AI maps them to the right action on any site, no memorized command list required.</p>
-
-                <h3>What it does</h3>
+                <h3>Accessibility feature: Voice Navigation</h3>
+                <p>Built into Second Brain — <a href="memory-layer.html#voice-navigation">jump to it</a>. Speak natural commands — "scroll down," "click sign up," "go back" — and the AI maps them to the right action on any site, no memorized command list required.</p>
                 <div class="feature-grid">
                     <div class="feature"><h4>Smart command recognition</h4><p>Understands natural phrasing, not just fixed keywords.</p></div>
                     <div class="feature"><h4>Real-time response</h4><p>Commands are mapped to actions as you speak.</p></div>
                     <div class="feature"><h4>Works on any site</h4><p>No per-site setup or configuration.</p></div>
-                    <div class="feature"><h4>Privacy by design</h4><p>Built with the same on-device-first approach as Second Brain.</p></div>
                 </div>
             </section>
 
@@ -337,7 +330,6 @@
                 <p>Pick one below to get started.</p>
                 <div class="tool-chips" style="justify-content:center; margin-top:14px;">
                     <a class="tool-chip" href="memory-layer.html"><i class="fa fa-brain"></i> Second Brain</a>
-                    <a class="tool-chip" href="voice-navigation.html"><i class="fa fa-microphone"></i> Voice Navigation</a>
                 </div>
             </section>
         </main>
