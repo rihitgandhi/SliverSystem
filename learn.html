@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A research-grounded explanation of AI, accessibility, and why portable preferences matter.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
+  <title>Learn - AccessAI</title>
+  <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=26">
+</head>
+<body class="learn-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="AccessAI home">
+        <img src="./images/a11y.jpg" alt="AccessAI logo mark">
+        <span>AccessAI</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="second-brain.html">Second Brain</a>
+        <a class="nav-link" href="learn.html" aria-current="page">Learn</a>
+        <a class="nav-link" href="accessibility-tools.html">Tools</a>
+        <a class="nav-link" href="mission.html">Our Mission</a>
+        <span class="nav-status">Coming Soon</span>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content" class="learn-main">
+    <section class="learn-section learn-headline-section" aria-labelledby="page-title">
+      <div class="learn-shell reveal">
+        <p class="kicker">Learn</p>
+        <h1 id="page-title">AI can help accessibility, but only with limits.</h1>
+      </div>
+    </section>
+
+    <section class="learn-section learn-intro-section" aria-label="Learn introduction">
+      <div class="learn-shell learn-copy-shell reveal">
+        <p class="lead">The strongest case for AccessAI is not hype. It is the scale and repetition of the same accessibility failures across the web.</p>
+        <p class="body-copy">AI can reduce friction by helping apply a user's own preferences more consistently. It cannot replace standards, testing, or human verification.</p>
+      </div>
+    </section>
+
+    <section class="learn-stat-section reveal" aria-labelledby="webaim-title">
+      <div class="learn-shell">
+        <small>WebAIM 2026</small>
+        <h2 id="webaim-title">95.9% of the top 1 million home pages had detectable WCAG 2 failures.</h2>
+        <p>The audit found 56.1 accessibility errors per page on average, up 10.1% from 2025.</p>
+      </div>
+    </section>
+
+    <section class="learn-stat-section reveal" aria-labelledby="recurring-title">
+      <div class="learn-shell">
+        <small>Recurring failures</small>
+        <h2 id="recurring-title">Six error types caused 96% of detected issues for seven straight years.</h2>
+        <p>Contrast, missing alt text, missing form labels, empty links, empty buttons, and missing document language keep returning.</p>
+      </div>
+    </section>
+
+    <section class="learn-stat-section reveal" aria-labelledby="affects-title">
+      <div class="learn-shell">
+        <small>Who it affects</small>
+        <h2 id="affects-title">More than 1 in 4 U.S. adults report having a disability.</h2>
+        <p>CDC 2022 data puts that number over 70 million people, rising to 43.9% among adults 65+.</p>
+      </div>
+    </section>
+
+    <section class="learn-stat-section reveal" aria-labelledby="limits-title">
+      <div class="learn-shell">
+        <small>AI limits</small>
+        <h2 id="limits-title">Fluent descriptions can still be wrong.</h2>
+        <p>Vision-AI can describe images, but it can also hallucinate screenshot text or invent details. Accessibility tools need visible limits.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="./scripts/page-transitions.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A placeholder structure for future AccessAI accessibility tools.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
+  <title>Tools - AccessAI</title>
+  <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=25">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="AccessAI home">
+        <img src="./images/a11y.jpg" alt="AccessAI logo mark">
+        <span>AccessAI</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="second-brain.html">Second Brain</a>
+        <a class="nav-link" href="learn.html">Learn</a>
+        <a class="nav-link" href="accessibility-tools.html" aria-current="page">Tools</a>
+        <a class="nav-link" href="mission.html">Our Mission</a>
+        <span class="nav-status">Coming Soon</span>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="screen single-screen" aria-labelledby="page-title">
+      <div class="shell compact-page-grid">
+        <div class="reveal">
+          <p class="kicker">Tools</p>
+          <h1 id="page-title">A simple structure for future accessibility tools.</h1>
+          <p class="lead">This page is intentionally a template. AccessAI should only list additional tools when the content is real, useful, and ready to explain clearly.</p>
+          <div class="button-row">
+            <span class="status-note">Placeholder structure only</span>
+            <a class="button secondary" href="index.html">Back to home</a>
+          </div>
+        </div>
+
+        <div class="tool-grid reveal" aria-label="Future tool placeholders">
+          <article class="tool-slot">
+            <small>[ICON SLOT]</small>
+            <div>
+              <h3>[TOOL TITLE]</h3>
+              <p>[TOOL DESCRIPTION]</p>
+            </div>
+            <span class="status-note">[STATUS]</span>
+          </article>
+          <article class="tool-slot">
+            <small>[ICON SLOT]</small>
+            <div>
+              <h3>[TOOL TITLE]</h3>
+              <p>[TOOL DESCRIPTION]</p>
+            </div>
+            <span class="status-note">[STATUS]</span>
+          </article>
+          <article class="tool-slot">
+            <small>[ICON SLOT]</small>
+            <div>
+              <h3>[TOOL TITLE]</h3>
+              <p>[TOOL DESCRIPTION]</p>
+            </div>
+            <span class="status-note">[STATUS]</span>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./scripts/page-transitions.js"></script>
+</body>
+</html>

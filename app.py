@@ -148,17 +148,33 @@ def health_check():
         'api_key': api_key_status
     })
 
-@app.route('/help.html')
-def help_page():
-    return send_from_directory('.', 'help.html')
-
 @app.route('/memory-layer.html')
 def memory_layer_page():
     return send_from_directory('.', 'memory-layer.html')
 
-@app.route('/voice-navigation.html')
-def voice_navigation_page():
-    return send_from_directory('.', 'voice-navigation.html')
+@app.route('/second-brain.html')
+def second_brain_page():
+    return send_from_directory('.', 'second-brain.html')
+
+@app.route('/second-brain-landing.html')
+def second_brain_landing_page():
+    return send_from_directory('.', 'second-brain-landing.html')
+
+@app.route('/learn.html')
+def learn_page():
+    return send_from_directory('.', 'learn.html')
+
+@app.route('/about.html')
+def about_page():
+    return send_from_directory('.', 'about.html')
+
+@app.route('/mission.html')
+def mission_page():
+    return send_from_directory('.', 'mission.html')
+
+@app.route('/accessibility-tools.html')
+def accessibility_tools_page():
+    return send_from_directory('.', 'accessibility-tools.html')
 
 @app.route('/api/cors-test', methods=['GET', 'OPTIONS'])
 def cors_test():

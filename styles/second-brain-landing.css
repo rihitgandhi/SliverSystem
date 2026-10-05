@@ -1,0 +1,402 @@
+:root {
+  --sell-bg: #ffffff;
+  --sell-surface: #f5f5f7;
+  --sell-text: #1d1d1f;
+  --sell-body: #424b57;
+  --sell-muted: #68727d;
+  --sell-line: #dde3eb;
+  --sell-blue: #0071e3;
+  --sell-blue-soft: #eef6ff;
+  --sell-shadow: 0 18px 56px rgba(29, 29, 31, 0.07);
+}
+
+html {
+  scroll-snap-type: y mandatory;
+}
+
+.sell-page {
+  background: var(--sell-bg);
+  color: var(--sell-text);
+}
+
+.sell-page .site-header {
+  border-bottom-color: rgba(221, 227, 235, 0.78);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.sell-main {
+  overflow: clip;
+}
+
+.sell-section {
+  height: 100svh;
+  min-height: 100svh;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: grid;
+  align-items: center;
+  padding: calc(var(--header-height) + clamp(18px, 3vw, 36px)) var(--gutter) clamp(18px, 3vw, 36px);
+  background: var(--sell-bg);
+}
+
+.sell-soft {
+  background: var(--sell-surface);
+}
+
+.sell-shell {
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  max-height: 100%;
+}
+
+.sell-narrow {
+  max-width: 980px;
+}
+
+.sell-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(440px, 1.05fr);
+  gap: clamp(28px, 4.5vw, 72px);
+  align-items: center;
+}
+
+.sell-kicker {
+  margin: 0 0 20px;
+  color: var(--sell-blue);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sell-section h1,
+.sell-section h2,
+.sell-section h3,
+.sell-section p {
+  margin: 0;
+}
+
+.sell-section h1 {
+  max-width: 1120px;
+  color: var(--sell-text);
+  font-size: clamp(3rem, 6vw, 5.75rem);
+  font-weight: 760;
+  line-height: 0.96;
+}
+
+.sell-section h2 {
+  max-width: 940px;
+  color: var(--sell-text);
+  font-size: clamp(2.3rem, 4.4vw, 4.45rem);
+  font-weight: 740;
+  line-height: 0.98;
+}
+
+.sell-section h3 {
+  color: var(--sell-text);
+  font-size: clamp(1.25rem, 1.7vw, 1.6rem);
+  font-weight: 720;
+  line-height: 1.2;
+}
+
+.sell-lead {
+  max-width: 760px;
+  margin-top: 24px;
+  color: var(--sell-body);
+  font-size: clamp(1.1rem, 1.55vw, 1.32rem);
+  line-height: 1.56;
+}
+
+.sell-copy {
+  max-width: 720px;
+  margin-top: 20px;
+  color: var(--sell-body);
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  line-height: 1.62;
+}
+
+.sell-hook {
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.98), rgba(255,255,255,0.78)),
+    url("../images/accessai-mountain-hero.png") center / cover no-repeat;
+}
+
+.sell-stat-stack {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sell-stat-stack article,
+.sell-card,
+.sell-steps article,
+.sell-screenshot {
+  border: 1px solid rgba(221, 227, 235, 0.82);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--sell-shadow);
+}
+
+.sell-stat-stack article {
+  min-height: 138px;
+  padding: 18px;
+}
+
+.sell-stat-stack strong {
+  display: block;
+  color: var(--sell-blue);
+  font-size: clamp(2.1rem, 4vw, 3.75rem);
+  font-weight: 800;
+  line-height: 0.95;
+}
+
+.sell-stat-stack span {
+  display: block;
+  margin-top: 14px;
+  color: var(--sell-body);
+  line-height: 1.45;
+}
+
+.sell-card {
+  padding: clamp(24px, 3.4vw, 42px);
+}
+
+.sell-card small {
+  display: block;
+  color: var(--sell-blue);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.sell-card p {
+  color: var(--sell-text);
+  font-size: clamp(1.45rem, 2.6vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1.08;
+}
+
+.sell-steps {
+  margin-top: clamp(22px, 3.5vw, 40px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.sell-steps article {
+  min-height: 220px;
+  padding: 20px;
+}
+
+.sell-steps span {
+  width: 40px;
+  height: 40px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--sell-blue-soft);
+  color: var(--sell-blue);
+  font-weight: 800;
+  margin-bottom: 28px;
+}
+
+.sell-steps p {
+  margin-top: 16px;
+  color: var(--sell-body);
+  line-height: 1.62;
+}
+
+.sell-voice-card ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--sell-body);
+  font-size: clamp(1.05rem, 1.45vw, 1.25rem);
+  line-height: 1.7;
+}
+
+.sell-voice-card li + li {
+  margin-top: 18px;
+}
+
+.sell-screenshot {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: clamp(20px, 3vw, 34px);
+  text-align: center;
+  background:
+    linear-gradient(135deg, rgba(245, 245, 247, 0.92), rgba(255, 255, 255, 0.98));
+}
+
+.sell-screenshot-icon {
+  position: relative;
+  width: 50px;
+  height: 40px;
+  border: 2px solid rgba(98, 112, 128, 0.58);
+  border-radius: 10px;
+}
+
+.sell-screenshot-icon::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(98, 112, 128, 0.58);
+}
+
+.sell-screenshot-icon::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  height: 14px;
+  background:
+    linear-gradient(135deg, transparent 0 34%, rgba(98, 112, 128, 0.58) 35% 55%, transparent 56%),
+    linear-gradient(45deg, transparent 0 38%, rgba(98, 112, 128, 0.58) 39% 62%, transparent 63%);
+}
+
+.sell-screenshot strong {
+  max-width: 620px;
+  color: var(--sell-text);
+  font-size: clamp(1.05rem, 1.5vw, 1.32rem);
+  font-weight: 750;
+  line-height: 1.38;
+}
+
+.sell-screenshot span {
+  display: block;
+  max-width: 520px;
+  margin-top: 14px;
+  color: var(--sell-muted);
+  line-height: 1.6;
+}
+
+.sell-close {
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 74%, rgba(0, 113, 227, 0.075), rgba(255,255,255,0) 36%),
+    linear-gradient(180deg, #ffffff, #f6faff);
+}
+
+.sell-close .sell-narrow {
+  margin-inline: auto;
+}
+
+.sell-close h2,
+.sell-close .sell-lead {
+  margin-inline: auto;
+}
+
+.sell-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  margin-top: 28px;
+  border-radius: 999px;
+  padding: 0 28px;
+  background: var(--sell-text);
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.sell-progress {
+  position: fixed;
+  right: clamp(16px, 2vw, 28px);
+  top: 50%;
+  z-index: 30;
+  display: grid;
+  gap: 10px;
+  transform: translateY(-50%);
+}
+
+.sell-progress a {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: 1px solid var(--sell-blue);
+  background: transparent;
+  opacity: 0.72;
+}
+
+.sell-progress a:hover,
+.sell-progress a:focus-visible {
+  background: var(--sell-blue);
+  opacity: 1;
+}
+
+@media (max-width: 1100px) {
+  .sell-grid,
+  .sell-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .sell-section {
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+    scroll-snap-align: none;
+  }
+
+  html {
+    scroll-snap-type: none;
+  }
+
+  .sell-progress {
+    display: none;
+  }
+
+  .sell-stat-stack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .sell-section {
+    padding: calc(var(--header-height) + 46px) 18px 64px;
+  }
+
+  .sell-section h1 {
+    font-size: clamp(3rem, 14vw, 5rem);
+  }
+
+  .sell-section h2 {
+    font-size: clamp(2.4rem, 11vw, 4.2rem);
+  }
+
+  .sell-stat-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .sell-stat-stack article,
+  .sell-card,
+  .sell-steps article,
+  .sell-screenshot {
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .sell-steps article {
+    min-height: auto;
+  }
+
+  .sell-steps span {
+    margin-bottom: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-snap-type: none;
+  }
+}
