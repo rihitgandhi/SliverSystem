@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AccessAI accessibility checker for scanning a URL against real accessibility standards.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
+  <title>Checker - AccessAI</title>
+  <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=33">
+</head>
+<body class="checker-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="AccessAI home">
+        <img src="./images/a11y.jpg" alt="AccessAI logo mark">
+        <span>AccessAI</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="second-brain.html">Second Brain</a>
+        <a class="nav-link" href="learn.html">Learn</a>
+        <a class="nav-link" href="checker.html" aria-current="page">Checker</a>
+        <a class="nav-link" href="mission.html">Our Mission</a>
+        <span class="nav-status">Coming Soon</span>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content" class="checker-main">
+    <section class="checker-hero" aria-labelledby="checker-page-title">
+      <div class="checker-shell reveal">
+        <p class="kicker">CHECKER</p>
+        <h1 id="checker-page-title">Is your site accessible? Let's find out.</h1>
+        <p class="lead">Paste a URL below. We'll check it against real accessibility standards and tell you exactly what to fix.</p>
+      </div>
+    </section>
+
+    <section class="checker-input-section" aria-labelledby="checker-form-title">
+      <div class="checker-shell">
+        <form class="checker-form reveal" id="checker-form" novalidate>
+          <label for="checker-url" id="checker-form-title">Website URL</label>
+          <div class="checker-input-row">
+            <input id="checker-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="https://example.com" aria-describedby="checker-error checker-status">
+            <button class="button primary checker-submit" type="submit">Scan</button>
+          </div>
+          <p class="checker-message checker-error" id="checker-error" role="alert" hidden></p>
+          <p class="checker-message checker-status" id="checker-status" role="status" hidden>
+            <span class="checker-spinner" aria-hidden="true"></span>
+            Scanning the page...
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <section class="checker-results-section" id="checker-results" aria-live="polite" hidden>
+      <div class="checker-shell">
+        <div class="checker-results-header">
+          <p class="kicker">Results</p>
+          <h2 id="checker-summary">Scan results</h2>
+        </div>
+        <div class="checker-issues" id="checker-issues"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+  <script src="./scripts/page-transitions.js?v=2"></script>
+  <script src="./scripts/checker.js"></script>
+</body>
+</html>

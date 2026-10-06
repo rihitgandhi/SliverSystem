@@ -11,7 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=27">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=33">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -28,7 +29,7 @@
       <div class="nav-menu" id="nav-menu">
         <a class="nav-link" href="second-brain.html">Second Brain</a>
         <a class="nav-link" href="learn.html">Learn</a>
-        <a class="nav-link" href="accessibility-tools.html">Tools</a>
+        <a class="nav-link" href="checker.html">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
         <span class="nav-status">Coming Soon</span>
       </div>
@@ -79,11 +80,11 @@
           <span class="home-learn-preview-label">A preview of what you'll find</span>
           <div class="home-learn-stat-row">
             <span class="home-learn-stat">
-              <strong>95.9%</strong>
+              <strong data-count-to="95.9" data-count-decimals="1" data-count-suffix="%">95.9%</strong>
               <span>of home pages fail basic accessibility standards</span>
             </span>
             <span class="home-learn-stat">
-              <strong>70M+</strong>
+              <strong data-count-to="70" data-count-prefix="" data-count-suffix="M+">70M+</strong>
               <span>Americans live with a disability</span>
             </span>
           </div>
@@ -91,11 +92,17 @@
       </a>
     </section>
 
-    <section class="home-screen home-tools-screen" id="tools" aria-labelledby="tools-title">
+    <section class="home-screen home-checker-screen" id="checker" aria-labelledby="checker-title">
       <div class="home-section-content home-centered reveal">
-        <p class="home-eyebrow">Tools</p>
-        <h2 id="tools-title">Tools</h2>
-        <p>Coming soon.</p>
+        <p class="home-eyebrow">CHECKER</p>
+        <h2 id="checker-title">See it for yourself.</h2>
+        <p>Paste any URL. Get a real accessibility read on it — what's working, what's not, and why it matters.</p>
+        <p class="home-checker-promise">Free. No signup.</p>
+        <a class="home-link-cue" href="checker.html">Try the checker</a>
+        <div class="home-checker-preview" role="img" aria-label="Checker preview placeholder">
+          <span class="home-product-placeholder-icon" aria-hidden="true"></span>
+          <span class="home-product-placeholder-caption">Checker preview</span>
+        </div>
       </div>
     </section>
 
@@ -121,6 +128,7 @@
     </section>
   </main>
 
-  <script src="./scripts/page-transitions.js"></script>
+  <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+  <script src="./scripts/page-transitions.js?v=2"></script>
 </body>
 </html>

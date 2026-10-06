@@ -172,9 +172,9 @@ def about_page():
 def mission_page():
     return send_from_directory('.', 'mission.html')
 
-@app.route('/accessibility-tools.html')
-def accessibility_tools_page():
-    return send_from_directory('.', 'accessibility-tools.html')
+@app.route('/checker.html')
+def checker_page():
+    return send_from_directory('.', 'checker.html')
 
 @app.route('/api/cors-test', methods=['GET', 'OPTIONS'])
 def cors_test():
