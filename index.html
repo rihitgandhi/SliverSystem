@@ -81,20 +81,98 @@
     </section>
 
     <section class="home-screen home-product-screen" id="product" aria-labelledby="product-title">
-      <a class="home-section-content home-product-content reveal" href="second-brain.html">
+      <div class="home-section-content home-product-content reveal">
         <div class="home-product-copy">
           <p class="home-eyebrow">PRODUCT</p>
           <h2 id="product-title">Second Brain</h2>
           <p class="home-product-tagline">Your accessibility preferences, remembered.</p>
           <p class="home-product-promise">Set preferences once. Use them as you browse.</p>
           <p class="home-product-support">Second Brain applies supported settings on websites that allow extension changes.</p>
-          <span class="home-link-cue">Explore the product</span>
+          <a class="home-link-cue" href="second-brain.html">Explore the product</a>
         </div>
-        <div class="home-product-shot-placeholder" role="img" aria-label="Placeholder for a real screenshot of the Second Brain popup settings UI, captured at 1440 by 900 or 16 to 10.">
-          <span class="home-product-placeholder-icon" aria-hidden="true"></span>
-          <span class="home-product-placeholder-caption">Second Brain popup preview</span>
+        <div class="sbw-walkthrough" role="group" aria-label="Animated walkthrough of Second Brain">
+          <p class="visually-hidden">The walkthrough shows a user raising text size to 177% and turning on reduced motion, link highlighting and voice navigation on one website, then opening a second website where the same settings are already applied, and using the voice commands 'scroll down' and 'click sample button'.</p>
+          <div class="sbw-stage" aria-hidden="true">
+            <div class="sbw-browser">
+              <div class="sbw-topbar">
+                <div class="sbw-window-dots"><span></span><span></span><span></span></div>
+                <div class="sbw-tabs">
+                  <div class="sbw-tab sbw-tab-a is-active">example.com</div>
+                  <div class="sbw-tab sbw-tab-b">another-site.org</div>
+                </div>
+              </div>
+              <div class="sbw-toolbar">
+                <div class="sbw-address">example.com</div>
+                <div class="sbw-toolbar-icon">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8.2v8.2M8.4 12h7.2"></path></svg>
+                </div>
+              </div>
+              <div class="sbw-viewport">
+                <div class="sbw-site sbw-site-a">
+                  <div class="sbw-site-a-content">
+                    <h3>The quick brown fox</h3>
+                    <p>This is a sample paragraph so you can see exactly how body text will look on real websites once this setting is applied.</p>
+                    <a href="#" tabindex="-1">A sample link</a>
+                    <button type="button" tabindex="-1">Sample button</button>
+                  </div>
+                </div>
+                <div class="sbw-site sbw-site-b">
+                  <div class="sbw-site-b-page">
+                    <div class="sbw-site-b-banner">Another website</div>
+                    <div class="sbw-site-b-content">
+                      <h3>A different layout</h3>
+                      <p>This page uses a centered column and a different structure.</p>
+                      <p>The same accessibility preferences still carry across.</p>
+                      <div class="sbw-site-b-below">
+                        <a href="#" tabindex="-1">Another link</a>
+                        <button type="button" tabindex="-1">Sample button</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sbw-caption">Same settings. Already applied.</div>
+                <div class="sbw-voice-panel">
+                  <div class="sbw-voice-heading">
+                    <span class="sbw-voice-dot"></span>
+                    <strong>Listening…</strong>
+                    <span class="sbw-voice-close">×</span>
+                  </div>
+                  <div class="sbw-voice-transcript"></div>
+                  <div class="sbw-voice-message"></div>
+                </div>
+              </div>
+
+              <div class="sbw-popup">
+                <div class="sbw-popup-header">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8.2v8.2M8.4 12h7.2"></path></svg>
+                  <strong>Second Brain</strong>
+                </div>
+                <div class="sbw-text-row"><span>Text size</span><strong class="sbw-text-value">100%</strong></div>
+                <div class="sbw-slider"><span class="sbw-slider-fill"></span><span class="sbw-slider-thumb"></span></div>
+                <div class="sbw-toggle-row" data-setting="reduce"><span>Reduce motion</span><span class="sbw-switch"><i></i></span></div>
+                <div class="sbw-toggle-row" data-setting="highlight"><span>Highlight links / buttons</span><span class="sbw-switch"><i></i></span></div>
+                <div class="sbw-toggle-row" data-setting="contrast"><span>High contrast</span><span class="sbw-switch"><i></i></span></div>
+                <div class="sbw-toggle-row" data-setting="voice"><span>Voice navigation</span><span class="sbw-switch"><i></i></span></div>
+                <button class="sbw-disable" type="button" tabindex="-1">
+                  <svg viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 10.7a2 2 0 0 0 2.7 2.7M9.9 4.2A10.8 10.8 0 0 1 12 4c5.2 0 8.8 4.7 9.5 5.7a1 1 0 0 1 0 1.1 15.5 15.5 0 0 1-2.6 3M6.1 6.1a15.2 15.2 0 0 0-3.6 3.6 1 1 0 0 0 0 1.1C3.2 11.9 6.8 16 12 16c1 0 1.9-.2 2.8-.5"></path></svg>
+                  Disable on this site
+                </button>
+                <div class="sbw-host-hint">example.com</div>
+                <div class="sbw-settings-link">Edit full settings <span>›</span></div>
+              </div>
+
+              <div class="sbw-cursor">
+                <svg viewBox="0 0 24 28"><path d="M2 1.5v21l5.7-5.2 4 8.2 4.1-2-4-8.1 7.6-.8z"></path></svg>
+              </div>
+              <div class="sbw-click-ripple"></div>
+            </div>
+          </div>
+          <button class="sbw-playback" type="button" aria-label="Pause walkthrough">
+            <svg class="sbw-pause-icon" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"></path></svg>
+            <svg class="sbw-play-icon" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"></path></svg>
+          </button>
         </div>
-      </a>
+      </div>
     </section>
 
     <section class="home-screen home-checker-screen" id="checker" aria-labelledby="checker-title">
