@@ -6,20 +6,21 @@
   <meta name="description" content="A research-grounded explanation of AI, accessibility, and why portable preferences matter.">
   <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light">
-  <title>Learn - AccessAI</title>
+  <title>Learn | AccessAI</title>
   <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=33">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=39">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=1">
 </head>
 <body class="learn-page">
   <a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="site-header" role="banner">
     <nav class="nav" aria-label="Main navigation">
       <a class="brand" href="index.html" aria-label="AccessAI home">
-        <img src="./images/a11y.jpg" alt="AccessAI logo mark">
+        <img src="./images/a11y.jpg" alt="">
         <span>AccessAI</span>
       </a>
       <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
@@ -30,60 +31,93 @@
         <a class="nav-link" href="learn.html" aria-current="page">Learn</a>
         <a class="nav-link" href="checker.html">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
-        <span class="nav-status">Coming Soon</span>
+        <a class="nav-status nav-status-link" href="second-brain.html#install">Try Second Brain</a>
       </div>
     </nav>
   </header>
 
   <main id="main-content" class="learn-main">
     <section class="learn-section learn-headline-section" aria-labelledby="page-title">
-      <div class="learn-shell reveal">
-        <p class="kicker">Learn</p>
-        <h1 id="page-title">AI can help accessibility, but only with limits.</h1>
+      <div class="learn-shell learn-hero-grid reveal">
+        <div>
+          <p class="kicker">Learn</p>
+          <h1 id="page-title">AI can help accessibility, but only with limits.</h1>
+        </div>
+        <aside class="learn-research-rail" aria-label="Learn page research themes">
+          <span>Research lens</span>
+          <strong>Scale</strong>
+          <strong>Repetition</strong>
+          <strong>Limits</strong>
+        </aside>
       </div>
     </section>
 
     <section class="learn-section learn-intro-section" aria-label="Learn introduction">
-      <div class="learn-shell learn-copy-shell reveal">
-        <p class="lead">The strongest case for AccessAI is not hype. It is the scale and repetition of the same accessibility failures across the web.</p>
-        <p class="body-copy">AI can reduce friction by helping apply a user's own preferences more consistently. It cannot replace standards, testing, or human verification.</p>
+      <div class="learn-shell learn-intro-grid reveal">
+        <p class="learn-intro-marker" aria-hidden="true">01</p>
+        <div class="learn-copy-shell">
+          <p class="lead">AccessAI starts from the scale and repetition of the same accessibility failures across the web.</p>
+          <p class="body-copy">AI can reduce friction by helping apply a user's own preferences more consistently. It cannot replace standards, testing, or human verification.</p>
+        </div>
       </div>
     </section>
 
-    <section class="learn-stat-section reveal" aria-labelledby="webaim-title">
-      <div class="learn-shell">
-        <small>WebAIM 2026</small>
-        <h2 id="webaim-title">95.9% of the top 1 million home pages had detectable WCAG 2 failures.</h2>
-        <p>The audit found 56.1 accessibility errors per page on average, up 10.1% from 2025.</p>
+    <section class="learn-stat-section learn-stat-feature reveal" aria-labelledby="webaim-title">
+      <div class="learn-shell learn-stat-feature-grid">
+        <div class="learn-stat-number" aria-hidden="true">95.9%</div>
+        <div>
+          <small>WebAIM 2026</small>
+          <h2 id="webaim-title">95.9% of the top one million home pages had detectable WCAG 2 failures.</h2>
+          <p>The automated analysis found 56.1 accessibility errors per page on average, up 10.1% from 2025.</p>
+        </div>
       </div>
     </section>
 
-    <section class="learn-stat-section reveal" aria-labelledby="recurring-title">
-      <div class="learn-shell">
-        <small>Recurring failures</small>
-        <h2 id="recurring-title">Six error types caused 96% of detected issues for seven straight years.</h2>
+    <section class="learn-stat-section learn-recurring-section reveal" aria-labelledby="recurring-title">
+      <div class="learn-shell learn-recurring-grid">
+        <div>
+          <small>Recurring failures</small>
+          <h2 id="recurring-title">Six error types account for about 96% of detected issues.</h2>
+        </div>
         <p>Contrast, missing alt text, missing form labels, empty links, empty buttons, and missing document language keep returning.</p>
       </div>
     </section>
 
-    <section class="learn-stat-section reveal" aria-labelledby="affects-title">
-      <div class="learn-shell">
-        <small>Who it affects</small>
-        <h2 id="affects-title">More than 1 in 4 U.S. adults report having a disability.</h2>
-        <p>CDC 2022 data puts that number over 70 million people, rising to 43.9% among adults 65+.</p>
+    <section class="learn-stat-section learn-impact-section reveal" aria-labelledby="affects-title">
+      <div class="learn-shell learn-impact-grid">
+        <div class="learn-impact-copy">
+          <small>Who it affects</small>
+          <h2 id="affects-title">More than 1 in 4 U.S. adults report having a disability.</h2>
+          <p>That scale is why accessibility cannot depend on each person reconfiguring every website from scratch.</p>
+        </div>
+        <div class="learn-impact-mark" aria-hidden="true">
+          <span>1</span>
+          <span>in</span>
+          <span>4</span>
+        </div>
       </div>
     </section>
 
-    <section class="learn-stat-section reveal" aria-labelledby="limits-title">
-      <div class="learn-shell">
+    <section class="learn-stat-section learn-limits-section reveal" aria-labelledby="limits-title">
+      <div class="learn-shell learn-limits-grid">
         <small>AI limits</small>
         <h2 id="limits-title">Fluent descriptions can still be wrong.</h2>
-        <p>Vision-AI can describe images, but it can also hallucinate screenshot text or invent details. Accessibility tools need visible limits.</p>
+        <p>AI image descriptions can be useful, but they still need review because they can misread text or invent details. Accessibility tools need visible limits.</p>
+      </div>
+    </section>
+
+    <section class="learn-section learn-next-section reveal" aria-labelledby="learn-next-title">
+      <div class="learn-shell learn-copy-shell">
+        <p class="kicker">Next step</p>
+        <h2 id="learn-next-title">Try the extension built from this research.</h2>
+        <p class="body-copy">Second Brain carries supported accessibility preferences across pages where the extension can run.</p>
+        <a class="button primary" href="second-brain.html#install">Try Second Brain</a>
       </div>
     </section>
   </main>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
   <script src="./scripts/page-transitions.js?v=2"></script>
+  <script src="./scripts/accessibility-settings.js?v=1"></script>
 </body>
 </html>

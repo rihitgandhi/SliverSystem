@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AccessAI is building browser-level accessibility support, research, and tools for a more usable web.">
+  <meta name="description" content="AccessAI helps people carry supported accessibility preferences across websites and explains detected accessibility problems in plain English.">
   <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light">
-  <title>AccessAI - Accessibility that starts with the browser</title>
+  <title>Home | AccessAI</title>
   <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=33">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=47">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=1">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -20,7 +21,7 @@
   <header class="site-header" role="banner">
     <nav class="nav" aria-label="Main navigation">
       <a class="brand" href="index.html" aria-label="AccessAI home">
-        <img src="./images/a11y.jpg" alt="AccessAI logo mark">
+        <img src="./images/a11y.jpg" alt="">
         <span>AccessAI</span>
       </a>
       <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
@@ -31,42 +32,29 @@
         <a class="nav-link" href="learn.html">Learn</a>
         <a class="nav-link" href="checker.html">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
-        <span class="nav-status">Coming Soon</span>
+        <a class="nav-status nav-status-link" href="second-brain.html#install">Try Second Brain</a>
       </div>
     </nav>
   </header>
 
   <main id="main-content" class="home-flow">
     <section class="home-screen home-hero-screen" aria-labelledby="hero-title">
-      <div class="home-section-content reveal">
-        <h1 id="hero-title">The web wasn't built for everyone. We're fixing that.</h1>
-        <p>AccessAI is building tools that put accessibility where it belongs — with the person who needs it, not buried in a settings menu nobody maintains.</p>
-        <a class="home-hero-cta" href="second-brain.html">Get Started</a>
+      <div class="home-section-content home-hero-layout reveal">
+        <div class="home-hero-copy">
+          <h1 id="hero-title">AccessAI</h1>
+          <div class="product-action-row" aria-label="Second Brain actions">
+            <a class="button primary" href="second-brain.html#install">Try Second Brain</a>
+            <a class="button secondary" href="second-brain.html#demo-proof">View demo proof</a>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="home-screen home-quote-screen" id="mission" aria-labelledby="mission-title">
       <a class="home-section-content home-centered reveal" href="mission.html">
         <p class="home-eyebrow">Mission</p>
-        <h2 id="mission-title">This isn't a technology problem. It's an ownership problem.</h2>
+        <h2 id="mission-title"><span class="home-quote-mark home-quote-mark-open" aria-hidden="true">“</span>This isn't a technology problem. It's an ownership problem.<span class="home-quote-mark home-quote-mark-close" aria-hidden="true">”</span></h2>
         <span class="home-link-cue">Read the full mission</span>
-      </a>
-    </section>
-
-    <section class="home-screen home-product-screen" id="product" aria-labelledby="product-title">
-      <a class="home-section-content home-product-content reveal" href="second-brain.html">
-        <div class="home-product-copy">
-          <p class="home-eyebrow">PRODUCT</p>
-          <h2 id="product-title">Second Brain</h2>
-          <p class="home-product-tagline">Your accessibility preferences, remembered.</p>
-          <p class="home-product-promise">Set once. Applies everywhere.</p>
-          <p class="home-product-support">No per-site setup. Ever.</p>
-          <span class="home-link-cue">Explore the product</span>
-        </div>
-        <div class="home-product-shot-placeholder" role="img" aria-label="Product screenshot placeholder">
-          <span class="home-product-placeholder-icon" aria-hidden="true"></span>
-          <span class="home-product-placeholder-caption">Product screenshot</span>
-        </div>
       </a>
     </section>
 
@@ -76,18 +64,35 @@
         <h2 id="learn-title">Learn</h2>
         <p>AI is changing what's possible in accessibility — and what it still gets wrong. We dig into both.</p>
         <span class="home-link-cue">Read the research</span>
-        <div class="home-learn-preview" aria-label="A preview of what you'll find">
-          <span class="home-learn-preview-label">A preview of what you'll find</span>
+        <div class="home-learn-preview" aria-label="Research preview">
+          <span class="home-learn-preview-label">Research preview</span>
           <div class="home-learn-stat-row">
             <span class="home-learn-stat">
               <strong data-count-to="95.9" data-count-decimals="1" data-count-suffix="%">95.9%</strong>
-              <span>of home pages fail basic accessibility standards</span>
+              <span>of top one million home pages had detectable WCAG 2 failures</span>
             </span>
             <span class="home-learn-stat">
               <strong data-count-to="70" data-count-prefix="" data-count-suffix="M+">70M+</strong>
-              <span>Americans live with a disability</span>
+              <span>U.S. adults report having a disability</span>
             </span>
           </div>
+        </div>
+      </a>
+    </section>
+
+    <section class="home-screen home-product-screen" id="product" aria-labelledby="product-title">
+      <a class="home-section-content home-product-content reveal" href="second-brain.html">
+        <div class="home-product-copy">
+          <p class="home-eyebrow">PRODUCT</p>
+          <h2 id="product-title">Second Brain</h2>
+          <p class="home-product-tagline">Your accessibility preferences, remembered.</p>
+          <p class="home-product-promise">Set preferences once. Use them as you browse.</p>
+          <p class="home-product-support">Second Brain applies supported settings on websites that allow extension changes.</p>
+          <span class="home-link-cue">Explore the product</span>
+        </div>
+        <div class="home-product-shot-placeholder" role="img" aria-label="Placeholder for a real screenshot of the Second Brain popup settings UI, captured at 1440 by 900 or 16 to 10.">
+          <span class="home-product-placeholder-icon" aria-hidden="true"></span>
+          <span class="home-product-placeholder-caption">Second Brain popup preview</span>
         </div>
       </a>
     </section>
@@ -95,13 +100,20 @@
     <section class="home-screen home-checker-screen" id="checker" aria-labelledby="checker-title">
       <div class="home-section-content home-centered reveal">
         <p class="home-eyebrow">CHECKER</p>
-        <h2 id="checker-title">See it for yourself.</h2>
-        <p>Paste any URL. Get a real accessibility read on it — what's working, what's not, and why it matters.</p>
-        <p class="home-checker-promise">Free. No signup.</p>
+        <h2 id="checker-title">Accessibility issues, explained in plain English.</h2>
+        <p>Paste a website link. AccessAI uses AI to turn detected accessibility problems into clear explanations and next steps.</p>
+        <p class="home-checker-promise">Plain-English reports.</p>
         <a class="home-link-cue" href="checker.html">Try the checker</a>
-        <div class="home-checker-preview" role="img" aria-label="Checker preview placeholder">
-          <span class="home-product-placeholder-icon" aria-hidden="true"></span>
-          <span class="home-product-placeholder-caption">Checker preview</span>
+        <div class="home-checker-preview" role="img" aria-label="Checker preview showing a website URL input, Scan button, and scanning status.">
+          <span class="home-checker-preview-label">Website URL</span>
+          <div class="home-checker-preview-row">
+            <span class="home-checker-preview-input">https://example.com</span>
+            <span class="home-checker-preview-button">Scan</span>
+          </div>
+          <span class="home-checker-preview-status">
+            <span class="home-checker-preview-spinner" aria-hidden="true"></span>
+            Scanning the page...
+          </span>
         </div>
       </div>
     </section>
@@ -110,25 +122,45 @@
       <div class="home-section-content reveal">
         <p class="home-eyebrow">About</p>
         <h2 id="founder-title">Why I'm building this</h2>
-        <p>I'm a high schooler studying Public Policy and Computer Science, with an eye toward AI governance. AccessAI sits at the intersection of both — the belief that accessibility fails when it's treated as only an engineering problem or only a policy problem.</p>
+        <p>I'm a high school student working at the intersection of accessibility, public policy, computer science, and AI governance. AccessAI comes from the belief that accessibility fails when it is treated as only an engineering problem or only a policy problem.</p>
         <div class="home-founder-placeholders" aria-label="Founder placeholders">
-          <span class="home-placeholder-slot">Founder photo</span>
-          <span class="home-placeholder-slot">Personal detail</span>
+          <span class="home-placeholder-slot">Founder portrait</span>
+          <span class="home-placeholder-slot">Founder story: why accessibility matters to me</span>
         </div>
       </div>
     </section>
 
-    <section class="home-screen home-closing-screen" id="status" aria-labelledby="closing-title">
-      <div class="home-section-content home-centered reveal">
-        <p class="home-eyebrow">Status</p>
-        <h2 id="closing-title">Coming soon to the Chrome Web Store</h2>
-        <p>The Chrome extension is built and working. We're finishing up the listing.</p>
-        <span class="home-status-pill">Coming Soon</span>
+    <section class="home-screen home-closing-screen home-try-screen" id="try-it" aria-labelledby="try-title">
+      <div class="home-section-content reveal">
+        <div class="home-try-heading">
+          <p class="home-eyebrow">Try it out</p>
+          <h2 id="try-title">Choose the AccessAI tool you need right now.</h2>
+          <p>Install Second Brain for browsing preferences, or run a quick accessibility check before your next review.</p>
+        </div>
+
+        <div class="home-try-grid" aria-label="AccessAI tools to try">
+          <article class="home-try-card home-try-card-store">
+            <span class="home-try-card-icon" aria-hidden="true">+</span>
+            <p class="home-eyebrow">Chrome Web Store</p>
+            <h3>Second Brain extension</h3>
+            <p>Save supported accessibility preferences once, then let Second Brain remember them as you browse sites that allow extension changes.</p>
+            <a class="button primary home-try-button" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Add to Chrome</a>
+          </article>
+
+          <article class="home-try-card home-try-card-checker">
+            <span class="home-try-card-icon" aria-hidden="true">?</span>
+            <p class="home-eyebrow">Accessibility Checker</p>
+            <h3>Scan a website</h3>
+            <p>Paste a page URL and get plain-English explanations of accessibility issues, why they matter, and what to fix next.</p>
+            <a class="button secondary home-try-button" href="checker.html">Try the checker</a>
+          </article>
+        </div>
       </div>
     </section>
   </main>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
   <script src="./scripts/page-transitions.js?v=2"></script>
+  <script src="./scripts/accessibility-settings.js?v=1"></script>
 </body>
 </html>

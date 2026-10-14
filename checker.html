@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AccessAI accessibility checker for scanning a URL against real accessibility standards.">
+  <meta name="description" content="AccessAI Checker explains detected website accessibility problems in plain English.">
   <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light">
-  <title>Checker - AccessAI</title>
+  <title>Checker | AccessAI</title>
   <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=33">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=39">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=1">
 </head>
 <body class="checker-page">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -20,7 +21,7 @@
   <header class="site-header" role="banner">
     <nav class="nav" aria-label="Main navigation">
       <a class="brand" href="index.html" aria-label="AccessAI home">
-        <img src="./images/a11y.jpg" alt="AccessAI logo mark">
+        <img src="./images/a11y.jpg" alt="">
         <span>AccessAI</span>
       </a>
       <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
@@ -31,7 +32,7 @@
         <a class="nav-link" href="learn.html">Learn</a>
         <a class="nav-link" href="checker.html" aria-current="page">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
-        <span class="nav-status">Coming Soon</span>
+        <a class="nav-status nav-status-link" href="second-brain.html#install">Try Second Brain</a>
       </div>
     </nav>
   </header>
@@ -40,8 +41,8 @@
     <section class="checker-hero" aria-labelledby="checker-page-title">
       <div class="checker-shell reveal">
         <p class="kicker">CHECKER</p>
-        <h1 id="checker-page-title">Is your site accessible? Let's find out.</h1>
-        <p class="lead">Paste a URL below. We'll check it against real accessibility standards and tell you exactly what to fix.</p>
+        <h1 id="checker-page-title">Accessibility issues, explained in plain English.</h1>
+        <p class="lead">Paste a website link. AccessAI uses AI to explain detected accessibility problems in clear language, so a site owner can understand what is wrong and what to fix next.</p>
       </div>
     </section>
 
@@ -71,10 +72,20 @@
         <div class="checker-issues" id="checker-issues"></div>
       </div>
     </section>
+
+    <section class="checker-next-section" aria-labelledby="checker-next-title">
+      <div class="checker-shell reveal">
+        <p class="kicker">Next step</p>
+        <h2 id="checker-next-title">Want accessibility preferences that travel with you?</h2>
+        <p class="checker-message">The Checker explains problems on a page. Second Brain is the extension for carrying supported accessibility preferences across the web.</p>
+        <a class="button primary" href="second-brain.html#install">Try Second Brain</a>
+      </div>
+    </section>
   </main>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
   <script src="./scripts/page-transitions.js?v=2"></script>
-  <script src="./scripts/checker.js"></script>
+  <script src="./scripts/checker.js?v=2"></script>
+  <script src="./scripts/accessibility-settings.js?v=1"></script>
 </body>
 </html>

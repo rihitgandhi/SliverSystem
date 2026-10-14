@@ -9,6 +9,9 @@
   const summary = document.getElementById('checker-summary');
   const issuesList = document.getElementById('checker-issues');
   const submit = form?.querySelector('button[type="submit"]');
+  const apiBase = ['8030', '8000', '8080'].includes(window.location.port)
+    ? 'http://127.0.0.1:5000'
+    : '';
 
   if (!form || !input || !error || !status || !results || !summary || !issuesList || !submit) return;
 
@@ -122,8 +125,7 @@
   }
 
   async function scan(url) {
-    // This calls our own backend endpoint, NOT the accessibility API directly. The backend endpoint is responsible for holding the real API key and calling the actual accessibility-checking API server-side, then returning results to this page. This keeps the API key private. [PLACEHOLDER: backend endpoint not yet built — this will 404 until the server-side piece exists]
-    const response = await fetch('/api/check-accessibility', {
+    const response = await fetch(`${apiBase}/api/check-accessibility`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -132,7 +134,12 @@
     });
 
     if (!response.ok) {
-      throw new Error('The checker backend is not available yet. The secure server-side endpoint still needs to be built before scans can run.');
+      let message = 'The checker could not complete the scan. Try again in a moment.';
+      try {
+        const payload = await response.json();
+        if (payload?.error) message = payload.error;
+      } catch (_) {}
+      throw new Error(message);
     }
 
     return response.json();

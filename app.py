@@ -53,6 +53,8 @@ if os.getenv('APPLICATIONINSIGHTS_CONNECTION_STRING'):
 _default_origins = [
     'http://localhost:5000',
     'http://127.0.0.1:5000',
+    'http://localhost:8030',
+    'http://127.0.0.1:8030',
     'https://rihitgandhi.github.io',
 ]
 _extra = os.getenv('ALLOWED_ORIGINS', '').strip()
@@ -192,6 +194,156 @@ def cors_test():
     })
     print(f"GET response headers: {dict(response.headers)}")
     return response
+
+
+def _checker_severity(wcag):
+    if wcag in {'1.1.1', '2.1.1', '3.3.2', '4.1.2'}:
+        return 'serious'
+    if wcag in {'1.3.1', '1.4.10', '2.4.1', '2.4.2', '2.4.4', '2.4.6'}:
+        return 'moderate'
+    return 'minor'
+
+
+def _checker_fix_for(wcag, summary):
+    fixes = {
+        '1.1.1': 'Add meaningful alt text for informative images, or use alt="" for decorative images.',
+        '1.3.1': 'Use semantic landmarks and a heading structure that moves one level at a time.',
+        '1.4.10': 'Add a responsive viewport meta tag so the page can reflow on small screens.',
+        '2.1.1': 'Use native buttons or links for interactive controls, and make every action keyboard reachable.',
+        '2.4.1': 'Add a visible-on-focus skip link that moves keyboard users directly to the main content.',
+        '2.4.2': 'Write a short, descriptive page title that identifies the page purpose.',
+        '2.4.4': 'Replace vague or empty link text with labels that describe each destination or action.',
+        '2.4.6': 'Add one clear h1 and keep headings descriptive and correctly nested.',
+        '3.1.1': 'Set the html lang attribute to the page language, such as lang="en".',
+        '3.3.2': 'Connect every form control to a visible label or an accessible aria-label.',
+        '4.1.2': 'Give controls, iframes, and custom widgets clear accessible names and valid roles.',
+    }
+    return fixes.get(wcag, f'Review this WCAG finding and update the page markup: {summary}')
+
+
+def _checker_issue_from_flag(flag, evidence):
+    wcag = flag.get('wcag', 'WCAG')
+    summary = flag.get('summary', 'Accessibility issue detected')
+    issue = {
+        'type': f'WCAG {wcag}',
+        'rule': wcag,
+        'severity': _checker_severity(wcag),
+        'element': 'Page markup',
+        'explanation': summary,
+        'fix': _checker_fix_for(wcag, summary),
+    }
+
+    if wcag == '1.1.1':
+        samples = evidence.get('images', {}).get('missing_alt_samples') or []
+        if samples:
+            issue['element'] = samples[0].get('selector') or 'Image without alt text'
+    elif wcag == '3.3.2':
+        samples = evidence.get('forms', {}).get('inputs_unlabeled_samples') or []
+        if samples:
+            issue['element'] = samples[0].get('selector') or 'Unlabeled form control'
+    elif wcag == '2.4.6':
+        outline = evidence.get('headings', {}).get('outline') or []
+        if outline:
+            issue['element'] = f"h{outline[0].get('level')}: {outline[0].get('text')}"
+
+    return issue
+
+
+def _checker_response_from_evidence(url, fetch_result, evidence, ai_issues=None):
+    issues = ai_issues if isinstance(ai_issues, list) else [
+        _checker_issue_from_flag(flag, evidence)
+        for flag in evidence.get('flagged_findings', [])
+    ]
+
+    severity_counts = {'critical': 0, 'serious': 0, 'moderate': 0, 'minor': 0}
+    for issue in issues:
+        severity = str(issue.get('severity', 'minor')).lower()
+        if severity not in severity_counts:
+            severity = 'minor'
+        severity_counts[severity] += 1
+
+    return {
+        'url': url,
+        'finalUrl': fetch_result.get('final_url', url),
+        'status': fetch_result.get('status'),
+        'totalIssues': len(issues),
+        'severityCounts': severity_counts,
+        'issues': issues,
+        'sources': evidence.get('sources', []),
+        'evidence': {
+            'page': evidence.get('page', {}),
+            'images': evidence.get('images', {}),
+            'headings': evidence.get('headings', {}),
+            'landmarks': evidence.get('landmarks', {}),
+            'links': evidence.get('links', {}),
+            'forms': evidence.get('forms', {}),
+        },
+        'aiPowered': ai_client.is_configured() and isinstance(ai_issues, list),
+    }
+
+
+@app.route('/api/check-accessibility', methods=['POST', 'OPTIONS'])
+def check_accessibility():
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'})
+    if not request.is_json:
+        return jsonify({'error': 'Content-Type must be application/json'}), 400
+
+    data = request.get_json(silent=True)
+    if data is None:
+        return jsonify({'error': 'Invalid JSON format'}), 400
+
+    url = (data.get('url') or '').strip()
+    if not url:
+        return jsonify({'error': 'No URL provided'}), 400
+
+    from web_audit import fetch_page, audit_html, evidence_summary_for_prompt
+
+    fetch_result = fetch_page(url)
+    if not fetch_result.get('ok'):
+        issue = {
+            'type': 'Scan blocked',
+            'rule': fetch_result.get('error_kind', 'fetch_error'),
+            'severity': 'serious',
+            'element': url,
+            'explanation': fetch_result.get('error', 'The page could not be fetched safely.'),
+            'fix': 'Check that the URL is public, reachable, and starts with http:// or https://.',
+        }
+        return jsonify({
+            'url': url,
+            'finalUrl': url,
+            'status': None,
+            'totalIssues': 1,
+            'severityCounts': {'critical': 0, 'serious': 1, 'moderate': 0, 'minor': 0},
+            'issues': [issue],
+            'sources': [],
+            'aiPowered': False,
+        })
+
+    evidence = audit_html(fetch_result.get('html', ''), fetch_result.get('final_url', url))
+    ai_issues = None
+
+    if ai_client.is_configured() and evidence.get('flagged_findings'):
+        system_prompt = (
+            "You are an accessibility checker. Use only the provided deterministic "
+            "audit evidence. Return JSON with an issues array. Each issue must have "
+            "type, rule, severity, element, explanation, and fix. Severity must be "
+            "critical, serious, moderate, or minor."
+        )
+        user_prompt = (
+            f"URL: {url}\n\n"
+            f"{evidence_summary_for_prompt(evidence)}\n\n"
+            "Return concise, plain-English issues for a site owner. Do not invent "
+            "findings that are not supported by the evidence."
+        )
+        try:
+            ai_result = ai_client.generate_json(user_prompt, system_message=system_prompt)
+            if isinstance(ai_result, dict) and isinstance(ai_result.get('issues'), list):
+                ai_issues = ai_result['issues']
+        except Exception as exc:
+            log.warning('Checker AI explanation failed; using deterministic fallback: %s', exc)
+
+    return jsonify(_checker_response_from_evidence(url, fetch_result, evidence, ai_issues))
 
 @app.route('/api/alt-text', methods=['POST', 'OPTIONS'])
 def generate_alt_text():
