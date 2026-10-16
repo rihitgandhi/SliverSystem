@@ -35,12 +35,6 @@ def _require_env_vars():
 	"""Fail fast if required secrets are missing in production."""
 	missing = []
 	if APP_ENV == 'production':
-		if not AZURE_OPENAI_API_KEY:
-			missing.append('AZURE_OPENAI_API_KEY')
-		if not AZURE_OPENAI_ENDPOINT:
-			missing.append('AZURE_OPENAI_ENDPOINT')
-		if not AZURE_OPENAI_DEPLOYMENT:
-			missing.append('AZURE_OPENAI_DEPLOYMENT')
 		if not FLASK_SECRET_KEY:
 			missing.append('FLASK_SECRET_KEY')
 

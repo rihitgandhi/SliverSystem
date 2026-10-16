@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AccessAI Checker explains detected website accessibility problems in plain English.">
+  <meta name="description" content="Check rendered desktop and mobile pages for accessibility findings, affected elements, and specific fixes.">
+  <meta name="checker-api-base" content="https://sliversystem-backend.onrender.com">
   <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light">
   <title>Checker | AccessAI</title>
@@ -12,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=39">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=44">
   <link rel="stylesheet" href="./styles/accessibility-settings.css?v=1">
 </head>
 <body class="checker-page">
@@ -42,7 +43,7 @@
       <div class="checker-shell reveal">
         <p class="kicker">CHECKER</p>
         <h1 id="checker-page-title">Accessibility issues, explained in plain English.</h1>
-        <p class="lead">Paste a website link. AccessAI uses AI to explain detected accessibility problems in clear language, so a site owner can understand what is wrong and what to fix next.</p>
+        <p class="lead">Check a page on desktop and mobile for contrast, labels, keyboard-related markup, ARIA, links, tables, and more. Explore every detected element, from critical barriers to smaller improvements.</p>
       </div>
     </section>
 
@@ -57,7 +58,7 @@
           <p class="checker-message checker-error" id="checker-error" role="alert" hidden></p>
           <p class="checker-message checker-status" id="checker-status" role="status" hidden>
             <span class="checker-spinner" aria-hidden="true"></span>
-            Scanning the page...
+            Checking desktop, mobile, and narrow layouts. Detailed scans can take a minute...
           </p>
         </form>
       </div>
@@ -68,8 +69,47 @@
         <div class="checker-results-header">
           <p class="kicker">Results</p>
           <h2 id="checker-summary">Scan results</h2>
+          <p class="checker-message" id="checker-coverage"></p>
+        </div>
+        <div class="checker-scan-warnings checker-message" id="checker-warnings" role="status" hidden></div>
+        <div class="checker-overview" id="checker-overview" aria-label="Finding categories" hidden></div>
+        <section class="checker-priorities" id="checker-priorities" aria-labelledby="checker-priorities-title" hidden>
+          <h3 id="checker-priorities-title">Start here</h3>
+          <p>Address A/AA findings first, then work through the best practices and enhanced recommendations.</p>
+          <ol id="checker-priority-list"></ol>
+        </section>
+        <div class="checker-report-actions" id="checker-report-actions" hidden>
+          <button type="button" id="checker-download-json">Download JSON</button>
+          <button type="button" id="checker-download-csv">Download CSV</button>
+          <button type="button" id="checker-expand-all">Expand all</button>
+          <button type="button" id="checker-collapse-all">Collapse all</button>
+          <p>Downloads include every finding and review item, regardless of filters.</p>
+        </div>
+        <div class="checker-filters" id="checker-filters" hidden>
+          <label>Show
+            <select id="checker-kind"><option value="confirmed">Detected findings</option><option value="review">Needs human review</option></select>
+          </label>
+          <label>Severity
+            <select id="checker-severity"><option value="all">All severities</option><option value="critical">Critical</option><option value="serious">Serious</option><option value="moderate">Moderate</option><option value="minor">Minor</option></select>
+          </label>
+          <label>Standard
+            <select id="checker-standard"><option value="all">All standards</option><option value="WCAG A/AA">WCAG A/AA</option><option value="Enhanced (AAA)">AAA enhancements</option><option value="Best practice">Best practices</option><option value="Human review">Human review</option><option value="Markup check">Markup checks</option></select>
+          </label>
+          <label>Screen size
+            <select id="checker-viewport"><option value="all">All screen sizes</option><option value="Desktop">Desktop · 1440px</option><option value="Mobile">Mobile · 390px</option><option value="Narrow">Narrow · 320px</option></select>
+          </label>
+          <label class="checker-search">Search findings
+            <input id="checker-search" type="search" placeholder="Search findings, elements, or fixes" autocomplete="off">
+          </label>
+          <button type="button" id="checker-reset-filters">Reset filters</button>
+          <p class="checker-message" id="checker-filter-count" role="status"></p>
         </div>
         <div class="checker-issues" id="checker-issues"></div>
+        <details class="checker-manual" id="checker-manual" hidden>
+          <summary>Checks that still need a person</summary>
+          <p>Automated testing cannot establish full accessibility or find every problem. Findings apply to this page's rendered state; other pages and interactions need their own checks.</p>
+          <ul id="checker-manual-list"></ul>
+        </details>
       </div>
     </section>
 
@@ -85,7 +125,8 @@
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
   <script src="./scripts/page-transitions.js?v=2"></script>
-  <script src="./scripts/checker.js?v=2"></script>
+  <script src="./scripts/checker-report.js?v=1"></script>
+  <script src="./scripts/checker.js?v=5"></script>
   <script src="./scripts/accessibility-settings.js?v=1"></script>
 </body>
 </html>

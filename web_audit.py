@@ -215,17 +215,32 @@ def fetch_page(url: str) -> Dict[str, Any]:
 
     started = time.monotonic()
     try:
-        resp = requests.get(
-            url,
-            headers={
-                "User-Agent": USER_AGENT,
-                "Accept": "text/html,application/xhtml+xml;q=0.9,*/*;q=0.5",
-                "Accept-Language": "en-US,en;q=0.9",
-            },
-            timeout=FETCH_TIMEOUT_SECONDS,
-            allow_redirects=True,
-            stream=True,
-        )
+        current_url = url
+        for _ in range(6):
+            current = urlparse(current_url)
+            if (current.scheme not in ('http', 'https') or not current.hostname
+                    or current.username or current.password or _is_private_host(current.hostname)):
+                return {"ok": False, "url": url, "error_kind": "private_host",
+                        "error": "The URL or a redirect points to a private or unsupported destination."}
+            resp = requests.get(
+                current_url,
+                headers={
+                    "User-Agent": USER_AGENT,
+                    "Accept": "text/html,application/xhtml+xml;q=0.9,*/*;q=0.5",
+                    "Accept-Language": "en-US,en;q=0.9",
+                },
+                timeout=FETCH_TIMEOUT_SECONDS,
+                allow_redirects=False,
+                stream=True,
+            )
+            if 300 <= resp.status_code < 400 and resp.headers.get('Location'):
+                current_url = urljoin(current_url, resp.headers['Location'])
+                resp.close()
+                continue
+            break
+        else:
+            return {"ok": False, "url": url, "error_kind": "redirects",
+                    "error": "The page redirected too many times."}
     except requests.exceptions.SSLError as exc:
         return {"ok": False, "url": url, "error_kind": "ssl",
                 "error": f"TLS error: {exc}"}

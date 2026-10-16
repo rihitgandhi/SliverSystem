@@ -1,25 +1,19 @@
 services:
   - type: web
-    name: sliver-system-backend
-    env: python
+    name: sliversystem-backend
+    env: docker
     plan: starter
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    dockerfilePath: ./Dockerfile
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.0
-      - key: GEMINI_API_KEY
-        sync: false
+      - key: APP_ENV
+        value: production
+      - key: ALLOWED_ORIGINS
+        value: https://rihitgandhi.github.io
       - key: FLASK_SECRET_KEY
         generateValue: true
       - key: FLASK_DEBUG
         value: false
-      - key: HOST
-        value: 0.0.0.0
-      - key: PORT
-        value: 10000
+      - key: WEB_CONCURRENCY
+        value: 1
     healthCheckPath: /api/health
     autoDeploy: true
-    scaling:
-      minInstances: 1
-      maxInstances: 3 
