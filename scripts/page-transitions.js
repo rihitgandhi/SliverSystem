@@ -5,6 +5,18 @@
   const PAGE_EXIT_DURATION_MS = 240;
   let lenis = null;
 
+  const shouldReduceMotion = () => (
+    prefersReducedMotion.matches || document.documentElement.dataset.a11yMotion === 'reduce'
+  );
+
+  const onSystemMotionChange = (listener) => {
+    if (typeof prefersReducedMotion.addEventListener === 'function') {
+      prefersReducedMotion.addEventListener('change', listener);
+    } else if (typeof prefersReducedMotion.addListener === 'function') {
+      prefersReducedMotion.addListener(listener);
+    }
+  };
+
   function initMenu() {
     const button = document.querySelector('.menu-toggle');
     const menu = document.getElementById('nav-menu');
@@ -50,7 +62,7 @@
     const items = sectionItems.length ? sectionItems : fallbackItems;
     if (!items.length) return;
 
-    if (prefersReducedMotion.matches || !('IntersectionObserver' in window)) {
+    if (shouldReduceMotion() || !('IntersectionObserver' in window)) {
       items.forEach((item) => item.classList.add('in-view'));
       fallbackItems.forEach((item) => item.classList.add('in-view'));
       return;
@@ -71,10 +83,17 @@
 
     items.forEach((item) => observer.observe(item));
     fallbackItems.forEach((item) => item.classList.add('in-view'));
+
+    document.addEventListener('accessai:settingschange', (event) => {
+      if (!event.detail || !event.detail.reducedMotion) return;
+      items.forEach((item) => item.classList.add('in-view'));
+      fallbackItems.forEach((item) => item.classList.add('in-view'));
+      observer.disconnect();
+    });
   }
 
   function initSmoothScroll() {
-    if (prefersReducedMotion.matches || typeof window.Lenis !== 'function') return;
+    if (typeof window.Lenis !== 'function') return;
 
     lenis = new window.Lenis({
       autoRaf: true,
@@ -91,8 +110,21 @@
 
     window.accessAILenis = lenis;
 
+    const syncMotion = () => {
+      if (!lenis) return;
+      if (shouldReduceMotion() && typeof lenis.stop === 'function') {
+        lenis.stop();
+      } else if (!shouldReduceMotion() && typeof lenis.start === 'function') {
+        lenis.start();
+      }
+    };
+
+    document.addEventListener('accessai:settingschange', syncMotion);
+    onSystemMotionChange(syncMotion);
+    syncMotion();
+
     document.addEventListener('click', (event) => {
-      if (!lenis || event.defaultPrevented || event.button !== 0) return;
+      if (!lenis || shouldReduceMotion() || event.defaultPrevented || event.button !== 0) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
       const anchor = event.target.closest('a[href^="#"]');
@@ -127,7 +159,7 @@
       });
     };
 
-    if (prefersReducedMotion.matches || !('IntersectionObserver' in window)) {
+    if (shouldReduceMotion() || !('IntersectionObserver' in window)) {
       setFinalValues();
       return;
     }
@@ -176,17 +208,23 @@
 
     const section = document.querySelector('.home-learn-screen') || items[0];
     observer.observe(section);
+
+    document.addEventListener('accessai:settingschange', (event) => {
+      if (!event.detail || !event.detail.reducedMotion) return;
+      setFinalValues();
+      observer.disconnect();
+    });
   }
 
   function initPageTransitions() {
     const body = document.body;
-    if (!body || prefersReducedMotion.matches) return;
+    if (!body) return;
 
-    body.classList.add('page-entering');
+    if (!shouldReduceMotion()) body.classList.add('page-entering');
     window.addEventListener('pageshow', () => {
       body.classList.remove('page-transitioning');
       body.removeAttribute('aria-busy');
-      body.classList.add('page-entering');
+      body.classList.toggle('page-entering', !shouldReduceMotion());
     });
 
     const isNavigableLink = (anchor) => {
@@ -214,6 +252,7 @@
     };
 
     document.addEventListener('click', (event) => {
+      if (shouldReduceMotion()) return;
       if (body.classList.contains('page-transitioning')) return;
       if (event.defaultPrevented || event.button !== 0) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -261,12 +300,13 @@
     const cursor = walkthrough.querySelector('.sbw-cursor');
     const ripple = walkthrough.querySelector('.sbw-click-ripple');
     const duration = 18000;
-    const reducedAtLoad = prefersReducedMotion.matches;
+    const reducedAtLoad = shouldReduceMotion();
     let elapsed = 0;
     let lastFrame = 0;
     let inView = false;
     let userPaused = reducedAtLoad;
     let showReducedStatic = reducedAtLoad;
+    let pausedBeforeReducedMotion = false;
 
     const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
     const easeInOut = (value) => {
@@ -468,6 +508,24 @@
       setPlaybackState();
       render(elapsed);
     });
+
+    const syncWalkthroughMotion = () => {
+      const reduce = shouldReduceMotion();
+      if (reduce && !showReducedStatic) {
+        pausedBeforeReducedMotion = userPaused;
+        showReducedStatic = true;
+        userPaused = true;
+      } else if (!reduce && showReducedStatic) {
+        showReducedStatic = false;
+        userPaused = pausedBeforeReducedMotion;
+        elapsed = 0;
+      }
+      setPlaybackState();
+      render(elapsed);
+    };
+
+    document.addEventListener('accessai:settingschange', syncWalkthroughMotion);
+    onSystemMotionChange(syncWalkthroughMotion);
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
