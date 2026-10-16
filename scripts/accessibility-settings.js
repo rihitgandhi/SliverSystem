@@ -15,7 +15,15 @@
 
   function load() {
     try {
-      return { ...defaults, ...JSON.parse(window.localStorage.getItem(key) || '{}') };
+      const saved = JSON.parse(window.localStorage.getItem(key) || '{}');
+      return {
+        fontScale: Number(saved.fontScale) || defaults.fontScale,
+        contrast: ['default', 'high', 'dark'].includes(saved.contrast) ? saved.contrast : defaults.contrast,
+        spacing: saved.spacing === true || saved.spacing === 'true',
+        readableFont: saved.readableFont === true || saved.readableFont === 'true',
+        underlineLinks: saved.underlineLinks === true || saved.underlineLinks === 'true',
+        reducedMotion: saved.reducedMotion === true || saved.reducedMotion === 'true'
+      };
     } catch (_) {
       return { ...defaults };
     }
@@ -113,6 +121,11 @@
       root.dataset.a11yUnderlineLinks = String(settings.underlineLinks);
       root.dataset.a11yMotion = settings.reducedMotion ? 'reduce' : 'default';
 
+      const themeColor = document.querySelector('meta[name="theme-color"]');
+      if (themeColor) {
+        themeColor.content = settings.contrast === 'dark' ? '#05070a' : '#ffffff';
+      }
+
       if (settings.reducedMotion && window.accessAILenis && typeof window.accessAILenis.destroy === 'function') {
         window.accessAILenis.destroy();
         window.accessAILenis = null;
@@ -129,7 +142,7 @@
       setOpen(panel.hidden);
     });
 
-    form.addEventListener('input', (event) => {
+    const updateSetting = (event) => {
       const target = event.target;
       if (!target.name) return;
       settings = {
@@ -142,14 +155,12 @@
       apply();
       syncControls();
       save(settings);
-    });
+    };
 
-    form.addEventListener('change', (event) => {
-      if (event.target.name !== 'contrast') return;
-      settings.contrast = event.target.value;
-      apply();
-      save(settings);
+    form.addEventListener('input', (event) => {
+      if (event.target.name === 'fontScale') updateSetting(event);
     });
+    form.addEventListener('change', updateSetting);
 
     widget.querySelector('.accessibility-settings__reset').addEventListener('click', () => {
       settings = { ...defaults };

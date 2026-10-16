@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Second Brain is the AccessAI Chrome extension that carries supported accessibility preferences across websites.">
+  <meta name="description" content="Set your accessibility preferences once. Second Brain remembers them as you browse.">
   <meta name="theme-color" content="#ffffff">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="light dark">
   <title>Second Brain | AccessAI</title>
   <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
   <link rel="stylesheet" href="./styles/accessai-tabs.css?v=38">
-  <link rel="stylesheet" href="./styles/second-brain-landing.css?v=12">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=1">
+  <link rel="stylesheet" href="./styles/second-brain-landing.css?v=21">
 </head>
-<body class="sell-page">
+<body class="second-brain-page">
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header" role="banner">
@@ -24,419 +24,106 @@
         <img src="./images/a11y.jpg" alt="">
         <span>AccessAI</span>
       </a>
-      <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
-        <span></span>
-      </button>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu"><span></span></button>
       <div class="nav-menu" id="nav-menu">
         <a class="nav-link" href="second-brain.html" aria-current="page">Second Brain</a>
         <a class="nav-link" href="learn.html">Learn</a>
         <a class="nav-link" href="checker.html">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
-        <a class="nav-status nav-status-link" href="#install">Try Second Brain</a>
+        <a class="nav-status nav-status-link" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Add to Chrome</a>
       </div>
     </nav>
   </header>
 
-  <main id="main-content" class="sell-main">
-    <nav class="sell-progress" aria-label="Second Brain page sections">
-      <a href="#overview" aria-label="Overview"></a>
-      <a href="#accessibility-problem" aria-label="The accessibility problem"></a>
-      <a href="#second-brain-solution" aria-label="The Second Brain solution"></a>
-      <a href="#how-it-works" aria-label="How it works"></a>
-      <a href="#current-features" aria-label="Current features"></a>
-      <a href="#limits" aria-label="Product limits"></a>
-      <a href="#browser-settings" aria-label="Browser and operating system settings"></a>
-      <a href="#voice-navigation" aria-label="Voice Navigation"></a>
-      <a href="#demo-proof" aria-label="Product proof"></a>
-      <a href="#install" aria-label="Install or open the demo"></a>
-    </nav>
-
-    <section class="sell-section sell-hook" id="overview" aria-labelledby="overview-title">
-      <div class="sell-shell sell-narrow reveal">
-        <p class="sell-kicker">Second Brain</p>
-        <h1 id="overview-title">Second Brain carries your accessibility preferences.</h1>
-        <p class="sell-lead">Second Brain stores supported preferences like font size, contrast, motion reduction, and spacing, then applies them on websites that allow extension changes.</p>
+  <main id="main-content" class="product-main">
+    <section class="product-section product-hero" id="overview" aria-labelledby="overview-title">
+      <div class="product-shell hero-copy reveal">
+        <p class="eyebrow">Second Brain for Chrome</p>
+        <h1 id="overview-title">Set it once.<br><span>It follows you.</span></h1>
+        <p class="hero-subhead">Font size, contrast, reduced motion, and spacing — remembered and applied as you browse.</p>
+        <a class="primary-cta" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Add to Chrome <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="product-shell hero-demo reveal" aria-label="Second Brain product demo">
+        <div class="demo-player" data-video-id="hpZcIcyKpl0">
+          <img src="./images/second-brain-demo-poster.jpg" alt="Second Brain applying saved reading preferences to an article in Chrome." width="480" height="360">
+          <button class="demo-play" type="button" aria-label="Play the Second Brain product demo"><span aria-hidden="true"></span></button>
+        </div>
+        <p class="media-caption">See Second Brain in action <span aria-hidden="true">— 0:52</span></p>
       </div>
     </section>
 
-    <section class="sell-section sell-problem" id="accessibility-problem" aria-labelledby="accessibility-problem-title">
-      <div class="sell-shell sell-problem-layout">
-        <div class="sell-problem-copy reveal">
-          <p class="sell-kicker">Problem</p>
-          <h2 id="accessibility-problem-title">Most accessibility failures are site problems.</h2>
-          <p class="sell-copy">WebAIM's 2026 automated analysis of the top one million home pages found that 95.9% had detectable WCAG 2 failures.</p>
-          <p class="sell-copy">That data shows why accessibility still needs serious work across the web, and why users are repeatedly forced to adjust, work around, or abandon pages that were not built for them.</p>
-        </div>
-        <div class="sell-stat-stack reveal" aria-label="Verified accessibility statistics">
-          <article>
-            <strong>95.9%</strong>
-            <span>of top one million home pages had detectable WCAG 2 failures.</span>
-          </article>
-          <article>
-            <strong>56.1</strong>
-            <span>accessibility errors per page on average.</span>
-          </article>
-          <article>
-            <strong>1 in 26</strong>
-            <span>page elements had a detectable error on average.</span>
-          </article>
-          <article>
-            <strong>70M+</strong>
-            <span>U.S. adults, more than 1 in 4, report having a disability.</span>
-          </article>
+    <section class="product-section problem-section" id="why" aria-labelledby="problem-title">
+      <div class="product-shell stat-moment reveal">
+        <p class="eyebrow eyebrow-light">The web keeps asking you to adapt</p>
+        <p class="stat-number" aria-label="95 point 9 percent">95.9%</p>
+        <h2 id="problem-title">of the top one million home pages had detectable WCAG 2 failures.</h2>
+        <p class="stat-source"><a href="https://webaim.org/projects/million/" target="_blank" rel="noopener">WebAIM Million, 2026 <span aria-hidden="true">↗</span></a></p>
+        <p class="pivot">You shouldn’t have to fix your setup on every site yourself.</p>
+      </div>
+    </section>
+
+    <section class="product-section how-section" id="how-it-works" aria-labelledby="how-title">
+      <div class="product-shell reveal">
+        <p class="eyebrow">How it works</p>
+        <h2 id="how-title">Three beats.<br>Then it’s yours.</h2>
+        <div class="beats" aria-label="How Second Brain works">
+          <article class="beat"><span class="beat-number" aria-hidden="true">01</span><h3>Choose.</h3><p>Set your font size, contrast, motion, and spacing preferences once.</p></article>
+          <article class="beat"><span class="beat-number" aria-hidden="true">02</span><h3>Browse.</h3><p>Move through the web as usual.</p></article>
+          <article class="beat"><span class="beat-number" aria-hidden="true">03</span><h3>Done.</h3><p>Your saved preferences apply automatically.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="sell-section sell-soft sell-solution" id="second-brain-solution" aria-labelledby="second-brain-solution-title">
-      <div class="sell-shell sell-solution-layout">
-        <div class="sell-solution-copy reveal">
-          <p class="sell-kicker">Solution</p>
-          <h2 id="second-brain-solution-title">Second Brain solves repeated personal setup.</h2>
-          <p class="sell-copy">Second Brain does not repair missing alt text, missing labels, empty buttons, or broken page code. It focuses on the preferences a person controls directly.</p>
-          <p class="sell-copy">The extension stores supported preferences in the browser and applies them as you move across ordinary websites that allow extension changes.</p>
+    <section class="product-section voice-section" id="voice-navigation" aria-labelledby="voice-title">
+      <div class="product-shell voice-layout">
+        <div class="voice-copy reveal">
+          <p class="eyebrow eyebrow-light">Voice Navigation</p>
+          <h2 id="voice-title">Say it.<br>Keep moving.</h2>
+          <p>Voice Navigation runs on your device and turns a small set of spoken commands into browser actions.</p>
         </div>
-        <div class="sell-card sell-solution-card reveal">
-          <small>Browser-level support</small>
-          <p>One place for the settings a person needs to carry with them.</p>
-          <ul aria-label="Second Brain solution points">
-            <li>Set font size, contrast, spacing, and reduced motion once.</li>
-            <li>Apply supported preferences where the page allows extension changes.</li>
-            <li>Reduce the repeat setup that happens from site to site.</li>
-          </ul>
+        <!-- TODO(real product capture): Replace the typographic command stage below with a PNG or WebP screenshot of the real Voice Navigation overlay. Capture it at 1600×1200 or larger, with listening active and one recognized command visible. Do not replace it with a mockup. -->
+        <div class="voice-stage reveal" aria-label="Voice Navigation example commands">
+          <blockquote>“click Submit”</blockquote>
+          <blockquote>“scroll down”</blockquote>
+          <blockquote>“focus Search”</blockquote>
+          <p class="voice-more">Also supports scroll up, top, or bottom; go back or forward; and stop or start listening.</p>
         </div>
       </div>
     </section>
 
-    <section class="sell-section" id="how-it-works" aria-labelledby="how-title">
-      <div class="sell-shell">
-        <div class="sell-narrow reveal">
-          <p class="sell-kicker">How it works</p>
-          <h2 id="how-title">Set supported preferences once. Second Brain applies them as you browse.</h2>
-        </div>
-        <div class="sell-steps reveal" aria-label="How Second Brain works">
-          <article>
-            <span>1</span>
-            <h3>Choose your settings.</h3>
-            <p>Font size, contrast, motion reduction, spacing, and related accessibility preferences start in one place.</p>
-          </article>
-          <article>
-            <span>2</span>
-            <h3>Visit a website.</h3>
-            <p>Second Brain checks whether supported preference changes can be applied on the page you are visiting.</p>
-          </article>
-          <article>
-            <span>3</span>
-            <h3>Keep moving.</h3>
-            <p>The extension applies supported preferences on websites that allow extension changes, reducing repeated setup from site to site.</p>
-          </article>
+    <section class="product-section limits-section" id="limits" aria-labelledby="limits-title">
+      <div class="product-shell limits-card reveal">
+        <p class="eyebrow">What it changes. What it doesn’t.</p>
+        <h2 id="limits-title">Your setup, carried forward.</h2>
+        <div class="limits-copy">
+          <p>Second Brain does not repair broken page code such as missing alt text or labels.</p>
+          <p>It does not use AI; AI lives only in the separate AccessAI Checker.</p>
+          <p>Browser zoom and operating system settings still matter, and browser-restricted pages may prevent extension changes.</p>
         </div>
       </div>
     </section>
 
-    <section class="sell-section sell-soft sell-table-section" id="current-features" aria-labelledby="current-features-title">
-      <div class="sell-shell">
-        <div class="sell-narrow reveal">
-          <p class="sell-kicker">Current status</p>
-          <h2 id="current-features-title">What Second Brain does today.</h2>
+    <section class="product-section final-section" id="install" aria-labelledby="install-title">
+      <div class="product-shell final-copy reveal">
+        <p class="eyebrow eyebrow-light">Available now</p>
+        <h2 id="install-title">Make the web feel like yours.</h2>
+        <p>Second Brain is live in the Chrome Web Store.</p>
+        <div class="final-actions">
+          <a class="primary-cta primary-cta-light" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Add to Chrome <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="checker.html">Try the AccessAI Checker <span aria-hidden="true">→</span></a>
         </div>
-        <div class="feature-status-table reveal" role="table" aria-label="Second Brain current and upcoming features">
-          <div role="row">
-            <strong role="columnheader">What it does today</strong>
-            <span role="cell">Stores supported accessibility preferences in one place: font size, contrast, reduced motion, spacing, and related settings.</span>
-          </div>
-          <div role="row">
-            <strong role="columnheader">What it applies today</strong>
-            <span role="cell">Applies supported preferences automatically on pages where the extension can run.</span>
-          </div>
-          <div role="row">
-            <strong role="columnheader">AI in Second Brain</strong>
-            <span role="cell">Second Brain does not use AI yet. AccessAI's AI is in the Checker, where a website link becomes a plain-English accessibility report.</span>
-          </div>
-          <div role="row">
-            <strong role="columnheader">Voice Navigation</strong>
-            <span role="cell">Voice Navigation runs on device and supports natural commands such as click submit, scroll down, scroll to top, focus search bar, go back, and stop listening.</span>
-          </div>
-          <div role="row">
-            <strong role="columnheader">Install path</strong>
-            <span role="cell">Chrome Web Store approval is in progress. Use the judge demo build or load-unpacked instructions as the install path until approval is complete.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="sell-section sell-table-section" id="limits" aria-labelledby="limits-title">
-      <div class="sell-shell">
-        <div class="sell-narrow reveal">
-          <p class="sell-kicker">Limits</p>
-          <h2 id="limits-title">What Second Brain cannot fix.</h2>
-        </div>
-        <div class="feature-status-table reveal" role="table" aria-label="Second Brain limits">
-          <div role="row">
-            <strong role="columnheader">Broken page code</strong>
-            <span role="cell">Second Brain does not repair missing alt text, missing form labels, empty links, empty buttons, or missing document language.</span>
-          </div>
-          <div role="row">
-            <strong role="columnheader">Restricted pages</strong>
-            <span role="cell">Second Brain is designed for ordinary websites that allow extension changes. Browser-restricted pages and pages that block extension changes may not support every feature.</span>
-          </div>
-          <div role="row">
-            <strong role="columnheader">AI limits</strong>
-            <span role="cell">Second Brain does not use AI yet. The Checker uses AI to explain detected issues in plain English, but automated checks still cannot prove that a page is fully accessible.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="sell-section sell-soft sell-table-section" id="browser-settings" aria-labelledby="browser-settings-title">
-      <div class="sell-shell">
-        <div class="sell-narrow reveal">
-          <p class="sell-kicker">Why not browser settings?</p>
-          <h2 id="browser-settings-title">Browser and OS settings still matter. Second Brain is for the gaps between them.</h2>
-        </div>
-        <div class="feature-status-table reveal" role="table" aria-label="Comparison with browser and operating system settings">
-          <div role="row">
-            <strong role="columnheader">Browser zoom</strong>
-            <span role="cell">Useful for making a page larger, but it is not a full preference system for contrast, spacing, reduced motion, and navigation support.</span>
-          </div>
-          <div role="row">
-            <strong role="columnheader">Operating system preferences</strong>
-            <span role="cell">Important when websites respect them. Second Brain gives the user a browser-level place to manage supported web preferences directly.</span>
-          </div>
-          <div role="row">
-            <strong role="columnheader">Second Brain</strong>
-            <span role="cell">Stores supported accessibility preferences and applies them on sites where extension changes are allowed.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="sell-section sell-soft" id="voice-navigation" aria-labelledby="voice-title">
-      <div class="sell-shell sell-grid">
-        <div class="reveal">
-          <p class="sell-kicker">Voice Navigation</p>
-          <h2 id="voice-title">Hands-free browsing belongs in the same accessibility system.</h2>
-          <p class="sell-copy">Voice Navigation runs on device and lets a user control supported browsing actions with spoken commands.</p>
-          <p class="sell-copy">It is part of Second Brain because reading preferences and navigation support often need to work together.</p>
-        </div>
-        <div class="sell-card sell-voice-card reveal">
-          <small>Within Second Brain</small>
-          <p class="voice-command-note">Said naturally. Phrases like "page down", "go back", and "press submit" work too.</p>
-          <ul>
-            <li>"click submit" or "click [button or link text]"</li>
-            <li>"scroll down", "scroll up", "scroll to top", or "scroll to bottom"</li>
-            <li>"go to search bar" or "focus [field name]"</li>
-            <li>"go back" or "go forward"</li>
-            <li>"stop listening" or "start listening"</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="sell-section sell-proof-section" id="demo-proof" aria-labelledby="proof-title">
-      <div class="sell-shell">
-        <div class="reveal">
-          <p class="sell-kicker">Proof</p>
-          <h2 id="proof-title">Second Brain is built and functional today.</h2>
-          <p class="sell-copy">Use this section to show the working extension directly: demo video, real screenshots, and feedback from people who have tried it.</p>
-        </div>
-        <div class="proof-media-grid reveal">
-          <div class="proof-slot proof-slot-wide">
-            <span>Demo video or GIF</span>
-            <strong>20-30 seconds, 16:10</strong>
-            <p>Record the extension popup, changing preferences, and a real page updating. Add captions if there is narration.</p>
-          </div>
-          <div class="proof-slot">
-            <span>Screenshot 1</span>
-            <strong>Popup settings</strong>
-            <p>Capture the real Second Brain popup with saved preferences visible.</p>
-          </div>
-          <div class="proof-slot">
-            <span>Screenshot 2</span>
-            <strong>Before and after</strong>
-            <p>Show one real page before preferences and after preferences are applied.</p>
-          </div>
-          <div class="proof-slot">
-            <span>Screenshot 3</span>
-            <strong>Voice Navigation</strong>
-            <p>Show voice navigation in use with the command UI visible, using a real command such as "click submit" or "scroll down".</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="sell-section sell-close" id="install" aria-labelledby="install-title">
-      <div class="sell-shell sell-narrow reveal">
-        <p class="sell-kicker">Try it</p>
-        <h2 id="install-title">Install or open the judging demo.</h2>
-        <p class="sell-lead">Chrome Web Store approval is in progress. For judging, use the demo build or load-unpacked instructions included with the submission.</p>
-        <div class="install-options" aria-label="Second Brain install options">
-          <a class="button primary" href="#demo-proof">View product proof</a>
-          <a class="button secondary" href="checker.html">Try AccessAI Checker</a>
-        </div>
-        <p class="install-note">The extension can be reviewed through the judge demo build while Chrome Web Store approval is in progress.</p>
       </div>
     </section>
   </main>
 
-  <aside class="accessibility-settings" aria-label="Accessibility appearance settings">
-    <button class="accessibility-settings__toggle" type="button" aria-label="Open accessibility settings" aria-expanded="false" aria-controls="accessibility-settings-panel">
-      <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
-        <circle cx="12" cy="4.5" r="2.2"></circle>
-        <path d="M4.8 8.2h14.4"></path>
-        <path d="M12 6.8v6.1"></path>
-        <path d="M8.1 20.2l2.1-6.7"></path>
-        <path d="M15.9 20.2l-2.1-6.7"></path>
-      </svg>
-    </button>
-    <form class="accessibility-settings__panel" id="accessibility-settings-panel" hidden>
-      <div class="accessibility-settings__heading">
-        <strong>Accessibility</strong>
-        <span>Appearance</span>
-      </div>
-      <label class="accessibility-settings__field">
-        <span>Text size <output for="a11y-text-size" data-a11y-size-output>100%</output></span>
-        <input id="a11y-text-size" name="fontScale" type="range" min="100" max="130" step="10" value="100">
-      </label>
-      <label class="accessibility-settings__field">
-        <span>Contrast</span>
-        <select name="contrast">
-          <option value="default">Default</option>
-          <option value="high">High contrast</option>
-          <option value="dark">Dark</option>
-        </select>
-      </label>
-      <label class="accessibility-settings__check">
-        <input name="spacing" type="checkbox">
-        <span>More text spacing</span>
-      </label>
-      <label class="accessibility-settings__check">
-        <input name="readableFont" type="checkbox">
-        <span>Readable font</span>
-      </label>
-      <label class="accessibility-settings__check">
-        <input name="underlineLinks" type="checkbox">
-        <span>Underline links</span>
-      </label>
-      <label class="accessibility-settings__check">
-        <input name="reducedMotion" type="checkbox">
-        <span>Reduce motion</span>
-      </label>
-      <button class="accessibility-settings__reset" type="button">Reset</button>
-    </form>
-  </aside>
+  <footer class="site-footer" aria-label="Site footer">
+    <a href="privacy.html">Privacy</a>
+    <a href="#main-content">Back to top</a>
+    <span>© 2026 AccessAI</span>
+  </footer>
 
-  <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
   <script src="./scripts/page-transitions.js?v=2"></script>
-  <script>
-    (() => {
-      'use strict';
-
-      const key = 'secondBrainAccessibilitySettings';
-      const defaults = {
-        fontScale: 100,
-        contrast: 'default',
-        spacing: false,
-        readableFont: false,
-        underlineLinks: false,
-        reducedMotion: false
-      };
-
-      const root = document.documentElement;
-      const widget = document.querySelector('.accessibility-settings');
-      if (!widget) return;
-
-      const toggle = widget.querySelector('.accessibility-settings__toggle');
-      const panel = widget.querySelector('.accessibility-settings__panel');
-      const form = panel;
-      const sizeOutput = widget.querySelector('[data-a11y-size-output]');
-
-      const load = () => {
-        try {
-          return { ...defaults, ...JSON.parse(window.localStorage.getItem(key) || '{}') };
-        } catch (_) {
-          return { ...defaults };
-        }
-      };
-
-      let settings = load();
-
-      const save = () => {
-        try {
-          window.localStorage.setItem(key, JSON.stringify(settings));
-        } catch (_) {}
-      };
-
-      const syncControls = () => {
-        form.elements.fontScale.value = String(settings.fontScale);
-        form.elements.contrast.value = settings.contrast;
-        form.elements.spacing.checked = settings.spacing;
-        form.elements.readableFont.checked = settings.readableFont;
-        form.elements.underlineLinks.checked = settings.underlineLinks;
-        form.elements.reducedMotion.checked = settings.reducedMotion;
-        sizeOutput.value = `${settings.fontScale}%`;
-      };
-
-      const apply = () => {
-        root.style.setProperty('--a11y-font-scale', settings.fontScale / 100);
-        root.dataset.a11yContrast = settings.contrast;
-        root.dataset.a11ySpacing = String(settings.spacing);
-        root.dataset.a11yReadableFont = String(settings.readableFont);
-        root.dataset.a11yUnderlineLinks = String(settings.underlineLinks);
-        root.dataset.a11yMotion = settings.reducedMotion ? 'reduce' : 'default';
-
-        if (settings.reducedMotion && window.accessAILenis && typeof window.accessAILenis.destroy === 'function') {
-          window.accessAILenis.destroy();
-          window.accessAILenis = null;
-        }
-      };
-
-      const setOpen = (open) => {
-        panel.hidden = !open;
-        toggle.setAttribute('aria-expanded', String(open));
-        toggle.setAttribute('aria-label', open ? 'Close accessibility settings' : 'Open accessibility settings');
-      };
-
-      toggle.addEventListener('click', () => {
-        setOpen(panel.hidden);
-      });
-
-      form.addEventListener('input', (event) => {
-        const target = event.target;
-        if (!target.name) return;
-        settings = {
-          ...settings,
-          [target.name]: target.type === 'checkbox' ? target.checked : target.value
-        };
-        if (target.name === 'fontScale') {
-          settings.fontScale = Number(target.value);
-        }
-        apply();
-        syncControls();
-        save();
-      });
-
-      form.addEventListener('change', (event) => {
-        if (event.target.name !== 'contrast') return;
-        settings.contrast = event.target.value;
-        apply();
-        save();
-      });
-
-      widget.querySelector('.accessibility-settings__reset').addEventListener('click', () => {
-        settings = { ...defaults };
-        apply();
-        syncControls();
-        save();
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') setOpen(false);
-      });
-
-      apply();
-      syncControls();
-    })();
-  </script>
+  <script src="./scripts/accessibility-settings.js?v=2"></script>
+  <script src="./scripts/second-brain.js?v=1"></script>
 </body>
 </html>
