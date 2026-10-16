@@ -4,9 +4,10 @@ import gzip
 import io
 import os
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 from config import (
+    APP_ENV,
     AZURE_OPENAI_ENDPOINT,
     AZURE_OPENAI_API_KEY,
     AZURE_OPENAI_DEPLOYMENT,
@@ -59,6 +60,9 @@ _default_origins = [
 ]
 _extra = os.getenv('ALLOWED_ORIGINS', '').strip()
 allowed_origins = list(_default_origins)
+if APP_ENV != 'production':
+    # Allow the browser's local static preview to use the local Python API.
+    allowed_origins.append(r'^http://(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$')
 if _extra:
     allowed_origins.extend([o.strip() for o in _extra.split(',') if o.strip()])
 _app_service_host = os.getenv('WEBSITE_HOSTNAME', '').strip()
@@ -290,60 +294,55 @@ def check_accessibility():
         return jsonify({'error': 'Content-Type must be application/json'}), 400
 
     data = request.get_json(silent=True)
-    if data is None:
+    if not isinstance(data, dict):
         return jsonify({'error': 'Invalid JSON format'}), 400
 
-    url = (data.get('url') or '').strip()
+    if not isinstance(data.get('url', ''), str):
+        return jsonify({'error': 'URL must be a string'}), 400
+    url = data.get('url', '').strip()
     if not url:
         return jsonify({'error': 'No URL provided'}), 400
 
-    from web_audit import fetch_page, audit_html, evidence_summary_for_prompt
+    from web_audit import fetch_page, audit_html
+    from rendered_audit import audit_rendered_page, ScanUnavailable, MANUAL_CHECKS
 
     fetch_result = fetch_page(url)
     if not fetch_result.get('ok'):
-        issue = {
-            'type': 'Scan blocked',
-            'rule': fetch_result.get('error_kind', 'fetch_error'),
-            'severity': 'serious',
-            'element': url,
-            'explanation': fetch_result.get('error', 'The page could not be fetched safely.'),
-            'fix': 'Check that the URL is public, reachable, and starts with http:// or https://.',
-        }
-        return jsonify({
-            'url': url,
-            'finalUrl': url,
-            'status': None,
-            'totalIssues': 1,
-            'severityCounts': {'critical': 0, 'serious': 1, 'moderate': 0, 'minor': 0},
-            'issues': [issue],
-            'sources': [],
-            'aiPowered': False,
-        })
+        return jsonify({'error': fetch_result.get('error', 'The page could not be fetched.'),
+                        'scanStatus': 'blocked'}), 422
+    if fetch_result.get('status', 200) >= 400:
+        return jsonify({'error': f"The website returned HTTP {fetch_result['status']}; its page content could not be scanned.",
+                        'scanStatus': 'blocked'}), 422
+    content_type = fetch_result.get('content_type', '').lower()
+    if content_type and not any(kind in content_type for kind in ('text/html', 'application/xhtml+xml')):
+        return jsonify({'error': 'This URL does not return an HTML page.', 'scanStatus': 'blocked'}), 422
 
     evidence = audit_html(fetch_result.get('html', ''), fetch_result.get('final_url', url))
-    ai_issues = None
-
-    if ai_client.is_configured() and evidence.get('flagged_findings'):
-        system_prompt = (
-            "You are an accessibility checker. Use only the provided deterministic "
-            "audit evidence. Return JSON with an issues array. Each issue must have "
-            "type, rule, severity, element, explanation, and fix. Severity must be "
-            "critical, serious, moderate, or minor."
-        )
-        user_prompt = (
-            f"URL: {url}\n\n"
-            f"{evidence_summary_for_prompt(evidence)}\n\n"
-            "Return concise, plain-English issues for a site owner. Do not invent "
-            "findings that are not supported by the evidence."
-        )
-        try:
-            ai_result = ai_client.generate_json(user_prompt, system_message=system_prompt)
-            if isinstance(ai_result, dict) and isinstance(ai_result.get('issues'), list):
-                ai_issues = ai_result['issues']
-        except Exception as exc:
-            log.warning('Checker AI explanation failed; using deterministic fallback: %s', exc)
-
-    return jsonify(_checker_response_from_evidence(url, fetch_result, evidence, ai_issues))
+    report = _checker_response_from_evidence(url, fetch_result, evidence)
+    # Keep the engine's full set of findings; a language-model summary must
+    # never replace or silently remove individual affected elements.
+    try:
+        rendered = audit_rendered_page(fetch_result.get('final_url', url))
+        report.update(rendered)
+        report['scanStatus'] = ('complete' if all(v['completed'] for v in rendered['coverage']['viewports'])
+                                and not rendered['coverage']['warnings'] else 'partial')
+    except ScanUnavailable as exc:
+        log.warning('Rendered scan unavailable: %s', exc)
+        report.update({'scanStatus': 'partial', 'reviewItems': [], 'rulesChecked': None,
+                       'coverage': {'engine': 'HTML only', 'viewports': [],
+                                    'scope': 'Downloaded markup only; rendered checks did not run',
+                                    'warnings': [str(exc)], 'manualChecks': MANUAL_CHECKS}})
+    report['aiPowered'] = False
+    report['scannedAt'] = datetime.now(timezone.utc).isoformat()
+    report['reportVersion'] = '1.1'
+    severity_order = {'critical': 0, 'serious': 1, 'moderate': 2, 'minor': 3}
+    report['issues'].sort(key=lambda item: severity_order.get(item.get('severity'), 3))
+    report['totalIssues'] = len(report['issues'])
+    report['ruleCount'] = len({item['rule'] for item in report['issues']})
+    report['reviewCount'] = len(report.get('reviewItems', []))
+    report['severityCounts'] = {key: sum(item.get('severity', 'minor') == key for item in report['issues'])
+                                for key in severity_order}
+    return jsonify(report)
 
 @app.route('/api/alt-text', methods=['POST', 'OPTIONS'])
 def generate_alt_text():

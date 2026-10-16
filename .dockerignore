@@ -1,0 +1,13 @@
+.git
+.github
+.codex_deps
+__pycache__
+*.py[cod]
+.pytest_cache
+venv
+env
+.env
+.env.*
+*.log
+node_modules
+

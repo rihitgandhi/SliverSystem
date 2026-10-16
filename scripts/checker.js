@@ -9,9 +9,28 @@
   const summary = document.getElementById('checker-summary');
   const issuesList = document.getElementById('checker-issues');
   const submit = form?.querySelector('button[type="submit"]');
-  const apiBase = ['8030', '8000', '8080'].includes(window.location.port)
-    ? 'http://127.0.0.1:5000'
-    : '';
+  const coverage = document.getElementById('checker-coverage');
+  const warnings = document.getElementById('checker-warnings');
+  const filters = document.getElementById('checker-filters');
+  const kindFilter = document.getElementById('checker-kind');
+  const severityFilter = document.getElementById('checker-severity');
+  const filterCount = document.getElementById('checker-filter-count');
+  const manual = document.getElementById('checker-manual');
+  const manualList = document.getElementById('checker-manual-list');
+  const standardFilter = document.getElementById('checker-standard');
+  const viewportFilter = document.getElementById('checker-viewport');
+  const searchInput = document.getElementById('checker-search');
+  const overview = document.getElementById('checker-overview');
+  const priorities = document.getElementById('checker-priorities');
+  const priorityList = document.getElementById('checker-priority-list');
+  const reportActions = document.getElementById('checker-report-actions');
+  const reportTools = window.CheckerReport;
+  let currentReport = null;
+  const isLocalPreview = ['localhost', '127.0.0.1', '[::1]'].includes(window.location.hostname);
+  const configuredApiBase = document.querySelector('meta[name="checker-api-base"]')?.content.trim().replace(/\/+$/, '') || '';
+  const apiBase = isLocalPreview
+    ? (window.location.port === '5000' ? '' : 'http://127.0.0.1:5000')
+    : configuredApiBase;
 
   if (!form || !input || !error || !status || !results || !summary || !issuesList || !submit) return;
 
@@ -75,48 +94,236 @@
     return fallback;
   }
 
-  function renderIssue(issue) {
+  function renderIssueGroup(issues, needsReview) {
+    const issue = issues[0];
     const item = document.createElement('article');
     item.className = 'checker-issue';
 
     const label = document.createElement('small');
-    label.textContent = getIssueField(issue, ['type', 'rule', 'title', 'name'], 'Accessibility issue');
+    const criteria = Array.isArray(issue.wcag) && issue.wcag.length ? ` · WCAG ${issue.wcag.join(', ')}` : '';
+    const highestSeverity = ['critical', 'serious', 'moderate', 'minor'].find(severity => issues.some(i => i.severity === severity));
+    label.textContent = `${needsReview ? 'Needs review' : highestSeverity || 'Finding'} · ${issue.standard || 'Markup check'}${criteria}`;
 
-    const element = document.createElement('h3');
-    element.textContent = getIssueField(issue, ['element', 'selector', 'target', 'node'], 'Affected element not specified');
+    const heading = document.createElement('h3');
+    heading.textContent = getIssueField(issue, ['type', 'title', 'rule'], 'Accessibility finding');
 
     const explanation = document.createElement('p');
     explanation.textContent = getIssueField(issue, ['explanation', 'why', 'description', 'message'], 'No explanation was returned by the scanner.');
 
-    const fix = document.createElement('p');
-    fix.className = 'checker-fix';
-    fix.textContent = getIssueField(issue, ['fix', 'suggestedFix', 'recommendation', 'help'], 'No suggested fix was returned by the scanner.');
-
-    item.append(label, element, explanation, fix);
+    const details = document.createElement('details');
+    details.className = 'checker-occurrences';
+    const detailSummary = document.createElement('summary');
+    detailSummary.textContent = `${issues.length} affected ${issues.length === 1 ? 'element' : 'elements'} — locations and fixes`;
+    details.append(detailSummary);
+    issues.forEach((finding) => {
+      const occurrence = document.createElement('div');
+      occurrence.className = 'checker-occurrence';
+      const location = document.createElement('code');
+      location.className = 'checker-selector';
+      location.textContent = finding.element || 'Page markup';
+      const context = document.createElement('p');
+      context.className = 'checker-occurrence-context';
+      context.textContent = [finding.frame && finding.frame !== 'main' ? finding.frame : '',
+        ...(finding.viewports || [])].filter(Boolean).join(' · ');
+      const fix = document.createElement('p');
+      fix.className = 'checker-fix';
+      fix.textContent = finding.fix || finding.explanation;
+      occurrence.append(location, context, fix);
+      if (finding.html) {
+        const pre = document.createElement('pre');
+        const code = document.createElement('code');
+        code.textContent = finding.html;
+        pre.append(code);
+        occurrence.append(pre);
+      }
+      // Preserve viewport-specific measurements and fix instructions.
+      if (Array.isArray(finding.evidence) && finding.evidence.length > 1) {
+        finding.evidence.filter(e => e.detail && e.detail !== finding.fix).forEach((evidence) => {
+          const detail = document.createElement('p');
+          detail.textContent = `${evidence.viewport}: ${evidence.detail}`;
+          occurrence.append(detail);
+        });
+      }
+      details.append(occurrence);
+    });
+    item.append(label, heading, explanation, details);
+    if (issue.helpUrl) {
+      try {
+        const helpUrl = new URL(issue.helpUrl);
+        if (helpUrl.protocol === 'https:' && helpUrl.hostname === 'dequeuniversity.com') {
+          const link = document.createElement('a');
+          link.href = helpUrl.href;
+          link.textContent = 'Read the rule and examples ↗';
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          item.append(link);
+        }
+      } catch (_) {}
+    }
     return item;
   }
 
-  function renderResults(data) {
-    const issues = Array.isArray(data?.issues) ? data.issues : [];
+  function renderFilteredResults() {
+    const needsReview = kindFilter?.value === 'review';
+    if (!currentReport) return;
+    const issues = reportTools.filter(currentReport, {
+      kind: kindFilter?.value, severity: severityFilter?.value,
+      standard: standardFilter?.value, viewport: viewportFilter?.value, search: searchInput?.value,
+    });
+    const groups = reportTools.groups(issues);
     issuesList.replaceChildren();
-    setHidden(results, false);
-
+    if (filterCount) {
+      const noun = needsReview ? 'review item' : 'finding';
+      filterCount.textContent = `${issues.length} ${noun}${issues.length === 1 ? '' : 's'} across ${groups.length} check${groups.length === 1 ? '' : 's'}`;
+    }
     if (!issues.length) {
-      summary.textContent = 'No accessibility issues found.';
       const success = document.createElement('article');
       success.className = 'checker-success';
       const heading = document.createElement('h3');
-      heading.textContent = 'No issues were returned for this scan.';
+      heading.textContent = needsReview ? 'No items match this review filter.' : 'No detected findings match this filter.';
       const copy = document.createElement('p');
-      copy.textContent = 'That is a good sign. Keep testing with real users, assistive technology, and accessibility standards as the site changes.';
+      copy.textContent = 'Try another search or reset the filters. A report without automated findings still needs the human checks listed below.';
       success.append(heading, copy);
       issuesList.append(success);
       return;
     }
-
-    summary.textContent = formatSummary(data);
-    issues.forEach((issue) => issuesList.append(renderIssue(issue)));
+    groups.forEach(group => issuesList.append(renderIssueGroup(group, needsReview)));
   }
+
+  function resetFilters(kind = 'confirmed') {
+    if (kindFilter) kindFilter.value = kind;
+    [severityFilter, standardFilter, viewportFilter].forEach(filter => { if (filter) filter.value = 'all'; });
+    if (searchInput) searchInput.value = '';
+  }
+
+  function renderOverview(data) {
+    if (!overview || !priorities || !priorityList) return;
+    overview.replaceChildren();
+    const counts = reportTools.counts(data);
+    const categories = [
+      [counts.aa + counts.markup, counts.markup ? 'Markup findings' : 'A/AA findings', counts.markup ? 'Markup check' : 'WCAG A/AA'],
+      [counts.aaa, 'AAA enhancements', 'Enhanced (AAA)'],
+      [counts.best, 'Best practices', 'Best practice'],
+      [counts.review, 'Needs review', 'review'],
+    ];
+    categories.forEach(([count, title, standard]) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.setAttribute('aria-label', `Show ${title.toLowerCase()} (${count})`);
+      const number = document.createElement('strong');
+      number.textContent = count;
+      const label = document.createElement('span');
+      label.textContent = title;
+      button.append(number, label);
+      button.addEventListener('click', () => {
+        resetFilters(standard === 'review' ? 'review' : 'confirmed');
+        if (standard !== 'review') standardFilter.value = standard;
+        renderFilteredResults();
+      });
+      overview.append(button);
+    });
+    setHidden(overview, false);
+    priorityList.replaceChildren();
+    reportTools.groups(data.issues || []).slice(0, 3).forEach(group => {
+      const li = document.createElement('li');
+      const copy = document.createElement('div');
+      const title = document.createElement('strong');
+      title.textContent = group[0].type;
+      const context = document.createElement('span');
+      context.textContent = `${group.length} affected ${group.length === 1 ? 'element' : 'elements'} · ${group[0].standard || 'Markup check'}`;
+      copy.append(title, context);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = 'Show findings';
+      button.setAttribute('aria-label', `Show findings: ${group[0].type}`);
+      button.addEventListener('click', () => {
+        resetFilters();
+        searchInput.value = group[0].rule || group[0].type;
+        renderFilteredResults();
+        const details = issuesList.querySelector('details');
+        if (details) details.open = true;
+        issuesList.scrollIntoView({block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+      });
+      li.append(copy, button);
+      priorityList.append(li);
+    });
+    setHidden(priorities, !(data.issues || []).length);
+    if (reportActions) setHidden(reportActions, false);
+  }
+
+  function downloadReport(format) {
+    if (!currentReport) return;
+    const content = format === 'csv' ? '\ufeff' + reportTools.csv(currentReport) : JSON.stringify(currentReport, null, 2);
+    const blob = new Blob([content], {type: format === 'csv' ? 'text/csv;charset=utf-8' : 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    let hostname = 'website';
+    try { hostname = new URL(currentReport.finalUrl || currentReport.url).hostname.replace(/[^a-z0-9.-]/gi, '-'); } catch (_) {}
+    link.href = url;
+    link.download = `accessibility-${hostname}-${(currentReport.scannedAt || new Date().toISOString()).slice(0, 10)}.${format}`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function renderResults(data) {
+    currentReport = data;
+    setHidden(results, false);
+    summary.textContent = formatSummary(data);
+    const scan = data.coverage || {};
+    const completed = (scan.viewports || []).filter(v => v.completed).map(v => `${v.name} ${v.width}px`);
+    if (coverage) coverage.textContent = [
+      data.scanStatus === 'partial' ? 'Partial scan' : 'Rendered page scan',
+      data.rulesChecked ? `${data.rulesChecked} checks considered${data.rulesApplicable != null ? `; ${data.rulesApplicable} apply to this page` : ''}` : scan.engine,
+      completed.join(' + '),
+      `${data.reviewCount || 0} ${(data.reviewCount || 0) === 1 ? 'item needs' : 'items need'} human review`,
+      'This page only; A/AA, available AAA checks, and best practices.',
+    ].filter(Boolean).join(' · ');
+    if (warnings) {
+      warnings.replaceChildren();
+      (scan.warnings || []).forEach(message => {
+        const p = document.createElement('p');
+        p.textContent = message;
+        warnings.append(p);
+      });
+      setHidden(warnings, !(scan.warnings || []).length);
+    }
+    if (kindFilter) {
+      kindFilter.value = 'confirmed';
+      kindFilter.options[0].textContent = `Detected findings (${data.totalIssues || 0})`;
+      kindFilter.options[1].textContent = `Needs human review (${data.reviewCount || 0})`;
+    }
+    if (severityFilter) severityFilter.value = 'all';
+    resetFilters();
+    if (filters) setHidden(filters, false);
+    if (manual && manualList) {
+      manualList.replaceChildren();
+      (scan.manualChecks || []).forEach(message => {
+        const li = document.createElement('li');
+        li.textContent = message;
+        manualList.append(li);
+      });
+      setHidden(manual, false);
+    }
+    renderOverview(data);
+    renderFilteredResults();
+  }
+
+  kindFilter?.addEventListener('change', renderFilteredResults);
+  severityFilter?.addEventListener('change', renderFilteredResults);
+  standardFilter?.addEventListener('change', renderFilteredResults);
+  viewportFilter?.addEventListener('change', renderFilteredResults);
+  let searchTimer;
+  searchInput?.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(renderFilteredResults, 150);
+  });
+  document.getElementById('checker-reset-filters')?.addEventListener('click', () => { resetFilters(); renderFilteredResults(); });
+  document.getElementById('checker-download-json')?.addEventListener('click', () => downloadReport('json'));
+  document.getElementById('checker-download-csv')?.addEventListener('click', () => downloadReport('csv'));
+  document.getElementById('checker-expand-all')?.addEventListener('click', () => { issuesList.querySelectorAll('details').forEach(d => { d.open = true; }); });
+  document.getElementById('checker-collapse-all')?.addEventListener('click', () => { issuesList.querySelectorAll('details').forEach(d => { d.open = false; }); });
 
   function setLoading(loading) {
     submit.disabled = loading;
@@ -125,24 +332,33 @@
   }
 
   async function scan(url) {
-    const response = await fetch(`${apiBase}/api/check-accessibility`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ url })
-    });
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 150000);
+    try {
+      const response = await fetch(`${apiBase}/api/check-accessibility`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
+        signal: controller.signal,
+      });
 
-    if (!response.ok) {
-      let message = 'The checker could not complete the scan. Try again in a moment.';
-      try {
-        const payload = await response.json();
-        if (payload?.error) message = payload.error;
-      } catch (_) {}
-      throw new Error(message);
+      if (!response.ok) {
+        let message = 'The checker could not complete the scan. Try again in a moment.';
+        try {
+          const payload = await response.json();
+          if (payload?.error) message = payload.error;
+        } catch (_) {}
+        throw new Error(message);
+      }
+
+      return await response.json();
+    } catch (scanError) {
+      if (scanError.name === 'AbortError') throw new Error('The scan took too long. Try again in a moment.');
+      if (scanError instanceof TypeError && isLocalPreview) throw new Error('Cannot reach the checker. Make sure the local API service is running, then try again.');
+      throw scanError;
+    } finally {
+      clearTimeout(timeout);
     }
-
-    return response.json();
   }
 
   form.addEventListener('submit', async (event) => {

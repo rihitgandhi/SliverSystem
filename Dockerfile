@@ -1,24 +1,23 @@
-FROM python:3.11-slim
+FROM python:3.11-slim-bookworm
 
-# Use a non-root user in production if desired (left as root for simplicity)
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
 WORKDIR /app
 
-# Install system deps (if needed) and pip packages
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential gcc \
+COPY requirements.txt ./
+RUN pip install --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt \
+    && python -m playwright install --with-deps chromium \
+    && chmod -R a+rX /ms-playwright \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt ./
-RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
-
-# Copy app sources
 COPY . /app
+RUN useradd --create-home --uid 10001 accessai \
+    && chown -R accessai:accessai /app
+USER accessai
 
-# Expose the port the app will run on
-EXPOSE 8000
+EXPOSE 10000
 
-# Use Gunicorn for production
-CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "app:app"]
+CMD ["sh", "-c", "gunicorn app:app --bind 0.0.0.0:${PORT:-10000} --workers ${WEB_CONCURRENCY:-1} --threads 2 --timeout 180"]
