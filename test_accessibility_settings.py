@@ -56,6 +56,7 @@ class AccessibilitySettingsTests(unittest.TestCase):
 
         self.page.locator('[name="fontScale"]').fill("200")
         self.assertEqual(self.page.locator("html").evaluate("el => getComputedStyle(el).fontSize"), "32px")
+        self.assertEqual(self.page.locator("html").get_attribute("data-a11y-font-scale"), "200")
         self.assertEqual(panel.locator("output").inner_text(), "200%")
 
         self.page.locator('[name="contrast"]').select_option("dark")
@@ -118,6 +119,9 @@ class AccessibilitySettingsTests(unittest.TestCase):
 
     def test_panel_stays_usable_on_mobile_at_200_percent(self):
         self.page.set_viewport_size({"width": 390, "height": 844})
+        self.page.goto(f"{self.base_url}/index.html", wait_until="networkidle")
+        self.page.evaluate("key => localStorage.removeItem(key)", STORAGE_KEY)
+        self.page.reload(wait_until="networkidle")
         self.open_panel()
         self.page.locator('[name="fontScale"]').fill("200")
         box = self.page.get_by_role("dialog", name="Accessibility").bounding_box()
@@ -128,6 +132,10 @@ class AccessibilitySettingsTests(unittest.TestCase):
         self.assertLessEqual(box["x"] + box["width"], 390)
         self.assertLessEqual(box["y"] + box["height"], 844)
         self.assertTrue(self.page.get_by_role("button", name="Reset all settings").is_visible())
+        self.assertLessEqual(
+            self.page.evaluate("document.documentElement.scrollWidth"),
+            self.page.evaluate("document.documentElement.clientWidth"),
+        )
 
     def test_cached_legacy_widget_is_replaced_with_current_controls(self):
         self.page.evaluate(
@@ -143,7 +151,7 @@ class AccessibilitySettingsTests(unittest.TestCase):
                   </aside>
                 `);
                 const script = document.createElement('script');
-                script.src = './scripts/accessibility-settings.js?v=4&legacy-test=1';
+                script.src = './scripts/accessibility-settings.js?v=5&legacy-test=1';
                 script.onload = resolve;
                 script.onerror = reject;
                 document.body.append(script);
@@ -151,11 +159,39 @@ class AccessibilitySettingsTests(unittest.TestCase):
         )
 
         widget = self.page.locator('.accessibility-settings')
-        self.assertEqual(widget.get_attribute('data-accessibility-version'), '4')
+        self.assertEqual(widget.get_attribute('data-accessibility-version'), '5')
         self.assertEqual(widget.count(), 1)
         self.open_panel()
         self.assertTrue(self.page.get_by_role('button', name='Close accessibility settings').is_visible())
         self.assertTrue(self.page.get_by_role('button', name='Reset all settings').is_visible())
+
+    def test_homepage_fluid_heading_and_contrast_layers_follow_settings(self):
+        self.page.goto(f"{self.base_url}/index.html", wait_until="networkidle")
+        self.page.evaluate("key => localStorage.removeItem(key)", STORAGE_KEY)
+        self.page.reload(wait_until="networkidle")
+
+        hero = self.page.locator("#hero-title")
+        hero_screen = self.page.locator(".home-hero-screen")
+        normal_size = float(hero.evaluate("el => parseFloat(getComputedStyle(el).fontSize)"))
+        self.assertIn("accessai-mountain-hero.png", hero_screen.evaluate("el => getComputedStyle(el).backgroundImage"))
+
+        self.open_panel()
+        self.page.locator('[name="fontScale"]').fill("200")
+        large_size = float(hero.evaluate("el => parseFloat(getComputedStyle(el).fontSize)"))
+        self.assertGreaterEqual(large_size, normal_size * 1.9)
+
+        self.page.locator('[name="contrast"]').select_option("dark")
+        self.assertEqual(hero_screen.evaluate("el => getComputedStyle(el).backgroundImage"), "none")
+        self.page.wait_for_function(
+            "el => getComputedStyle(el).backgroundColor === 'rgb(5, 7, 10)'",
+            arg=hero_screen.element_handle(),
+        )
+        self.assertEqual(hero_screen.evaluate("el => getComputedStyle(el).backgroundColor"), "rgb(5, 7, 10)")
+
+        self.page.get_by_role("button", name="Reset all settings").click()
+        self.assertIn("accessai-mountain-hero.png", hero_screen.evaluate("el => getComputedStyle(el).backgroundImage"))
+        reset_size = float(hero.evaluate("el => parseFloat(getComputedStyle(el).fontSize)"))
+        self.assertAlmostEqual(reset_size, normal_size, delta=0.5)
 
 
 if __name__ == "__main__":

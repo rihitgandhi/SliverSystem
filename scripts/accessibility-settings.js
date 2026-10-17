@@ -2,7 +2,7 @@
   'use strict';
 
   const STORAGE_KEY = 'secondBrainAccessibilitySettings';
-  const WIDGET_VERSION = '4';
+  const WIDGET_VERSION = '5';
   const FONT_MIN = 100;
   const FONT_MAX = 200;
   const FONT_STEP = 10;
@@ -166,6 +166,7 @@
 
     const apply = (shouldAnnounce = false, message = 'Accessibility settings applied') => {
       root.style.setProperty('--a11y-font-scale', String(settings.fontScale / 100));
+      root.dataset.a11yFontScale = String(settings.fontScale);
       root.dataset.a11yContrast = settings.contrast;
       root.dataset.a11ySpacing = String(settings.spacing);
       root.dataset.a11yReadableFont = String(settings.readableFont);

@@ -264,6 +264,29 @@ html[data-a11y-spacing="true"] :where(main, footer) :where(h1, h2, h3, h4, h5, h
   line-height: 1.35 !important;
 }
 
+html[data-a11y-font-scale]:not([data-a11y-font-scale="100"]) :where(main, footer) :where(h1, h2, h3, h4, h5, h6) {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+html[data-a11y-font-scale]:not([data-a11y-font-scale="100"]) .home-flow .home-screen {
+  height: auto;
+  min-height: 100svh;
+  overflow: visible;
+}
+
+html[data-a11y-font-scale]:not([data-a11y-font-scale="100"]) :where(
+  .home-checker-preview-input,
+  .home-checker-preview-button,
+  .home-learn-stat-row,
+  .home-learn-stat,
+  .home-learn-stat strong
+) {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
 html[data-a11y-readable-font="true"] body,
 html[data-a11y-readable-font="true"] :where(button, input, select, textarea),
 html[data-a11y-readable-font="true"] .accessibility-settings {
@@ -359,6 +382,7 @@ html[data-a11y-contrast="high"] body,
 html[data-a11y-contrast="high"] :where(main, section, footer, .site-header, .nav-menu),
 html[data-a11y-contrast="high"] :where(.home-screen, .checker-page, .learn-page, .mission-page, .sell-page, .second-brain-page) {
   background-color: #ffffff !important;
+  background-image: none !important;
   color: #000000 !important;
 }
 
@@ -366,6 +390,7 @@ html[data-a11y-contrast="dark"] body,
 html[data-a11y-contrast="dark"] :where(main, section, footer, .site-header, .nav-menu),
 html[data-a11y-contrast="dark"] :where(.home-screen, .checker-page, .learn-page, .mission-page, .sell-page, .second-brain-page) {
   background-color: #05070a !important;
+  background-image: none !important;
   color: #ffffff !important;
 }
 
@@ -496,7 +521,7 @@ html[data-a11y-contrast="dark"] .accessibility-settings__reset {
   }
 
   .accessibility-settings__panel {
-    width: calc(100vw - 24px);
+    width: min(360px, calc(100vw - 40px));
     max-height: calc(100dvh - 94px);
     padding: 16px;
   }
