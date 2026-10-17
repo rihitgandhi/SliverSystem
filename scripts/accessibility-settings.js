@@ -2,6 +2,7 @@
   'use strict';
 
   const STORAGE_KEY = 'secondBrainAccessibilitySettings';
+  const WIDGET_VERSION = '4';
   const FONT_MIN = 100;
   const FONT_MAX = 200;
   const FONT_STEP = 10;
@@ -52,10 +53,16 @@
 
   function buildWidget() {
     const existing = document.querySelector('.accessibility-settings');
-    if (existing) return existing;
+    const isCurrent = existing
+      && existing.dataset.accessibilityVersion === WIDGET_VERSION
+      && existing.querySelector('.accessibility-settings__close')
+      && existing.querySelector('.accessibility-settings__status');
+    if (isCurrent) return existing;
+    if (existing) existing.remove();
 
     const widget = document.createElement('aside');
     widget.className = 'accessibility-settings';
+    widget.dataset.accessibilityVersion = WIDGET_VERSION;
     widget.setAttribute('aria-label', 'Accessibility appearance settings');
     widget.innerHTML = `
       <button class="accessibility-settings__toggle" type="button" aria-label="Open accessibility settings" aria-haspopup="dialog" aria-expanded="false" aria-controls="accessibility-settings-panel">
@@ -115,7 +122,12 @@
   }
 
   function init() {
-    if (root.dataset.a11yInitialized === 'true') return;
+    const currentWidget = document.querySelector('.accessibility-settings');
+    if (
+      root.dataset.a11yInitialized === 'true'
+      && currentWidget
+      && currentWidget.dataset.accessibilityVersion === WIDGET_VERSION
+    ) return;
     root.dataset.a11yInitialized = 'true';
 
     const widget = buildWidget();

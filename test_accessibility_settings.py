@@ -129,6 +129,34 @@ class AccessibilitySettingsTests(unittest.TestCase):
         self.assertLessEqual(box["y"] + box["height"], 844)
         self.assertTrue(self.page.get_by_role("button", name="Reset all settings").is_visible())
 
+    def test_cached_legacy_widget_is_replaced_with_current_controls(self):
+        self.page.evaluate(
+            """() => new Promise((resolve, reject) => {
+                document.querySelector('.accessibility-settings')?.remove();
+                document.documentElement.dataset.a11yInitialized = 'true';
+                document.body.insertAdjacentHTML('beforeend', `
+                  <aside class="accessibility-settings">
+                    <button class="accessibility-settings__toggle" type="button" aria-label="Open accessibility settings">Open</button>
+                    <form class="accessibility-settings__panel" hidden>
+                      <button class="accessibility-settings__reset" type="button">Reset</button>
+                    </form>
+                  </aside>
+                `);
+                const script = document.createElement('script');
+                script.src = './scripts/accessibility-settings.js?v=4&legacy-test=1';
+                script.onload = resolve;
+                script.onerror = reject;
+                document.body.append(script);
+            })"""
+        )
+
+        widget = self.page.locator('.accessibility-settings')
+        self.assertEqual(widget.get_attribute('data-accessibility-version'), '4')
+        self.assertEqual(widget.count(), 1)
+        self.open_panel()
+        self.assertTrue(self.page.get_by_role('button', name='Close accessibility settings').is_visible())
+        self.assertTrue(self.page.get_by_role('button', name='Reset all settings').is_visible())
+
 
 if __name__ == "__main__":
     unittest.main()
