@@ -115,11 +115,11 @@ def _launch(playwright):
     if channel:
         candidates.append({'channel': channel})
     if Path(playwright.chromium.executable_path).exists():
-        candidates.append({'channel': 'chromium'})
+        candidates.append({})
     candidates.extend([{'channel': 'msedge'}, {'channel': 'chrome'}])
     for options in candidates:
         try:
-            return playwright.chromium.launch(headless=True, chromium_sandbox=True,
+            return playwright.chromium.launch(headless=True, chromium_sandbox=False,
                                                timeout=15000, **options)
         except Exception:
             continue
