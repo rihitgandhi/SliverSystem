@@ -13,6 +13,14 @@ import requests
 from web_audit import _is_private_host
 
 
+PROJECT_ROOT = Path(__file__).resolve().parent
+VERCEL_BROWSER_DIR = PROJECT_ROOT / '.playwright'
+
+# The Vercel build installs Chromium into the project so the Python function
+# bundler can include it. Point Playwright at that bundled browser at runtime.
+if os.getenv('VERCEL') and VERCEL_BROWSER_DIR.exists():
+    os.environ['PLAYWRIGHT_BROWSERS_PATH'] = str(VERCEL_BROWSER_DIR)
+
 AXE_PATH = Path(__file__).resolve().parent / 'vendor' / 'axe-core' / 'axe.min.js'
 VIEWPORTS = [('Desktop', 1440, 900), ('Mobile', 390, 844), ('Narrow', 320, 800)]
 SCAN_SLOTS = threading.BoundedSemaphore(2)
