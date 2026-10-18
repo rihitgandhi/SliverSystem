@@ -15,10 +15,14 @@ from web_audit import _is_private_host
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 VERCEL_BROWSER_DIR = PROJECT_ROOT / '.playwright'
+CONTAINER_BROWSER_DIR = Path('/ms-playwright')
 
 # The Vercel build installs Chromium into the project so the Python function
-# bundler can include it. Point Playwright at that bundled browser at runtime.
-if os.getenv('VERCEL') and VERCEL_BROWSER_DIR.exists():
+# bundler can include it. Container deployments install it in /ms-playwright;
+# prefer that location even if an older project setting specifies "0".
+if CONTAINER_BROWSER_DIR.exists():
+    os.environ['PLAYWRIGHT_BROWSERS_PATH'] = str(CONTAINER_BROWSER_DIR)
+elif os.getenv('VERCEL') and VERCEL_BROWSER_DIR.exists():
     os.environ['PLAYWRIGHT_BROWSERS_PATH'] = str(VERCEL_BROWSER_DIR)
 
 AXE_PATH = Path(__file__).resolve().parent / 'vendor' / 'axe-core' / 'axe.min.js'
