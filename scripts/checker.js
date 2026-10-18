@@ -360,12 +360,37 @@
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 150000);
     try {
-      const response = await fetch(`${apiBase}/api/check-accessibility`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url }),
-        signal: controller.signal,
-      });
+      let response;
+      let networkError;
+
+      // Vercel may briefly drop a connection while a container wakes up or a
+      // new deployment is promoted. Scans are read-only, so one retry is safe
+      // and prevents a transient platform hand-off from becoming a dead end.
+      for (let attempt = 0; attempt < 2; attempt += 1) {
+        try {
+          response = await fetch(`${apiBase}/api/check-accessibility`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url }),
+            signal: controller.signal,
+            cache: 'no-store',
+          });
+          networkError = null;
+        } catch (error) {
+          networkError = error;
+        }
+
+        const retryableStatus = response && [502, 503, 504].includes(response.status);
+        if (attempt === 0 && (networkError instanceof TypeError || retryableStatus)) {
+          await new Promise(resolve => setTimeout(resolve, 1200));
+          response = undefined;
+          continue;
+        }
+        break;
+      }
+
+      if (networkError) throw networkError;
+      if (!response) throw new TypeError('No response from checker');
 
       if (!response.ok) {
         let message = 'The checker could not complete the scan. Try again in a moment.';
@@ -380,6 +405,7 @@
     } catch (scanError) {
       if (scanError.name === 'AbortError') throw new Error('The scan took too long. Try again in a moment.');
       if (scanError instanceof TypeError && isLocalPreview) throw new Error('Cannot reach the checker. Make sure the local API service is running, then try again.');
+      if (scanError instanceof TypeError) throw new Error('The checker temporarily lost its connection. Please try the scan again.');
       throw scanError;
     } finally {
       clearTimeout(timeout);
