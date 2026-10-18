@@ -118,8 +118,10 @@ def _launch(playwright):
     channel = os.getenv('CHECKER_BROWSER_CHANNEL', '').strip()
     if channel:
         candidates.append({'channel': channel})
-    if Path(playwright.chromium.executable_path).exists():
-        candidates.append({})
+    # Always let Playwright resolve its bundled executable. A headless-only
+    # installation does not necessarily exist at chromium.executable_path,
+    # but launch(headless=True) correctly selects the installed shell.
+    candidates.append({})
     candidates.extend([{'channel': 'msedge'}, {'channel': 'chrome'}])
     for options in candidates:
         try:
