@@ -22,7 +22,7 @@ CONTAINER_BROWSER_DIR = Path('/ms-playwright')
 # prefer that location even if an older project setting specifies "0".
 if CONTAINER_BROWSER_DIR.exists():
     os.environ['PLAYWRIGHT_BROWSERS_PATH'] = str(CONTAINER_BROWSER_DIR)
-elif os.getenv('VERCEL') and VERCEL_BROWSER_DIR.exists():
+elif VERCEL_BROWSER_DIR.exists():
     os.environ['PLAYWRIGHT_BROWSERS_PATH'] = str(VERCEL_BROWSER_DIR)
 
 AXE_PATH = Path(__file__).resolve().parent / 'vendor' / 'axe-core' / 'axe.min.js'
