@@ -2,7 +2,7 @@
   'use strict';
 
   const STORAGE_KEY = 'secondBrainAccessibilitySettings';
-  const WIDGET_VERSION = '5';
+  const WIDGET_VERSION = '6';
   const FONT_MIN = 100;
   const FONT_MAX = 200;
   const FONT_STEP = 10;
@@ -66,6 +66,7 @@
     widget.setAttribute('aria-label', 'Accessibility appearance settings');
     widget.innerHTML = `
       <button class="accessibility-settings__toggle" type="button" aria-label="Open accessibility settings" aria-haspopup="dialog" aria-expanded="false" aria-controls="accessibility-settings-panel">
+        <span class="accessibility-settings__toggle-hint" aria-hidden="true">Adjust this site</span>
         <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
           <circle cx="12" cy="4.5" r="2.2"></circle>
           <path d="M4.8 8.2h14.4"></path>

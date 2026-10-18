@@ -151,7 +151,7 @@ class AccessibilitySettingsTests(unittest.TestCase):
                   </aside>
                 `);
                 const script = document.createElement('script');
-                script.src = './scripts/accessibility-settings.js?v=5&legacy-test=1';
+                script.src = './scripts/accessibility-settings.js?v=6&legacy-test=1';
                 script.onload = resolve;
                 script.onerror = reject;
                 document.body.append(script);
@@ -159,8 +159,9 @@ class AccessibilitySettingsTests(unittest.TestCase):
         )
 
         widget = self.page.locator('.accessibility-settings')
-        self.assertEqual(widget.get_attribute('data-accessibility-version'), '5')
+        self.assertEqual(widget.get_attribute('data-accessibility-version'), '6')
         self.assertEqual(widget.count(), 1)
+        self.assertTrue(widget.locator('.accessibility-settings__toggle-hint').is_visible())
         self.open_panel()
         self.assertTrue(self.page.get_by_role('button', name='Close accessibility settings').is_visible())
         self.assertTrue(self.page.get_by_role('button', name='Reset all settings').is_visible())
