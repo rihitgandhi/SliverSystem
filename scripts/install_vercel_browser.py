@@ -15,7 +15,7 @@ BROWSER_DIR = PROJECT_ROOT / ".playwright"
 def main() -> None:
     os.environ["PLAYWRIGHT_BROWSERS_PATH"] = str(BROWSER_DIR)
     subprocess.run(
-        [sys.executable, "-m", "playwright", "install", "chromium"],
+        [sys.executable, "-m", "playwright", "install", "--only-shell", "chromium"],
         cwd=PROJECT_ROOT,
         check=True,
     )
