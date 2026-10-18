@@ -11,6 +11,10 @@
   const submit = form?.querySelector('button[type="submit"]');
   const coverage = document.getElementById('checker-coverage');
   const warnings = document.getElementById('checker-warnings');
+  const aiAnalysis = document.getElementById('checker-ai-analysis');
+  const aiSummary = document.getElementById('checker-ai-summary');
+  const aiPriorities = document.getElementById('checker-ai-priorities');
+  const aiLimit = document.getElementById('checker-ai-limit');
   const filters = document.getElementById('checker-filters');
   const kindFilter = document.getElementById('checker-kind');
   const severityFilter = document.getElementById('checker-severity');
@@ -288,6 +292,27 @@
         warnings.append(p);
       });
       setHidden(warnings, !(scan.warnings || []).length);
+    }
+    if (aiAnalysis && aiSummary && aiPriorities && aiLimit) {
+      aiPriorities.replaceChildren();
+      if (data.aiPowered && data.aiAnalysis) {
+        aiSummary.textContent = data.aiAnalysis.summary || '';
+        (data.aiAnalysis.topPriorities || []).forEach(priority => {
+          const item = document.createElement('li');
+          const title = document.createElement('strong');
+          title.textContent = priority.title || priority.rule || 'Priority finding';
+          const impact = document.createElement('p');
+          impact.textContent = priority.why_it_matters || '';
+          const step = document.createElement('p');
+          step.textContent = priority.first_step ? `First step: ${priority.first_step}` : '';
+          item.append(title, impact, step);
+          aiPriorities.append(item);
+        });
+        aiLimit.textContent = data.aiAnalysis.limitations || '';
+        setHidden(aiAnalysis, false);
+      } else {
+        setHidden(aiAnalysis, true);
+      }
     }
     if (kindFilter) {
       kindFilter.value = 'confirmed';

@@ -54,6 +54,34 @@ class LocalCheckerTests(unittest.TestCase):
         self.assertEqual(payload['totalIssues'], len(payload['issues']))
         self.assertEqual(payload['scanStatus'], 'partial')
 
+    @patch('app._checker_ai_analysis', return_value={
+        'summary': 'Fix the missing image description first.',
+        'topPriorities': [{
+            'rule': '1.1.1', 'title': 'Describe the image',
+            'why_it_matters': 'Screen reader users need an equivalent.',
+            'first_step': 'Add an accurate alt attribute.',
+        }],
+        'manualReviewFocus': ['Check whether the description is meaningful.'],
+        'limitations': 'Automated checks cannot prove full conformance.',
+    })
+    @patch('ai_client.is_configured', return_value=True)
+    @patch('rendered_audit.audit_rendered_page')
+    @patch('web_audit.fetch_page')
+    def test_scan_includes_ai_explanation_when_configured(
+            self, fetch_page, rendered, _configured, _analysis):
+        from rendered_audit import ScanUnavailable
+        rendered.side_effect = ScanUnavailable('Browser unavailable for this test')
+        fetch_page.return_value = {
+            'ok': True, 'status': 200, 'final_url': 'https://example.com/',
+            'html': '<html lang="en"><head><title>Fixture</title></head><body><img src="photo.jpg"></body></html>',
+        }
+        response = self.client.post('/api/check-accessibility', json={'url': 'https://example.com/'})
+        self.assertEqual(response.status_code, 200)
+        payload = response.get_json()
+        self.assertTrue(payload['aiPowered'])
+        self.assertEqual(payload['aiStatus'], 'complete')
+        self.assertEqual(payload['aiAnalysis']['topPriorities'][0]['rule'], '1.1.1')
+
     def test_bad_payloads_return_validation_errors(self):
         for payload in ([], None, {'url': 123}, {'url': ''}):
             with self.subTest(payload=payload):

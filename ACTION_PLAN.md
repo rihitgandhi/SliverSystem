@@ -35,7 +35,7 @@
 
 ### Step 1: Generate New API Key (5 minutes)
 
-**Why:** Your current API key `AIzaSyD77xnWvyPutXCe3jJfN1zB2l5lDVVwOm4` was detected as leaked by Google and has been disabled.
+**Why:** The previously committed API key was detected as leaked by Google and has been disabled.
 
 **How:**
 1. Open: https://aistudio.google.com/app/apikey
@@ -66,7 +66,7 @@ PORT=5000
 
 **Example:**
 ```env
-GEMINI_API_KEY=AIzaSyABC123xyz789DefGhiJklMnoPqrStUvWxYz
+GEMINI_API_KEY=your-gemini-api-key
 FLASK_SECRET_KEY=my-super-secret-random-key-12345
 FLASK_DEBUG=True
 HOST=0.0.0.0

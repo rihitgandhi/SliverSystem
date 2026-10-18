@@ -3,9 +3,9 @@ from dotenv import load_dotenv
 import logging
 
 # Load environment variables from .env file (if present).
-# override=True ensures the .env wins over any pre-existing OS env vars,
-# which avoids subtle bugs when a stale value is set in the user's shell.
-load_dotenv(override=True)
+# Real process variables must win in production; `.env` fills only missing
+# values for local development.
+load_dotenv(override=False)
 
 # Application environment: development | production
 # In production set APP_ENV=production

@@ -13,6 +13,14 @@ services:
         generateValue: true
       - key: FLASK_DEBUG
         value: false
+      - key: AZURE_OPENAI_ENDPOINT
+        value: https://dhiraj-gandhi-6076-resource.cognitiveservices.azure.com/
+      - key: AZURE_OPENAI_DEPLOYMENT
+        value: gpt-5.3-chat
+      - key: AZURE_OPENAI_API_VERSION
+        value: 2024-12-01-preview
+      - key: AZURE_OPENAI_API_KEY
+        sync: false
       - key: WEB_CONCURRENCY
         value: 1
     healthCheckPath: /api/health

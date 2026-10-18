@@ -67,7 +67,7 @@ pip install -r requirements.txt
 ```
 
 **Root Cause:** 
-- API key `AIzaSyD77xnWvyPutXCe3jJfN1zB2l5lDVVwOm4` was hardcoded in `config.py`
+- A now-revoked API key was hardcoded in `config.py`
 - Likely committed to version control (GitHub)
 - Google automatically detected and disabled the key for security
 
@@ -80,7 +80,7 @@ pip install -r requirements.txt
 
 #### A. Generate New API Key (User Must Do This)
 1. Visit: https://aistudio.google.com/app/apikey
-2. **Delete the old leaked key** (AIzaSyD77xnWvyPutXCe3jJfN1zB2l5lDVVwOm4)
+2. **Delete the old leaked key** from the provider account
 3. Click "Create API Key"
 4. Copy the new key immediately
 
@@ -88,7 +88,7 @@ pip install -r requirements.txt
 
 **Before (INSECURE):**
 ```python
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', 'AIzaSyD77xnWvyPutXCe3jJfN1zB2l5lDVVwOm4')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
 ```
 
 **After (SECURE):**

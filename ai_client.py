@@ -14,6 +14,12 @@ import base64
 from typing import Any, Optional
 
 from openai import AzureOpenAI
+from dotenv import load_dotenv
+
+
+# Keep this module safe to import on its own (for scripts and health checks),
+# while still allowing real process environment variables to take precedence.
+load_dotenv(override=False)
 
 
 # ---------------------------------------------------------------------------
@@ -53,6 +59,8 @@ def get_client() -> AzureOpenAI:
             api_key=AZURE_OPENAI_API_KEY,
             azure_endpoint=AZURE_OPENAI_ENDPOINT,
             api_version=AZURE_OPENAI_API_VERSION,
+            timeout=45.0,
+            max_retries=2,
         )
     return _client
 
