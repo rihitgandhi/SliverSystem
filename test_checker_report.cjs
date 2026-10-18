@@ -59,10 +59,11 @@ test('a clean report still exports scope and scan status', () => {
   assert.ok(csv.includes('0 detected findings; 0 review items'));
 });
 
-test('published checker points to the Render API while local previews stay local', () => {
+test('published checker uses the same-origin API while local previews stay local', () => {
   const html = fs.readFileSync('./checker.html', 'utf8');
   const script = fs.readFileSync('./scripts/checker.js', 'utf8');
-  assert.match(html, /name="checker-api-base" content="https:\/\/sliversystem-backend\.onrender\.com"/);
+  assert.match(html, /name="checker-api-base" content=""/);
+  assert.doesNotMatch(html, /onrender\.com/);
   assert.match(script, /meta\[name="checker-api-base"\]/);
   assert.match(script, /http:\/\/127\.0\.0\.1:5000/);
 });
