@@ -111,6 +111,12 @@ html {
   display: none;
 }
 
+.accessibility-settings__form {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
 .accessibility-settings__heading,
 .accessibility-settings__heading > div,
 .accessibility-settings__field,

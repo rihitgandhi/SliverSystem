@@ -52,6 +52,30 @@ test('CSV safely quotes multiline markup and treats spreadsheet formulas as lite
   assert.ok(csv.includes('<a title=""Hello"">\nText</a>'));
 });
 
+test('PDF export includes the complete report regardless of active filters', () => {
+  reportTools.filter(report, {severity:'critical'});
+  const html = reportTools.pdfHtml(report);
+  assert.ok(html.includes('AccessAI Accessibility Report'));
+  assert.ok(html.includes('Enhanced contrast'));
+  assert.ok(html.includes('Button needs a name'));
+  assert.ok(html.includes('Content landmarks'));
+  assert.ok(html.includes('Review click action'));
+  assert.ok(html.includes('Test the keyboard'));
+  assert.ok(html.includes('4 detected findings; 1 item needing human review'));
+});
+
+test('PDF export escapes scanned content before writing the printable document', () => {
+  const html = reportTools.pdfHtml({
+    url:'https://example.com/?q=<script>',
+    issues:[{type:'<img src=x onerror=alert(1)>', element:'<button>', fix:'Use "safe" text'}],
+    reviewItems:[], coverage:{},
+  });
+  assert.ok(html.includes('&lt;script&gt;'));
+  assert.ok(html.includes('&lt;img src=x onerror=alert(1)&gt;'));
+  assert.ok(html.includes('&lt;button&gt;'));
+  assert.ok(!html.includes('<img src=x onerror=alert(1)>'));
+});
+
 test('a clean report still exports scope and scan status', () => {
   const csv = reportTools.csv({issues:[], reviewItems:[], scanStatus:'partial', coverage:{warnings:['Styles not loaded']}});
   assert.ok(csv.includes('Styles not loaded'));

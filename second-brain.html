@@ -11,9 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=48">
-  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=7">
-  <link rel="stylesheet" href="./styles/second-brain-landing.css?v=22">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=55">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=8">
+  <link rel="stylesheet" href="./styles/second-brain-landing.css?v=23">
 </head>
 <body class="second-brain-page">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -27,7 +27,7 @@
       <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu"><span></span></button>
       <div class="nav-menu" id="nav-menu">
         <a class="nav-link" href="second-brain.html" aria-current="page">Second Brain</a>
-        <a class="nav-link" href="learn.html">Learn</a>
+        <a class="nav-link" href="learn.html">Research</a>
         <a class="nav-link" href="checker.html">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
         <a class="nav-status nav-status-link" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Add to Chrome</a>
@@ -42,20 +42,93 @@
         <h1 id="overview-title">Set it once.<br><span>It follows you.</span></h1>
         <p class="hero-subhead">Font size, contrast, reduced motion, and spacing — remembered and applied as you browse.</p>
         <a class="primary-cta" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Add to Chrome <span aria-hidden="true">↗</span></a>
-      </div>
-      <div class="product-shell hero-demo reveal" aria-label="Second Brain product demo">
-        <div class="demo-player" data-video-id="hpZcIcyKpl0">
-          <img src="./images/second-brain-demo-poster.jpg" alt="Second Brain applying saved reading preferences to an article in Chrome." width="480" height="360">
-          <button class="demo-play" type="button" aria-label="Play the Second Brain product demo"><span aria-hidden="true"></span></button>
+        <div class="sbw-walkthrough product-hero-preview" role="group" aria-label="Animated preview of Second Brain">
+          <p class="visually-hidden">The preview shows a user raising text size to 177% and turning on reduced motion, link highlighting, and voice navigation on one website, then opening another website where the same preferences are already applied.</p>
+          <div class="sbw-stage" aria-hidden="true">
+            <div class="sbw-browser">
+              <div class="sbw-topbar">
+                <div class="sbw-window-dots"><span></span><span></span><span></span></div>
+                <div class="sbw-tabs">
+                  <div class="sbw-tab sbw-tab-a is-active">example.com</div>
+                  <div class="sbw-tab sbw-tab-b">another-site.org</div>
+                </div>
+              </div>
+              <div class="sbw-toolbar">
+                <div class="sbw-address">example.com</div>
+                <div class="sbw-toolbar-icon">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8.2v8.2M8.4 12h7.2"></path></svg>
+                </div>
+              </div>
+              <div class="sbw-viewport">
+                <div class="sbw-site sbw-site-a">
+                  <div class="sbw-site-a-content">
+                    <h3>The quick brown fox</h3>
+                    <p>This is a sample paragraph so you can see exactly how body text will look on real websites once this setting is applied.</p>
+                    <a href="#" tabindex="-1">A sample link</a>
+                    <button type="button" tabindex="-1">Sample button</button>
+                  </div>
+                </div>
+                <div class="sbw-site sbw-site-b">
+                  <div class="sbw-site-b-page">
+                    <div class="sbw-site-b-banner">Another website</div>
+                    <div class="sbw-site-b-content">
+                      <h3>A different layout</h3>
+                      <p>This page uses a centered column and a different structure.</p>
+                      <p>The same accessibility preferences still carry across.</p>
+                      <div class="sbw-site-b-below">
+                        <a href="#" tabindex="-1">Another link</a>
+                        <button type="button" tabindex="-1">Sample button</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sbw-caption">Same settings. Already applied.</div>
+                <div class="sbw-voice-panel">
+                  <div class="sbw-voice-heading">
+                    <span class="sbw-voice-dot"></span>
+                    <strong>Listening…</strong>
+                    <span class="sbw-voice-close">×</span>
+                  </div>
+                  <div class="sbw-voice-transcript"></div>
+                  <div class="sbw-voice-message"></div>
+                </div>
+              </div>
+              <div class="sbw-popup">
+                <div class="sbw-popup-header">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8.2v8.2M8.4 12h7.2"></path></svg>
+                  <strong>Second Brain</strong>
+                </div>
+                <div class="sbw-text-row"><span>Text size</span><strong class="sbw-text-value">100%</strong></div>
+                <div class="sbw-slider"><span class="sbw-slider-fill"></span><span class="sbw-slider-thumb"></span></div>
+                <div class="sbw-toggle-row" data-setting="reduce"><span>Reduce motion</span><span class="sbw-switch"><i></i></span></div>
+                <div class="sbw-toggle-row" data-setting="highlight"><span>Highlight links / buttons</span><span class="sbw-switch"><i></i></span></div>
+                <div class="sbw-toggle-row" data-setting="contrast"><span>High contrast</span><span class="sbw-switch"><i></i></span></div>
+                <div class="sbw-toggle-row" data-setting="voice"><span>Voice navigation</span><span class="sbw-switch"><i></i></span></div>
+                <button class="sbw-disable" type="button" tabindex="-1">
+                  <svg viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 10.7a2 2 0 0 0 2.7 2.7M9.9 4.2A10.8 10.8 0 0 1 12 4c5.2 0 8.8 4.7 9.5 5.7a1 1 0 0 1 0 1.1 15.5 15.5 0 0 1-2.6 3M6.1 6.1a15.2 15.2 0 0 0-3.6 3.6 1 1 0 0 0 0 1.1C3.2 11.9 6.8 16 12 16c1 0 1.9-.2 2.8-.5"></path></svg>
+                  Disable on this site
+                </button>
+                <div class="sbw-host-hint">example.com</div>
+                <div class="sbw-settings-link">Edit full settings <span>›</span></div>
+              </div>
+              <div class="sbw-cursor">
+                <svg viewBox="0 0 24 28"><path d="M2 1.5v21l5.7-5.2 4 8.2 4.1-2-4-8.1 7.6-.8z"></path></svg>
+              </div>
+              <div class="sbw-click-ripple"></div>
+            </div>
+          </div>
+          <button class="sbw-playback" type="button" aria-label="Pause walkthrough">
+            <svg class="sbw-pause-icon" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"></path></svg>
+            <svg class="sbw-play-icon" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"></path></svg>
+          </button>
         </div>
-        <p class="media-caption">See Second Brain in action <span aria-hidden="true">— 0:52</span></p>
       </div>
     </section>
 
     <section class="product-section problem-section" id="why" aria-labelledby="problem-title">
       <div class="product-shell stat-moment reveal">
         <p class="eyebrow eyebrow-light">The web keeps asking you to adapt</p>
-        <p class="stat-number" aria-label="95 point 9 percent">95.9%</p>
+        <p class="stat-number"><span aria-hidden="true">95.9%</span><span class="visually-hidden">95.9 percent</span></p>
         <h2 id="problem-title">of the top one million home pages had detectable WCAG 2 failures.</h2>
         <p class="stat-source"><a href="https://webaim.org/projects/million/" target="_blank" rel="noopener">WebAIM Million, 2026 <span aria-hidden="true">↗</span></a></p>
         <p class="pivot">You shouldn’t have to fix your setup on every site yourself.</p>
@@ -66,7 +139,7 @@
       <div class="product-shell reveal">
         <p class="eyebrow">How it works</p>
         <h2 id="how-title">Three beats.<br>Then it’s yours.</h2>
-        <div class="beats" aria-label="How Second Brain works">
+        <div class="beats">
           <article class="beat"><span class="beat-number" aria-hidden="true">01</span><h3>Choose.</h3><p>Set your font size, contrast, motion, and spacing preferences once.</p></article>
           <article class="beat"><span class="beat-number" aria-hidden="true">02</span><h3>Browse.</h3><p>Move through the web as usual.</p></article>
           <article class="beat"><span class="beat-number" aria-hidden="true">03</span><h3>Done.</h3><p>Your saved preferences apply automatically.</p></article>
@@ -82,7 +155,7 @@
           <p>Voice Navigation runs on your device and turns a small set of spoken commands into browser actions.</p>
         </div>
         <!-- TODO(real product capture): Replace the typographic command stage below with a PNG or WebP screenshot of the real Voice Navigation overlay. Capture it at 1600×1200 or larger, with listening active and one recognized command visible. Do not replace it with a mockup. -->
-        <div class="voice-stage reveal" aria-label="Voice Navigation example commands">
+        <div class="voice-stage reveal">
           <blockquote>“click Submit”</blockquote>
           <blockquote>“scroll down”</blockquote>
           <blockquote>“focus Search”</blockquote>
@@ -122,8 +195,8 @@
     <span>© 2026 AccessAI</span>
   </footer>
 
-  <script src="./scripts/page-transitions.js?v=3"></script>
-  <script src="./scripts/accessibility-settings.js?v=7"></script>
+  <script src="./scripts/page-transitions.js?v=4"></script>
+  <script src="./scripts/accessibility-settings.js?v=10"></script>
   <script src="./scripts/second-brain.js?v=1"></script>
 </body>
 </html>

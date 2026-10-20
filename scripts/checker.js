@@ -271,6 +271,19 @@
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
+  function exportPdf() {
+    if (!currentReport) return;
+    const printWindow = window.open('', '_blank', 'width=960,height=720');
+    if (!printWindow) {
+      showError('Your browser blocked the PDF window. Allow pop-ups for this site, then try again.');
+      return;
+    }
+    printWindow.opener = null;
+    printWindow.document.open();
+    printWindow.document.write(reportTools.pdfHtml(currentReport));
+    printWindow.document.close();
+  }
+
   function renderResults(data) {
     currentReport = data;
     setHidden(results, false);
@@ -345,6 +358,7 @@
     searchTimer = setTimeout(renderFilteredResults, 150);
   });
   document.getElementById('checker-reset-filters')?.addEventListener('click', () => { resetFilters(); renderFilteredResults(); });
+  document.getElementById('checker-download-pdf')?.addEventListener('click', exportPdf);
   document.getElementById('checker-download-json')?.addEventListener('click', () => downloadReport('json'));
   document.getElementById('checker-download-csv')?.addEventListener('click', () => downloadReport('csv'));
   document.getElementById('checker-expand-all')?.addEventListener('click', () => { issuesList.querySelectorAll('details').forEach(d => { d.open = true; }); });

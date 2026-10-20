@@ -423,9 +423,7 @@
         return;
       }
 
-      const fadeIn = easeOut(between(time, 0, 1200));
-      const fadeOut = 1 - easeInOut(between(time, 17600, 18000));
-      stage.style.opacity = String(Math.min(fadeIn, fadeOut));
+      stage.style.opacity = '1';
 
       const sliderProgress = easeInOut(between(time, 2800, 5000));
       const currentTextSize = Math.round(100 + 77 * sliderProgress);

@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=48">
-  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=7">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=55">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=8">
 </head>
 <body class="checker-page">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -30,7 +30,7 @@
       </button>
       <div class="nav-menu" id="nav-menu">
         <a class="nav-link" href="second-brain.html">Second Brain</a>
-        <a class="nav-link" href="learn.html">Learn</a>
+        <a class="nav-link" href="learn.html">Research</a>
         <a class="nav-link" href="checker.html" aria-current="page">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
         <a class="nav-status nav-status-link" href="second-brain.html#install">Try Second Brain</a>
@@ -86,11 +86,12 @@
           <ol id="checker-priority-list"></ol>
         </section>
         <div class="checker-report-actions" id="checker-report-actions" hidden>
+          <button type="button" id="checker-download-pdf">Export PDF</button>
           <button type="button" id="checker-download-json">Download JSON</button>
           <button type="button" id="checker-download-csv">Download CSV</button>
           <button type="button" id="checker-expand-all">Expand all</button>
           <button type="button" id="checker-collapse-all">Collapse all</button>
-          <p>Downloads include every finding and review item, regardless of filters.</p>
+          <p>Exports include every finding and review item, regardless of filters. PDF opens your browser's print dialog; choose Save as PDF.</p>
         </div>
         <div class="checker-filters" id="checker-filters" hidden>
           <label>Show
@@ -131,9 +132,9 @@
   </main>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="./scripts/page-transitions.js?v=3"></script>
-  <script src="./scripts/checker-report.js?v=1"></script>
-  <script src="./scripts/checker.js?v=7"></script>
-  <script src="./scripts/accessibility-settings.js?v=7"></script>
+  <script src="./scripts/page-transitions.js?v=4"></script>
+  <script src="./scripts/checker-report.js?v=2"></script>
+  <script src="./scripts/checker.js?v=8"></script>
+  <script src="./scripts/accessibility-settings.js?v=10"></script>
 </body>
 </html>

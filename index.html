@@ -13,8 +13,8 @@
   <link rel="preload" as="image" href="./images/accessai-mountain-hero.png" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=49">
-  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=7">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=56">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=8">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -30,7 +30,7 @@
       </button>
       <div class="nav-menu" id="nav-menu">
         <a class="nav-link" href="second-brain.html">Second Brain</a>
-        <a class="nav-link" href="learn.html">Learn</a>
+        <a class="nav-link" href="learn.html">Research</a>
         <a class="nav-link" href="checker.html">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
         <a class="nav-status nav-status-link" href="second-brain.html#install">Try Second Brain</a>
@@ -42,56 +42,25 @@
     <section class="home-screen home-hero-screen" aria-labelledby="hero-title">
       <div class="home-section-content home-hero-layout reveal">
         <div class="home-hero-copy">
-          <h1 id="hero-title">AccessAI</h1>
-          <p class="home-hero-intro">Two practical ways to make the web easier to use and easier to improve.</p>
-          <div class="home-hero-tools" aria-label="AccessAI tools">
-            <a class="home-hero-tool" href="second-brain.html">
-              <span class="home-hero-tool-name">Second Brain</span>
-              <span class="home-hero-tool-copy">Set supported accessibility preferences once, then carry them with you as you browse.</span>
-              <span class="home-hero-tool-cue" aria-hidden="true">Explore <span>→</span></span>
-            </a>
-            <a class="home-hero-tool" href="checker.html">
-              <span class="home-hero-tool-name">Website Scanner</span>
-              <span class="home-hero-tool-copy">Paste any page URL to uncover accessibility barriers and get clear next steps.</span>
-              <span class="home-hero-tool-cue" aria-hidden="true">Scan a site <span>→</span></span>
-            </a>
-          </div>
-          <div class="product-action-row" aria-label="Second Brain actions">
-            <a class="button primary" href="second-brain.html#install">Try Second Brain</a>
-            <a class="button secondary" href="second-brain.html#demo-proof">View video demo</a>
-          </div>
+          <p class="home-hero-kicker"><span>AccessAI</span> Accessibility, made practical.</p>
+          <h1 id="hero-title">The web should work <span>for everyone.</span></h1>
+          <p class="home-hero-intro">Two focused tools make digital experiences easier to use—and easier to improve.</p>
+        </div>
+        <div class="home-hero-tools">
+          <a class="home-hero-tool home-hero-tool-brain" href="second-brain.html#install">
+            <span class="home-hero-tool-meta"><span>For browsing</span><span aria-hidden="true">01</span></span>
+            <span class="home-hero-tool-name">Second Brain</span>
+            <span class="home-hero-tool-copy">Carry your preferred text size, contrast, motion, and spacing across the web.</span>
+            <span class="home-hero-tool-cue">Try Second Brain <span aria-hidden="true">↗</span></span>
+          </a>
+          <a class="home-hero-tool home-hero-tool-checker" href="checker.html">
+            <span class="home-hero-tool-meta"><span>For improving</span><span aria-hidden="true">02</span></span>
+            <span class="home-hero-tool-name">Accessibility Checker</span>
+            <span class="home-hero-tool-copy">Scan any page for accessibility barriers and get clear, practical next steps.</span>
+            <span class="home-hero-tool-cue">Try the Checker <span aria-hidden="true">↗</span></span>
+          </a>
         </div>
       </div>
-    </section>
-
-    <section class="home-screen home-quote-screen" id="mission" aria-labelledby="mission-title">
-      <a class="home-section-content home-centered reveal" href="mission.html">
-        <p class="home-eyebrow">Mission</p>
-        <h2 id="mission-title"><span class="home-quote-mark home-quote-mark-open" aria-hidden="true">“</span>This isn't a technology problem. It's an ownership problem.<span class="home-quote-mark home-quote-mark-close" aria-hidden="true">”</span></h2>
-        <span class="home-link-cue">Read the full mission</span>
-      </a>
-    </section>
-
-    <section class="home-screen home-learn-screen" id="learn" aria-labelledby="learn-title">
-      <a class="home-section-content home-centered home-learn-content reveal" href="learn.html">
-        <p class="home-eyebrow">Learn</p>
-        <h2 id="learn-title">Learn</h2>
-        <p>AI is changing what's possible in accessibility — and what it still gets wrong. We dig into both.</p>
-        <span class="home-link-cue">Read the research</span>
-        <div class="home-learn-preview" aria-label="Research preview">
-          <span class="home-learn-preview-label">Research preview</span>
-          <div class="home-learn-stat-row">
-            <span class="home-learn-stat">
-              <strong data-count-to="95.9" data-count-decimals="1" data-count-suffix="%">95.9%</strong>
-              <span>of top one million home pages had detectable WCAG 2 failures</span>
-            </span>
-            <span class="home-learn-stat">
-              <strong data-count-to="70" data-count-prefix="" data-count-suffix="M+">70M+</strong>
-              <span>U.S. adults report having a disability</span>
-            </span>
-          </div>
-        </div>
-      </a>
     </section>
 
     <section class="home-screen home-product-screen" id="product" aria-labelledby="product-title">
@@ -210,13 +179,45 @@
       </div>
     </section>
 
+    <section class="home-screen home-learn-screen" id="learn" aria-labelledby="learn-title">
+      <a class="home-section-content home-centered home-learn-content reveal" href="learn.html">
+        <p class="home-eyebrow">Research</p>
+        <h2 id="learn-title">Research</h2>
+        <p>AI is changing what's possible in accessibility — and what it still gets wrong. We dig into both.</p>
+        <span class="home-link-cue">Read the research</span>
+        <div class="home-learn-preview" aria-label="Research preview">
+          <span class="home-learn-preview-label">Research preview</span>
+          <div class="home-learn-stat-row">
+            <span class="home-learn-stat">
+              <strong data-count-to="95.9" data-count-decimals="1" data-count-suffix="%">95.9%</strong>
+              <span>of top one million home pages had detectable WCAG 2 failures</span>
+            </span>
+            <span class="home-learn-stat">
+              <strong data-count-to="70" data-count-prefix="" data-count-suffix="M+">70M+</strong>
+              <span>U.S. adults report having a disability</span>
+            </span>
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <section class="home-screen home-quote-screen" id="mission" aria-labelledby="mission-title">
+      <a class="home-section-content home-centered reveal" href="mission.html">
+        <p class="home-eyebrow">Mission</p>
+        <h2 id="mission-title"><span class="home-quote-mark home-quote-mark-open" aria-hidden="true">“</span>This isn't a technology problem. It's an ownership problem.<span class="home-quote-mark home-quote-mark-close" aria-hidden="true">”</span></h2>
+        <span class="home-link-cue">Read the full mission</span>
+      </a>
+    </section>
+
     <section class="home-screen home-founder-screen" id="founder" aria-labelledby="founder-title">
       <div class="home-section-content reveal">
         <p class="home-eyebrow">About</p>
         <h2 id="founder-title">Why I'm building this</h2>
         <p>I'm a high school student working at the intersection of accessibility, public policy, computer science, and AI governance. AccessAI comes from the belief that accessibility fails when it is treated as only an engineering problem or only a policy problem.</p>
-        <div class="home-founder-placeholders" aria-label="Founder placeholders">
-          <span class="home-placeholder-slot">Founder portrait</span>
+        <figure class="home-founder-portrait">
+          <img src="./images/founder-portrait.png" alt="Portrait of the AccessAI founder wearing a NASCAR Racing shirt." width="1024" height="1536" loading="lazy">
+        </figure>
+        <div class="home-founder-placeholders">
           <span class="home-placeholder-slot">Founder story: why accessibility matters to me</span>
         </div>
       </div>
@@ -230,7 +231,7 @@
           <p>Install Second Brain for browsing preferences, or run a quick accessibility check before your next review.</p>
         </div>
 
-        <div class="home-try-grid" aria-label="AccessAI tools to try">
+        <div class="home-try-grid">
           <article class="home-try-card home-try-card-store">
             <span class="home-try-card-icon" aria-hidden="true">+</span>
             <p class="home-eyebrow">Chrome Web Store</p>
@@ -252,7 +253,7 @@
   </main>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="./scripts/page-transitions.js?v=3"></script>
-  <script src="./scripts/accessibility-settings.js?v=7"></script>
+  <script src="./scripts/page-transitions.js?v=4"></script>
+  <script src="./scripts/accessibility-settings.js?v=10"></script>
 </body>
 </html>

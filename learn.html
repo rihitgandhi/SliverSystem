@@ -6,14 +6,14 @@
   <meta name="description" content="A research-grounded explanation of AI, accessibility, and why portable preferences matter.">
   <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light">
-  <title>Learn | AccessAI</title>
+  <title>Research | AccessAI</title>
   <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=48">
-  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=7">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=55">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=8">
 </head>
 <body class="learn-page">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -28,7 +28,7 @@
       </button>
       <div class="nav-menu" id="nav-menu">
         <a class="nav-link" href="second-brain.html">Second Brain</a>
-        <a class="nav-link" href="learn.html" aria-current="page">Learn</a>
+        <a class="nav-link" href="learn.html" aria-current="page">Research</a>
         <a class="nav-link" href="checker.html">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
         <a class="nav-status nav-status-link" href="second-brain.html#install">Try Second Brain</a>
@@ -40,24 +40,25 @@
     <section class="learn-section learn-headline-section" aria-labelledby="page-title">
       <div class="learn-shell learn-hero-grid reveal">
         <div>
-          <p class="kicker">Learn</p>
+          <p class="kicker">Research</p>
           <h1 id="page-title">AI can help accessibility, but only with limits.</h1>
         </div>
-        <aside class="learn-research-rail" aria-label="Learn page research themes">
+        <aside class="learn-research-rail" aria-label="Research themes">
           <span>Research lens</span>
           <strong>Scale</strong>
-          <strong>Repetition</strong>
+          <strong>Standards</strong>
+          <strong>Evidence</strong>
           <strong>Limits</strong>
         </aside>
       </div>
     </section>
 
-    <section class="learn-section learn-intro-section" aria-label="Learn introduction">
+    <section class="learn-section learn-intro-section" aria-label="Research introduction">
       <div class="learn-shell learn-intro-grid reveal">
         <p class="learn-intro-marker" aria-hidden="true">01</p>
         <div class="learn-copy-shell">
-          <p class="lead">AccessAI starts from the scale and repetition of the same accessibility failures across the web.</p>
-          <p class="body-copy">AI can reduce friction by helping apply a user's own preferences more consistently. It cannot replace standards, testing, or human verification.</p>
+          <p class="lead">AccessAI starts from evidence: disability is common, barriers repeat at scale, and technical compliance still requires human judgment.</p>
+          <p class="body-copy">AI can reduce friction by helping apply a user's own preferences more consistently. It cannot replace accessible design, standards-based engineering, testing with assistive technology, or decisions made with disabled people.</p>
         </div>
       </div>
     </section>
@@ -66,9 +67,9 @@
       <div class="learn-shell learn-stat-feature-grid">
         <div class="learn-stat-number" aria-hidden="true">95.9%</div>
         <div>
-          <small>WebAIM 2026</small>
+          <small><a class="learn-source-link" href="#source-webaim">WebAIM 2026</a></small>
           <h2 id="webaim-title">95.9% of the top one million home pages had detectable WCAG 2 failures.</h2>
-          <p>The automated analysis found 56.1 accessibility errors per page on average, up 10.1% from 2025.</p>
+          <p>The automated analysis found 56.1 accessibility errors per page on average, up 10.1% from 2025. Because automated tools detect only a subset of barriers, a page with no flagged errors is not necessarily accessible or conformant.</p>
         </div>
       </div>
     </section>
@@ -76,39 +77,110 @@
     <section class="learn-stat-section learn-recurring-section reveal" aria-labelledby="recurring-title">
       <div class="learn-shell learn-recurring-grid">
         <div>
-          <small>Recurring failures</small>
+          <small><a class="learn-source-link" href="#source-webaim">Recurring failures</a></small>
           <h2 id="recurring-title">Six error types account for about 96% of detected issues.</h2>
         </div>
-        <p>Contrast, missing alt text, missing form labels, empty links, empty buttons, and missing document language keep returning.</p>
+        <p>Low contrast, missing alternative text, missing form labels, empty links, empty buttons, and missing document language have remained the dominant automated findings for seven years.</p>
+      </div>
+    </section>
+
+    <section class="learn-stat-section learn-stat-feature reveal" aria-labelledby="complexity-title">
+      <div class="learn-shell learn-stat-feature-grid">
+        <div class="learn-stat-number" aria-hidden="true">1/26</div>
+        <div>
+          <small><a class="learn-source-link" href="#source-webaim">Page complexity</a></small>
+          <h2 id="complexity-title">One detectable error appeared for every 26 home-page elements.</h2>
+          <p>WebAIM analyzed more than 1.4 billion elements. The average home page contained 1,437 elements in 2026, nearly twice the 2019 average, showing how growing interface complexity can multiply opportunities for barriers.</p>
+        </div>
       </div>
     </section>
 
     <section class="learn-stat-section learn-impact-section reveal" aria-labelledby="affects-title">
       <div class="learn-shell learn-impact-grid">
         <div class="learn-impact-copy">
-          <small>Who it affects</small>
-          <h2 id="affects-title">More than 1 in 4 U.S. adults report having a disability.</h2>
-          <p>That scale is why accessibility cannot depend on each person reconfiguring every website from scratch.</p>
+          <small><a class="learn-source-link" href="#source-cdc">Who it affects</a></small>
+          <h2 id="affects-title">More than 70 million U.S. adults report having a disability.</h2>
+          <p>CDC data from the 2022 Behavioral Risk Factor Surveillance System puts the figure above one in four adults. Accessibility is therefore core infrastructure, not a niche accommodation.</p>
         </div>
         <div class="learn-impact-mark" aria-hidden="true">
-          <span>1</span>
-          <span>in</span>
-          <span>4</span>
+          <span>70</span>
+          <span>million+</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="learn-stat-section learn-recurring-section reveal" aria-labelledby="global-title">
+      <div class="learn-shell learn-recurring-grid">
+        <div>
+          <small><a class="learn-source-link" href="#source-who">Global scale</a></small>
+          <h2 id="global-title">About 1.3 billion people experience significant disability.</h2>
+        </div>
+        <p>The World Health Organization estimates that disability affects 16% of the global population—roughly one person in six—and emphasizes that environmental barriers help shape disability outcomes.</p>
+      </div>
+    </section>
+
+    <section class="learn-stat-section reveal" aria-labelledby="standards-title">
+      <div class="learn-shell learn-recurring-grid">
+        <div>
+          <small><a class="learn-source-link" href="#source-wcag">Standards baseline</a></small>
+          <h2 id="standards-title">WCAG 2.2 adds nine success criteria, but does not cover every user need.</h2>
+        </div>
+        <p>The additions address issues such as focus visibility, target size, dragging alternatives, consistent help, redundant entry, and accessible authentication. W3C still cautions that conformance alone cannot meet every need.</p>
+      </div>
+    </section>
+
+    <section class="learn-stat-section learn-recurring-section reveal" aria-labelledby="policy-title">
+      <div class="learn-shell learn-recurring-grid">
+        <div>
+          <small><a class="learn-source-link" href="#source-doj">Public-sector requirements</a></small>
+          <h2 id="policy-title">U.S. state and local government sites must meet WCAG 2.1 Level AA.</h2>
+        </div>
+        <p>The Department of Justice's Title II rule sets compliance dates of April 2027 for larger public entities and April 2028 for smaller entities and special districts. Technical compliance does not remove the broader duty to provide effective communication and equal access.</p>
+      </div>
+    </section>
+
+    <section class="learn-stat-section learn-impact-section reveal" aria-labelledby="descriptions-title">
+      <div class="learn-shell learn-impact-grid">
+        <div class="learn-impact-copy">
+          <small><a class="learn-source-link" href="#source-stangl">Image-description research</a></small>
+          <h2 id="descriptions-title">Useful image descriptions depend on context, not a single universal template.</h2>
+          <p>Interviews with 28 people who were blind or had low vision found that the information people wanted changed with the task and setting, including news, shopping, employment, social media, and productivity tools.</p>
+        </div>
+        <div class="learn-impact-mark" aria-hidden="true">
+          <span>28</span>
+          <span>participants</span>
         </div>
       </div>
     </section>
 
     <section class="learn-stat-section learn-limits-section reveal" aria-labelledby="limits-title">
       <div class="learn-shell learn-limits-grid">
-        <small>AI limits</small>
+        <small><a class="learn-source-link" href="#source-nist">AI limits</a></small>
         <h2 id="limits-title">Fluent descriptions can still be wrong.</h2>
-        <p>AI image descriptions can be useful, but they still need review because they can misread text or invent details. Accessibility tools need visible limits.</p>
+        <p>NIST identifies confabulation—confidently presented false or erroneous content—as a core generative-AI risk. For accessibility, that means generated descriptions and recommendations should expose uncertainty, preserve user control, and remain subject to human review.</p>
+      </div>
+    </section>
+
+    <section class="learn-section learn-sources-section reveal" aria-labelledby="sources-title">
+      <div class="learn-shell">
+        <p class="kicker">Sources</p>
+        <h2 id="sources-title">Works Cited</h2>
+        <p class="learn-sources-intro">MLA-style citations for the evidence and standards summarized on this page.</p>
+        <ol class="learn-sources-list">
+          <li id="source-cdc">Centers for Disease Control and Prevention. “CDC Data Shows Over 70 Million U.S. Adults Reported Having a Disability.” <em>CDC</em>, 16 July 2024, <a href="https://www.cdc.gov/media/releases/2024/s0716-adult-disability.html" target="_blank" rel="noopener">www.cdc.gov/media/releases/2024/s0716-adult-disability.html</a>. Accessed 19 Oct. 2026.</li>
+          <li id="source-nist">National Institute of Standards and Technology. <em>Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile</em>. NIST AI 600-1, July 2024, <a href="https://doi.org/10.6028/NIST.AI.600-1" target="_blank" rel="noopener">doi.org/10.6028/NIST.AI.600-1</a>. Accessed 19 Oct. 2026.</li>
+          <li id="source-stangl">Stangl, Abigale, et al. “Going Beyond One-Size-Fits-All Image Descriptions to Satisfy the Information Wants of People Who Are Blind or Have Low Vision.” <em>Proceedings of the 23rd International ACM SIGACCESS Conference on Computers and Accessibility</em>, ACM, 2021, pp. 1–15, <a href="https://doi.org/10.1145/3441852.3471233" target="_blank" rel="noopener">doi.org/10.1145/3441852.3471233</a>. Accessed 19 Oct. 2026.</li>
+          <li id="source-doj">United States, Department of Justice, Civil Rights Division. “Fact Sheet: New Rule on the Accessibility of Web Content and Mobile Apps Provided by State and Local Governments.” <em>ADA.gov</em>, 8 Mar. 2024, <a href="https://www.ada.gov/resources/2024-03-08-web-rule/" target="_blank" rel="noopener">www.ada.gov/resources/2024-03-08-web-rule/</a>. Accessed 19 Oct. 2026.</li>
+          <li id="source-webaim">WebAIM. “The WebAIM Million: The 2026 Report on the Accessibility of the Top 1,000,000 Home Pages.” <em>Institute for Disability Research, Policy, and Practice, Utah State University</em>, 2026, <a href="https://webaim.org/projects/million/" target="_blank" rel="noopener">webaim.org/projects/million/</a>. Accessed 19 Oct. 2026.</li>
+          <li id="source-who">World Health Organization. “Disability.” <em>World Health Organization</em>, 7 Mar. 2023, <a href="https://www.who.int/news-room/fact-sheets/detail/disability-and-health" target="_blank" rel="noopener">www.who.int/news-room/fact-sheets/detail/disability-and-health</a>. Accessed 19 Oct. 2026.</li>
+          <li id="source-wcag">World Wide Web Consortium. <em>Web Content Accessibility Guidelines (WCAG) 2.2</em>. W3C Recommendation, 12 Dec. 2024, <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">www.w3.org/TR/WCAG22/</a>. Accessed 19 Oct. 2026.</li>
+        </ol>
       </div>
     </section>
 
     <section class="learn-section learn-next-section reveal" aria-labelledby="learn-next-title">
       <div class="learn-shell learn-copy-shell">
-        <p class="kicker">Next step</p>
+        <p class="kicker">From research to practice</p>
         <h2 id="learn-next-title">Try the extension built from this research.</h2>
         <p class="body-copy">Second Brain carries supported accessibility preferences across pages where the extension can run.</p>
         <a class="button primary" href="second-brain.html#install">Try Second Brain</a>
@@ -117,7 +189,7 @@
   </main>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="./scripts/page-transitions.js?v=3"></script>
-  <script src="./scripts/accessibility-settings.js?v=7"></script>
+  <script src="./scripts/page-transitions.js?v=4"></script>
+  <script src="./scripts/accessibility-settings.js?v=10"></script>
 </body>
 </html>

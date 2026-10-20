@@ -2,7 +2,7 @@
   'use strict';
 
   const STORAGE_KEY = 'secondBrainAccessibilitySettings';
-  const WIDGET_VERSION = '7';
+  const WIDGET_VERSION = '10';
   const FONT_MIN = 100;
   const FONT_MAX = 200;
   const FONT_STEP = 10;
@@ -65,8 +65,7 @@
     widget.dataset.accessibilityVersion = WIDGET_VERSION;
     widget.setAttribute('aria-label', 'Accessibility appearance settings');
     widget.innerHTML = `
-      <button class="accessibility-settings__toggle" type="button" aria-label="Open accessibility settings" aria-haspopup="dialog" aria-expanded="false" aria-controls="accessibility-settings-panel">
-        <span class="accessibility-settings__toggle-hint" aria-hidden="true">Make this site work for you</span>
+      <button class="accessibility-settings__toggle" type="button" aria-label="Open accessibility settings" aria-haspopup="dialog" aria-expanded="false">
         <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
           <circle cx="12" cy="4.5" r="2.2"></circle>
           <path d="M4.8 8.2h14.4"></path>
@@ -75,8 +74,9 @@
           <path d="M15.9 20.2l-2.1-6.7"></path>
         </svg>
       </button>
-      <form class="accessibility-settings__panel" id="accessibility-settings-panel" role="dialog" aria-modal="false" aria-labelledby="accessibility-settings-title" hidden>
-        <div class="accessibility-settings__heading">
+      <div class="accessibility-settings__panel" id="accessibility-settings-panel" role="dialog" aria-modal="false" aria-labelledby="accessibility-settings-title" hidden>
+        <form class="accessibility-settings__form">
+          <div class="accessibility-settings__heading">
           <div>
             <strong id="accessibility-settings-title">Accessibility</strong>
             <span>Appearance</span>
@@ -84,39 +84,40 @@
           <button class="accessibility-settings__close" type="button" aria-label="Close accessibility settings">
             <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false"><path d="M6 6l12 12M18 6L6 18"></path></svg>
           </button>
-        </div>
-        <label class="accessibility-settings__field">
+          </div>
+          <label class="accessibility-settings__field">
           <span>Text size <output for="a11y-text-size" data-a11y-size-output>100%</output></span>
           <input id="a11y-text-size" name="fontScale" type="range" min="${FONT_MIN}" max="${FONT_MAX}" step="${FONT_STEP}" value="100">
           <span class="accessibility-settings__range-labels" aria-hidden="true"><small>100%</small><small>200%</small></span>
-        </label>
-        <label class="accessibility-settings__field">
+          </label>
+          <label class="accessibility-settings__field">
           <span>Contrast</span>
           <select name="contrast">
             <option value="default">Default</option>
             <option value="high">High contrast</option>
             <option value="dark">Dark</option>
           </select>
-        </label>
-        <label class="accessibility-settings__check">
+          </label>
+          <label class="accessibility-settings__check">
           <input name="spacing" type="checkbox">
           <span>More text spacing</span>
-        </label>
-        <label class="accessibility-settings__check">
+          </label>
+          <label class="accessibility-settings__check">
           <input name="readableFont" type="checkbox">
           <span>Readable font</span>
-        </label>
-        <label class="accessibility-settings__check">
+          </label>
+          <label class="accessibility-settings__check">
           <input name="underlineLinks" type="checkbox">
           <span>Underline links</span>
-        </label>
-        <label class="accessibility-settings__check">
+          </label>
+          <label class="accessibility-settings__check">
           <input name="reducedMotion" type="checkbox">
           <span>Reduce motion</span>
-        </label>
-        <button class="accessibility-settings__reset" type="button">Reset all settings</button>
-        <p class="accessibility-settings__status" aria-live="polite" aria-atomic="true"></p>
-      </form>
+          </label>
+          <button class="accessibility-settings__reset" type="button">Reset all settings</button>
+          <p class="accessibility-settings__status" aria-live="polite" aria-atomic="true"></p>
+        </form>
+      </div>
     `;
     document.body.append(widget);
     return widget;
@@ -138,7 +139,7 @@
     const resetButton = widget.querySelector('.accessibility-settings__reset');
     const sizeOutput = widget.querySelector('[data-a11y-size-output]');
     const status = widget.querySelector('.accessibility-settings__status');
-    const form = panel;
+    const form = panel.querySelector('.accessibility-settings__form');
     const themeColor = document.querySelector('meta[name="theme-color"]');
     const originalThemeColor = themeColor ? themeColor.content : '';
     let settings = load();
