@@ -583,10 +583,14 @@ a { color: inherit; }
 
 .skip-link:focus { transform: translateY(0); }
 
-:focus-visible {
-  outline: 3px solid rgba(0, 95, 204, 0.42);
-  outline-offset: 4px;
+:focus-visible,
+body :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px #005fcc;
 }
+
+main[tabindex="-1"]:focus { outline: none; }
 
 .site-header {
   position: fixed;
@@ -1090,6 +1094,14 @@ h3 {
   will-change: auto;
 }
 
+main > section:first-child.scroll-reveal,
+main > section:first-child .reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  will-change: auto;
+}
+
 .screen:first-child .reveal {
   opacity: 1;
   transform: none;
@@ -1097,7 +1109,7 @@ h3 {
 
 @keyframes pageEnter {
   from {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(12px);
   }
   to {
@@ -1641,7 +1653,6 @@ body:has(.single-screen) {
   padding: 0 clamp(22px, 3vw, 34px);
   font: inherit;
   font-size: clamp(1.04rem, calc(1.35vw * var(--a11y-font-scale, 1)), 1.22rem);
-  outline: none;
   transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
 
@@ -1675,6 +1686,10 @@ body:has(.single-screen) {
   color: #4f5b68;
   font-size: clamp(0.98rem, calc(1.18vw * var(--a11y-font-scale, 1)), 1.1rem);
   line-height: 1.55;
+}
+
+.checker-help {
+  margin-top: -8px;
 }
 
 .checker-error {
@@ -1718,6 +1733,53 @@ body:has(.single-screen) {
 .checker-next-section .button,
 .learn-next-section .button {
   margin-top: clamp(24px, 3vw, 36px);
+}
+
+.privacy-main {
+  overflow: visible;
+  background: #ffffff;
+}
+
+.privacy-hero,
+.privacy-content {
+  padding-inline: var(--gutter);
+}
+
+.privacy-hero {
+  padding-top: calc(var(--header-height) + clamp(54px, 8vw, 118px));
+  padding-bottom: clamp(48px, 6vw, 84px);
+}
+
+.privacy-content {
+  padding-bottom: clamp(72px, 10vw, 140px);
+}
+
+.privacy-shell {
+  width: min(100%, 920px);
+  margin: 0 auto;
+}
+
+.privacy-hero h1 {
+  font-size: clamp(3rem, calc(6vw * var(--a11y-font-scale, 1)), 6.5rem);
+  line-height: 0.98;
+}
+
+.privacy-content h2 {
+  margin: 2.4em 0 0.55em;
+  font-size: clamp(1.6rem, calc(2.4vw * var(--a11y-font-scale, 1)), 2.4rem);
+}
+
+.privacy-content p,
+.privacy-content li {
+  color: var(--muted);
+  font-size: clamp(1rem, calc(1.2vw * var(--a11y-font-scale, 1)), 1.15rem);
+  line-height: 1.7;
+}
+
+.privacy-content a {
+  color: var(--blue);
+  font-weight: 700;
+  text-underline-offset: 0.22em;
 }
 
 .checker-issues {

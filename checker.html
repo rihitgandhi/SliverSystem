@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=48">
-  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=7">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=51">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=8">
 </head>
 <body class="checker-page">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -38,7 +38,7 @@
     </nav>
   </header>
 
-  <main id="main-content" class="checker-main">
+  <main id="main-content" class="checker-main" tabindex="-1">
     <section class="checker-hero" aria-labelledby="checker-page-title">
       <div class="checker-shell reveal">
         <p class="kicker">CHECKER</p>
@@ -51,12 +51,13 @@
       <div class="checker-shell">
         <form class="checker-form reveal" id="checker-form" novalidate>
           <label for="checker-url" id="checker-form-title">Website URL</label>
+          <p class="checker-message checker-help" id="checker-help">Enter a public page URL. A detailed desktop, mobile, and narrow-screen scan can take up to two minutes.</p>
           <div class="checker-input-row">
-            <input id="checker-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="https://example.com" aria-describedby="checker-error checker-status">
+            <input id="checker-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="https://example.com" aria-describedby="checker-help checker-error checker-status">
             <button class="button primary checker-submit" type="submit">Scan</button>
           </div>
-          <p class="checker-message checker-error" id="checker-error" role="alert" hidden></p>
-          <p class="checker-message checker-status" id="checker-status" role="status" hidden>
+          <p class="checker-message checker-error" id="checker-error" role="alert" tabindex="-1" hidden></p>
+          <p class="checker-message checker-status" id="checker-status" role="status" tabindex="-1" hidden>
             <span class="checker-spinner" aria-hidden="true"></span>
             Checking desktop, mobile, and narrow layouts. Detailed scans can take a minute...
           </p>
@@ -64,11 +65,11 @@
       </div>
     </section>
 
-    <section class="checker-results-section" id="checker-results" aria-live="polite" hidden>
+    <section class="checker-results-section" id="checker-results" hidden>
       <div class="checker-shell">
         <div class="checker-results-header">
           <p class="kicker">Results</p>
-          <h2 id="checker-summary">Scan results</h2>
+          <h2 id="checker-summary" tabindex="-1">Scan results</h2>
           <p class="checker-message" id="checker-coverage"></p>
         </div>
         <div class="checker-scan-warnings checker-message" id="checker-warnings" role="status" hidden></div>
@@ -131,9 +132,9 @@
   </main>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="./scripts/page-transitions.js?v=3"></script>
+  <script src="./scripts/page-transitions.js?v=5"></script>
   <script src="./scripts/checker-report.js?v=1"></script>
-  <script src="./scripts/checker.js?v=7"></script>
-  <script src="./scripts/accessibility-settings.js?v=7"></script>
+  <script src="./scripts/checker.js?v=8"></script>
+  <script src="./scripts/accessibility-settings.js?v=8"></script>
 </body>
 </html>

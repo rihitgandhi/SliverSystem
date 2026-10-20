@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How AccessAI handles website-checker requests, appearance preferences, and Second Brain privacy information.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light dark">
+  <title>Privacy | AccessAI</title>
+  <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=51">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=8">
+</head>
+<body class="privacy-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="AccessAI home">
+        <img src="./images/a11y.jpg" alt="">
+        <span>AccessAI</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu"><span></span></button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="second-brain.html">Second Brain</a>
+        <a class="nav-link" href="learn.html">Learn</a>
+        <a class="nav-link" href="checker.html">Checker</a>
+        <a class="nav-link" href="mission.html">Our Mission</a>
+        <a class="nav-status nav-status-link" href="second-brain.html#install">Try Second Brain</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content" class="privacy-main" tabindex="-1">
+    <section class="privacy-hero" aria-labelledby="privacy-title">
+      <div class="privacy-shell">
+        <p class="kicker">Privacy</p>
+        <h1 id="privacy-title">Clear information about what leaves your browser.</h1>
+        <p class="lead">AccessAI has no user accounts. This notice explains the limited information used by the public website, the Checker, and the Second Brain extension listing.</p>
+      </div>
+    </section>
+
+    <section class="privacy-content" aria-label="Privacy details">
+      <div class="privacy-shell">
+        <h2>Accessibility appearance settings</h2>
+        <p>The “Make this site work for you” controls save your selected text size, contrast, spacing, font, link, and motion preferences in this browser’s local storage. Those settings stay on your device and are used to update AccessAI pages.</p>
+
+        <h2>Website Checker</h2>
+        <p>When you submit a public website URL, AccessAI sends that URL to the Checker service so it can load the page and produce an accessibility report. Do not submit private, authenticated, or sensitive URLs. Reports describe the submitted public page and are not proof of full WCAG conformance.</p>
+
+        <h2>Second Brain extension</h2>
+        <p>The current Chrome Web Store disclosure states that the developer does not collect or use user data. Second Brain is designed to apply the preferences you choose while you browse; the public AccessAI website does not receive those extension preferences.</p>
+
+        <h2>Third-party services</h2>
+        <p>AccessAI uses Google Fonts for typography. The Second Brain demo connects to YouTube only after you choose to play it. Links to the Chrome Web Store and research sources take you to those services, where their own privacy terms apply.</p>
+
+        <h2>Questions and updates</h2>
+        <p>This notice may change when the products change. For extension support, use the developer support option on the <a href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener noreferrer">Second Brain Chrome Web Store listing<span class="visually-hidden"> (opens in a new tab)</span></a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <a href="#main-content">Back to top</a>
+    <span>© 2026 AccessAI</span>
+  </footer>
+
+  <script src="./scripts/page-transitions.js?v=5"></script>
+  <script src="./scripts/accessibility-settings.js?v=8"></script>
+</body>
+</html>

@@ -46,7 +46,7 @@ class AccessibilitySettingsTests(unittest.TestCase):
         self.context.close()
 
     def open_panel(self):
-        self.page.get_by_role("button", name="Open accessibility settings").click()
+        self.page.get_by_role("button", name="Make this site work for you: open accessibility settings").click()
         panel = self.page.get_by_role("dialog", name="Accessibility")
         self.assertTrue(panel.is_visible())
         return panel
@@ -108,7 +108,10 @@ class AccessibilitySettingsTests(unittest.TestCase):
         self.open_panel()
         self.page.keyboard.press("Escape")
         self.assertFalse(self.page.get_by_role("dialog", name="Accessibility").is_visible())
-        self.assertEqual(self.page.evaluate("document.activeElement.getAttribute('aria-label')"), "Open accessibility settings")
+        self.assertEqual(
+            self.page.evaluate("document.activeElement.getAttribute('aria-label')"),
+            "Make this site work for you: open accessibility settings",
+        )
 
         invalid = json.dumps({"fontScale": 999, "contrast": "unknown", "spacing": "true"})
         self.page.evaluate("([key, value]) => localStorage.setItem(key, value)", [STORAGE_KEY, invalid])
@@ -151,7 +154,7 @@ class AccessibilitySettingsTests(unittest.TestCase):
                   </aside>
                 `);
                 const script = document.createElement('script');
-                script.src = './scripts/accessibility-settings.js?v=7&legacy-test=1';
+                script.src = './scripts/accessibility-settings.js?v=8&legacy-test=1';
                 script.onload = resolve;
                 script.onerror = reject;
                 document.body.append(script);
@@ -159,7 +162,7 @@ class AccessibilitySettingsTests(unittest.TestCase):
         )
 
         widget = self.page.locator('.accessibility-settings')
-        self.assertEqual(widget.get_attribute('data-accessibility-version'), '7')
+        self.assertEqual(widget.get_attribute('data-accessibility-version'), '8')
         self.assertEqual(widget.count(), 1)
         self.assertTrue(widget.locator('.accessibility-settings__toggle-hint').is_visible())
         self.assertEqual(widget.locator('.accessibility-settings__toggle-hint').inner_text(), 'Make this site work for you')
@@ -194,6 +197,64 @@ class AccessibilitySettingsTests(unittest.TestCase):
         self.assertIn("accessai-mountain-hero.png", hero_screen.evaluate("el => getComputedStyle(el).backgroundImage"))
         reset_size = float(hero.evaluate("el => parseFloat(getComputedStyle(el).fontSize)"))
         self.assertAlmostEqual(reset_size, normal_size, delta=0.5)
+
+    def test_core_pages_pass_automated_wcag_a_and_aa_checks(self):
+        axe_path = REPO_ROOT / "vendor" / "axe-core" / "axe.min.js"
+        for page_name in ("index.html", "second-brain.html", "checker.html", "privacy.html"):
+            with self.subTest(page=page_name):
+                self.page.emulate_media(reduced_motion="reduce")
+                self.page.goto(f"{self.base_url}/{page_name}", wait_until="networkidle")
+                self.page.add_script_tag(path=str(axe_path))
+                violations = self.page.evaluate(
+                    """async () => (await axe.run(document, {
+                      runOnly: {type: 'tag', values: [
+                        'wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'
+                      ]}
+                    })).violations.map(({id, nodes}) => ({
+                      id,
+                      targets: nodes.map(node => node.target.join(' '))
+                    }))"""
+                )
+                self.assertEqual(violations, [], violations)
+
+    def test_priority_pages_reflow_at_200_percent_on_narrow_screens(self):
+        self.page.set_viewport_size({"width": 320, "height": 800})
+        for page_name in ("second-brain.html", "checker.html"):
+            with self.subTest(page=page_name):
+                self.page.goto(f"{self.base_url}/{page_name}", wait_until="networkidle")
+                self.page.evaluate(
+                    "([key, value]) => localStorage.setItem(key, value)",
+                    [STORAGE_KEY, json.dumps({"fontScale": 200})],
+                )
+                self.page.reload(wait_until="networkidle")
+                self.assertLessEqual(
+                    self.page.evaluate("document.documentElement.scrollWidth"),
+                    self.page.evaluate("document.documentElement.clientWidth") + 1,
+                )
+
+    def test_skip_link_and_mobile_menu_keep_keyboard_focus_predictable(self):
+        self.page.goto(f"{self.base_url}/index.html", wait_until="networkidle")
+        self.page.keyboard.press("Tab")
+        self.assertEqual(self.page.evaluate("document.activeElement.textContent.trim()"), "Skip to main content")
+        self.page.keyboard.press("Enter")
+        self.assertEqual(self.page.evaluate("document.activeElement.id"), "main-content")
+
+        self.page.set_viewport_size({"width": 390, "height": 844})
+        self.page.reload(wait_until="networkidle")
+        menu_button = self.page.get_by_role("button", name="Toggle navigation")
+        menu_button.click()
+        self.assertEqual(menu_button.get_attribute("aria-expanded"), "true")
+        self.page.keyboard.press("Escape")
+        self.assertEqual(menu_button.get_attribute("aria-expanded"), "false")
+        self.assertEqual(self.page.evaluate("document.activeElement.getAttribute('aria-label')"), "Toggle navigation")
+
+    def test_checker_validation_exposes_error_state_and_returns_focus(self):
+        self.page.goto(f"{self.base_url}/checker.html", wait_until="networkidle")
+        self.page.get_by_role("button", name="Scan").click()
+        field = self.page.get_by_role("textbox", name="Website URL")
+        self.assertEqual(field.get_attribute("aria-invalid"), "true")
+        self.assertEqual(self.page.evaluate("document.activeElement.id"), "checker-url")
+        self.assertEqual(self.page.get_by_role("alert").inner_text(), "Enter a URL to scan.")
 
 
 if __name__ == "__main__":

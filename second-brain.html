@@ -11,9 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=48">
-  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=7">
-  <link rel="stylesheet" href="./styles/second-brain-landing.css?v=22">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=51">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=8">
+  <link rel="stylesheet" href="./styles/second-brain-landing.css?v=23">
 </head>
 <body class="second-brain-page">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -30,20 +30,20 @@
         <a class="nav-link" href="learn.html">Learn</a>
         <a class="nav-link" href="checker.html">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
-        <a class="nav-status nav-status-link" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Add to Chrome</a>
+        <a class="nav-status nav-status-link" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener noreferrer">Add to Chrome<span class="visually-hidden"> (opens in a new tab)</span></a>
       </div>
     </nav>
   </header>
 
-  <main id="main-content" class="product-main">
+  <main id="main-content" class="product-main" tabindex="-1">
     <section class="product-section product-hero" id="overview" aria-labelledby="overview-title">
       <div class="product-shell hero-copy reveal">
         <p class="eyebrow">Second Brain for Chrome</p>
         <h1 id="overview-title">Set it once.<br><span>It follows you.</span></h1>
         <p class="hero-subhead">Font size, contrast, reduced motion, and spacing — remembered and applied as you browse.</p>
-        <a class="primary-cta" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Add to Chrome <span aria-hidden="true">↗</span></a>
+        <a class="primary-cta" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener noreferrer">Add to Chrome <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
       </div>
-      <div class="product-shell hero-demo reveal" aria-label="Second Brain product demo">
+      <div class="product-shell hero-demo reveal" id="demo-proof" aria-label="Second Brain product demo">
         <div class="demo-player" data-video-id="hpZcIcyKpl0">
           <img src="./images/second-brain-demo-poster.jpg" alt="Second Brain applying saved reading preferences to an article in Chrome." width="480" height="360">
           <button class="demo-play" type="button" aria-label="Play the Second Brain product demo"><span aria-hidden="true"></span></button>
@@ -57,7 +57,7 @@
         <p class="eyebrow eyebrow-light">The web keeps asking you to adapt</p>
         <p class="stat-number" aria-label="95 point 9 percent">95.9%</p>
         <h2 id="problem-title">of the top one million home pages had detectable WCAG 2 failures.</h2>
-        <p class="stat-source"><a href="https://webaim.org/projects/million/" target="_blank" rel="noopener">WebAIM Million, 2026 <span aria-hidden="true">↗</span></a></p>
+        <p class="stat-source"><a href="https://webaim.org/projects/million/" target="_blank" rel="noopener noreferrer">WebAIM Million, 2026 <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a></p>
         <p class="pivot">You shouldn’t have to fix your setup on every site yourself.</p>
       </div>
     </section>
@@ -109,7 +109,7 @@
         <h2 id="install-title">Make the web feel like yours.</h2>
         <p>Second Brain is live in the Chrome Web Store.</p>
         <div class="final-actions">
-          <a class="primary-cta primary-cta-light" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Add to Chrome <span aria-hidden="true">↗</span></a>
+          <a class="primary-cta primary-cta-light" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener noreferrer">Add to Chrome <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
           <a class="text-link" href="checker.html">Try the AccessAI Checker <span aria-hidden="true">→</span></a>
         </div>
       </div>
@@ -122,8 +122,8 @@
     <span>© 2026 AccessAI</span>
   </footer>
 
-  <script src="./scripts/page-transitions.js?v=3"></script>
-  <script src="./scripts/accessibility-settings.js?v=7"></script>
+  <script src="./scripts/page-transitions.js?v=5"></script>
+  <script src="./scripts/accessibility-settings.js?v=8"></script>
   <script src="./scripts/second-brain.js?v=1"></script>
 </body>
 </html>

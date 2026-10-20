@@ -19,7 +19,7 @@ class AppEndpointTests(unittest.TestCase):
 
     def test_current_static_routes(self):
         for route in ('/', '/checker.html', '/learn.html', '/mission.html',
-                      '/second-brain.html', '/second-brain-landing.html'):
+                      '/privacy.html', '/second-brain.html', '/second-brain-landing.html'):
             with self.subTest(route=route):
                 response = self.client.get(route)
                 try:

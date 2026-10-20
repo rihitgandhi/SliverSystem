@@ -2,7 +2,7 @@
   'use strict';
 
   const STORAGE_KEY = 'secondBrainAccessibilitySettings';
-  const WIDGET_VERSION = '7';
+  const WIDGET_VERSION = '8';
   const FONT_MIN = 100;
   const FONT_MAX = 200;
   const FONT_STEP = 10;
@@ -65,7 +65,7 @@
     widget.dataset.accessibilityVersion = WIDGET_VERSION;
     widget.setAttribute('aria-label', 'Accessibility appearance settings');
     widget.innerHTML = `
-      <button class="accessibility-settings__toggle" type="button" aria-label="Open accessibility settings" aria-haspopup="dialog" aria-expanded="false" aria-controls="accessibility-settings-panel">
+      <button class="accessibility-settings__toggle" type="button" aria-label="Make this site work for you: open accessibility settings" aria-haspopup="dialog" aria-expanded="false" aria-controls="accessibility-settings-panel">
         <span class="accessibility-settings__toggle-hint" aria-hidden="true">Make this site work for you</span>
         <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
           <circle cx="12" cy="4.5" r="2.2"></circle>
@@ -195,7 +195,12 @@
     const setOpen = (open, returnFocus = false) => {
       panel.hidden = !open;
       toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Hide accessibility settings' : 'Open accessibility settings');
+      toggle.setAttribute(
+        'aria-label',
+        open
+          ? 'Make this site work for you: hide accessibility settings'
+          : 'Make this site work for you: open accessibility settings'
+      );
 
       if (open) {
         window.requestAnimationFrame(() => closeButton.focus());

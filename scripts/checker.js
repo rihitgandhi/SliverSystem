@@ -42,13 +42,19 @@
     element.hidden = hidden;
   }
 
-  function showError(message) {
+  function showError(message, invalidInput = false) {
     error.textContent = message;
+    if (invalidInput) {
+      input.setAttribute('aria-invalid', 'true');
+    } else {
+      input.removeAttribute('aria-invalid');
+    }
     setHidden(error, false);
   }
 
   function clearError() {
     error.textContent = '';
+    input.removeAttribute('aria-invalid');
     setHidden(error, true);
   }
 
@@ -353,6 +359,7 @@
   function setLoading(loading) {
     submit.disabled = loading;
     input.disabled = loading;
+    form.setAttribute('aria-busy', String(loading));
     setHidden(status, !loading);
   }
 
@@ -422,20 +429,25 @@
     try {
       url = normalizeUrl(input.value);
     } catch (validationError) {
-      showError(validationError.message);
+      showError(validationError.message, true);
       input.focus();
       return;
     }
 
     setLoading(true);
+    status.focus();
 
     try {
       const data = await scan(url);
       renderResults(data);
+      setLoading(false);
+      summary.focus();
     } catch (scanError) {
       showError(scanError.message || 'The scan failed. Try again later.');
-    } finally {
       setLoading(false);
+      error.focus();
+    } finally {
+      if (form.getAttribute('aria-busy') === 'true') setLoading(false);
     }
   });
 })();

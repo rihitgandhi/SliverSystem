@@ -13,8 +13,8 @@
   <link rel="preload" as="image" href="./images/accessai-mountain-hero.png" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=49">
-  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=7">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=51">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=8">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -38,7 +38,7 @@
     </nav>
   </header>
 
-  <main id="main-content" class="home-flow">
+  <main id="main-content" class="home-flow" tabindex="-1">
     <section class="home-screen home-hero-screen" aria-labelledby="hero-title">
       <div class="home-section-content home-hero-layout reveal">
         <div class="home-hero-copy">
@@ -236,7 +236,7 @@
             <p class="home-eyebrow">Chrome Web Store</p>
             <h3>Second Brain extension</h3>
             <p>Save supported accessibility preferences once, then let Second Brain remember them as you browse sites that allow extension changes.</p>
-            <a class="button primary home-try-button" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Add to Chrome</a>
+            <a class="button primary home-try-button" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener noreferrer">Add to Chrome<span class="visually-hidden"> (opens in a new tab)</span></a>
           </article>
 
           <article class="home-try-card home-try-card-checker">
@@ -252,7 +252,7 @@
   </main>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="./scripts/page-transitions.js?v=3"></script>
-  <script src="./scripts/accessibility-settings.js?v=7"></script>
+  <script src="./scripts/page-transitions.js?v=5"></script>
+  <script src="./scripts/accessibility-settings.js?v=8"></script>
 </body>
 </html>

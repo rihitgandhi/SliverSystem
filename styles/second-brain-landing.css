@@ -4,8 +4,8 @@
   --product-ink: #1d1d1f;
   --product-muted: #5f6269;
   --product-line: #d7d7dc;
-  --product-blue: #0071e3;
-  --product-blue-dark: #0058b0;
+  --product-blue: #005fcc;
+  --product-blue-dark: #004a99;
   --product-night: #05070b;
   --product-shell: 1180px;
 }
@@ -432,7 +432,7 @@
   }
 
   .hero-copy h1 {
-    font-size: clamp(3.6rem, 19vw, 6rem);
+    font-size: min(3.6rem, 18vw);
   }
 
   .hero-subhead {
@@ -458,7 +458,7 @@
   .voice-section h2,
   .limits-card h2,
   .final-section h2 {
-    font-size: clamp(2.9rem, 14vw, 4.8rem);
+    font-size: min(2.9rem, 14vw);
   }
 
   .pivot {

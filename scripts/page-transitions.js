@@ -17,15 +17,33 @@
     }
   };
 
+  function initSkipLink() {
+    const link = document.querySelector('.skip-link[href^="#"]');
+    if (!link) return;
+
+    link.addEventListener('click', (event) => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+
+      event.preventDefault();
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ block: 'start', behavior: 'auto' });
+      window.history.pushState(null, '', link.getAttribute('href'));
+    });
+  }
+
   function initMenu() {
     const button = document.querySelector('.menu-toggle');
     const menu = document.getElementById('nav-menu');
+    const nav = button?.closest('nav');
     if (!button || !menu) return;
 
-    const close = () => {
+    const close = (returnFocus = false) => {
+      if (button.getAttribute('aria-expanded') !== 'true') return;
       button.setAttribute('aria-expanded', 'false');
       menu.classList.remove('is-open');
       document.body.classList.remove('nav-open');
+      if (returnFocus) button.focus();
     };
 
     button.addEventListener('click', () => {
@@ -39,8 +57,20 @@
       if (event.target.closest('a')) close();
     });
 
+    nav?.addEventListener('focusout', (event) => {
+      if (event.relatedTarget && !nav.contains(event.relatedTarget)) close();
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (nav && !nav.contains(event.target)) close();
+    });
+
     window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') close();
+      if (event.key === 'Escape') close(true);
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 1101px)').matches) close();
     });
   }
 
@@ -82,7 +112,9 @@
     });
 
     items.forEach((item) => observer.observe(item));
-    fallbackItems.forEach((item) => item.classList.add('in-view'));
+    if (sectionItems.length) {
+      fallbackItems.forEach((item) => item.classList.add('in-view'));
+    }
 
     document.addEventListener('accessai:settingschange', (event) => {
       if (!event.detail || !event.detail.reducedMotion) return;
@@ -543,6 +575,7 @@
   }
 
   function init() {
+    initSkipLink();
     initMenu();
     initSmoothScroll();
     initReveal();
