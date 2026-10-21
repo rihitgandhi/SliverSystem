@@ -3219,7 +3219,7 @@ body:has(.single-screen) {
   margin-top: clamp(8px, 1.5vw, 20px);
   border: 0;
   border-radius: 0;
-  background: rgba(246, 247, 249, 0.88);
+  background: transparent;
   padding: clamp(20px, 2.6vw, 34px);
   text-align: left;
 }
@@ -4223,70 +4223,46 @@ body:has(.single-screen) {
   max-width: 1380px;
   min-height: min(650px, calc(100svh - var(--header-height) - 96px));
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(390px, 0.7fr);
-  align-items: center;
-  gap: clamp(54px, 7vw, 132px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(26px, 3vw, 40px);
 }
 
 .home-hero-copy {
   align-content: center;
-  gap: clamp(18px, 2vw, 28px);
-}
-
-.home-hero-screen .home-section-content .home-hero-kicker {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  max-width: none;
-  color: #344152;
-  font-size: 0.78rem;
-  font-weight: 760;
-  letter-spacing: 0.12em;
-  line-height: 1.3;
-  text-transform: uppercase;
-}
-
-.home-hero-kicker span {
-  display: inline-flex;
-  min-height: 30px;
-  align-items: center;
-  border-radius: 999px;
-  padding: 0 12px;
-  background: #0f1720;
-  color: #ffffff;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
+  gap: clamp(12px, 1.4vw, 20px);
 }
 
 .home-hero-screen .home-section-content h1 {
   max-width: 820px;
   color: #10151c;
-  font-size: clamp(4.4rem, calc(7.7vw * var(--a11y-font-scale, 1)), 9.2rem);
-  font-weight: 720;
-  letter-spacing: -0.062em;
-  line-height: 0.9;
+  font-size: clamp(5.2rem, calc(9vw * var(--a11y-font-scale, 1)), 10.5rem);
+  font-weight: 760;
+  letter-spacing: -0.07em;
+  line-height: 0.82;
   text-wrap: balance;
 }
 
-.home-hero-screen .home-section-content h1 span {
-  color: #0969da;
+.home-hero-screen .home-section-content .home-hero-subheading {
+  max-width: 760px;
+  color: #10151c;
+  font-size: clamp(1.45rem, calc(2.2vw * var(--a11y-font-scale, 1)), 2.5rem);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  text-wrap: balance;
 }
 
-.home-hero-screen .home-section-content .home-hero-intro {
-  max-width: 620px;
-  color: #344152;
-  font-size: clamp(1.05rem, calc(1.25vw * var(--a11y-font-scale, 1)), 1.24rem);
-  font-weight: 560;
-  line-height: 1.58;
+.home-hero-screen .home-section-content .home-hero-subheading span {
+  color: #0969da;
 }
 
 .home-hero-tools {
   display: grid;
   width: 100%;
-  max-width: 470px;
-  grid-template-columns: 1fr;
-  justify-self: end;
+  max-width: 860px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -4294,18 +4270,18 @@ body:has(.single-screen) {
 .home-hero-tool:visited {
   position: relative;
   display: grid;
-  min-height: 182px;
+  min-height: 176px;
   align-content: start;
   gap: 12px;
   overflow: hidden;
-  border: 1px solid rgba(15, 23, 32, 0.13);
+  border: 1px solid rgba(16, 21, 28, 0.16);
   border-radius: 24px;
   padding: 24px 26px;
-  background: rgba(255, 255, 255, 0.83);
+  background: linear-gradient(135deg, rgba(238, 246, 255, 0.92), rgba(255, 255, 255, 0.78));
   color: #111820;
   text-decoration: none;
-  box-shadow: 0 24px 70px rgba(23, 38, 55, 0.13);
-  backdrop-filter: blur(18px) saturate(125%);
+  box-shadow: 0 22px 64px rgba(23, 38, 55, 0.17), 0 2px 8px rgba(23, 38, 55, 0.08);
+  backdrop-filter: blur(12px) saturate(118%);
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease, box-shadow 220ms ease, background 220ms ease;
 }
 
@@ -4326,7 +4302,7 @@ body:has(.single-screen) {
 
 .home-hero-tool:hover {
   border-color: rgba(9, 105, 218, 0.34);
-  background: rgba(255, 255, 255, 0.96);
+  background: linear-gradient(135deg, rgba(224, 237, 250, 0.68), rgba(255, 255, 255, 0.42));
   box-shadow: 0 30px 82px rgba(23, 38, 55, 0.18);
   transform: translateY(-4px);
 }
@@ -4338,17 +4314,6 @@ body:has(.single-screen) {
 .home-hero-tool:focus-visible {
   outline: 3px solid #0969da;
   outline-offset: 4px;
-}
-
-.home-hero-tool-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #566273;
-  font-size: 0.7rem;
-  font-weight: 780;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
 }
 
 .home-hero-tool-name {
@@ -4393,12 +4358,11 @@ body:has(.single-screen) {
 
 @media (max-width: 980px) {
   .home-hero-screen .home-section-content.home-hero-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(330px, 0.72fr);
-    gap: 38px;
+    gap: 28px;
   }
 
   .home-hero-screen .home-section-content h1 {
-    font-size: clamp(4rem, calc(8.6vw * var(--a11y-font-scale, 1)), 7.2rem);
+    font-size: clamp(4.8rem, calc(10vw * var(--a11y-font-scale, 1)), 8.4rem);
   }
 }
 
@@ -4417,39 +4381,29 @@ body:has(.single-screen) {
     width: 100%;
     max-width: 100%;
     min-height: 0;
-    grid-template-columns: 1fr;
     align-items: start;
     gap: 34px;
     padding-top: 20px;
   }
 
-  .home-hero-screen .home-section-content .home-hero-kicker {
-    gap: 9px;
-    font-size: 0.66rem;
-    letter-spacing: 0.09em;
-  }
-
-  .home-hero-kicker span {
-    min-height: 27px;
-    padding: 0 10px;
-  }
-
   .home-hero-screen .home-section-content h1 {
     max-width: 590px;
-    font-size: clamp(3.4rem, calc(15.5vw * var(--a11y-font-scale, 1)), 5.4rem);
-    letter-spacing: -0.055em;
-    line-height: 0.92;
+    font-size: clamp(3.5rem, calc(18vw * var(--a11y-font-scale, 1)), 5.4rem);
+    letter-spacing: -0.065em;
+    line-height: 0.84;
+    white-space: nowrap;
   }
 
-  .home-hero-screen .home-section-content .home-hero-intro {
-    max-width: 34rem;
-    font-size: 1rem;
-    line-height: 1.5;
+  .home-hero-screen .home-section-content .home-hero-subheading {
+    max-width: 560px;
+    font-size: clamp(1.35rem, calc(6vw * var(--a11y-font-scale, 1)), 2rem);
+    letter-spacing: -0.032em;
+    line-height: 1.08;
   }
 
   .home-hero-tools {
     max-width: none;
-    justify-self: stretch;
+    grid-template-columns: 1fr;
     gap: 11px;
   }
 
@@ -4473,6 +4427,10 @@ body:has(.single-screen) {
   .home-hero-tool-cue {
     margin-top: 4px;
     font-size: 0.82rem;
+  }
+
+  html[data-a11y-font-scale]:not([data-a11y-font-scale="100"]) .home-hero-screen .home-section-content h1 {
+    white-space: normal;
   }
 }
 
