@@ -182,6 +182,10 @@ def mission_page():
 def checker_page():
     return send_from_directory('.', 'checker.html')
 
+@app.route('/privacy.html')
+def privacy_page():
+    return send_from_directory('.', 'privacy.html')
+
 @app.route('/api/cors-test', methods=['GET', 'OPTIONS'])
 def cors_test():
     if request.method == 'OPTIONS':

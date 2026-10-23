@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Set your accessibility preferences once. Second Brain remembers them as you browse.">
+  <meta name="description" content="Use Second Brain in Chrome or Microsoft Edge to apply supported accessibility preferences across compatible websites.">
+  <meta property="og:title" content="Second Brain | AccessAI">
+  <meta property="og:description" content="Set supported text, contrast, motion, and spacing preferences once and apply them across compatible websites.">
   <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light dark">
   <title>Second Brain | AccessAI</title>
@@ -11,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=55">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=66">
   <link rel="stylesheet" href="./styles/accessibility-settings.css?v=8">
   <link rel="stylesheet" href="./styles/second-brain-landing.css?v=23">
 </head>
@@ -30,7 +32,7 @@
         <a class="nav-link" href="learn.html">Research</a>
         <a class="nav-link" href="checker.html">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
-        <a class="nav-status nav-status-link" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Try Second Brain</a>
+        <a class="nav-status nav-status-link" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Install Second Brain</a>
       </div>
     </nav>
   </header>
@@ -39,8 +41,8 @@
     <section class="product-section product-hero" id="overview" aria-labelledby="overview-title">
       <div class="product-shell hero-copy reveal">
         <p class="eyebrow">Second Brain for Chrome &amp; Edge</p>
-        <h1 id="overview-title">Set it once.<br><span>It follows you.</span></h1>
-        <p class="hero-subhead">Font size, contrast, reduced motion, and spacing — remembered and applied as you browse.</p>
+        <h1 id="overview-title">Set it once.<br><span>Carry it across supported sites.</span></h1>
+        <p class="hero-subhead">Font size, contrast, reduced motion, and spacing &mdash; remembered and applied on compatible pages as you browse.</p>
         <a class="primary-cta" href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Install for Chrome or Edge <span aria-hidden="true">↗</span></a>
         <div class="sbw-walkthrough product-hero-preview" role="group" aria-label="Animated preview of Second Brain">
           <p class="visually-hidden">The preview shows a user raising text size to 177% and turning on reduced motion, link highlighting, and voice navigation on one website, then opening another website where the same preferences are already applied.</p>
@@ -142,7 +144,7 @@
         <div class="beats">
           <article class="beat"><span class="beat-number" aria-hidden="true">01</span><h3>Choose.</h3><p>Set your font size, contrast, motion, and spacing preferences once.</p></article>
           <article class="beat"><span class="beat-number" aria-hidden="true">02</span><h3>Browse.</h3><p>Move through the web as usual.</p></article>
-          <article class="beat"><span class="beat-number" aria-hidden="true">03</span><h3>Done.</h3><p>Your saved preferences apply automatically.</p></article>
+          <article class="beat"><span class="beat-number" aria-hidden="true">03</span><h3>Applied.</h3><p>Your saved preferences apply automatically on supported pages.</p></article>
         </div>
       </div>
     </section>
@@ -152,7 +154,7 @@
         <div class="voice-copy reveal">
           <p class="eyebrow eyebrow-light">Voice Navigation</p>
           <h2 id="voice-title">Say it.<br>Keep moving.</h2>
-          <p>Voice Navigation runs on your device and turns a small set of spoken commands into browser actions.</p>
+          <p>Voice Navigation uses your browser's speech-recognition capability to turn a small set of spoken commands into browser actions.</p>
         </div>
         <!-- TODO(real product capture): Replace the typographic command stage below with a PNG or WebP screenshot of the real Voice Navigation overlay. Capture it at 1600×1200 or larger, with listening active and one recognized command visible. Do not replace it with a mockup. -->
         <div class="voice-stage reveal">
@@ -172,6 +174,7 @@
           <p>Second Brain does not repair broken page code such as missing alt text or labels.</p>
           <p>It does not use AI; AI lives only in the separate AccessAI Checker.</p>
           <p>Browser zoom and operating system settings still matter, and browser-restricted pages may prevent extension changes.</p>
+          <p>Preferences apply within browser profiles where the extension is installed; browser sync behavior depends on your browser settings.</p>
         </div>
       </div>
     </section>
@@ -190,9 +193,9 @@
   </main>
 
   <footer class="site-footer" aria-label="Site footer">
-    <a href="privacy.html">Privacy</a>
+    <a href="privacy.html">Privacy &amp; Data Use</a>
     <a href="#main-content">Back to top</a>
-    <span>© 2026 AccessAI</span>
+    <span>&copy; 2026 AccessAI</span>
   </footer>
 
   <script src="./scripts/page-transitions.js?v=4"></script>

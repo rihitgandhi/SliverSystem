@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How AccessAI processes webpage scan data, accessibility preferences, voice input, and technical logs.">
+  <meta property="og:title" content="Privacy &amp; Data Use | AccessAI">
+  <meta property="og:description" content="A plain-English explanation of what AccessAI processes and where third-party services are involved.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
+  <title>Privacy &amp; Data Use | AccessAI</title>
+  <link rel="icon" type="image/jpeg" href="./images/a11y.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=66">
+  <link rel="stylesheet" href="./styles/accessibility-settings.css?v=8">
+</head>
+<body class="privacy-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="AccessAI home">
+        <img src="./images/a11y.jpg" alt="">
+        <span>AccessAI</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu"><span></span></button>
+      <div class="nav-menu" id="nav-menu">
+        <a class="nav-link" href="second-brain.html">Second Brain</a>
+        <a class="nav-link" href="learn.html">Research</a>
+        <a class="nav-link" href="checker.html">Checker</a>
+        <a class="nav-link" href="mission.html">Our Mission</a>
+        <a class="nav-status nav-status-link" href="second-brain.html#install">Get Second Brain</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content" class="privacy-main">
+    <article class="privacy-article" aria-labelledby="privacy-title">
+      <header class="privacy-hero reveal">
+        <p class="kicker">Privacy &amp; Data Use</p>
+        <h1 id="privacy-title">What AccessAI processes&mdash;and what it does not.</h1>
+        <p class="privacy-lead">AccessAI does not require an account. This page explains how the Second Brain extension and the Accessibility Checker handle information.</p>
+        <p class="privacy-updated">Last updated: October 23, 2026</p>
+      </header>
+
+      <section class="privacy-section reveal" aria-labelledby="second-brain-privacy">
+        <p class="kicker">Second Brain</p>
+        <h2 id="second-brain-privacy">Preferences stay within your browser environment.</h2>
+        <ul>
+          <li>Second Brain stores accessibility preferences through browser extension storage so it can apply supported settings on compatible pages.</li>
+          <li>Your browser may synchronize extension settings between browser profiles or devices, depending on your browser and sync settings.</li>
+          <li>AccessAI does not sell extension data or use it for advertising.</li>
+          <li>Voice Navigation uses speech-recognition capabilities supplied by your browser or operating system. AccessAI does not intentionally receive or store your voice audio, but your browser or operating-system provider may process speech under its own terms.</li>
+        </ul>
+      </section>
+
+      <section class="privacy-section reveal" aria-labelledby="checker-privacy">
+        <p class="kicker">Accessibility Checker</p>
+        <h2 id="checker-privacy">A submitted public URL is processed to create a report.</h2>
+        <ul>
+          <li>The URL you submit is sent to the AccessAI server so the Checker can retrieve and render the publicly available page.</li>
+          <li>The Checker evaluates the downloaded markup and rendered page at three viewport widths. It does not log in to private pages or access content behind authentication.</li>
+          <li>Automated rules produce the findings. AI does not decide which violations exist or change their severity.</li>
+          <li>When AI explanations are available, AccessAI sends Azure OpenAI the page URL and a limited summary of verified scan data, such as rule names, counts, severity, sample selectors, existing remediation guidance, and manual-review checks. The full raw page HTML is not intentionally included in that AI prompt.</li>
+          <li>Do not submit URLs that contain private tokens, personal information, or content you are not authorized to analyze.</li>
+        </ul>
+      </section>
+
+      <section class="privacy-section reveal" aria-labelledby="storage-privacy">
+        <p class="kicker">Storage &amp; logs</p>
+        <h2 id="storage-privacy">AccessAI does not provide saved scan history.</h2>
+        <p>The application does not create a user account or intentionally write completed Checker reports to an application database. Hosting, monitoring, browser, and AI providers may process standard technical information&mdash;such as IP address, request time, browser details, errors, and service logs&mdash;under their own security and retention practices.</p>
+      </section>
+
+      <section class="privacy-section reveal" aria-labelledby="services-privacy">
+        <p class="kicker">Service providers</p>
+        <h2 id="services-privacy">Some features rely on third-party infrastructure.</h2>
+        <p>AccessAI may use website hosting and monitoring providers, Microsoft Azure OpenAI for optional Checker summaries, the Chrome Web Store for extension distribution, Google Fonts for typography, and unpkg for a page-scrolling library. These providers may receive ordinary technical request information when their services are used.</p>
+      </section>
+
+      <section class="privacy-section privacy-contact reveal" aria-labelledby="questions-privacy">
+        <p class="kicker">Questions</p>
+        <h2 id="questions-privacy">Ask before sharing anything sensitive.</h2>
+        <p>For privacy questions, use the developer contact shown on the <a href="https://chromewebstore.google.com/detail/second-brain/doodbhenooojmhdjapkfokajbmbmnhkb" target="_blank" rel="noopener">Second Brain Chrome Web Store listing</a>.</p>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <a href="index.html">Home</a>
+    <a href="#main-content">Back to top</a>
+    <span>&copy; 2026 AccessAI</span>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+  <script src="./scripts/page-transitions.js?v=4"></script>
+  <script src="./scripts/accessibility-settings.js?v=10"></script>
+</body>
+</html>

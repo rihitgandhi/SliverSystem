@@ -55,7 +55,7 @@
   function normalizeUrl(value) {
     const trimmed = value.trim();
     if (!trimmed) {
-      throw new Error('Enter a URL to scan.');
+      throw new Error('Enter a public webpage URL to scan.');
     }
 
     const candidate = /^[a-z][a-z0-9+.-]*:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
@@ -64,11 +64,11 @@
     try {
       parsed = new URL(candidate);
     } catch (_) {
-      throw new Error('Enter a valid URL, like https://example.com.');
+      throw new Error('Enter a valid public webpage URL, like https://example.com.');
     }
 
     if (!['http:', 'https:'].includes(parsed.protocol) || !parsed.hostname || !parsed.hostname.includes('.')) {
-      throw new Error('Enter a valid website URL, like https://example.com.');
+      throw new Error('Enter a valid public webpage URL, like https://example.com.');
     }
 
     return parsed.href;
@@ -87,8 +87,11 @@
       }
     });
 
+    if (total === 0) return 'No automated issues detected';
     const issueWord = total === 1 ? 'issue' : 'issues';
-    return pieces.length ? `${total} ${issueWord} found — ${pieces.join(', ')}` : `${total} ${issueWord} found`;
+    return pieces.length
+      ? `${total} automated ${issueWord} detected \u2014 ${pieces.join(', ')}`
+      : `${total} automated ${issueWord} detected`;
   }
 
   function getIssueField(issue, keys, fallback) {
@@ -184,9 +187,15 @@
       const success = document.createElement('article');
       success.className = 'checker-success';
       const heading = document.createElement('h3');
-      heading.textContent = needsReview ? 'No items match this review filter.' : 'No detected findings match this filter.';
       const copy = document.createElement('p');
-      copy.textContent = 'Try another search or reset the filters. A report without automated findings still needs the human checks listed below.';
+      const noAutomatedFindings = !needsReview && Number(currentReport.totalIssues || 0) === 0;
+      if (noAutomatedFindings) {
+        heading.textContent = 'No automated findings detected.';
+        copy.textContent = 'Continue with the human-review checks below. Automated testing cannot establish full accessibility or WCAG conformance.';
+      } else {
+        heading.textContent = needsReview ? 'No items match this review filter.' : 'No findings match these filters.';
+        copy.textContent = 'Try another search or reset the filters. A report without visible findings still needs the human checks listed below.';
+      }
       success.append(heading, copy);
       issuesList.append(success);
       return;
@@ -289,7 +298,7 @@
     setHidden(results, false);
     summary.textContent = formatSummary(data);
     const scan = data.coverage || {};
-    const completed = (scan.viewports || []).filter(v => v.completed).map(v => `${v.name} ${v.width}px`);
+    const completed = (scan.viewports || []).filter(v => v.completed).map(v => `${v.width}px viewport`);
     if (coverage) coverage.textContent = [
       data.scanStatus === 'partial' ? 'Partial scan' : 'Rendered page scan',
       data.rulesChecked ? `${data.rulesChecked} checks considered${data.rulesApplicable != null ? `; ${data.rulesApplicable} apply to this page` : ''}` : scan.engine,

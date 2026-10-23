@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Check rendered desktop and mobile pages for accessibility findings, affected elements, and specific fixes.">
+  <meta name="description" content="Scan one publicly accessible webpage at three viewport widths for automated accessibility findings and human-review checks.">
+  <meta property="og:title" content="Accessibility Checker | AccessAI">
+  <meta property="og:description" content="Review automated webpage findings, AI-assisted explanations, and checks that still require a person.">
   <meta name="checker-api-base" content="">
   <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light">
@@ -13,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=55">
+  <link rel="stylesheet" href="./styles/accessai-tabs.css?v=66">
   <link rel="stylesheet" href="./styles/accessibility-settings.css?v=8">
 </head>
 <body class="checker-page">
@@ -33,7 +35,7 @@
         <a class="nav-link" href="learn.html">Research</a>
         <a class="nav-link" href="checker.html" aria-current="page">Checker</a>
         <a class="nav-link" href="mission.html">Our Mission</a>
-        <a class="nav-status nav-status-link" href="second-brain.html#install">Try Second Brain</a>
+        <a class="nav-status nav-status-link" href="second-brain.html#install">Get Second Brain</a>
       </div>
     </nav>
   </header>
@@ -43,22 +45,23 @@
       <div class="checker-shell reveal">
         <p class="kicker">CHECKER</p>
         <h1 id="checker-page-title">Accessibility issues, explained in plain English.</h1>
-        <p class="lead">Check a page on desktop and mobile for contrast, labels, keyboard-related markup, ARIA, links, tables, and more. Explore every detected element, from critical barriers to smaller improvements.</p>
+        <p class="lead">Scan one publicly accessible webpage at three viewport widths for contrast, labels, keyboard-related markup, ARIA, links, tables, and more. Review every automated finding, from serious barriers to smaller improvements.</p>
       </div>
     </section>
 
     <section class="checker-input-section" aria-labelledby="checker-form-title">
       <div class="checker-shell">
         <form class="checker-form reveal" id="checker-form" novalidate>
-          <label for="checker-url" id="checker-form-title">Website URL</label>
+          <label for="checker-url" id="checker-form-title">Public webpage URL</label>
           <div class="checker-input-row">
-            <input id="checker-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="https://example.com" aria-describedby="checker-error checker-status">
+            <input id="checker-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="https://example.com" aria-describedby="checker-scope checker-error checker-status">
             <button class="button primary checker-submit" type="submit">Scan</button>
           </div>
+          <p class="checker-scope" id="checker-scope">The Checker tests one rendered page at 1440px, 390px, and 320px. Automated results cannot establish WCAG conformance and should be followed by human testing.</p>
           <p class="checker-message checker-error" id="checker-error" role="alert" hidden></p>
           <p class="checker-message checker-status" id="checker-status" role="status" hidden>
             <span class="checker-spinner" aria-hidden="true"></span>
-            Checking desktop, mobile, and narrow layouts. Detailed scans can take a minute...
+            Checking three viewport widths. Detailed scans can take a minute...
           </p>
         </form>
       </div>
@@ -73,8 +76,8 @@
         </div>
         <div class="checker-scan-warnings checker-message" id="checker-warnings" role="status" hidden></div>
         <section class="checker-ai-analysis" id="checker-ai-analysis" aria-labelledby="checker-ai-title" hidden>
-          <p class="kicker">AI explanation</p>
-          <h3 id="checker-ai-title">What to fix first</h3>
+          <p class="kicker">AI-generated summary</p>
+          <h3 id="checker-ai-title">Suggested priorities</h3>
           <p id="checker-ai-summary"></p>
           <ol id="checker-ai-priorities"></ol>
           <p class="checker-ai-limit" id="checker-ai-limit"></p>
@@ -103,11 +106,11 @@
           <label>Standard
             <select id="checker-standard"><option value="all">All standards</option><option value="WCAG A/AA">WCAG A/AA</option><option value="Enhanced (AAA)">AAA enhancements</option><option value="Best practice">Best practices</option><option value="Human review">Human review</option><option value="Markup check">Markup checks</option></select>
           </label>
-          <label>Screen size
-            <select id="checker-viewport"><option value="all">All screen sizes</option><option value="Desktop">Desktop · 1440px</option><option value="Mobile">Mobile · 390px</option><option value="Narrow">Narrow · 320px</option></select>
+          <label>Viewport width
+            <select id="checker-viewport"><option value="all">All viewport widths</option><option value="Desktop">1440px</option><option value="Mobile">390px</option><option value="Narrow">320px</option></select>
           </label>
           <label class="checker-search">Search findings
-            <input id="checker-search" type="search" placeholder="Search findings, elements, or fixes" autocomplete="off">
+            <input id="checker-search" type="search" placeholder="Search findings, elements, or recommendations" autocomplete="off">
           </label>
           <button type="button" id="checker-reset-filters">Reset filters</button>
           <p class="checker-message" id="checker-filter-count" role="status"></p>
@@ -125,16 +128,22 @@
       <div class="checker-shell reveal">
         <p class="kicker">Next step</p>
         <h2 id="checker-next-title">Want accessibility preferences that travel with you?</h2>
-        <p class="checker-message">The Checker explains problems on a page. Second Brain is the extension for carrying supported accessibility preferences across the web.</p>
-        <a class="button primary" href="second-brain.html#install">Try Second Brain</a>
+        <p class="checker-message">The Checker flags automatically detectable issues on one page. Second Brain carries supported accessibility preferences across compatible websites.</p>
+        <a class="button primary" href="second-brain.html#install">Get Second Brain</a>
       </div>
     </section>
   </main>
 
+  <footer class="site-footer" aria-label="Site footer">
+    <a href="privacy.html">Privacy &amp; Data Use</a>
+    <a href="#main-content">Back to top</a>
+    <span>&copy; 2026 AccessAI</span>
+  </footer>
+
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
   <script src="./scripts/page-transitions.js?v=4"></script>
   <script src="./scripts/checker-report.js?v=2"></script>
-  <script src="./scripts/checker.js?v=8"></script>
+  <script src="./scripts/checker.js?v=9"></script>
   <script src="./scripts/accessibility-settings.js?v=10"></script>
 </body>
 </html>
