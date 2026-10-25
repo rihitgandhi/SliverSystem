@@ -32,9 +32,9 @@
   let currentReport = null;
   const isLocalPreview = ['localhost', '127.0.0.1', '[::1]'].includes(window.location.hostname);
   const configuredApiBase = document.querySelector('meta[name="checker-api-base"]')?.content.trim().replace(/\/+$/, '') || '';
-  const apiBase = isLocalPreview
-    ? (window.location.port === '5000' ? '' : 'http://127.0.0.1:5000')
-    : configuredApiBase;
+  const apiBases = isLocalPreview && window.location.port && window.location.port !== '5000'
+    ? ['', 'http://127.0.0.1:5000']
+    : [configuredApiBase];
 
   if (!form || !input || !error || !status || !results || !summary || !issuesList || !submit) return;
 
@@ -389,27 +389,34 @@
       // Vercel may briefly drop a connection while a container wakes up or a
       // new deployment is promoted. Scans are read-only, so one retry is safe
       // and prevents a transient platform hand-off from becoming a dead end.
-      for (let attempt = 0; attempt < 2; attempt += 1) {
-        try {
-          response = await fetch(`${apiBase}/api/check-accessibility`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url }),
-            signal: controller.signal,
-            cache: 'no-store',
-          });
-          networkError = null;
-        } catch (error) {
-          networkError = error;
+      for (const apiBase of apiBases) {
+        for (let attempt = 0; attempt < 2; attempt += 1) {
+          try {
+            response = await fetch(`${apiBase}/api/check-accessibility`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ url }),
+              signal: controller.signal,
+              cache: 'no-store',
+            });
+            networkError = null;
+          } catch (error) {
+            networkError = error;
+          }
+
+          const retryableStatus = response && [502, 503, 504].includes(response.status);
+          if (attempt === 0 && (networkError instanceof TypeError || retryableStatus)) {
+            await new Promise(resolve => setTimeout(resolve, 1200));
+            response = undefined;
+            continue;
+          }
+          break;
         }
 
-        const retryableStatus = response && [502, 503, 504].includes(response.status);
-        if (attempt === 0 && (networkError instanceof TypeError || retryableStatus)) {
-          await new Promise(resolve => setTimeout(resolve, 1200));
-          response = undefined;
-          continue;
-        }
-        break;
+        const shouldTryFallback = apiBase === '' && apiBases.length > 1
+          && (networkError instanceof TypeError || response?.status === 404 || response?.status === 405);
+        if (!shouldTryFallback) break;
+        response = undefined;
       }
 
       if (networkError) throw networkError;
@@ -461,4 +468,10 @@
       setLoading(false);
     }
   });
+
+  const requestedUrl = new URLSearchParams(window.location.search).get('url');
+  if (requestedUrl) {
+    input.value = requestedUrl.slice(0, 2048);
+    form.requestSubmit();
+  }
 })();
