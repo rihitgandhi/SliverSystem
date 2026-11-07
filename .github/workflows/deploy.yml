@@ -30,13 +30,13 @@ jobs:
 
             echo "Writing .env file from GitHub Secrets (this will NOT be committed to Git)..."
             cat > .env <<'EOF'
-APP_ENV=production
-GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-FLASK_SECRET_KEY=${{ secrets.FLASK_SECRET_KEY }}
-HOST=0.0.0.0
-PORT=5000
-FLASK_DEBUG=False
-EOF
+            APP_ENV=production
+            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+            FLASK_SECRET_KEY=${{ secrets.FLASK_SECRET_KEY }}
+            HOST=0.0.0.0
+            PORT=5000
+            FLASK_DEBUG=False
+            EOF
 
             echo "Pulling latest code"
             git pull origin main || true

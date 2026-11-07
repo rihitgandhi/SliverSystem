@@ -41,5 +41,3 @@ jobs:
       - name: Post-deploy note
         run: |
           echo "Deployed image to Web App for Containers. Check app logs in Azure portal or run 'az webapp log tail'."
-
-  
