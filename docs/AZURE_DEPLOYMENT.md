@@ -46,6 +46,6 @@ gh run list --repo rihitgandhi/SliverSystem --workflow deploy-sliversystem.yml
 Invoke-RestMethod https://sliversystem-dg395e.azurewebsites.net/api/health
 ```
 
-Azure OpenAI features additionally require `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_DEPLOYMENT`, and `AZURE_OPENAI_API_KEY` in the NEW app's environment settings. Set keys through Azure Portal without pasting them into logs, source or chat. Without these settings, the site and local accessibility checks work; AI features report unavailable. The infrastructure generates a separate secure Flask session key; no StockResearch secret is read or copied.
+Azure OpenAI settings belong only in the NEW App Service's environment settings. They are intentionally absent from GitHub source, secrets, variables and workflow inputs. Set or rotate them directly through Azure Portal without pasting values into logs, source or chat. The deployment gate sends a real request through `/api/simplify-content` and rejects the application's non-AI fallback. The infrastructure generates a separate secure Flask session key; no StockResearch secret is read or copied.
 
 For rollback, configure this app to a previously verified image digest in its registry and restart it. Never retag or overwrite an existing release image.

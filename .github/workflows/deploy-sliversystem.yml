@@ -68,16 +68,42 @@ jobs:
           az webapp restart -g "$AZURE_RESOURCE_GROUP" -n "$AZURE_WEBAPP_NAME" --output none
           HOST=$(az webapp show -g "$AZURE_RESOURCE_GROUP" -n "$AZURE_WEBAPP_NAME" --query defaultHostName -o tsv)
           echo "APP_URL=https://$HOST" >> "$GITHUB_ENV"
-      - name: Verify deployed revision and homepage
+      - name: Verify deployed revision, homepage and Azure OpenAI
         shell: bash
         run: |
           set -euo pipefail
           for attempt in $(seq 1 40); do
-            if curl --fail --silent --max-time 20 "$APP_URL/api/health" -o "$RUNNER_TEMP/health.json" && python -c 'import json,os; h=json.load(open(os.environ["RUNNER_TEMP"]+"/health.json")); assert h["status"]=="healthy"; assert h["revision"]==os.environ["GITHUB_SHA"]' && curl --fail --silent --max-time 20 "$APP_URL/" -o /dev/null; then
-              echo "Deployed $GITHUB_SHA to $APP_URL" >> "$GITHUB_STEP_SUMMARY"
-              exit 0
+            if curl --fail --silent --max-time 20 "$APP_URL/api/health" -o "$RUNNER_TEMP/health.json" && python -c 'import json,os; h=json.load(open(os.environ["RUNNER_TEMP"]+"/health.json")); assert h["status"]=="healthy"; assert h["api_key"]=="configured"; assert h["revision"]==os.environ["GITHUB_SHA"]' && curl --fail --silent --max-time 20 "$APP_URL/" -o /dev/null; then
+              break
             fi
+            [[ "$attempt" == '40' ]] && { echo '::error::The deployed revision did not become healthy.'; exit 1; }
             sleep 15
           done
-          echo '::error::The deployed revision did not become healthy.'
-          exit 1
+          python - <<'PY'
+          import json, os
+          request = {
+              'content': ('Individuals are requested to ascertain whether implementation of these procedures '
+                          'requires authorization before operational activities begin. All participants must '
+                          'submit documentation by Friday to facilitate timely processing.'),
+              'reading_level': 'elementary',
+          }
+          with open(os.environ['RUNNER_TEMP'] + '/ai-request.json', 'w', encoding='utf-8') as stream:
+              json.dump(request, stream)
+          PY
+          curl --fail --silent --show-error --max-time 180 \
+            -H 'Content-Type: application/json' \
+            --data-binary "@$RUNNER_TEMP/ai-request.json" \
+            "$APP_URL/api/simplify-content" -o "$RUNNER_TEMP/ai-result.json"
+          python - <<'PY'
+          import json, os
+          with open(os.environ['RUNNER_TEMP'] + '/ai-result.json', encoding='utf-8') as stream:
+              result = json.load(stream)
+          assert 'error' not in result, result.get('error')
+          assert '_fallback_reason' not in result, 'Application used its non-AI fallback'
+          assert result.get('simplified_content'), 'Azure OpenAI returned no simplified content'
+          assert not any('fallback' in str(item).lower() for item in result.get('improvements', []))
+          PY
+          {
+            echo "Deployed $GITHUB_SHA to $APP_URL"
+            echo 'Azure OpenAI live request succeeded without fallback.'
+          } >> "$GITHUB_STEP_SUMMARY"
