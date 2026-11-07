@@ -1,0 +1,6 @@
+{
+  "name": "github-sliversystem-main",
+  "issuer": "https://token.actions.githubusercontent.com",
+  "subject": "repo:rihitgandhi/SliverSystem:ref:refs/heads/main",
+  "audiences": ["api://AzureADTokenExchange"]
+}

@@ -1,8 +1,7 @@
 name: Build and deploy Docker image to ACR and Web App for Containers
 
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:

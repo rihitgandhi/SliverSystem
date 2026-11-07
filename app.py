@@ -150,6 +150,7 @@ def health_check():
     api_key_status = 'configured' if ai_client.is_configured() else 'not configured'
     return jsonify({
         'status': 'healthy', 
+        'revision': os.getenv('APP_REVISION', 'local'),
         'timestamp': datetime.now().isoformat(),
         'api_key': api_key_status
     })
